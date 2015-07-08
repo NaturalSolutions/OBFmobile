@@ -1,6 +1,6 @@
 /**
 
-Model Taxon
+Model Departement
 
 **/
 define(['jquery', 'underscore', 'backbone','config'],
@@ -10,14 +10,9 @@ define(['jquery', 'underscore', 'backbone','config'],
 
     return Backbone.Model.extend({
         defaults: {
-            NOE_ID: '' ,
-            INPN_ID: '' ,
-            vernacularName: '',
-            scientificName: '',
-            description: '',
-            urlWeb: '',
-            photos: [],
-            criteres: [],
+            name: '' ,
+            code: '' ,
+            numero: '',
         },
 
         //url: config.coreUrl,

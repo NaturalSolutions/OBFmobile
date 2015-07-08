@@ -17,6 +17,8 @@ require.config({
 		'transition-region'		: './base/transition-region/transition-region',
 		'translater'            : 'translater',
 
+		'localstorage'			: '../node_modules/backbone.localstorage/backbone.localStorage-min',
+
 		/*==========  NS modules  ==========*/
 
 		/*==========  Bower  ==========*/

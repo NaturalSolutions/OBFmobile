@@ -1,5 +1,5 @@
-define(['marionette', 'lyt-rootview', 'router', 'controller', /*, 'entities/taxon', 'entities/observation', 'entities/mission'*/ 'collections/taxon_coll'],
-    function(Marionette, Lyt_rootview, Router, Controller, /*, Taxon, Observation, MissionInfo */ Collection) {
+define(['marionette', 'lyt-rootview', 'router', 'controller', 'models/taxon', 'models/observation', 'models/mission','collections/taxon_coll','collections/observation_coll','collections/mission_coll'],
+    function(Marionette, Lyt_rootview, Router, Controller, Taxon, Observation, Mission, TaxonCollection, ObservationCollection, MissionCollection) {
 
 
         var app = {},
@@ -21,6 +21,43 @@ define(['marionette', 'lyt-rootview', 'router', 'controller', /*, 'entities/taxo
             app.router = new Router({
                 controller: app.controller,
                 app: app
+            });
+
+            /*
+            * tests MODEL COLLECTION LOCALSTORAGE
+            */
+
+            //declare new collection : mission, taxon
+            app.missionCollection = new MissionCollection();
+            app.TaxonCollection = new TaxonCollection();
+
+
+            // test if collection mission 
+            app.missionCollection.fetch({
+                success : function(data){
+                    if(Object.getOwnPropertyNames(data._byId).length === 0) {
+                        app.mission = new Mission({idMission : '123', missionNom: 'Mission 123',});
+                        app.missionCollection.add(app.mission).save();
+                        data = app.missionCollection ;
+                    }else{
+                        console.log(data);
+                    }
+                    //
+                    app.taxon = new Taxon({vernacularName: 'mon taxon2'});
+                    app.TaxonCollection = new TaxonCollection();
+                    app.TaxonCollection.add(app.taxon).save();
+                    // insert an observation
+                    app.observation = new Observation({obsDate: new Date(),mission: data ,taxon: app.taxon});
+                    app.observationCollection = new ObservationCollection();
+                    if (app.observation.isValid()){
+                        app.observationCollection.add(app.observation).save();
+                    }else{
+                        console.log("observation non valide : "+app.observation.validationError);
+                    }
+                },
+                error : function(error){
+                    console.log(error);
+                }
             });
 
 

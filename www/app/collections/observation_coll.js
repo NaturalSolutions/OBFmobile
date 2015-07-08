@@ -1,16 +1,17 @@
 /**
 
-Collection taxon
+Collection observation
 
 **/
-define(['jquery', 'underscore', 'backbone', 'models/taxon','config'],
-	function($, _ ,Backbone, taxon, config){
+define(['jquery', 'underscore', 'backbone', 'localstorage','models/observation','config'],
+	function($, _ ,Backbone, localstorage,observation, config){
 
 	'use strict';
 
 	return Backbone.Collection.extend({
 		model: observation,
 		url: config.coreUrl,
+		localStorage: new Backbone.LocalStorage("observationCollection")
 	});
 
 });
