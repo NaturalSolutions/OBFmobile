@@ -18,6 +18,7 @@ define(['jquery', 'underscore', 'backbone','config'],
 			success: 0,
 			dpt_ID: [],
 			Taxon_ID: '',
+			criteres: [],
 		},
 		url: config.coreUrl,
 
