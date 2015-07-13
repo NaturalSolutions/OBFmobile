@@ -4,9 +4,7 @@ define(['jquery', 'marionette', 'backbone', 'config'],
 	'use strict';
 	return Marionette.AppRouter.extend({
 		appRoutes: {
-			'': 'home',
-			'dashboard': 'dashboard',
-			'dashboard/:tab': 'dashboardTab'
+			'*route(/:page)': 'home',
 		},
 
 	});

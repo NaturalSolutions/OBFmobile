@@ -3,34 +3,12 @@ function(Marionette) {
 	'use strict';
 
 	return Marionette.LayoutView.extend({
-		template: 'www/app/base/home/tpl/tpl-home.html',
-		className: 'home-page ns-full-height animated',
+		template: 'www/app/base/home/tpl-home.html',
+		className: 'page home ns-full-height',
 		events: {
 		},
 
-		animateIn: function() {
-			this.$el.removeClass('zoomOutDown');
-
-			this.$el.addClass('zoomInDown');
-
-			this.$el.animate(
-				{ opacity: 1 },
-				500,
-				_.bind(this.trigger, this, 'animateIn')
-			);
-		},
-
-		// Same as above, except this time we trigger 'animateOut'
-		animateOut: function() {
-			this.$el.removeClass('zoomInUp');
-
-			this.$el.animate(
-				{ opacity : 0 },
-				500,
-				_.bind(this.trigger, this, 'animateOut')
-			);
-		},
-		onShow : function(options) {
+		onRender : function(options) {
 			this.$el.i18n();
 		}
 	});

@@ -34,7 +34,5 @@ define(['marionette', 'lyt-rootview', 'router', 'controller', /*, 'entities/taxo
             $('#header-loader').addClass('hidden');
         });
 
-        app.toto = 'ok';
-
         return app;
     });

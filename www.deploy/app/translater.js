@@ -4,20 +4,18 @@ define(['marionette','config','i18n'], function( Marionette,config) {
 
 		initialize: function(options) {
 			this.url = 'app/locales/__lng__/__ns__.json';
+			this.initi18n();
 		},
 
-		start: function() {
-			var self = this;
+		initi18n : function() {
 			i18n.init({ 
 				resGetPath: this.url, 
 				getAsync : false, 
-				lng : config.language || 'fr' //navigator.language || navigator.userLanguagenavigator.language || navigator.userLanguage
-			}, function(t) {
-			    self.triggerMethod('ready');
+				lng : config.language || 'en' //navigator.language || navigator.userLanguagenavigator.language || navigator.userLanguage
 			});
 		},
 
-		getValueFromKey: function(key) {
+		getValueFromKey : function(key) {
 			return $.t(key);
 		}
 	});

@@ -1,15 +1,3 @@
-/* Override Bootstrap */
-
-.btn-link {
-	color: inherit;
-	&:hover,
-	&:focus {
-		color: inherit;
-		text-decoration: none;
-	}
-}
-
-/* End override Bootstrap */
 
 html, body{
 	height: 100%;
@@ -28,6 +16,9 @@ body{
 main{
 	height: 100%;
 }
+.container{
+	height: 100%;
+}
 
 a{
 	&:hover, &:focus, &:visited{
@@ -39,10 +30,8 @@ a{
 .no-padding, .ns-no-padding{
 	padding: 0px;
 }
-.ns-no-margin{
-	margin: 0px;
-}
 .full-height, .ns-full-height, {
+	overflow: auto;
 	height: 100%;
 }
 .ns-mid-height{
