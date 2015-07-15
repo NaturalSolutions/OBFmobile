@@ -1,8 +1,7 @@
 require.config({
     //baseUrl: 'app',
     paths: {
-
-        'tmp': './tmp',
+		'localstorage': '../node_modules/backbone.localstorage/backbone.localStorage-min',
 
         //'app': 'app',
         'config': 'config',
