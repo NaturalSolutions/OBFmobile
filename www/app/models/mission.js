@@ -10,15 +10,16 @@ define(['jquery', 'underscore', 'backbone','config'],
 
 	return Backbone.Model.extend({
 		defaults: {
-			NOE_ID: '',
-			numero : '',
-			name: '',
-			level : 0,
-			accept: 0,
-			success: 0,
-			dpt_ID: [],
-			Taxon_ID: '',
-			criteres: [],
+			externId: '',
+			num: 0,
+			title: '',
+			taxonId: 0,
+			difficulty: 0,
+			accept: false,
+			success: false,
+			departements: [],//code
+			criterias: [],
+			monthes: [],//indexes
 		},
 		url: config.coreUrl,
 

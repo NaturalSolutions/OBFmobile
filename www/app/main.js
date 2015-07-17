@@ -1,9 +1,9 @@
 require.config({
     //baseUrl: 'app',
     paths: {
-		'localstorage': '../node_modules/backbone.localstorage/backbone.localStorage-min',
+		'localstorage': '../../node_modules/backbone.localstorage/backbone.localStorage-min',
 
-        //'app': 'app',
+        'app': 'app',
         'config': 'config',
         'router': 'router',
         'controller': 'controller',
@@ -18,9 +18,16 @@ require.config({
 
         /*==========  NS modules  ==========*/
 
+        'jqueryNs': './vendor/ns/jquery-ns',
+        'lodashNs': './vendor/ns/lodash-ns',
+
+        /*==========  Vendor  ==========*/
+
+        'backboneAutocomplete': './vendor/backbone-autocomplete/backbone.autocomplete-min',
+
         /*==========  Bower  ==========*/
         'jquery': '../bower_components/jquery/jquery.min',
-        'underscore': '../bower_components/underscore/underscore',
+        'underscore': '../bower_components/lodash/lodash',
         'backbone': '../bower_components/backbone/backbone',
         'marionette': '../bower_components/marionette/lib/core/backbone.marionette',
         'backbone.babysitter': '../bower_components/backbone.babysitter/lib/backbone.babysitter',
@@ -58,6 +65,18 @@ require.config({
         i18n: {
             deps: ['jquery'],
             exports: '$'
+        },
+        jqueryNs: {
+            deps: ['jquery'],
+            exports: '$ns'
+        },
+        lodashNs: {
+            deps: ['underscore'],
+            exports: 'lodashNs'
+        },
+        backboneAutocomplete: {
+            deps: ['backbone', 'underscore'],
+            exports: 'AutoCompleteView'
         },
     },
 });

@@ -6,8 +6,8 @@
 **/
 
 
-define(['marionette', 'config'],
-function(Marionette, config) {
+define(['marionette', 'config', 'underscore'],
+function(Marionette, config, _) {
 	'use strict';
 	return Marionette.LayoutView.extend({
 		template: 'www/app/base/header/tpl-header.html',
@@ -34,7 +34,7 @@ function(Marionette, config) {
 				icon: 'option-vertical'
 			}
 		],
-		dataSets: [
+		states: [
 			{
 				name: 'empty',
 				titleKey: '',
@@ -46,6 +46,12 @@ function(Marionette, config) {
 				titleKey: 'dashboard',
 				leftBtns: ['menu'],
 				rightBtns: [],
+			},
+			{
+				name: 'missionsAroundMe',
+				titleKey: 'missions',
+				leftBtns: ['menu'],
+				rightBtns: ['plus'],
 			}
 		],
 
@@ -53,10 +59,10 @@ function(Marionette, config) {
 			var self = this;
 
 			//Dynamic config
-			_.forEach(self.dataSets, function(dataSet) {
+			_.forEach(self.states, function(state) {
 				_.forEach(['left', 'right'], function(side) {
-					_.forEach(dataSet[side+'Btns'], function(btnName, index) {
-						dataSet[side+'Btns'][index] = _.findWhere(self.btnConfigs, {name: btnName});
+					_.forEach(state[side+'Btns'], function(btnName, index) {
+						state[side+'Btns'][index] = _.findWhere(self.btnConfigs, {name: btnName});
 					});
 				});
 			});
@@ -64,14 +70,14 @@ function(Marionette, config) {
 
 		serializeData: function() {
 			var self = this;
-			var dataSetName = self.dataSetName || 'empty';
+			var stateName = self.stateName || 'empty';
 			
-			return _.findWhere(self.dataSets, {name:dataSetName});
+			return _.findWhere(self.states, {name:stateName});
 		},
 
-		setData: function(name) {
+		setState: function(name) {
 			var self = this;
-			self.dataSetName = name;
+			self.stateName = name;
 			
 			Marionette.LayoutView.prototype.render.apply(this);
 		},

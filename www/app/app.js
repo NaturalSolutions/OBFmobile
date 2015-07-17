@@ -1,67 +1,148 @@
-define(['marionette', 'lyt-rootview', 'router', 'controller', 'models/taxon', 'models/observation', 'models/mission','collections/taxon_coll','collections/observation_coll','collections/mission_coll'],
-    function(Marionette, Lyt_rootview, Router, Controller, Taxon, Observation, Mission, TaxonCollection, ObservationCollection, MissionCollection) {
-
-
-        var app = {},
-            JST = window.JST = window.JST || {};
+define([
+    'underscore',
+    'lodashNs',
+    'jqueryNs',
+    'bootstrap',
+    'marionette',
+    'lyt-rootview',
+    'router',
+    'controller',
+    'models/user',
+    'collections/user_coll',
+    'models/taxon',
+    'collections/taxon_coll',
+    'models/observation',
+    'collections/observation_coll',
+    'models/mission',
+    'collections/mission_coll',
+    'models/departement',
+    'collections/departement_coll'],
+function(
+    _,
+    _ns,
+    $ns,
+    Bootstrap,
+    Marionette,
+    Lyt_rootview,
+    Router,
+    Controller,
+    User,
+    UserCollection,
+    Taxon,
+    TaxonCollection,
+    Observation,
+    ObservationCollection,
+    Mission,
+    MissionCollection,
+    Departement,
+    DepartementCollection) {
+        
+        var JST = window.JST = window.JST || {};
 
         Backbone.Marionette.Renderer.render = function(template, data) {
             if (!JST[template]) throw "Template '" + template + "' not found!";
             return JST[template](data);
         };
 
-        app = new Marionette.Application();
+        var app = new Marionette.Application();
 
         app.on('start', function() {
             app.rootView = new Lyt_rootview();
             app.rootView.render();
-            app.controller = new Controller({
-                app: app
-            });
+            app.controller = new Controller();
             app.router = new Router({
-                controller: app.controller,
-                app: app
+                controller: app.controller
             });
 
-            /*
-            * tests MODEL COLLECTION LOCALSTORAGE
-            */
+            var getMissions = function() {
+                app.missionCollection = new MissionCollection();
 
-            //declare new collection : mission, taxon
-            app.missionCollection = new MissionCollection();
-            app.TaxonCollection = new TaxonCollection();
-
-
-            // test if collection mission 
-            app.missionCollection.fetch({
-                success : function(data){
-                    if(Object.getOwnPropertyNames(data._byId).length === 0) {
-                        app.mission = new Mission({idMission : '123', missionNom: 'Mission 123',});
-                        app.missionCollection.add(app.mission).save();
-                        data = app.missionCollection ;
-                    }else{
-                        console.log(data);
+                var deferred = $.Deferred();
+                app.missionCollection.fetch({
+                    success : function(data){
+                        if ( data.length ) {
+                            deferred.resolve();
+                        } else {
+                            $.get('./app/data/missions.json')
+                                .then(function(response) {
+                                    var missionDatas = response;
+                                    _.forEach(missionDatas, function(missionData) {
+                                        var mission = new Mission({
+                                            num: missionData.num,
+                                            title: missionData.taxonLabel,
+                                            monthes: missionData.monthes,
+                                            departements: missionData.departements,
+                                            difficulty: missionData.difficulty
+                                        });
+                                        app.missionCollection.add(mission).save();
+                                    });
+                                    deferred.resolve();
+                                }, function(error) {
+                                    console.log(error);
+                                });
+                        };
+                    },
+                    error : function(error){
+                        console.log(error);
                     }
-                    //
-                    app.taxon = new Taxon({vernacularName: 'mon taxon2'});
-                    app.TaxonCollection = new TaxonCollection();
-                    app.TaxonCollection.add(app.taxon).save();
-                    // insert an observation
-                    app.observation = new Observation({obsDate: new Date(),mission: data ,taxon: app.taxon});
-                    app.observationCollection = new ObservationCollection();
-                    if (app.observation.isValid()){
-                        app.observationCollection.add(app.observation).save();
-                    }else{
-                        console.log("observation non valide : "+app.observation.validationError);
+                });
+
+                return deferred;
+            };
+
+            var getDepartements = function() {
+                app.departementCollection = new DepartementCollection();
+
+                var deferred = $.Deferred();
+                $.get('./app/data/departements.json')
+                    .then(function(response) {
+                        var departementDatas = response;
+                        _.forEach(departementDatas, function(departementData) {
+                            var departement = new Departement({
+                                code: departementData.code,
+                                title: departementData.title,
+                                lat: departementData.lat,
+                                lon: departementData.lon
+                            });
+                            app.departementCollection.add(departement);
+                        });
+                        deferred.resolve();
+                    }, function(error) {
+                        console.log(error);
+                    });
+
+                return deferred;
+            };
+
+            var getUser = function() {
+                var userCollection = new UserCollection();
+
+                var deferred = $.Deferred();
+                userCollection.fetch({
+                    success : function(data){
+                        console.log('user fetch', data);
+                        if ( data.length ) {
+                            app.user = data.at(0);
+                            deferred.resolve();
+                        } else {
+                            app.user = new User();
+                            userCollection.add(app.user).save();
+                            deferred.resolve();
+                        }
+                    },
+                    error : function(error){
+                        console.log(error);
                     }
-                },
-                error : function(error){
-                    console.log(error);
-                }
-            });
+                });
 
+                return deferred;
+            };
 
-            Backbone.history.start();
+            $.when(getMissions(), getDepartements(), getUser())
+                .done(function() {
+                    console.log(app.user);
+                    Backbone.history.start();
+                });
         });
 
         $(document).ajaxStart(function(e) {
@@ -70,8 +151,6 @@ define(['marionette', 'lyt-rootview', 'router', 'controller', 'models/taxon', 'm
         $(document).ajaxStop(function() {
             $('#header-loader').addClass('hidden');
         });
-
-        app.toto = 'ok';
 
         return app;
     });

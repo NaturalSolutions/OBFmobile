@@ -1,7 +1,8 @@
 {
 	"header": {
 		"titles": {
-			"dashboard": "Tableau de bord"
+			"dashboard": "Tableau de bord",
+			"missions": "Missions"
 		}
 	},
 	"pages": {

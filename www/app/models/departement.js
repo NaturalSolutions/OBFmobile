@@ -10,11 +10,10 @@ define(['jquery', 'underscore', 'backbone','config'],
 
     return Backbone.Model.extend({
         defaults: {
-            name: '' ,
-            code: '' ,
-            numero: '',
-        },
-
-        //url: config.coreUrl,
+            code: '',
+            title: '',
+            lat: 0,
+            lon: 0
+        }
     });
 });

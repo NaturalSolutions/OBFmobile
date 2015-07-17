@@ -1,12 +1,14 @@
-define(['jquery', 'marionette', 'backbone', 'config'],
-	function($, Marionette, Backbone, config){
+define(['jquery', 'marionette'],
+	function($, Marionette){
 
 	'use strict';
 	return Marionette.AppRouter.extend({
 		appRoutes: {
 			'': 'home',
 			'dashboard': 'dashboard',
-			'dashboard/:tab': 'dashboardTab'
+			'dashboard/:tab': 'dashboardTab',
+			'missions/aroundme': 'missionsAroundMe',
+			'missions/aroundme/:tab': 'missionsAroundMeTab'
 		},
 
 	});
