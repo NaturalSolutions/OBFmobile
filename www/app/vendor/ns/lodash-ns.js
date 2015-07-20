@@ -25,6 +25,16 @@ _.mixin({
 });
 
 _.mixin({
+    getPointOnCircle: function(angle, radius, centerX, centerY) {
+        var angle = _.deg2rad(angle);
+        return {
+            x: radius*Math.cos(angle) + centerX,
+            y: radius*Math.sin(angle) + centerY
+        }
+    }
+});
+
+_.mixin({
     deg2rad: function(deg) {
         return deg * (Math.PI/180)
     }

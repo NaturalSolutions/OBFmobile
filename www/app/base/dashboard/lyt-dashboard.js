@@ -14,6 +14,12 @@ function(Marionette, i18n) {
 
 		onRender: function(options) {
 			this.$el.i18n();
+			var donutchart = this.$el.find('.donutchart').nsDonutChart({
+				value: .95,
+				onCreate: function(api) {
+					
+				}
+			}).data('nsDonutChart');
 		}
 	});
 });

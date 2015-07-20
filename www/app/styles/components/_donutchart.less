@@ -1,0 +1,84 @@
+.donutchart {
+	position: relative;
+	font-size: 100px;
+	width: 1em;
+	height: 1em;
+	box-sizing: border-box;
+	* {
+		box-sizing: border-box;
+	}
+
+	.circle {
+    	border-radius: 50%;
+    	border-color: #000;
+    }
+
+	.gap-patch {
+        position: absolute;
+        top: 0;
+        left: 45%;
+        width: 10%;
+        height: 100%;
+        overflow: hidden;
+        border-color: inherit;
+    }
+    .gap-patch .circle {
+        width: 1000%;
+        left: -450%;
+    }
+
+    .circle-clipper {
+    	display: block;
+        position: relative;
+        width: 50%;
+        height: 100%;
+        overflow: hidden;
+        .circle {
+	    	width: 200%;
+            height: 100%;
+            border-width: 10px;
+            border-style: solid;
+            border-bottom-color: transparent !important;
+            border-radius: 50%;
+            -webkit-animation: none;
+            animation: none;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+	    }
+	    &.circle-clipper-left {
+	        float: left;
+	        .circle {
+	        	left: 0;
+	            border-right-color: transparent !important;
+	            transform: rotate(135deg);
+	        }
+	    }
+	    &.circle-clipper-right {
+	        float: right;
+	        .circle {
+	        	left: -100%;
+	            border-left-color: transparent !important;
+	            transform: rotate(-135deg);
+	        }
+	    }
+    }
+
+    .cap {
+        position: absolute;
+        font-size: 10px;
+        width: 1em;
+        height: 1em;
+        background: #000;
+        border-radius: 50%;
+	    &.cap-start {
+	        left: 50%;
+	        margin-left: -.5em;
+	    }
+	    &.cap-end {
+	        margin-top: -.5em;
+	        margin-left: -.5em;
+	    }
+    }
+}

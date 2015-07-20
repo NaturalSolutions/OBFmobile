@@ -110,14 +110,7 @@ function(Marionette, i18n, DepartementCollection, Departement, BackboneAutocompl
 		onRender: function(options) {
 			var self = this;
 			if ( self.displayState == 'localized' ) {
-				this.$el.find('.js-nav-tabs a').click(function (e) {
-					e.preventDefault();
-					var slug = $(this).attr('href').replace('#', '');
-					self.app.router.navigate('missions/aroundme/'+ slug, {trigger:true});
-					//$(this).tab('show');
-				});
-				if ( self.$initTab )
-					self.$initTab.tab('show');
+				self.initTabs();
 			} else if ( self.displayState == 'autocomplete' ) {
 				self.initAutocompleteDepartements();
 			};
@@ -126,9 +119,28 @@ function(Marionette, i18n, DepartementCollection, Departement, BackboneAutocompl
 			this.$el.i18n();
 		},
 
+		initTabs: function() {
+			var self = this;
+			this.$el.find('.js-nav-tabs a').click(function (e) {
+				e.preventDefault();
+				var slug = $(this).attr('href').replace('#', '');
+				self.app.router.navigate('missions/aroundme/'+ slug, {trigger:true});
+				//$(this).tab('show');
+			});
+			console.log(self.$initTab);
+			if ( self.initTabSlug )
+				self.setTab(self.initTabSlug);
+			self.initTabSlug = null;
+		},
+
 		setTab: function(slug) {
-			self.$initTab = this.$el.find('.js-nav-tabs a[href="#'+slug+'"]');
-			self.$initTab.tab('show');
+			var self = this;
+			var $initTab = this.$el.find('.js-nav-tabs a[href="#'+slug+'"]');
+			console.log($initTab.length);
+			if ( !$initTab.length )
+				self.initTabSlug = slug;
+			else
+				$initTab.tab('show');
 		},
 
 		initAutocompleteDepartements: function() {
