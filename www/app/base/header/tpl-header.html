@@ -1,6 +1,6 @@
 <div class="col-side col-left pull-left">
 	<% _.each(leftBtns, function(btn){ %>
-	<button class="btn btn-lg btn-link btn_<%= btn.name %>">
+	<button class="btn btn-lg btn-link btn_<%= btn.name %>" name="<%= btn.name %>">
 		<span class="glyphicon glyphicon-<%= btn.icon %>"></span>
 	</button>
 	<% }); %>

@@ -12,6 +12,9 @@ function(Marionette, config, _) {
 	return Marionette.LayoutView.extend({
 		template: 'www/app/base/header/tpl-header.html',
 		className: 'inner clearfix',
+		events: {
+			'click .btn': 'btnClick'
+		}
 		btnConfigs: [
 			{
 				name: 'menu',
@@ -82,8 +85,13 @@ function(Marionette, config, _) {
 			Marionette.LayoutView.prototype.render.apply(this);
 		},
 
-		onRender : function(options) {
+		onRender: function(options) {
 			this.$el.i18n();
+		},
+
+		btnClick: function(e) {
+			var self = this;
+			self.triggerMethod('btn:'+$(e.currentTarget).attr('name'));
 		}
 	});
 });
