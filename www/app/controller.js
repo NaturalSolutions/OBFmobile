@@ -1,6 +1,11 @@
-define(['marionette', 'config','./base/home/lyt-home','./base/dashboard/lyt-dashboard','./base/missions/lyt-missions-aroundme'
+define(['marionette',
+	'config',
+	'./base/home/lyt-home',
+	'./base/dashboard/lyt-dashboard',
+	'./base/missions/lyt-missions-all',
+	'./base/missions-aroundme/lyt-missions-aroundme'
 
-],function( Marionette, config, LytHome, LytDashboard, LytMissionsAroundMe ){
+],function( Marionette,config, LytHome, LytDashboard, LytMissionsAll, LytMissionsAroundMe ){
 	'use strict';
 	return Marionette.Object.extend({
 
@@ -38,23 +43,80 @@ define(['marionette', 'config','./base/home/lyt-home','./base/dashboard/lyt-dash
 			self.rgMain.currentView.setTab(tabSlug);
 		},
 
+		missionsAll: function(params) {
+			var self = this;
+
+			if ( self.rgMain.currentView && self.rgMain.currentView.getOption('name') == 'missionsAll' ) {
+				self.rgMain.currentView.setState('list', params);
+				return false;
+			};
+
+			self.rgHeader.currentView.setState('missionsAll');
+			self.rgMain.show(new LytMissionsAll({
+				name: 'missionsAll',
+			}), {preventDestroy:true});
+		},
+
+		missionsAllFilter: function() {
+			var self = this;
+
+			if ( !self.rgMain.currentView || self.rgMain.currentView.getOption('name') != 'missionsAll' )
+				self.missionsAll();
+
+			self.rgMain.currentView.setState('filter');
+		},
+
+		_missionsAroundMe: function(options) {
+			var self = this;
+
+			if ( self.rgMain.currentView && self.rgMain.currentView.getOption('name') == 'missionsAroundMe' ) {
+				self.rgMain.currentView.setState(options.state.name, options.state.args);
+				return false;
+			};
+
+			var state = options.state || {};
+
+			if ( state.name != 'manually' ) {
+				if ( !self.app.user.get('departements').length || self.app.user.get('positionEnabled') )
+					state.name = 'localize';
+				else
+					state.name = 'list';
+			};
+
+			self.rgMain.show(new LytMissionsAroundMe({
+				name: 'missionsAroundMe',
+				state: state
+
+			}), {preventDestroy:true});
+		},
+
 		missionsAroundMe: function() {
 			var self = this;
 
-			self.rgHeader.currentView.setState('missionsAroundMe');
-			self.rgMain.show(new LytMissionsAroundMe({
-				name: 'missionsAroundMe',
-				model: self.app.user
-			}), {preventDestroy:true});
+			self._missionsAroundMe({});
+		},
+
+		missionsAroundMeManually: function() {
+			var self = this;
+
+			self._missionsAroundMe({
+				state: {
+					name: 'manually'
+				}
+			});
 		},
 
 		missionsAroundMeTab: function(tabSlug) {
 			var self = this;
 
-			if ( !self.rgMain.currentView || self.rgMain.currentView.getOption('name') != 'missionsAroundMe' )
-				self.missionsAroundMe();
-
-			self.rgMain.currentView.setTab(tabSlug);
+			self._missionsAroundMe({
+				state: {
+					name: 'list',
+					args: {
+						tab: 'tab-'+tabSlug
+					}
+				}
+			});
 		},
 	});
 });

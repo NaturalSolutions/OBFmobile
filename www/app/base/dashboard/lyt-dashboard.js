@@ -8,6 +8,10 @@ function(Marionette, i18n) {
 		events: {
 		},
 
+		initialize: function() {
+			var self = this;
+		},
+
 		setTab: function(name) {
 			console.log(name);
 		},

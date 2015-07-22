@@ -19,7 +19,7 @@ define(['jquery', 'underscore', 'backbone', 'localstorage','config'],
             totalTimeOnMission: 0,
             newsletter: false,
             displayHelp: true,
-            //departements: [],
+            departements: [],//codes
             positionEnabled: true,
             position: {
                 lat: null,

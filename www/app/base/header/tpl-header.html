@@ -8,7 +8,7 @@
 <div class="col-center title" data-i18n="header.titles.<%= name %>"></div>
 <div class="col-side col-right pull-right">
 	<% _.each(rightBtns, function(btn){ %>
-	<button class="btn btn-lg btn-link btn_<%= btn.name %>">
+	<button class="btn btn-lg btn-link btn_<%= btn.name %>" name="<%= btn.name %>">
 		<span class="glyphicon glyphicon-<%= btn.icon %>"></span>
 	</button>
 	<% }); %>

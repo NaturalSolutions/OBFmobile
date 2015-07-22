@@ -1,8 +1,8 @@
-define(['marionette', './base/header/lyt-header', './base/home/lyt-home'],
-function(Marionette, LytHeader, LytHome) {
+define(['marionette', 'transition-region', './base/header/lyt-header', './base/home/lyt-home'],
+function(Marionette, TransitionRegion, LytHeader, LytHome) {
 	'use strict';
 
-	var MainRegion = Marionette.Region.extend({
+	/*var MainRegion = Marionette.Region.extend({
 		attachHtml: function(view) {
 			if ( this.$el.children('div').length ) {
 				var last = this.currentView;
@@ -18,7 +18,7 @@ function(Marionette, LytHeader, LytHome) {
 
 			this.$el.prepend(view.el);
 		}
-	});
+	});*/
 
 	return Marionette.LayoutView.extend({
 		el: 'body',
@@ -27,7 +27,7 @@ function(Marionette, LytHeader, LytHome) {
 
 		regions: {
 			rgHeader: 'header',
-			rgMain: new MainRegion({
+			rgMain: new TransitionRegion({
 				el: 'main'
 			}),
 			rgFooter: 'footer'

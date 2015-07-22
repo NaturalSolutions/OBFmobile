@@ -17,7 +17,7 @@ define(['jquery', 'underscore', 'backbone','config'],
 			difficulty: 0,
 			accept: false,
 			success: false,
-			departements: [],//code
+			departements: [],//codes
 			criterias: [],
 			monthes: [],//indexes
 		},

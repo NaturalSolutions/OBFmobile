@@ -12,9 +12,13 @@ function(Marionette, config, _) {
 	return Marionette.LayoutView.extend({
 		template: 'www/app/base/header/tpl-header.html',
 		className: 'inner clearfix',
-		events: {
+		/*events: {
 			'click .btn': 'btnClick'
-		}
+		},*/
+		triggers: {
+			'click .btn_plus': 'btn:plus:click',
+			'click .btn_option': 'btn:option:click'
+		},
 		btnConfigs: [
 			{
 				name: 'menu',
@@ -49,6 +53,12 @@ function(Marionette, config, _) {
 				titleKey: 'dashboard',
 				leftBtns: ['menu'],
 				rightBtns: [],
+			},
+			{
+				name: 'missionsAll',
+				titleKey: 'missions',
+				leftBtns: ['back'],
+				rightBtns: ['search', 'option'],
 			},
 			{
 				name: 'missionsAroundMe',
@@ -86,12 +96,15 @@ function(Marionette, config, _) {
 		},
 
 		onRender: function(options) {
-			this.$el.i18n();
-		},
-
-		btnClick: function(e) {
 			var self = this;
-			self.triggerMethod('btn:'+$(e.currentTarget).attr('name'));
+
+			self.$el.i18n();
 		}
+
+		/*btnClick: function(e) {
+			var self = this;
+			console.log('btn:'+$(e.currentTarget).attr('name'));
+			self.triggerMethod('btn:'+$(e.currentTarget).attr('name'));
+		}*/
 	});
 });

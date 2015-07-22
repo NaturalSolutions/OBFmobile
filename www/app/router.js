@@ -7,8 +7,11 @@ define(['jquery', 'marionette'],
 			'': 'home',
 			'dashboard': 'dashboard',
 			'dashboard/:tab': 'dashboardTab',
+			'missions/all': 'missionsAll',
+			'missions/all/filter': 'missionsAllFilter',
 			'missions/aroundme': 'missionsAroundMe',
-			'missions/aroundme/:tab': 'missionsAroundMeTab'
+			'missions/aroundme/manually': 'missionsAroundMeManually',
+			'missions/aroundme/tab-:tab': 'missionsAroundMeTab'
 		},
 
 	});
