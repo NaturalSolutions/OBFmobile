@@ -2,10 +2,11 @@ define(['marionette',
 	'config',
 	'./base/home/lyt-home',
 	'./base/dashboard/lyt-dashboard',
-	'./base/missions/lyt-missions-all',
+	'./base/missions-all/lyt-missions-all',
+	'./base/missions-all/lyt-missions-all-filter',
 	'./base/missions-aroundme/lyt-missions-aroundme'
 
-],function( Marionette,config, LytHome, LytDashboard, LytMissionsAll, LytMissionsAroundMe ){
+],function( Marionette,config, LytHome, LytDashboard, LytMissionsAll, LytMissionsAllFilter, LytMissionsAroundMe ){
 	'use strict';
 	return Marionette.Object.extend({
 
@@ -43,27 +44,40 @@ define(['marionette',
 			self.rgMain.currentView.setTab(tabSlug);
 		},
 
-		missionsAll: function(params) {
+		missionsAll: function() {
 			var self = this;
 
-			if ( self.rgMain.currentView && self.rgMain.currentView.getOption('name') == 'missionsAll' ) {
-				self.rgMain.currentView.setState('list', params);
-				return false;
-			};
+			var missions = self.app.missionCollection.clone();
+			var params = self.app.missionAllFilters || {};
+			var departement = params.departement;
+			var startAt = params.startAt;
+			var endAt = params.endAt;
+			console.log(params);
+			missions.forEach(function(mission) {
+				if ( mission ) {
+					var isMatch = true;
+					if ( isMatch && departement && !mission.isInDepartement(departement.code) ) {
+						isMatch = false;
+					};
+					if ( isMatch && (startAt || endAt ) && !mission.isInSeason(startAt, endAt) ) {
+						isMatch = false;
+					};
+					if (!isMatch)
+						missions.remove(mission);
+				};
+			});
 
 			self.rgHeader.currentView.setState('missionsAll');
 			self.rgMain.show(new LytMissionsAll({
-				name: 'missionsAll',
+				collection: missions
 			}), {preventDestroy:true});
 		},
 
 		missionsAllFilter: function() {
 			var self = this;
 
-			if ( !self.rgMain.currentView || self.rgMain.currentView.getOption('name') != 'missionsAll' )
-				self.missionsAll();
-
-			self.rgMain.currentView.setState('filter');
+			self.rgHeader.currentView.setState('hidden');
+			self.rgMain.show(new LytMissionsAllFilter(), {preventDestroy:true});
 		},
 
 		_missionsAroundMe: function(options) {

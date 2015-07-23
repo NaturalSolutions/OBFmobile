@@ -70,7 +70,7 @@ function(
                                         var mission = new Mission({
                                             num: missionData.num,
                                             title: missionData.taxonLabel,
-                                            monthes: missionData.monthes,
+                                            seasons: missionData.seasons,
                                             departements: missionData.departements,
                                             difficulty: missionData.difficulty
                                         });

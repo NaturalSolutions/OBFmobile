@@ -43,7 +43,7 @@ function(Marionette, config, _) {
 		],
 		states: [
 			{
-				name: 'empty',
+				name: 'hidden',
 				titleKey: '',
 				leftBtns: [],
 				rightBtns: [],
@@ -83,7 +83,7 @@ function(Marionette, config, _) {
 
 		serializeData: function() {
 			var self = this;
-			var stateName = self.stateName || 'empty';
+			var stateName = self.stateName || 'hidden';
 			
 			return _.findWhere(self.states, {name:stateName});
 		},

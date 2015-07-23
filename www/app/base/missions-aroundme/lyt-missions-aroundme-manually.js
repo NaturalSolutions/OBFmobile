@@ -1,5 +1,5 @@
-define(['marionette', 'i18n', 'collections/departement_coll', 'models/departement', 'backboneAutocomplete'],
-function(Marionette, i18n, DepartementCollection, Departement, BackboneAutocomplete) {
+define(['marionette', 'i18n', 'models/departement', 'backboneAutocomplete'],
+function(Marionette, i18n, Departement, BackboneAutocomplete) {
 	'use strict';
 
 	return Marionette.LayoutView.extend({

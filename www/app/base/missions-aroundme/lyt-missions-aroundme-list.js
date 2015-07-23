@@ -13,14 +13,12 @@ function(Marionette, i18n) {
 			self.app = require('app');
 
 			var departementCodes = self.app.user.get('departements');
-			var curMonth = new Date().getMonth();
-			
 			self.collection = self.app.missionCollection.clone();
 			self.collection.forEach(function(mission) {
 				if (mission) {
-					var isDptMatch = _.intersection(departementCodes, mission.get('departements')).length;
-					var isMonthMatch = _.indexOf(mission.get('monthes'), curMonth) > -1;
-					if (!isDptMatch || !isMonthMatch)
+					var isInDepartement = mission.isInDepartement(departementCodes);//_.intersection(departementCodes, mission.get('departements')).length;
+					var isInSeason = mission.isInSeason(new Date());
+					if (!isInDepartement || !isInSeason)
 						self.collection.remove(mission);
 				};
 			});

@@ -33,6 +33,9 @@ require.config({
         'backbone.babysitter': '../bower_components/backbone.babysitter/lib/backbone.babysitter',
         'backbone.wreqr': '../bower_components/backbone.wreqr/lib/backbone.wreqr',
         'bootstrap': '../bower_components/bootstrap/dist/js/bootstrap',
+        'moment': '../bower_components/moment/min/moment-with-locales',
+        //'moment-fr': '../bower_components/moment/locale/fr',
+        'datetimepicker': '../bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min',
 
         'requirejs-text': '../bower_components/requirejs-text/text',
         'i18n': '../bower_components/i18n/i18next',
