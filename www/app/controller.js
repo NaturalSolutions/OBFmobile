@@ -2,11 +2,12 @@ define(['marionette',
 	'config',
 	'./base/home/lyt-home',
 	'./base/dashboard/lyt-dashboard',
+	'./base/mission/lyt-mission',
 	'./base/missions-all/lyt-missions-all',
 	'./base/missions-all/lyt-missions-all-filter',
 	'./base/missions-aroundme/lyt-missions-aroundme'
 
-],function( Marionette,config, LytHome, LytDashboard, LytMissionsAll, LytMissionsAllFilter, LytMissionsAroundMe ){
+],function( Marionette,config, LytHome, LytDashboard, LytMission, LytMissionsAll, LytMissionsAllFilter, LytMissionsAroundMe ){
 	'use strict';
 	return Marionette.Object.extend({
 
@@ -22,7 +23,7 @@ define(['marionette',
 		home: function() {
 			var self = this;
 
-			self.rgHeader.currentView.setState('empty');
+			self.rgHeader.currentView.setState('hidden');
 			self.rgMain.show(new LytHome(), {preventDestroy:true});
 		},
 
@@ -44,6 +45,18 @@ define(['marionette',
 			self.rgMain.currentView.setTab(tabSlug);
 		},
 
+		missionSheet: function(num) {
+			var self = this;
+			num = parseInt(num);
+			var mission = self.app.missionCollection.findWhere({num: num});
+			console.log(self.app.missionCollection);
+
+			self.rgHeader.currentView.setState('hidden');
+			self.rgMain.show(new LytMission({
+				model: mission
+			}), {preventDestroy:true});
+		},
+
 		missionsAll: function() {
 			var self = this;
 
@@ -52,20 +65,21 @@ define(['marionette',
 			var departement = params.departement;
 			var startAt = params.startAt;
 			var endAt = params.endAt;
-			console.log(params);
+			var removables = [];
 			missions.forEach(function(mission) {
-				if ( mission ) {
-					var isMatch = true;
-					if ( isMatch && departement && !mission.isInDepartement(departement.code) ) {
-						isMatch = false;
-					};
-					if ( isMatch && (startAt || endAt ) && !mission.isInSeason(startAt, endAt) ) {
-						isMatch = false;
-					};
-					if (!isMatch)
-						missions.remove(mission);
+				var isMatch = true;
+				if ( isMatch && departement && !mission.isInDepartement(departement.get('code')) ) {
+					isMatch = false;
 				};
+				if ( isMatch && (startAt || endAt ) && !mission.isInSeason(startAt, endAt) ) {
+					isMatch = false;
+				};
+				if (!isMatch)
+					removables.push(mission);
 			});
+
+			if ( removables.length )
+				missions.remove(removables);
 
 			self.rgHeader.currentView.setState('missionsAll');
 			self.rgMain.show(new LytMissionsAll({

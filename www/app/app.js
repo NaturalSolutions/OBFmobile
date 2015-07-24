@@ -57,6 +57,7 @@ function(
             var getMissions = function() {
                 app.missionCollection = new MissionCollection();
 
+                //TODO manage updates
                 var deferred = $.Deferred();
                 app.missionCollection.fetch({
                     success : function(data){
@@ -69,10 +70,17 @@ function(
                                     _.forEach(missionDatas, function(missionData) {
                                         var mission = new Mission({
                                             num: missionData.num,
-                                            title: missionData.taxonLabel,
+                                            title: missionData.title,
                                             seasons: missionData.seasons,
                                             departements: missionData.departements,
-                                            difficulty: missionData.difficulty
+                                            difficulty: missionData.difficulty,
+                                            taxon: {
+                                                title: missionData.taxon.title,
+                                                family: missionData.taxon.family,
+                                                description: missionData.taxon.description,
+                                                url: missionData.taxon.url,
+                                                characteristic: missionData.taxon.characteristic
+                                            }
                                         });
                                         app.missionCollection.add(mission).save();
                                     });

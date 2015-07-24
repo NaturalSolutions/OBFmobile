@@ -13,13 +13,19 @@ define(['jquery', 'underscore', 'backbone','config'],
 			externId: '',
 			num: 0,
 			title: '',
-			taxonId: 0,
 			difficulty: 0,
 			accept: false,
 			success: false,
 			departements: [],//codes
 			criterias: [],
-			seasons: [],//month-day
+			seasons: [],//month-day,
+			taxon: {
+				title: "",
+		        family: '',
+		        description: "",
+		        url: '',
+		        characteristic: ""
+			},
 		},
 		url: config.coreUrl,
 		isInDepartement: function(codes) {

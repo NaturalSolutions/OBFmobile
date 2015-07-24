@@ -2,7 +2,7 @@
 	<h3>List</h3>
 	<ul>
 	<% _.forEach(missions, function(mission) { %>
-		<li><%= mission.title %></li>
+		<li><a href="#mission/<%= mission.num %>"><%= mission.title %></a></li>
 	<% }); %>
 	</ul>
 </div>
