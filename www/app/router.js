@@ -12,7 +12,8 @@ define(['jquery', 'marionette'],
 			'missions/all/filter': 'missionsAllFilter',
 			'missions/aroundme': 'missionsAroundMe',
 			'missions/aroundme/manually': 'missionsAroundMeManually',
-			'missions/aroundme/tab-:tab': 'missionsAroundMeTab'
+			'missions/aroundme/tab-:tab': 'missionsAroundMeTab',
+			'observation': 'observation'
 		},
 
 	});

@@ -3,8 +3,8 @@
 Collection observation
 
 **/
-define(['jquery', 'underscore', 'backbone', 'localstorage','models/observation','config'],
-	function($, _ ,Backbone, localstorage,observation, config){
+define(['jquery', 'underscore', 'backbone', 'localstorage', 'models/observation', 'config'],
+	function($, _ ,Backbone, localstorage, observation, config){
 
 	'use strict';
 

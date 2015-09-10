@@ -5,9 +5,10 @@ define(['marionette',
 	'./base/mission/lyt-mission',
 	'./base/missions-all/lyt-missions-all',
 	'./base/missions-all/lyt-missions-all-filter',
-	'./base/missions-aroundme/lyt-missions-aroundme'
+	'./base/missions-aroundme/lyt-missions-aroundme',
+	'./base/observation/lyt-observation'
 
-],function( Marionette,config, LytHome, LytDashboard, LytMission, LytMissionsAll, LytMissionsAllFilter, LytMissionsAroundMe ){
+],function( Marionette,config, LytHome, LytDashboard, LytMission, LytMissionsAll, LytMissionsAllFilter, LytMissionsAroundMe, LytObservation ){
 	'use strict';
 	return Marionette.Object.extend({
 
@@ -146,5 +147,14 @@ define(['marionette',
 				}
 			});
 		},
+
+		observation: function(){
+			var self = this;
+
+			self.rgHeader.currentView.setState('observation');
+			self.rgMain.show(new LytObservation({
+				name: 'observation'
+			}), {preventDestroy:true});
+		}
 	});
 });

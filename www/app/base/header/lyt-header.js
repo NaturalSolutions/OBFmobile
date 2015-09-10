@@ -39,6 +39,10 @@ function(Marionette, config, _) {
 			{
 				name: 'option',
 				icon: 'option-vertical'
+			},
+			{
+				name: 'cancel',
+				icon: 'remove'
 			}
 		],
 		states: [
@@ -65,6 +69,12 @@ function(Marionette, config, _) {
 				titleKey: 'missions',
 				leftBtns: ['menu'],
 				rightBtns: ['plus'],
+			},
+			{
+				name: 'observation',
+				titleKey: 'observation',
+				leftBtns: ['back'],
+				rightBtns: ['cancel'],
 			}
 		],
 

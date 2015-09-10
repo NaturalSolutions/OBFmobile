@@ -2,7 +2,8 @@
 	"header": {
 		"titles": {
 			"dashboard": "Tableau de bord",
-			"missions": "Missions"
+			"missions": "Missions",
+			"observation": "Observation"
 		}
 	},
 	"pages": {
