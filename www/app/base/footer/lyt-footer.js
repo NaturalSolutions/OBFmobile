@@ -15,7 +15,6 @@ define(['marionette', 'config', 'underscore', '../../models/observation'],
 
             events: {
                 'click .capturePhoto-js': 'createObservation',
-                // 'change #input-picture': 'loadPhoto',
                 'submit form' : 'uploadPhoto'
 
             },
@@ -45,24 +44,7 @@ define(['marionette', 'config', 'underscore', '../../models/observation'],
                 }
             },
             uploadPhoto: function(e) {
-                // var input = document.querySelector('input[type=file]');
-                // var file = readfile(input.files[0]);
-                // var self = this;
-                // var $preview = self.$el.find('.img-preview');
-
-                // function readfile(f) {
-                //     var reader = new FileReader();
-                //     reader.readAsDataURL(f);
-                //     reader.onload = function() {
-                //         var data = reader.result;
-                //         $preview.addClass('complete');
-                //         $preview.find('img.editor-picture-img').attr('src', data);
-                //     };
-                //     reader.onerror = function(e) {
-                //         $preview.removeClass('complete');
-                //         console.log("Error", e);
-                //     };
-                // }
+                var self = this;
                 e.preventDefault();
 
                 var $form = $(e.currentTarget);
@@ -77,9 +59,9 @@ define(['marionette', 'config', 'underscore', '../../models/observation'],
                     dataType: 'json', // selon le retour attendu
                     data: data,
                     success: function(response) {
-                        // La réponse du serveur
                         console.log(response);
-                        this.createObservation('http://localhost/DRUPAL/OBF_BACK/www/sites/default/files/'+response.data[0].label);
+                        //TODO url into config
+                        self.createObservation('http://localhost/DRUPAL/OBF_BACK/www/sites/default/files/'+response.data[0].label,response.data[0].id);
                     }
                 });
             },
@@ -137,13 +119,13 @@ define(['marionette', 'config', 'underscore', '../../models/observation'],
                 alert(message);
             },
 
-            createObservation: function(fe) {
+            createObservation: function(fe,id) {
                 var self = this;
                 var observationModel = new ObsModel();
                 //set observation model
                 observationModel.set({
                     'date': this.moment().format("X"),
-                    //'photo': [fe]
+                    'photo': [{'url': fe ? fe : '', 'external_id':id ? id : ''}]
                 });
                 //Save observation in localstorage
                 this.app.observationCollection.add(observationModel)
