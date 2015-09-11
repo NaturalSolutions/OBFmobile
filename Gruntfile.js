@@ -9,6 +9,7 @@ module.exports = function(grunt) {
 			},
 			configFiles: {
 				files: [ 'Gruntfile.js'],
+				tasks: ['build'],
 				options: {
 					reload: true
 				}
@@ -31,6 +32,15 @@ module.exports = function(grunt) {
 				]
 			}
 		},
+		connect: {
+            server: {
+                options: {
+                    base: './',
+                    open: true,
+                    livereload: true
+                }
+            }
+        },
 		less: {
 			dist: {
 				files: {
@@ -181,6 +191,8 @@ module.exports = function(grunt) {
 
 	grunt.loadNpmTasks('grunt-contrib-rename');
 
+	grunt.loadNpmTasks('grunt-contrib-connect');
+
 
 	/*==========  Regitred Tasks  ==========*/
 
@@ -193,7 +205,8 @@ module.exports = function(grunt) {
 		//'jasmine'
 	]);
 
-	grunt.registerTask('dev', ['build', 'fileblocks:develop']);
+	grunt.registerTask('dev', ['build', 'fileblocks:develop', 'connect', 'watch']);
 
 	grunt.registerTask('release', ['build', 'copy','fileblocks:prod',/*,'rename'*/]);
 };
+//TODO : connect without errors (timeout modules) or 404 templates.js 
