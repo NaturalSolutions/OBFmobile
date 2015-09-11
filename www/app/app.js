@@ -146,7 +146,23 @@ function(
                 return deferred;
             };
 
-            $.when(getMissions(), getDepartements(), getUser())
+            var getObservations = function() {
+                app.observationCollection = new ObservationCollection();
+
+                var deferred = $.Deferred();
+                app.observationCollection.fetch({
+                    success : function(data){
+                        deferred.resolve();
+                    },
+                    error : function(error){
+                        console.log(error);
+                    }
+                });
+
+                return deferred;
+            };
+
+            $.when(getMissions(), getDepartements(), getUser(), getObservations())
                 .done(function() {
                     console.log(app.user);
                     Backbone.history.start();

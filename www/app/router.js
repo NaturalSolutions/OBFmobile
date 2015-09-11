@@ -13,7 +13,6 @@ define(['jquery', 'marionette'],
 			'missions/aroundme': 'missionsAroundMe',
 			'missions/aroundme/manually': 'missionsAroundMeManually',
 			'missions/aroundme/tab-:tab': 'missionsAroundMeTab',
-			'observation': 'observation',
 			'observation/:id' : 'observationId'
 		},
 

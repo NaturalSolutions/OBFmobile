@@ -13,7 +13,7 @@
     <form>
         <div class="form-group">
             <label for="missions">Mission</label>
-            <select id="missions" name="missions" class="form-control updateMission-js">
+            <select id="missions" name="mission" class="form-control updateMission-js">
                 <% mission.forEach(function(m, key){ %>
                     <option value='<%= m.get('num') %>'><%= m.get('title')%></option>
                 <% }); %>

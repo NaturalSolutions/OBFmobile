@@ -151,30 +151,17 @@ define(['marionette',
 			});
 		},
 
-		observation: function(){
-			var self = this;
-
-			self.rgHeader.currentView.setState('observation');
-			self.rgMain.show(new LytObservation({
-				name: 'observation'
-			}), {preventDestroy:true});
-		},
-
 		observationId: function(id){
 			var self = this;
-			this.observationCollection.fetch({
-                    success : function(data){
-						var observation = self.observationCollection.findWhere({id: id});
-						self.rgHeader.currentView.setState('observation');
-						self.rgMain.show(new LytObservation({
-							name: 'observation',
-							model: observation
-						}), {preventDestroy:true});
-                    },
-                    error : function(error){
-                        console.log(error);
-                    }
-            });
+
+			var observation = this.app.observationCollection.get(id);
+			console.log(observation);
+			self.rgHeader.currentView.setState('observation');
+			self.rgMain.show(new LytObservation({
+				name: 'observation',
+				model: observation
+			}), {preventDestroy:true});
+
 		}
 	});
 });
