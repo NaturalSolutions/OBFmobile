@@ -6,9 +6,10 @@ define(['marionette',
 	'./base/missions-all/lyt-missions-all',
 	'./base/missions-all/lyt-missions-all-filter',
 	'./base/missions-aroundme/lyt-missions-aroundme',
-	'./base/observation/lyt-observation'
+	'./base/observation/lyt-observation',
+	'./collections/observation_coll'
 
-],function( Marionette,config, LytHome, LytDashboard, LytMission, LytMissionsAll, LytMissionsAllFilter, LytMissionsAroundMe, LytObservation ){
+],function( Marionette,config, LytHome, LytDashboard, LytMission, LytMissionsAll, LytMissionsAllFilter, LytMissionsAroundMe, LytObservation, ObsColl ){
 	'use strict';
 	return Marionette.Object.extend({
 
@@ -19,6 +20,8 @@ define(['marionette',
 			self.rgMain = self.app.rootView.rgMain;
 			self.rgHeader = self.app.rootView.rgHeader;
 			self.rgFooter = self.app.rootView.rgFooter;
+
+			this.observationCollection = new ObsColl();
 		},
 
 		home: function() {
@@ -155,6 +158,23 @@ define(['marionette',
 			self.rgMain.show(new LytObservation({
 				name: 'observation'
 			}), {preventDestroy:true});
+		},
+
+		observationId: function(id){
+			var self = this;
+			this.observationCollection.fetch({
+                    success : function(data){
+						var observation = self.observationCollection.findWhere({id: id});
+						self.rgHeader.currentView.setState('observation');
+						self.rgMain.show(new LytObservation({
+							name: 'observation',
+							model: observation
+						}), {preventDestroy:true});
+                    },
+                    error : function(error){
+                        console.log(error);
+                    }
+            });
 		}
 	});
 });

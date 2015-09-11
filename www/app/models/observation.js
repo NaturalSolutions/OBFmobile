@@ -9,7 +9,7 @@ define(['jquery', 'underscore', 'backbone', 'localstorage', 'config'],
 	'use strict';
 
     return Backbone.Model.extend({
-        // defaults: {
+        // Expected attributes : {
         //     date: '',
         //     mission_id: '',
         //     taxon_id: '',

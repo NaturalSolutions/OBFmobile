@@ -6,16 +6,19 @@ function(Marionette, i18n, ObsModel, ObsColl) {
 		template: 'www/app/base/observation/tpl-observation.html',
 		className: 'page page-observation page-scrollable',
 		events: {
-			'click .submit': 'onSubmit'
+			'click .submit': 'sendObs',
+			'focusout .updateDept-js' : 'updateDept',
+			'focusout .updateMission-js' : 'updateMission'
 		},
 
 		initialize: function() {
 			var self = this;
 
-			this.observationModel = new ObsModel();
+			this.observationModel = this.model ? this.model : new ObsModel();
 			this.observationColl = new ObsColl();
 			this.app = require('app');
 			this.moment = require('moment');
+			this.date = this.model.get('date') ? this.model.get('date') : this.moment().format("X");
 		},
 
 		serializeData: function() {
@@ -25,50 +28,49 @@ function(Marionette, i18n, ObsModel, ObsColl) {
 				observation: this.observationModel.toJSON(),
 				departement:this.app.departementCollection.models,
 				mission: this.app.missionCollection.models,
-				date: this.moment()
+				date: this.date
 			};
 		},
 
-		onSubmit: function(e){
-			var self = this;
-			//TODO add User in label if exist
-			e.preventDefault();
-			// mission ID
-			var missionSelected = $('#missions option:selected').val();
-			// departement code
-			var departementSelected = $("#departement option:selected").val();
+		updateDept: function(e){
+			var $currentTarget = e.target;
+			var newValue = $('#'+$currentTarget.id+' option:selected').val().trim();
 			this.observationModel.set({
-				'title': 'mission' + missionSelected + '_' + this.moment().format("X") ,
-				'date': this.moment().format("X"),
-				'departement':departementSelected,
-				'mission_id':missionSelected
-			});
+				departement: newValue
+			}).save();
+		},
 
-			//Save in localstorage
-			this.observationColl.add(self.observationModel)
-				.save()
-					.done(function(data){
-						//Save in server
-						var virginModel = new ObsModel();
-						delete data.shared;
-						delete data.taxon_id;
-						delete data.photos;
-						delete data.external_id;
-						delete data.id;
+		updateMission: function(e){
+			var $currentTarget = e.target;
+			var newValue = $('#'+$currentTarget.id+' option:selected').val().trim();
+			this.observationModel.set({
+				mission: newValue
+			}).save();
+		},
 
-						virginModel.save(data,{ajaxSync: true})
-							.done(function(response){
-								self.observationModel.set({
-									'external_id':response.data[0].id,
-									'shared': 1
-								}).save();
-							})
-							.fail(function(error){
-								console.log(error);
-							})
-							;
-					});
-
+		sendObs: function(e){
+			var self = this;
+			//TODO add User in title if exist
+			e.preventDefault();
+			//data expected by the server
+			var data = {
+						'title': this.observationModel.get('mission') + '_' + this.date,
+						'date': this.date,
+						'departement': this.observationModel.get('departement'),
+						'mission_id' : this.observationModel.get('mission')
+						};
+			var virginModel = new ObsModel();
+			virginModel.save(data,{ajaxSync: true})
+				.done(function(response){
+					self.observationModel.set({
+						'external_id':response.data[0].id,
+						'shared': 1
+					}).save();
+				})
+				.fail(function(error){
+					console.log(error);
+				})
+				;
 		},
 
 		onShow: function() {
