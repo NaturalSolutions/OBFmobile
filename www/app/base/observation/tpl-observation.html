@@ -1,8 +1,15 @@
 <div class="header img-preview hidden-by-keyboard">
     <div class="inner">
         <span class="icon-camera material-icons">camera_alt</span>
-        <img class="editor-picture-img " src="" />
-        <input type="file" accept="image/*" capture="" id="input-picture" />
+        <% observation.photo.forEach(function(p){ %>
+            <img class="editor-picture-img " src=" <%= p.url %>" style="width:200px;"/>
+        <% }); %>
+            <% console.log(observation.photo); %>
+        <form id="form-picture" method="post" action="http://localhost/DRUPAL/OBF_BACK/www/api/file-upload" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" />
+            <input type="submit" value="upload file"></input>
+        </form>
+
         <button id="take-picture" type="button" class="btn btn-link">
             <span>Prendre une photo</span>
             <span>Modifier la photo</span>
@@ -37,7 +44,7 @@
             <button type="button" class="btn btn-lg cancel-js">Annuler</button>
         </div>
         <div class="btn-group form-actions" role="group">
-            <input type="submit" class="btn btn-lg submit" name="Ajouter" value="Valider">
+            <input type="submit" class="btn btn-lg submit" name="Ajouter" value="Transmettre">
         </div>
     </div>
 </div>
