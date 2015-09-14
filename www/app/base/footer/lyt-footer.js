@@ -35,14 +35,7 @@ define(['marionette', 'config', 'underscore', '../../models/observation'],
 
                 self.$el.i18n();
             },
-            getValue: function() {
-                if (this.$el) {
-                    var val = this.$el.find('img').attr('src');
-                    if (val === this.nullValue || val === null || val === "") return undefined;
-                    if (!this.multiple) return [val];
-                    return val;
-                }
-            },
+
             uploadPhoto: function(e) {
                 var self = this;
                 e.preventDefault();
