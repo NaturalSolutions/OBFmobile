@@ -11,6 +11,10 @@ var Layout = Marionette.LayoutView.extend({
 	events: {
 	},
 
+	serializeData : function(){
+		return {tata : 'lorem'};
+	}, 
+
 	onRender : function(options) {
 		//this.$el.i18n();
 	}

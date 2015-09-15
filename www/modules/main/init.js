@@ -58,7 +58,7 @@ function init() {
 
 
     Backbone.Marionette.Renderer.render = function(template, data) {
-        return _.template(template(), data);
+        return template(data);
     };
 
     var app = new Marionette.Application();
