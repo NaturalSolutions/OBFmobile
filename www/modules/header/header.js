@@ -9,9 +9,10 @@ var View = Marionette.LayoutView.extend({
 	template: require('./header.html'),
 	className: 'inner clearfix',
 	events: {
-		'click .btn_menu': 'onBtnMenuClick'
+		//'click .btn_menu': 'onBtnMenuClick'
 	},
 	triggers: {
+		'click .btn_menu': 'btn:menu:click',
 		'click .btn_plus': 'btn:plus:click',
 		'click .btn_option': 'btn:option:click'
 	},
@@ -43,7 +44,7 @@ var View = Marionette.LayoutView.extend({
 		data = _.defaultsDeep(data, {
 			titleKey: '',
 			buttons: {
-				left: [],
+				left: ['menu'],
 				right: [],
 			}
 		});
@@ -80,10 +81,10 @@ var View = Marionette.LayoutView.extend({
 		//self.$el.parent('header').attr('class', _.get(self.data, 'classNames', ''));
 	},
 
-	onBtnMenuClick: function(e) {
-		/*var app = require('app');
-		app.rootView.rgSidenav.currentView.toggleShow();*/
-	}
+	/*onBtnMenuClick: function(e) {
+		var app = require('app');
+		app.rootView.rgSidenav.currentView.toggleShow();
+	}*/
 });
 
 var instance = null;
