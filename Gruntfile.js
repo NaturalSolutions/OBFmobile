@@ -1,212 +1,136 @@
 module.exports = function(grunt) {
-	grunt.initConfig({
-
-		/*==========  Watch Tasks  ==========*/
-		watch: {
-			options: {
-				nospawn: true,
-				livereload: true
-			},
-			configFiles: {
-				files: [ 'Gruntfile.js'],
-				tasks: ['build'],
-				options: {
-					reload: true
-				}
-			},
-			jst: {
-				files: [
-					'www/app/**/*.html'
-				],
-				tasks: ['jst']
-			},
-			css: {
-				files: 'www/app/styles/**/*.less',
-				tasks: ['less']
-			},
-			livereload: {
-				files: [
-					'www/*.html',
-					'www/app/styles/**/*.css',
-					'www/app/**/*.js',
-				]
-			}
-		},
-		connect: {
+    grunt.initConfig({
+        jshint: {
+            options: {
+                browserify: true,
+                browser: true,
+                devel: true
+            },
+            all: [
+                'Gruntfile.js',
+                'www/js/**/*.js',
+            ]
+        },
+        watch: {
+            options: {
+                livereload: true,
+                spawn: false
+            },
+            configFiles: {
+                files: ['Gruntfile.js'],
+                tasks: ['build'],
+                options: {
+                    reload: true
+                }
+            },
+            js: {
+                files: [
+                    'www/js/**/*.js',
+                    'www/vendor/**/*'
+                ],
+                tasks: ['build']
+            },
+            tpl: {
+                files: [
+                    'www/js/**/*.html'
+                ],
+                tasks: ['browserify:dev']
+            },
+            css: {
+                // files: [
+                //     'www/css/page-container.css',
+                //     'www/vendor/bootstrap-dialog/css/bootstrap-dialog.css',
+                    //'www/js/**/*.css',
+                //     'www/css/general.css',
+                // ],
+                // tasks: ['cssmin']
+                files: ['www/js/**/*.less', 'www/less/*'],
+                tasks: ['less']
+            },
+        },
+        // cssmin: {
+        //     options: {
+        //         sourceMap: true,
+        //         roundingPrecision: -1
+        //     },
+        //     target: {
+        //         files: {
+        //             'www/css/index.css': [
+        //                 './node_modules/bootstrap-slider/css/bootstrap-slider.css',
+        //                 './node_modules/bootstrap/dist/css/bootstrap.min.css',
+        //                 './node_modules/planet-maps/dist/ol.css',
+        //                 './node_modules/swiper/dist/css/swiper.min.css',
+        //                 './www/vendor/bootstrap-dialog/css/bootstrap-dialog.css',
+        //                 './www/css/general.css',
+        //                 './www/css/page-container.css',
+        //                 './www/js/**/*.css'
+        //             ]
+        //         }
+        //     }
+        // },
+        less: {
+            dist: {
+                files: {
+                    'www/style.css': 'www/less/main.less'
+                },
+                options: {
+                    compress: false,
+                    sourceMap: true,
+                    sourceMapFilename: 'www/style.css.map',
+                    sourceMapURL: 'style.css.map'
+                }
+            }
+        },
+        connect: {
             server: {
                 options: {
-                    base: './',
+                    base: 'www',
                     open: true,
                     livereload: true
                 }
             }
         },
-		less: {
-			dist: {
-				files: {
-					'www/app/styles/main.css': 'www/app/styles/main.less'
-				},
-				options: {
-					compress: false,
-					sourceMap: true,
-					sourceMapFilename: 'www/app/styles/main.css.map',
-					sourceMapURL: 'main.css.map'
-				}
-			}
-		},
-		autoprefixer: {
-			dist: {
-				files: {
-					'www/app/styles/main.css': 'app/styles/main.css'
-				}
-			}
-		},
-		jst: {
-			compile: {
-				files: {
-					'build/templates.js': ['www/app/**/*.html']
-				}
-			}
-		},
-		requirejs: {
-			compile: {
-				options: {
-					findNestedDependencies: false,
-					baseUrl: 'www/app',
-					mainConfigFile: 'www/app/main.js',
-					include: 'main',
-					//name: '../bower_components/almond/almond',
-					name: '../bower_components/requirejs/require',
-					out: './build/prod.js',
-					//optimize : 'none',
+        browserify: {
+            dev: {
+                src: ['www/js/**/*.js'],
+                dest: 'www/index.js',
+                options: {
+                    browserifyOptions: {
+                        debug: true // Enable (inline) source map
+                    }
+                }
+            },
+            options: {
+                transform: [
+                    ['node-underscorify', {templateSettings: {variable: 'data'}}]
+                ]
+            }
+        },
+        copy: {
+            fonts: {
+                expand: true,
+                src: ['./node_modules/bootstrap/fonts/*'],
+                dest: 'www/fonts/',
+                filter: 'isFile',
+                flatten: true
+            },
+        }
+    });
 
-					done: function(done, output) {
-					var duplicates = require('rjs-build-analysis').duplicates(output);
-					
-					if (duplicates.length > 0) {
-						grunt.log.subhead('Duplicates found in requirejs build:');
-						grunt.log.warn(duplicates);
-						done(new Error('r.js built duplicate modules, please check the excludes option.'));
-					}
-					
-					done();
-					}
-				}
-			}
-		},
-		// jasmine: {
-		// 	all:{
-		// 		src : 'www/app/modules/{,*/}*.js',
-		// 		options: {
-		// 			keepRunner: true,
-		// 			specs : 'www/test/**/*.js',
-		// 			vendor : [
-		// 				'www/bower_components/jquery/dist/jquery.js',
-		// 				'www/bower_components/underscore/underscore.js',
-		// 				'www/bower_components/backbone/backbone.js',
-		// 				'www/bower_components/marionette/lib/core/backbone.marionette.js',
-		// 				'www/bower_components/backbone.babysitter/lib/backbone.babysitter.js',
-		// 				'www/bower_components/backbone.wreqr/lib/backbone.wreqr.js',
-		// 				'www/bower_components/bootstrap/dist/js/bootstrap.js',      
-		// 			]
-		// 		}
-		// 	}
-		// }, 
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
-		/*==========  Build Tasks  ==========*/
-		clean: {
-			dist: ['build'],
-		},
-		jshint: {
-			all: [
-				'Gruntfile.js',
-				'www/app/**/*.js',
-			]
-		},
-		fileblocks: {
-			options: {
-				templates: {
-					'js': '<script data-main="app/main" src="${file}"></script>',
-				},
-				removeFiles : true
-			},
-			prod: {
-				src: 'build/index.html',
-				blocks: {
-					'app': { src: 'prod.js', cwd: 'build' }
-				}
-			},
-			develop: {
-				src: 'www/index.html',
-				blocks: {
-					'app': { src: 'bower_components/requirejs/require.js',cwd: 'www' }
-				}
-			},
-		},
-
-		copy:{
-			main:{
-				files: [
-					{expand: true, flatten: true, src: ['www/index.html'], dest: 'build/', filter: 'isFile'},
-					{expand: true, flatten: true, src: ['www/app/styles/main.css'], dest: 'build/app/styles', filter: 'isFile'},
-					{expand: true, flatten: true, src: ['www/bower_components/bootstrap/fonts/*'], dest: 'build/bower_components/bootstrap/fonts/',filter: 'isFile'},
-					{expand: true, flatten: true, src: ['www/app/locales/dev/*'], dest: 'build/app/locales/dev/',filter: 'isFile'},
-					{expand: true, flatten: true, src: ['www/app/locales/en/*'], dest: 'build/app/locales/en/',filter: 'isFile'},
-					{expand: true, flatten: true, src: ['www/app/locales/fr/*'], dest: 'build/app/locales/fr/',filter: 'isFile'},
-					{expand: true, flatten: true, src: ['www/app/styles/img/*'], dest: 'build/app/styles/img/',filter: 'isFile'},
-				],
-			},
-		},
-		rename:{
-			main: {
-				files: [
-					{src: ['www'], dest: ['www-dev']},
-					{src: ['build'], dest: ['www']},
-				]
-			}
-		},
-
-	});
-
-
-	/*==========  Loaded Tasks  ==========*/
-
-	grunt.loadNpmTasks('grunt-requirejs');
-
-	grunt.loadNpmTasks('grunt-contrib-watch');
-
-	grunt.loadNpmTasks('grunt-contrib-jasmine');
-
-	grunt.loadNpmTasks('grunt-contrib-jst');
-
-	grunt.loadNpmTasks('grunt-contrib-clean');
-
-	grunt.loadNpmTasks('grunt-contrib-less');
-
-	grunt.loadNpmTasks('grunt-contrib-jshint');
-
-	grunt.loadNpmTasks('grunt-file-blocks');
-
-	grunt.loadNpmTasks('grunt-contrib-copy');
-
-	grunt.loadNpmTasks('grunt-contrib-rename');
-
-	grunt.loadNpmTasks('grunt-contrib-connect');
-
-
-	/*==========  Regitred Tasks  ==========*/
-
-	grunt.registerTask('build', [
-		//'jshint',
-		'clean:dist',
-		'jst',
-		'less',
-		'requirejs',
-		//'jasmine'
-	]);
-
-	grunt.registerTask('dev', ['build', 'fileblocks:develop', 'connect', 'watch']);
-
-	grunt.registerTask('release', ['build', 'copy','fileblocks:prod',/*,'rename'*/]);
+    grunt.registerTask('build', ['jshint', 'less', 'browserify:dev','copy']);
+    grunt.registerTask('dev', ['build', 'connect', 'watch']);
+    grunt.registerTask('default', ['build']);
 };
-//TODO : connect without errors (timeout modules) or 404 templates.js 
+
+/* TODO:
+ * - uglify (prod uniquement)
+ * - remplacer connect par ripple et enlever le test "if (window.cordova)" dans init.js
+ */

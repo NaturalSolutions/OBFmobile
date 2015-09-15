@@ -1,6 +1,6 @@
 # OBFmobile
 
-DEPENDANCES npm, bower grunt, cordova
+DEPENDANCES npm, grunt, cordova
 
 GITHUB
 
