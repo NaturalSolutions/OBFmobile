@@ -8,7 +8,7 @@ module.exports = function(grunt) {
             },
             all: [
                 'Gruntfile.js',
-                'www/js/**/*.js',
+                'www/modules/**/*.js',
             ]
         },
         watch: {
@@ -25,14 +25,14 @@ module.exports = function(grunt) {
             },
             js: {
                 files: [
-                    'www/js/**/*.js',
+                    'www/modules/**/*.js',
                     'www/vendor/**/*'
                 ],
                 tasks: ['build']
             },
             tpl: {
                 files: [
-                    'www/js/**/*.html'
+                    'www/modules/**/*.html'
                 ],
                 tasks: ['browserify:dev']
             },
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
                 //     'www/css/general.css',
                 // ],
                 // tasks: ['cssmin']
-                files: ['www/js/**/*.less', 'www/less/*'],
+                files: ['www/modules/**/*.less', 'www/less/*'],
                 tasks: ['less']
             },
         },
@@ -71,7 +71,7 @@ module.exports = function(grunt) {
         less: {
             dist: {
                 files: {
-                    'www/style.css': 'www/less/main.less'
+                    'www/style.css': 'www/modules/main/_style.less'
                 },
                 options: {
                     compress: false,
@@ -92,7 +92,7 @@ module.exports = function(grunt) {
         },
         browserify: {
             dev: {
-                src: ['www/js/**/*.js'],
+                src: ['www/modules/**/*.js'],
                 dest: 'www/index.js',
                 options: {
                     browserifyOptions: {

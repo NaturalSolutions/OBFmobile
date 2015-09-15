@@ -2,8 +2,8 @@
 
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
-    main = require('./main/main'),
-    Home = require('./home/home');
+    main = require('./main'),
+    Home = require('../home/home');
 
 /*
  * Controller class

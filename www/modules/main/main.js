@@ -2,7 +2,7 @@
 
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
-    controller = require('../controller'),
+    controller = require('./controller'),
     MainRegion = require('./main_region');
 
 var Layout = Marionette.LayoutView.extend({
