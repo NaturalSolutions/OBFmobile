@@ -2,7 +2,8 @@
 
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    header = require('../header/header');
 
 var Region = Marionette.Region.extend({
 	attachHtml: function(view) {
@@ -20,8 +21,10 @@ var Region = Marionette.Region.extend({
             $last.addClass('animate animate-close');
 		}
 
+		header.getInstance().set(view.header);
 		/*self.app = require('app');
 		self.app.rootView.rgHeader.currentView.set(view.header);*/
+
 
 		this.$el.prepend(view.el);
 	}
