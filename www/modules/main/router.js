@@ -7,7 +7,8 @@ var Backbone = require('backbone'),
 var Router = Marionette.AppRouter.extend({
     appRoutes: {
         '': 'home',
-    	'observation/:id' : 'observationId'
+    	'observation/:id' : 'observationId',
+        'dashboard': 'dashboard'
     },
 });
 

@@ -4,8 +4,8 @@ var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     main = require('./main.view'),
     Home = require('../home/home.view'),
-    ObservationView = require('../observation/observation.view')
-    ;
+    ObservationView = require('../observation/observation.view'),
+    Dashboard = require('../dashboard/dashboard');
 
 /*
  * Controller class
@@ -15,13 +15,11 @@ var Backbone = require('backbone'),
 var Controller = Marionette.Object.extend({
     initialize: function(options) {
         var self = this;
-        console.log('Controller initialize');
     },
 
     home: function() {
         var self = this;
 
-        console.log('Controller HOME_');
         main.getInstance().rgMain.show(new Home(), {
             preventDestroy: true
         });
@@ -40,7 +38,12 @@ var Controller = Marionette.Object.extend({
         }), {
             preventDestroy: true
         });
+    },
 
+    dashboard: function() {
+        var self = this;
+
+        main.getInstance().rgMain.show(new Dashboard(), {preventDestroy:true});
     }
 
 });
