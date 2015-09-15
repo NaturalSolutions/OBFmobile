@@ -102,7 +102,10 @@ module.exports = function(grunt) {
             },
             options: {
                 transform: [
-                    ['node-underscorify', {templateSettings: {variable: 'data'}}]
+                    ['node-underscorify', {
+                        templateSettings: {variable: 'data'},
+                        requires: [{variable: '_', module: 'lodash'}]
+                    }]
                 ]
             }
         },
