@@ -11,7 +11,8 @@ var Backbone = require('backbone'),
     Observation = require('../models/observation'),
     i18n = require('i18next-client'),
     User = require('../models/user'),
-    Departement = require('../models/departement');
+    Departement = require('../models/departement'),
+    Mission = require('../models/mission');
 
 var bootstrap = require('bootstrap');
 var jqueryNs = require('jquery-ns');
@@ -52,6 +53,50 @@ function init() {
             lng : 'fr'
         }, function(t) {
             deferred.resolve();
+        });
+
+        return deferred;
+    };
+
+    var getMissions = function() {
+        var missionCollection = Mission.collection.getInstance();
+
+        //TODO manage updates
+        var deferred = $.Deferred();
+        missionCollection.fetch({
+            success : function(data){
+                if ( data.length ) {
+                    deferred.resolve();
+                } else {
+                    $.get('./data/missions.json')
+                        .then(function(response) {
+                            var missionDatas = response;
+                            _.forEach(missionDatas, function(missionData) {
+                                var mission = new Mission.Model({
+                                    num: missionData.num,
+                                    title: missionData.title,
+                                    seasons: missionData.seasons,
+                                    departements: missionData.departements,
+                                    difficulty: missionData.difficulty,
+                                    taxon: {
+                                        title: missionData.taxon.title,
+                                        family: missionData.taxon.family,
+                                        description: missionData.taxon.description,
+                                        url: missionData.taxon.url,
+                                        characteristic: missionData.taxon.characteristic
+                                    }
+                                });
+                                missionCollection.add(mission).save();
+                            });
+                            deferred.resolve();
+                        }, function(error) {
+                            console.log(error);
+                        });
+                }
+            },
+            error : function(error){
+                console.log(error);
+            }
         });
 
         return deferred;
