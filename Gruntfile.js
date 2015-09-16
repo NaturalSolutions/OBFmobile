@@ -104,7 +104,10 @@ module.exports = function(grunt) {
                 transform: [
                     ['node-underscorify', {
                         templateSettings: {variable: 'data'},
-                        requires: [{variable: '_', module: 'lodash'}]
+                        requires: [
+                            {variable: '_', module: 'lodash'},
+                            {variable: 'i18n', module: 'i18next-client'}
+                        ]
                     }]
                 ]
             }

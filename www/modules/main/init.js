@@ -7,10 +7,8 @@ var Backbone = require('backbone'),
     moment = require('moment'),
     momentFr = require('moment/locale/fr'),
     _ = require('lodash'),
-    Observation = require('../models/observation')
-
-;
-
+    Observation = require('../models/observation'),
+    Translater = require('./translater');
 
 var bootstrap = require('bootstrap');
 var jqueryNs = require('jquery-ns');
@@ -53,7 +51,11 @@ function init() {
 
     });
 
-    app.start();
+    var translater = new Translater();
+    translater.on('ready', function() {
+        app.start();
+    });
+    translater.start();
 }
 
 if (window.cordova) {

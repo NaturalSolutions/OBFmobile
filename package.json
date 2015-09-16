@@ -51,6 +51,7 @@
     "bootstrap-slider": "^5.0.12",
     "browserify-shim": "^3.8.9",
     "geocomplete": "git://github.com/ubilabs/geocomplete.git#1.6.5",
+    "i18next-client": "^1.10.2",
     "jquery": "^2.1.4",
     "lodash": "^3.10.0",
     "moment": "^2.10.6",

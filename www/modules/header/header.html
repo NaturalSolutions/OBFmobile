@@ -5,7 +5,7 @@
 	</button>
 	<% }); %>
 </div>
-<div class="col-center title" data-i18n="header.titles.<%= data.titleKey %>"></div>
+<div class="col-center title"><%= i18n.t('header.titles.'+data.titleKey) %></div>
 <div class="col-side col-right pull-right">
 	<% _.each(data.buttons.right, function(btn){ %>
 	<button class="btn btn-lg btn-link btn_<%= btn.name %>" name="<%= btn.name %>">

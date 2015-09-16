@@ -2,7 +2,9 @@
 
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    $ = require('jQuery'),
+    i18n = require('i18next-client');
     //i18n = require('i18n');
 
 var View = Marionette.LayoutView.extend({
@@ -78,7 +80,7 @@ var View = Marionette.LayoutView.extend({
 		var self = this;
 
 		//self.$el.i18n();
-		//self.$el.parent('header').attr('class', _.get(self.data, 'classNames', ''));
+		self.$el.parent('header').attr('class', _.get(self.data, 'classNames', ''));
 	},
 
 	/*onBtnMenuClick: function(e) {
