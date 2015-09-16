@@ -4,6 +4,11 @@ var Marionette = require('backbone.marionette'),
     Router = require('../main/router');
 
 module.exports = Marionette.LayoutView.extend({
+	header: {
+		buttons: {
+			right: ['option']
+		}
+	},
     template: require('./missions_all.tpl.html'),
     className: 'page page-missions page-missions-all page-scrollable',
     events: {},

@@ -35,7 +35,7 @@ var View = Marionette.LayoutView.extend({
             self.$el.find('input.js-autocomplete').val(self.filters.departement.get('title'));
 
         self.$el.find('.js-datetimepicker').datetimepicker({
-            locale: 'fr',
+            //locale: 'fr',
             format: 'DD/MM/YYYY'
         });
         var $dpStart = self.$el.find('.js-datetimepicker.date-start');
@@ -60,7 +60,7 @@ var View = Marionette.LayoutView.extend({
         var self = this;
 
         filters = self.filters;
-        Router.getInstance.navigate('missions/all', {
+        Router.getInstance().navigate('missions/all', {
             trigger: true
         });
     },

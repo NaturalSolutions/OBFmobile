@@ -56,6 +56,7 @@
     "bootstrap": "^3.3.5",
     "bootstrap-slider": "^5.0.12",
     "browserify-shim": "^3.8.9",
+    "eonasdan-bootstrap-datetimepicker": "^4.15.35",
     "geocomplete": "git://github.com/ubilabs/geocomplete.git#1.6.5",
     "i18next-client": "^1.10.2",
     "jquery": "^2.1.4",

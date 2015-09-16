@@ -3,11 +3,13 @@
 var Backbone = require('backbone'),
     LocalStorage = require("backbone.localstorage"),
     Marionette = require('backbone.marionette'),
-    $ = require('jQuery'),
+    $ = require('jquery'),
+    bootstrap = require('bootstrap'),
     main = require('./main.view'),
     //currentPos = require('./current-position'),
     moment = require('moment'),
     momentFr = require('moment/locale/fr'),
+    datetimepicker = require('eonasdan-bootstrap-datetimepicker'),
     _ = require('lodash'),
     _ns = require('lodash-ns'),
     Observation = require('../models/observation'),
@@ -17,8 +19,6 @@ var Backbone = require('backbone'),
     Mission = require('../models/mission'),
     Router = require('./router');
 
-var bootstrap = require('bootstrap');
-var jqueryNs = require('jquery-ns');
 /*var badgesInstanceColl = require('./models/badge').instanceColl;
 var badgesColl = require('./models/badge').BadgeCollection;*/
 

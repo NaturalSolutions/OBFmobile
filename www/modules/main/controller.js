@@ -42,13 +42,14 @@ module.exports = Marionette.Object.extend({
         var rgMain = main.getInstance().rgMain;
         var currentIsDashboard = (rgMain.currentView && rgMain.currentView.getOption('name') == 'dashboard');
 
-        if ( !currentIsDashboard ) {
+        if (!currentIsDashboard) {
             rgMain.show(new Dashboard({
                 name: 'dashboard',
                 tab: tab,
-            }), {preventDestroy:true});
-        }
-        else
+            }), {
+                preventDestroy: true
+            });
+        } else
             rgMain.currentView.setTab(tab);
     },
 
@@ -66,30 +67,34 @@ module.exports = Marionette.Object.extend({
         var removables = [];
         missions.forEach(function(mission) {
             var isMatch = true;
-            if ( isMatch && departement && !mission.isInDepartement(departement.get('code')) ) {
+            if (isMatch && departement && !mission.isInDepartement(departement.get('code'))) {
                 isMatch = false;
             }
-            if ( isMatch && (startAt || endAt ) && !mission.isInSeason(startAt, endAt) ) {
+            if (isMatch && (startAt || endAt) && !mission.isInSeason(startAt, endAt)) {
                 isMatch = false;
             }
             if (!isMatch)
                 removables.push(mission);
         });
 
-        if ( removables.length )
+        if (removables.length)
             missions.remove(removables);
 
         var View = require('../missions_all/missions_all.view');
         main.getInstance().rgMain.show(new View({
             collection: missions
-        }), {preventDestroy:true});
+        }), {
+            preventDestroy: true
+        });
     },
 
     missionsAllFilter: function() {
         var self = this;
 
-        var View = require('../missions_all/missions_all.view').getClass();
-        main.getInstance().rgMain.show(new View(), {preventDestroy:true});
+        var View = (require('../missions_all/missions_all_filter.view')).getClass();
+        main.getInstance().rgMain.show(new View(), {
+            preventDestroy: true
+        });
     },
 
     _missionsAroundMe: function(options) {
@@ -97,15 +102,15 @@ module.exports = Marionette.Object.extend({
         var rgMain = main.getInstance().rgMain;
         var state = options.state || {};
 
-        if ( rgMain.currentView && rgMain.currentView.getOption('name') == 'missionsAroundMe' ) {
+        if (rgMain.currentView && rgMain.currentView.getOption('name') == 'missionsAroundMe') {
             rgMain.currentView.setState(state.name, state.args);
             return false;
         }
 
         var user = User.model.getInstance();
 
-        if ( state.name != 'manually' ) {
-            if ( !user.get('departements').length || user.get('positionEnabled') )
+        if (state.name != 'manually') {
+            if (!user.get('departements').length || user.get('positionEnabled'))
                 state.name = 'localize';
             else
                 state.name = 'list';
@@ -115,7 +120,9 @@ module.exports = Marionette.Object.extend({
             name: 'missionsAroundMe',
             state: state
 
-        }), {preventDestroy:true});
+        }), {
+            preventDestroy: true
+        });
     },
 
     missionsAroundMe: function() {
@@ -145,7 +152,7 @@ module.exports = Marionette.Object.extend({
             state: {
                 name: 'list',
                 args: {
-                    tab: 'tab-'+tabSlug
+                    tab: 'tab-' + tabSlug
                 }
             }
         });
