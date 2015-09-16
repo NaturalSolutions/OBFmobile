@@ -4,7 +4,7 @@ var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     controller = require('./controller'),
     MainRegion = require('./main.region'),
-    Footer = require('../footer/footer.view'),
+    footer = require('../footer/footer.view'),
     header = require('../header/header'),
     sidenav = require('../sidenav/sidenav');
 
@@ -31,7 +31,7 @@ var Layout = Marionette.LayoutView.extend({
         
         this.rgHeader.show(header.getInstance());
         this.rgSidenav.show(sidenav.getInstance());
-        this.rgFooter.show(new Footer());
+        this.rgFooter.show(footer.getInstance());
     }
 
    
