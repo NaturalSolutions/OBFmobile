@@ -28,7 +28,7 @@ module.exports = Marionette.LayoutView.extend({
 	initialize: function(options) {
 		var self = this;
 
-		self.listenTo(header, 'btn:plus:click', function(e) {
+		self.listenTo(header.getInstance(), 'btn:plus:click', function(e) {
 			console.log('onBtnPlusClick');
 		});
 
@@ -44,6 +44,9 @@ module.exports = Marionette.LayoutView.extend({
 
 	setState: function(name, args) {
 		var self = this;
+
+		name = name || 'list';
+		args = args || {tab:1};
 
 		if ( self.state && name == self.state.name ) {
 			if ( name == 'list' && args.tab )

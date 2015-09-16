@@ -9,7 +9,7 @@ var Backbone = require('backbone'),
     Dashboard = require('../dashboard/dashboard'),
     MissionsAroundMe = require('../missions_aroundme/missions_aroundme.view');
 
-var Controller = Marionette.Object.extend({
+module.exports = Marionette.Object.extend({
     initialize: function(options) {
         var self = this;
     },
@@ -55,13 +55,13 @@ var Controller = Marionette.Object.extend({
     _missionsAroundMe: function(options) {
         var self = this;
         var rgMain = main.getInstance().rgMain;
+        var state = options.state || {};
 
         if ( rgMain.currentView && rgMain.currentView.getOption('name') == 'missionsAroundMe' ) {
-            rgMain.currentView.setState(options.state.name, options.state.args);
+            rgMain.currentView.setState(state.name, state.args);
             return false;
         }
 
-        var state = options.state || {};
         var user = User.model.getInstance();
 
         if ( state.name != 'manually' ) {
@@ -105,8 +105,5 @@ var Controller = Marionette.Object.extend({
                 }
             }
         });
-    },
-
+    }
 });
-
-module.exports = Controller;

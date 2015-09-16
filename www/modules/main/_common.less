@@ -1,0 +1,24 @@
+.page {
+	opacity: 1;
+	transition: opacity .3s linear;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	padding-top: 54px;
+	background: #FFF;
+	&.animate-close {
+		opacity: 0;
+	}
+	&.page-scrollable {
+		overflow: auto;
+	}
+	.page-states {
+		> .state {
+			transition: opacity .3s linear;
+			&.animate-close {
+				opacity: 0;
+			}
+		}
+	}
+}

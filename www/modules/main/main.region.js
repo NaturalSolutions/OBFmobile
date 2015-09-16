@@ -3,14 +3,15 @@
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     _ = require('lodash'),
+    $ = require('jQuery'),
     header = require('../header/header');
 
 var Region = Marionette.Region.extend({
 	attachHtml: function(view) {
 		var self = this;
 
-		if ( this.$el.children('div').length && this.currentView ) {
-			var last = this.currentView;
+		if ( self.$el.children('div').length && self.currentView ) {
+			var last = self.currentView;
 			var $last = last.$el;
 			$last.on('transitionend, webkitTransitionEnd', function(e) {
 				if ( $last.hasClass('animate-close') ) {
@@ -26,7 +27,7 @@ var Region = Marionette.Region.extend({
 		self.app.rootView.rgHeader.currentView.set(view.header);*/
 
 
-		this.$el.prepend(view.el);
+		self.$el.prepend(view.el);
 	}
 });
 

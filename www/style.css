@@ -6797,6 +6797,28 @@ button.close {
   /* Support for IE. */
   font-feature-settings: 'liga';
 }
+.page {
+  opacity: 1;
+  transition: opacity .3s linear;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  padding-top: 54px;
+  background: #FFF;
+}
+.page.animate-close {
+  opacity: 0;
+}
+.page.page-scrollable {
+  overflow: auto;
+}
+.page .page-states > .state {
+  transition: opacity .3s linear;
+}
+.page .page-states > .state.animate-close {
+  opacity: 0;
+}
 .sidenav {
   position: absolute;
   width: 100%;
