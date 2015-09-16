@@ -3,7 +3,7 @@
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     _ = require('lodash'),
-    Missions = require('./missions');
+    Missions = require('./missions.view');
 
 var ClassDef = Marionette.LayoutView.extend({
 	header: {
@@ -12,7 +12,7 @@ var ClassDef = Marionette.LayoutView.extend({
 			left: ['menu']
 		}
 	},
-	template: require('./dashboard.html'),
+	template: require('./dashboard.tpl.html'),
 	className: 'page dashboard ns-full-height',
 	events: {
 	},

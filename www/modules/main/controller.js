@@ -40,10 +40,19 @@ var Controller = Marionette.Object.extend({
         });
     },
 
-    dashboard: function() {
+    dashboard: function(tab) {
         var self = this;
+        var rgMain = main.getInstance().rgMain;
+        var currentIsDashboard = (rgMain.currentView && rgMain.currentView.getOption('name') == 'dashboard');
 
-        main.getInstance().rgMain.show(new Dashboard(), {preventDestroy:true});
+        if ( !currentIsDashboard ) {
+            rgMain.show(new Dashboard({
+                name: 'dashboard',
+                tab: tab,
+            }), {preventDestroy:true});
+        }
+        else
+            rgMain.currentView.setTab(tab);
     }
 
 });

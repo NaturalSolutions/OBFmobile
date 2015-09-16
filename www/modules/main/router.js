@@ -8,7 +8,7 @@ var Router = Marionette.AppRouter.extend({
     appRoutes: {
         '': 'home',
     	'observation/:id' : 'observationId',
-        'dashboard': 'dashboard'
+        'dashboard(/:tab)': 'dashboard'
     },
 });
 
