@@ -1,5 +1,6 @@
 'use strict';
 var Backbone = require('backbone'),
+    LocalStorage = require("backbone.localstorage"),
     Marionette = require('backbone.marionette'),
     $ = require('jQuery'),
     main = require('./main.view'),
@@ -8,7 +9,8 @@ var Backbone = require('backbone'),
     momentFr = require('moment/locale/fr'),
     _ = require('lodash'),
     Observation = require('../models/observation'),
-    i18n = require('i18next-client');
+    i18n = require('i18next-client'),
+    user = require('../models/user');
 
 var bootstrap = require('bootstrap');
 var jqueryNs = require('jquery-ns');
@@ -40,8 +42,45 @@ function init() {
         return template(data);
     };
 
-    var app = new Marionette.Application();
+    var getI18n = function() {
+        var deferred = $.Deferred();
+        
+        i18n.init({ 
+            resGetPath: 'locales/__lng__/__ns__.json', 
+            getAsync : false, 
+            lng : 'fr'
+        }, function(t) {
+            deferred.resolve();
+        });
 
+        return deferred;
+    };
+
+    var getUser = function() {
+        var userCollection = user.collection.getInstance();
+
+        var deferred = $.Deferred();
+        userCollection.fetch({
+            success : function(data){
+                console.log('user fetch', data);
+                if ( data.length ) {
+                    user.model.init(data.at(0));
+                    deferred.resolve();
+                } else {
+                    user.model.init();
+                    userCollection.add(user.model.getInstance()).save();
+                    deferred.resolve();
+                }
+            },
+            error : function(error){
+                console.log(error);
+            }
+        });
+
+        return deferred;
+    };
+
+    var app = new Marionette.Application();
     app.on('start', function() {
         main.init();
         main.getInstance().render();
@@ -51,13 +90,10 @@ function init() {
 
     });
 
-    i18n.init({ 
-        resGetPath: 'locales/__lng__/__ns__.json', 
-        getAsync : false, 
-        lng : 'fr'
-    }, function(t) {
-        app.start();
-    });
+    $.when(getI18n(), getUser())
+        .done(function() {
+            app.start();
+        });
 }
 
 if (window.cordova) {
