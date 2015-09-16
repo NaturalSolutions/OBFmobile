@@ -8,7 +8,7 @@ var Backbone = require('backbone'),
     momentFr = require('moment/locale/fr'),
     _ = require('lodash'),
     Observation = require('../models/observation'),
-    Translater = require('./translater');
+    i18n = require('i18next-client');
 
 var bootstrap = require('bootstrap');
 var jqueryNs = require('jquery-ns');
@@ -51,11 +51,13 @@ function init() {
 
     });
 
-    var translater = new Translater();
-    translater.on('ready', function() {
+    i18n.init({ 
+        resGetPath: 'locales/__lng__/__ns__.json', 
+        getAsync : false, 
+        lng : 'fr'
+    }, function(t) {
         app.start();
     });
-    translater.start();
 }
 
 if (window.cordova) {
