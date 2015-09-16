@@ -3,7 +3,8 @@
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     _ = require('lodash'),
-    Missions = require('./missions.view');
+    Missions = require('./missions.view'),
+    Activities = require('./activities.view');
 
 var ClassDef = Marionette.LayoutView.extend({
 	header: {
@@ -23,10 +24,10 @@ var ClassDef = Marionette.LayoutView.extend({
 			ClassDef: Missions
 		},
 		activities: {
-			//className: LytActivities
+			ClassDef: Activities
 		},
 		observations: {
-			//className: LytObservations
+			//ClassDef: LytObservations
 		},
 	},
 
@@ -63,9 +64,7 @@ var ClassDef = Marionette.LayoutView.extend({
 
 	onRender: function(options) {
 		var self = this;
-
-		//self.$el.i18n();
-
+		
 		var tab = self.tabs[self.curTab];
 		var tabView = new tab.ClassDef();
 		self.showChildView('tabContent', tabView);
