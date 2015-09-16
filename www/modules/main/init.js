@@ -10,7 +10,8 @@ var Backbone = require('backbone'),
     _ = require('lodash'),
     Observation = require('../models/observation'),
     i18n = require('i18next-client'),
-    user = require('../models/user');
+    User = require('../models/user'),
+    Departement = require('../models/departement');
 
 var bootstrap = require('bootstrap');
 var jqueryNs = require('jquery-ns');
@@ -56,19 +57,43 @@ function init() {
         return deferred;
     };
 
+    var getDepartements = function() {
+        var departementCollection = new Departement.collection.getInstance();
+
+        var deferred = $.Deferred();
+        $.get('./data/departements.json')
+            .then(function(response) {
+                var departementDatas = response;
+                _.forEach(departementDatas, function(departementData) {
+                    var departement = new Departement.Model({
+                        code: departementData.code,
+                        title: departementData.title,
+                        lat: departementData.lat,
+                        lon: departementData.lon
+                    });
+                    departementCollection.add(departement);
+                });
+                deferred.resolve();
+            }, function(error) {
+                console.log(error);
+            });
+
+        return deferred;
+    };
+
     var getUser = function() {
-        var userCollection = user.collection.getInstance();
+        var userCollection = User.collection.getInstance();
 
         var deferred = $.Deferred();
         userCollection.fetch({
             success : function(data){
                 console.log('user fetch', data);
                 if ( data.length ) {
-                    user.model.init(data.at(0));
+                    User.model.init(data.at(0));
                     deferred.resolve();
                 } else {
-                    user.model.init();
-                    userCollection.add(user.model.getInstance()).save();
+                    User.model.init();
+                    userCollection.add(User.model.getInstance()).save();
                     deferred.resolve();
                 }
             },
@@ -90,7 +115,7 @@ function init() {
 
     });
 
-    $.when(getI18n(), getUser())
+    $.when(getI18n(), getDepartements(), getUser())
         .done(function() {
             app.start();
         });
