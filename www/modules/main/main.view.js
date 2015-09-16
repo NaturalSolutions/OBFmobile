@@ -3,11 +3,11 @@
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     controller = require('./controller'),
-    MainRegion = require('./main_region');
+    MainRegion = require('./main.region');
 
 var Layout = Marionette.LayoutView.extend({
     el: 'body',
-    template: require('./main.html'),
+    template: require('./main.tpl.html'),
     className: 'ns-full-height',
 
     initialize: function() {

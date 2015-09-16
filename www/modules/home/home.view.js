@@ -6,8 +6,8 @@ var Backbone = require('backbone'),
 
 var Layout = Marionette.LayoutView.extend({
     header: 'none',
-    template: require('./tpl_observation.html'),
-    className: 'page observation ns-full-height',
+    template: require('./home.tpl.html'),
+    className: 'page home ns-full-height',
     events: {},
 
     serializeData: function() {

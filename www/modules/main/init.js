@@ -2,7 +2,7 @@
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     $ = require('jQuery'),
-    main = require('./main'),
+    main = require('./main.view'),
     //currentPos = require('./current-position'),
     moment = require('moment'),
     momentFr = require('moment/locale/fr'),

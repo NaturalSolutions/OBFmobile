@@ -2,9 +2,9 @@
 
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
-    main = require('./main'),
-    Home = require('../home/lyt_home'),
-    Observation = require('../observation/lyt_observation')
+    main = require('./main.view'),
+    Home = require('../home/home.view'),
+    Observation = require('../observation/observation.view')
     ;
 
 /*

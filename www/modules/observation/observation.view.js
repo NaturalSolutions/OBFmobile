@@ -6,13 +6,17 @@ var Backbone = require('backbone'),
 
 var Layout = Marionette.LayoutView.extend({
     header: 'none',
-    template: require('./tpl_home.html'),
-    className: 'page home ns-full-height',
+    template: require('./observation.tpl.html'),
+    className: 'page observation ns-full-height',
     events: {},
+
+    initialize: function(){
+        this.observationModel = this.model;
+    },
 
     serializeData: function() {
         return {
-            tata: 'lorem'
+            // observation: this.observationModel.toJSON()
         };
     },
 
