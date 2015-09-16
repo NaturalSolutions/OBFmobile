@@ -98,7 +98,7 @@ var Layout = Marionette.LayoutView.extend({
             // 'mission_id': this.observationModel.get('mission'),
             'photo': clearPhoto(this.observationModel.get('photo'))
         };
-        var virginModel = new ObsModel.observationModel();
+        var virginModel = new ObsModel.ObservationModel();
         virginModel.save(data, {
                 ajaxSync: true
             })
