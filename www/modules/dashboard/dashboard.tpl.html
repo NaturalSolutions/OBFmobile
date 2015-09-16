@@ -1,7 +1,9 @@
 <!-- Fake Nav tabs -->
 <ul class="nav nav-tabs page-nav-tabs" role="tablist">
 <% _.forEach(data.tabs, function(tab, tabName) { %>
-	<li class="tab-<%= tabName %> <%= data.curTab == tabName ? 'active' : '' %>"><a href="#dashboard/<%= tabName %>" data-i18n="pages.dashboard.tabs.<%= tabName %>"></a></li>
+	<li class="tab-<%= tabName %> <%= data.curTab == tabName ? 'active' : '' %>">
+		<a href="#dashboard/<%= tabName %>"><%= i18n.t('pages.dashboard.tabs.'+ tabName) %></a>
+	</li>
 <% }); %>
 	<!-- <li class="tab-missions"><a href="#dashboard/missions">Missions</a></li>
     <li class="tab-activities"><a href="#dashboard/activities">Activités</a></li>
