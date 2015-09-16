@@ -28,7 +28,7 @@ var Layout = Marionette.LayoutView.extend({
     serializeData: function() {
         return {
             observation: this.observationModel.toJSON(),
-            departement: '',
+            departement: departement.collection.getInstance(),
             mission: mission.collection.getInstance(),
         };
     },

@@ -17,6 +17,22 @@
 </div>
 <div class="container">
     <form>
+        <div class="form-group">
+            <label for="missions">Mission</label>
+            <select id="missions" name="mission" class="form-control updateMission-js">
+                <% data.mission.forEach(function(m, key){ %>
+                    <option value='<%= m.get('num') %>'><%= m.get('title')%></option>
+                <% }); %>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="departement">Département</label>
+            <select id="departement" name="departement" class="form-control updateDept-js">
+                <% data.departement.forEach(function(d, key){ %>
+                    <option value='<%= d.get('code') %>'><%= d.get('title') %></option>
+                <% }); %>
+            </select>
+        </div>
         <div class="form-group required">
             <span class="icon-field material-icons">Date</span>
             <input id="date" name="date" type="text" class="form-control" value="<%= data.observation.date %>" readonly >
