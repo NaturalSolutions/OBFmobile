@@ -3,7 +3,9 @@
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     $ = require('jquery'),
-    ObsModel = require('../models/observation')
+    ObsModel = require('../models/observation'),
+    departement = require('../models/departement'),
+    mission = require('../models/mission')
     ;
 //i18n = require('i18n');
 
@@ -27,7 +29,7 @@ var Layout = Marionette.LayoutView.extend({
         return {
             observation: this.observationModel.toJSON(),
             departement: '',
-            mission: '',
+            mission: mission.collection.getInstance(),
         };
     },
 
@@ -92,10 +94,10 @@ var Layout = Marionette.LayoutView.extend({
 
         //data expected by the server
         var data = {
-            'title': this.observationModel.get('mission') + '_' + this.date,
+            'title': this.observationModel.get('mission') + '_' + this.observationModel.get('date'),
             'date': this.date,
-            // 'departement': this.observationModel.get('departement'),
-            // 'mission_id': this.observationModel.get('mission'),
+            'departement': this.observationModel.get('departement'),
+            'mission_id': this.observationModel.get('mission'),
             'photo': clearPhoto(this.observationModel.get('photo'))
         };
         var virginModel = new ObsModel.ObservationModel();
