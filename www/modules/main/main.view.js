@@ -3,7 +3,9 @@
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     controller = require('./controller'),
-    MainRegion = require('./main.region');
+    MainRegion = require('./main.region'),
+    Footer = require('../footer/footer.view')
+    ;
 
 var Layout = Marionette.LayoutView.extend({
     el: 'body',
@@ -27,8 +29,8 @@ var Layout = Marionette.LayoutView.extend({
         Marionette.LayoutView.prototype.render.apply(this, options);
         
         /*this.rgHeader.show(new LytHeader());
-        this.rgSidenav.show(new LytSidenav());
-        this.rgFooter.show(new LytFooter());*/
+        this.rgSidenav.show(new LytSidenav());*/
+        this.rgFooter.show(new Footer());
     }
 
    

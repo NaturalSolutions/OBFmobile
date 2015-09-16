@@ -6,7 +6,11 @@ var Backbone = require('backbone'),
     //currentPos = require('./current-position'),
     moment = require('moment'),
     momentFr = require('moment/locale/fr'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    Observation = require('../models/observation')
+
+;
+
 
 var bootstrap = require('bootstrap');
 var jqueryNs = require('jquery-ns');
@@ -33,29 +37,6 @@ function init() {
 
     moment.locale('fr');
 
-    /*var bC = new badgesColl();
-    bC.fetch({
-        success : function(response){
-            if(response.length === 0){
-                badgesInstanceColl.fetch({
-                    ajaxSync: true,
-                    success : function(coll){
-                        coll.models.forEach(function(n, key){
-                            badgesInstanceColl.add(n).save();
-                        });
-                    }
-                });
-            }else{
-                badgesInstanceColl.fetch();
-            }
-        }
-    });*/
-
-    /*var containerView = require('./container/container');
-    containerView.render().$el.appendTo('body');
-
-    Backbone.history.start();*/
-
 
     Backbone.Marionette.Renderer.render = function(template, data) {
         return template(data);
@@ -66,7 +47,10 @@ function init() {
     app.on('start', function() {
         main.init();
         main.getInstance().render();
-        Backbone.history.start();
+        Observation.instanceCollection.fetch().done(function() {
+            Backbone.history.start();
+        });
+
     });
 
     app.start();

@@ -27,5 +27,6 @@ var ObservationCollection = Backbone.Collection.extend({
 });
 module.exports = {
     ObservationModel : ObservationModel,
-    ObservationCollection : ObservationCollection
+    ObservationCollection : ObservationCollection,
+    instanceCollection : new ObservationCollection()
 };

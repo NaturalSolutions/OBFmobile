@@ -4,7 +4,7 @@ var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     main = require('./main.view'),
     Home = require('../home/home.view'),
-    Observation = require('../observation/observation.view')
+    ObservationView = require('../observation/observation.view')
     ;
 
 /*
@@ -29,13 +29,14 @@ var Controller = Marionette.Object.extend({
 
     observationId: function(id) {
         var self = this;
-
+        var Observation = require('../models/observation');
+        var currentObservation = Observation.instanceCollection.get(id);
         //var observation = this.app.observationCollection.get(id);
         // console.log(observation);
         //self.rgHeader.currentView.setState('observation');
-        main.getInstance().rgMain.show(new Observation({
+        main.getInstance().rgMain.show(new ObservationView({
             name: 'observation',
-            // model: observation
+            model: currentObservation
         }), {
             preventDestroy: true
         });
