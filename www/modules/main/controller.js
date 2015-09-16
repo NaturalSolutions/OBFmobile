@@ -3,15 +3,12 @@
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     main = require('./main.view'),
+    User = require('../models/user'),
     Home = require('../home/home.view'),
     ObservationView = require('../observation/observation.view'),
-    Dashboard = require('../dashboard/dashboard');
+    Dashboard = require('../dashboard/dashboard'),
+    MissionsAroundMe = require('../missions_aroundme/missions_aroundme.view');
 
-/*
- * Controller class
- */
-
-// Constructor
 var Controller = Marionette.Object.extend({
     initialize: function(options) {
         var self = this;
@@ -53,8 +50,63 @@ var Controller = Marionette.Object.extend({
         }
         else
             rgMain.currentView.setTab(tab);
-    }
+    },
+
+    _missionsAroundMe: function(options) {
+        var self = this;
+        var rgMain = main.getInstance().rgMain;
+
+        if ( rgMain.currentView && rgMain.currentView.getOption('name') == 'missionsAroundMe' ) {
+            rgMain.currentView.setState(options.state.name, options.state.args);
+            return false;
+        }
+
+        var state = options.state || {};
+        var user = User.model.getInstance();
+
+        if ( state.name != 'manually' ) {
+            if ( !user.get('departements').length || user.get('positionEnabled') )
+                state.name = 'localize';
+            else
+                state.name = 'list';
+        }
+
+        rgMain.show(new MissionsAroundMe({
+            name: 'missionsAroundMe',
+            state: state
+
+        }), {preventDestroy:true});
+    },
+
+    missionsAroundMe: function() {
+        var self = this;
+
+        self._missionsAroundMe({});
+    },
+
+    missionsAroundMeManually: function() {
+        var self = this;
+
+        self._missionsAroundMe({
+            state: {
+                name: 'manually'
+            }
+        });
+    },
+
+    missionsAroundMeTab: function(tabSlug) {
+        var self = this;
+
+        self._missionsAroundMe({
+            state: {
+                name: 'list',
+                args: {
+                    tab: 'tab-'+tabSlug
+                }
+            }
+        });
+    },
 
 });
 
-module.exports = new Controller();
+module.exports = Controller;

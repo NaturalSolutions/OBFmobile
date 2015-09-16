@@ -1,17 +1,28 @@
 'use strict';
 
 var Backbone = require('backbone'),
-    Marionette = require('backbone.marionette'),
-    controller = require('./controller');
+    Marionette = require('backbone.marionette');
 
 var Router = Marionette.AppRouter.extend({
     appRoutes: {
         '': 'home',
     	'observation/:id' : 'observationId',
-        'dashboard(/:tab)': 'dashboard'
+        'dashboard(/:tab)': 'dashboard',
+        'missions/aroundme': 'missionsAroundMe',
+		'missions/aroundme/manually': 'missionsAroundMeManually',
+		'missions/aroundme/tab-:tab': 'missionsAroundMeTab'
     },
 });
 
-module.exports = new Router({
-    controller: controller
-});
+var instance = null;
+
+module.exports = {
+    getInstance: function() {
+        //console.log(Controller);
+        if ( !instance )
+            instance = new Router({
+                controller: new (require('./controller'))()
+            });
+        return instance;
+    }
+};

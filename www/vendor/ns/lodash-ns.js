@@ -1,6 +1,45 @@
 'use strict';
 var console = console || {log:function(){}};
 
+_.mixin({
+    getDistanceFromLatLon: function(lat1, lon1, lat2, lon2) {
+        var R = 6371; // Radius of the earth in km
+        var dLat = _.deg2rad(lat2 - lat1); // deg2rad below
+        var dLon = _.deg2rad(lon2 - lon1);
+        var a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(_.deg2rad(lat1)) * Math.cos(_.deg2rad(lat2)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return c;
+    }
+});
+
+_.mixin({
+    getDistanceFromLatLonInKm: function(lat1, lon1, lat2, lon2) {
+        var R = 6371; // Radius of the earth in km
+        var c = _.getDistanceFromLatLon(lat1, lon1, lat2, lon2);
+        var d = R * c; // Distance in km
+        return d;
+    }
+});
+
+_.mixin({
+    getPointOnCircle: function(angle, radius, centerX, centerY) {
+        var angle = _.deg2rad(angle);
+        return {
+            x: radius*Math.cos(angle) + centerX,
+            y: radius*Math.sin(angle) + centerY
+        }
+    }
+});
+
+_.mixin({
+    deg2rad: function(deg) {
+        return deg * (Math.PI/180)
+    }
+});
+
 _.mixin({trim: function(input) {
     if ( !input )
         return '';
@@ -86,7 +125,7 @@ _.mixin({parseQueryString: function(queryString) {
                     var val = undefined;
                     if(aux.length == 2)
                         val = aux[1];
-                    o[aux[0]] = JSON.parse(val);
+                    o[aux[0]] = val;
                 }
                 return o;
             }),
@@ -97,23 +136,6 @@ _.mixin({parseQueryString: function(queryString) {
     };
 
     return params;
-}})
-
-_.mixin({getInternetExplorerVersion: function() {
-    var rv = -1;
-    if (navigator.appName == 'Microsoft Internet Explorer') {
-        var ua = navigator.userAgent;
-        var re  = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
-        if (re.exec(ua) != null)
-        rv = parseFloat( RegExp.$1 );
-    }
-    else if (navigator.appName == 'Netscape') {
-        var ua = navigator.userAgent;
-        var re  = new RegExp("Trident/.*rv:([0-9]{1,}[\.0-9]{0,})");
-        if (re.exec(ua) != null)
-            rv = parseFloat( RegExp.$1 );
-    };
-    return rv;
 }});
 
 

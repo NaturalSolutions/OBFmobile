@@ -1,4 +1,5 @@
 'use strict';
+
 var Backbone = require('backbone'),
     LocalStorage = require("backbone.localstorage"),
     Marionette = require('backbone.marionette'),
@@ -8,11 +9,13 @@ var Backbone = require('backbone'),
     moment = require('moment'),
     momentFr = require('moment/locale/fr'),
     _ = require('lodash'),
+    _ns = require('lodash-ns'),
     Observation = require('../models/observation'),
     i18n = require('i18next-client'),
     User = require('../models/user'),
     Departement = require('../models/departement'),
-    Mission = require('../models/mission');
+    Mission = require('../models/mission'),
+    Router = require('./router');
 
 var bootstrap = require('bootstrap');
 var jqueryNs = require('jquery-ns');
@@ -152,6 +155,7 @@ function init() {
 
     var app = new Marionette.Application();
     app.on('start', function() {
+        Router.getInstance();
         main.init();
         main.getInstance().render();
         Observation.instanceCollection.fetch().done(function() {

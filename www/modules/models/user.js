@@ -1,5 +1,6 @@
 'use strict';
 var Backbone = require('backbone'),
+    LocalStorage = require("backbone.localstorage"),
     config = require('../main/config');
 
 var Model = Backbone.Model.extend({

@@ -5,6 +5,7 @@
   "private": true,
   "browser": {
     "jquery-ns": "./www/vendor/ns/jquery-ns.js",
+    "lodash-ns": "./www/vendor/ns/lodash-ns.js",
     "bootstrap": "./node_modules/bootstrap/dist/js/bootstrap.js",
     "bootstrap-dialog": "./www/vendor/bootstrap-dialog/js/bootstrap-dialog.js",
     "swiper": "./node_modules/swiper/dist/js/swiper.min.js"
@@ -18,6 +19,11 @@
     "jquery-ns": {
       "depends": [
         "jquery:jQuery"
+      ]
+    },
+    "lodash-ns": {
+      "depends": [
+        "lodash:_"
       ]
     },
     "bootstrap": {

@@ -1,0 +1,20 @@
+<div class="inner">
+	<ul class="nav nav-tabs js-nav-tabs" role="tablist">
+	<% _.forEach(data.missionTabs, function(missionTab, index) { %>
+		<li role="presentation" class=" <% if ( index == 0 ) { %>active<% } %>">
+			<a href="#tab-difficulty-<%= index %>" role="tab">Difficulty <%= index %></a>
+		</li>
+	<% }); %>
+	</ul>
+	<div class="tab-content">
+	<% _.forEach(data.missionTabs, function(missionTab, index) { %>
+		<div role="tabpanel" class="tab-pane <% if ( index == 0 ) { %>active<% } %>" id="tab-difficulty-<%= index %>">
+			<ul>
+			<% _.forEach(missionTab.missions, function(mission) { %>
+				<li><%= mission.title %></li>
+			<% }); %>
+			</ul>
+		</div>
+	<% }); %>
+	</div>
+</div>
