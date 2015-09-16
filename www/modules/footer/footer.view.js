@@ -7,7 +7,7 @@ var Backbone = require('backbone'),
     Observation = require('../models/observation');
 //i18n = require('i18n');
 
-var Layout = Marionette.LayoutView.extend({
+var View = Marionette.LayoutView.extend({
     header: 'none',
     template: require('./footer.tpl.html'),
     className: '',
@@ -46,7 +46,13 @@ var Layout = Marionette.LayoutView.extend({
             success: function(response) {
                 console.log(response);
                 //TODO url into config
-                self.createObservation('http://localhost/DRUPAL/OBF_BACK/www/sites/default/files/' + response.data[0].label, response.data[0].id);
+                var urlServer;
+                if(window.cordova) {
+                    urlServer = 'http://192.168.0.17/DRUPAL/OBF_BACK/www/sites/default/files/';
+                }else{
+                    urlServer = 'http://localhost/DRUPAL/OBF_BACK/www/sites/default/files/';
+                }
+                self.createObservation(urlServer + response.data[0].label, response.data[0].id);
             },
             error: function(response) {
                 console.log(response);
@@ -89,7 +95,9 @@ var Layout = Marionette.LayoutView.extend({
             console.log("upload error target " + error.target);
         };
         /* jshint ignore:start */
-        ft.upload(f, encodeURI("http://192.168.0.17/DRUPAL/OBF_BACK/www/api/file-upload"), win, fail);
+        var options = new FileUploadOptions();
+        options.fileName = f.substr(f.lastIndexOf('/') + 1);
+        ft.upload(f, encodeURI("http://192.168.0.17/DRUPAL/OBF_BACK/www/api/file-upload"), win, fail, options);
         /* jshint ignore:end */
     },
 
@@ -150,7 +158,7 @@ var Layout = Marionette.LayoutView.extend({
                 var $form = $('form');
                 self.resetForm($form);
                 //navigate
-                router.navigate('observation/' + data.id, {
+                router.getInstance().navigate('observation/' + data.id, {
                     trigger: true
                 });
             })
@@ -164,4 +172,12 @@ var Layout = Marionette.LayoutView.extend({
 
 });
 
-module.exports = Layout;
+var instance = null;
+
+module.exports = {
+    getInstance: function() {
+        if ( !instance )
+            instance = new View();
+        return instance;
+    }
+};
