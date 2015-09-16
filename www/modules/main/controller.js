@@ -6,7 +6,7 @@ var Backbone = require('backbone'),
     User = require('../models/user'),
     Home = require('../home/home.view'),
     ObservationView = require('../observation/observation.view'),
-    Dashboard = require('../dashboard/dashboard'),
+    Dashboard = require('../dashboard/dashboard.view'),
     MissionsAroundMe = require('../missions_aroundme/missions_aroundme.view');
 
 module.exports = Marionette.Object.extend({
