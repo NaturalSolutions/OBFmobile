@@ -1,0 +1,64 @@
+<div class="container">
+    <h3><%= data.mission.title %></h3>
+    <div class="panel-group" id="mission-sheet-accordion" role="tablist">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab">
+                <h4 class="panel-title">
+		        <a role="button" data-toggle="collapse" data-parent="#mission-sheet-accordion" href="#collapse1">
+		        	<%= data.mission.taxon.title %>
+		        </a>
+		      </h4>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse in" role="tabpanel">
+                <div class="panel-body">
+                    <%= data.mission.taxon.description %>
+                    <div>
+                    	<a href="<%= data.mission.taxon.url %>" class="btn btn-default">Fiche espèce</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab">
+                <h4 class="panel-title">
+					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#mission-sheet-accordion" href="#collapse2">
+						Où et quand le trouver ?
+					</a>
+				</h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse" role="tabpanel">
+                <div class="panel-body">
+                    Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab">
+                <h4 class="panel-title">
+					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#mission-sheet-accordion" href="#collapse3">
+						Comment l'identifier ?
+					</a>
+				</h4>
+            </div>
+            <div id="collapse3" class="panel-collapse collapse" role="tabpanel">
+                <div class="panel-body">
+                    <%= data.mission.taxon.characteristic %>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab">
+                <h4 class="panel-title">
+					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#mission-sheet-accordion" href="#collapse4">
+						Mes observations
+					</a>
+				</h4>
+            </div>
+            <div id="collapse4" class="panel-collapse collapse" role="tabpanel">
+                <div class="panel-body">
+                    Aucune observation
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
