@@ -14,6 +14,7 @@ var ObservationModel = Backbone.Model.extend({
         //     shared: 0,
         //     external_id: ''
         // }
+        url: 'http://192.168.0.17/DRUPAL/OBF_BACK/www/api/v1.0/observations',
 });
 
 var ObservationCollection = Backbone.Collection.extend({
