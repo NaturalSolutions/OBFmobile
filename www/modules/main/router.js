@@ -10,7 +10,9 @@ var Router = Marionette.AppRouter.extend({
         'dashboard(/:tab)': 'dashboard',
         'missions/aroundme': 'missionsAroundMe',
 		'missions/aroundme/manually': 'missionsAroundMeManually',
-		//'missions/aroundme/tab-:tab': 'missionsAroundMeTab'
+		//'missions/aroundme/tab-:tab': 'missionsAroundMeTab',
+        'missions/all': 'missionsAll',
+        'missions/all/filter': 'missionsAllFilter',
     },
 });
 

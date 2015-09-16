@@ -52,6 +52,46 @@ module.exports = Marionette.Object.extend({
             rgMain.currentView.setTab(tab);
     },
 
+    missionsAll: function() {
+        var self = this;
+
+        var Mission = require('../models/mission');
+        var MissionsAllFilter = require('../missions_all/missions_all_filter.view');
+
+        var missions = Mission.collection.getInstance().clone();
+        var params = MissionsAllFilter.getFilters() || {};
+        var departement = params.departement;
+        var startAt = params.startAt;
+        var endAt = params.endAt;
+        var removables = [];
+        missions.forEach(function(mission) {
+            var isMatch = true;
+            if ( isMatch && departement && !mission.isInDepartement(departement.get('code')) ) {
+                isMatch = false;
+            }
+            if ( isMatch && (startAt || endAt ) && !mission.isInSeason(startAt, endAt) ) {
+                isMatch = false;
+            }
+            if (!isMatch)
+                removables.push(mission);
+        });
+
+        if ( removables.length )
+            missions.remove(removables);
+
+        var View = require('../missions_all/missions_all.view');
+        main.getInstance().rgMain.show(new View({
+            collection: missions
+        }), {preventDestroy:true});
+    },
+
+    missionsAllFilter: function() {
+        var self = this;
+
+        var View = require('../missions_all/missions_all.view').getClass();
+        main.getInstance().rgMain.show(new View(), {preventDestroy:true});
+    },
+
     _missionsAroundMe: function(options) {
         var self = this;
         var rgMain = main.getInstance().rgMain;

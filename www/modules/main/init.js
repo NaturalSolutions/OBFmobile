@@ -164,7 +164,7 @@ function init() {
 
     });
 
-    $.when(getI18n(), getDepartements(), getUser())
+    $.when(getI18n(), getMissions(), getDepartements(), getUser())
         .done(function() {
             app.start();
         });
