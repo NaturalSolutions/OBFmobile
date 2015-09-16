@@ -81,7 +81,11 @@ module.exports = Marionette.Object.extend({
     missionsAroundMe: function() {
         var self = this;
 
-        self._missionsAroundMe({});
+        self._missionsAroundMe({
+            state: {
+                name: 'list'
+            }
+        });
     },
 
     missionsAroundMeManually: function() {

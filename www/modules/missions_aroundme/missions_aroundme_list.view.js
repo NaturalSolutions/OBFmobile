@@ -2,7 +2,8 @@
 
 var Marionette = require('backbone.marionette'),
 	_ = require('lodash'),
-	$ = require('jQuery'),
+	$ = require('jquery'),
+	bootstrap = require('bootstrap'),
 	User = require('../models/user'),
 	Mission = require('../models/mission'),
 	Router = require('../main/router');
@@ -46,30 +47,10 @@ module.exports = Marionette.LayoutView.extend({
 	onShow: function() {
 		var self = this;
 
-		self.initTabs();
-	},
-
-	initTabs: function() {
-		var self = this;
-
 		self.$el.find('.js-nav-tabs a').click(function (e) {
 			e.preventDefault();
-			var slug = $(this).attr('href').replace('#', '');
-			Router.getInstance().navigate('missions/aroundme/'+ slug, {trigger:true});
+			$(this).tab('show');
 		});
-		if ( self.initTabSlug )
-			self.setTab(self.initTabSlug);
-		self.initTabSlug = null;
-	},
-
-	setTab: function(slug) {
-		var self = this;
-		var $initTab = this.$el.find('.js-nav-tabs a[href="#'+slug+'"]');
-		console.log(slug, $initTab.length);
-		if ( !$initTab.length )
-			self.initTabSlug = slug;
-		else
-			$initTab.tab('show');
 	},
 
     onDestroy: function() {

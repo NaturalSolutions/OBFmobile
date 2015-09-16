@@ -2,7 +2,7 @@
 
 var Marionette = require('backbone.marionette'),
 	header = require('../header/header'),
-	router = require('../main/router'),
+	Router = require('../main/router'),
 	_ = require('lodash');
 
 module.exports = Marionette.LayoutView.extend({
@@ -46,19 +46,7 @@ module.exports = Marionette.LayoutView.extend({
 		var self = this;
 
 		name = name || 'list';
-		args = args || {tab:1};
-
-		if ( self.state && name == self.state.name ) {
-			if ( name == 'list' && args.tab )
-				self.rgStates.currentView.setTab(args.tab);
-			return false;
-		}
-
-		self.state = {
-			name: name,
-			args: args
-		};
-
+		
 		self.$el.alterClass('state-*', 'state-'+name);
 
 		var viewState;
@@ -84,7 +72,7 @@ module.exports = Marionette.LayoutView.extend({
 		self.listenTo(view, 'abort', function() {
 			self.stopListening(view);
 			console.log('onLocalizeError');
-			router.navigate('missions/aroundme/manually', {trigger: true});
+			Router.getInstance().navigate('missions/aroundme/manually', {trigger: true});
 		});
 
 		return view;
@@ -101,9 +89,6 @@ module.exports = Marionette.LayoutView.extend({
 		var self = this;
 
 		var view = new (require('./missions_aroundme_list.view'))();
-		var tab = _.get(self, 'state.args.tab');
-		if ( tab )
-			view.setTab(tab);
 		
 		return view;
 	},
