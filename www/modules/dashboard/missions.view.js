@@ -1,6 +1,8 @@
 'use strict';
 var Backbone = require('backbone'),
-    Marionette = require('backbone.marionette');
+    Marionette = require('backbone.marionette'),
+    Mission = require('../models/mission'),
+    _ = require('lodash');
 
 var ClassDef = Marionette.LayoutView.extend({
 	template: require('./missions.tpl.html'),
@@ -10,7 +12,18 @@ var ClassDef = Marionette.LayoutView.extend({
 
 	initialize: function() {
 		var self = this;
-		//console.log(this);
+		
+		self.missions = Mission.collection.getInstance().toJSON();
+		self.missions = _.filter(self.missions, {accept: true});
+		console.log(self.missions);
+	},
+
+	serializeData: function() {
+		var self = this;
+		
+		return {
+			missions: self.missions
+		};
 	},
 
 	onRender: function(options) {

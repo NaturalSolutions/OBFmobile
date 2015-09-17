@@ -1,5 +1,6 @@
 'use strict';
 var Backbone = require('backbone'),
+	LocalStorage = require("backbone.localstorage"),
 	_ = require('lodash'),
 	config = require('../main/config');
 
@@ -50,6 +51,11 @@ var Model = Backbone.Model.extend({
 		});
 
 		return isMatch;
+	},
+	toggleAccept: function() {
+		var self = this;
+		self.set('accept', !self.get('accept'));
+		self.save();
 	}
 });
 

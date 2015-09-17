@@ -4,6 +4,7 @@ var Backbone = require('backbone'),
     LocalStorage = require("backbone.localstorage"),
     Marionette = require('backbone.marionette'),
     $ = require('jquery'),
+    $ns = require('jquery-ns'),
     bootstrap = require('bootstrap'),
     main = require('./main.view'),
     //currentPos = require('./current-position'),
@@ -21,7 +22,6 @@ var Backbone = require('backbone'),
 
 /*var badgesInstanceColl = require('./models/badge').instanceColl;
 var badgesColl = require('./models/badge').BadgeCollection;*/
-
 
 function init() {
     //Manage geolocation when the application goes to the background
@@ -41,7 +41,6 @@ function init() {
     });
 
     moment.locale('fr');
-
 
     Backbone.Marionette.Renderer.render = function(template, data) {
         return template(data);

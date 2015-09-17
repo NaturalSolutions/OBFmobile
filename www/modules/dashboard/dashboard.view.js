@@ -44,35 +44,43 @@ var ClassDef = Marionette.LayoutView.extend({
 		var self = this;
 
 		return {
-			tabs: self.tabs,
-			curTab: self.curTab
+			tabs: self.tabs
 		};
-	},
-
-	setTab: function(tab) {
-		var self = this;
-		tab = tab || self.defaultTab;
-		if ( tab == self.curTab )
-			return false;
-
-		self.curTab = tab;
-		
-		Marionette.LayoutView.prototype.render.apply(self);
 	},
 
 	onRender: function(options) {
 		var self = this;
 		
-		var tab = self.tabs[self.curTab];
-		var tabView = new tab.ClassDef();
-		self.showChildView('tabContent', tabView);
-		console.log(self.curTab);
+		self.displayTab();
 		/*var donutchart = this.$el.find('.donutchart').nsDonutChart({
 			value: .75,
 			onCreate: function(api) {
 				
 			}
 		}).data('nsDonutChart');*/
+	},
+
+	setTab: function(tab) {
+		var self = this;
+
+		tab = tab || self.defaultTab;
+		if ( tab == self.curTab )
+			return false;
+
+		self.curTab = tab;
+		self.displayTab();
+	},
+
+	displayTab: function() {
+		var self = this;
+
+		var tab = self.tabs[self.curTab];
+		var tabView = new tab.ClassDef();
+		self.showChildView('tabContent', tabView);
+
+		var $tabs = self.$el.find('.nav-tabs .tab');
+		$tabs.removeClass('active');
+		$tabs.filter('.tab-'+self.curTab).addClass('active');
 	}
 });
 

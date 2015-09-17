@@ -1,5 +1,10 @@
 <div class="container">
-    <h3><%= data.mission.title %></h3>
+    <div class="header clearfix">
+        <h3 class="pull-left"><%= data.mission.title %></h3>
+        <button type="button" class="btn btn-accept pull-right">
+            <span class="material-icons">check</span>
+        </button>
+    </div>
     <div class="panel-group" id="mission-sheet-accordion" role="tablist">
         <div class="panel panel-default">
             <div class="panel-heading" role="tab">
