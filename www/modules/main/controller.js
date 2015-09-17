@@ -25,7 +25,7 @@ module.exports = Marionette.Object.extend({
     observationId: function(id) {
         var self = this;
         var Observation = require('../models/observation');
-        var currentObservation = Observation.instanceCollection.get(id);
+        var currentObservation = Observation.collection.getInstance().get(id);
         //var observation = this.app.observationCollection.get(id);
         // console.log(observation);
         //self.rgHeader.currentView.setState('observation');

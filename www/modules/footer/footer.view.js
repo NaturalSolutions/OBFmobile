@@ -4,7 +4,8 @@ var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     $ = require('jquery'),
     _ = require('lodash'),
-    Observation = require('../models/observation');
+    Observation = require('../models/observation'),
+    config = require('../main/config');
 //i18n = require('i18n');
 
 var View = Marionette.LayoutView.extend({
@@ -37,7 +38,7 @@ var View = Marionette.LayoutView.extend({
         var data = (formdata !== null) ? formdata : $form.serialize();
 
         $.ajax({
-            url: "http://localhost/DRUPAL/OBF_BACK/www/api/file-upload",
+            url: config.apiUrl +"/file-upload",
             type: "POST",
             contentType: false,
             processData: false,
@@ -46,7 +47,7 @@ var View = Marionette.LayoutView.extend({
             success: function(response) {
                 console.log(response);
                 //TODO url into config
-                var urlServer = 'http://192.168.0.17/DRUPAL/OBF_BACK/www/sites/default/files/';
+                var urlServer = config.coreUrl +'/sites/default/files/';
                 self.createObservation(urlServer + response.data[0].label, response.data[0].id);
             },
             error: function(response) {
@@ -135,7 +136,7 @@ var View = Marionette.LayoutView.extend({
     createObservation: function(fe, id) {
         var self = this;
         var router = require('../main/router');
-        var observationModel = new Observation.ObservationModel();
+        var observationModel = new Observation.model.ClassDef();
 
         //set observation model
         observationModel.set({
@@ -146,7 +147,7 @@ var View = Marionette.LayoutView.extend({
             }]
         });
         //Save observation in localstorage
-        Observation.instanceCollection.add(observationModel)
+        Observation.collection.getInstance().add(observationModel)
             .save()
             .done(function(data) {
                 //reset input file

@@ -152,18 +152,19 @@ function init() {
         return deferred;
     };
 
+    var getObservations = function() {
+        return Observation.collection.getInstance().fetch();
+    };
+
     var app = new Marionette.Application();
     app.on('start', function() {
         Router.getInstance();
         main.init();
         main.getInstance().render();
-        Observation.instanceCollection.fetch().done(function() {
-            Backbone.history.start();
-        });
-
+        Backbone.history.start();
     });
 
-    $.when(getI18n(), getMissions(), getDepartements(), getUser())
+    $.when(getI18n(), getMissions(), getDepartements(), getUser(), getObservations())
         .done(function() {
             app.start();
         });

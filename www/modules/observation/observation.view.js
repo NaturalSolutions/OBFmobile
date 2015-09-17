@@ -6,7 +6,8 @@ var Backbone = require('backbone'),
     _ = require('lodash'),
     ObsModel = require('../models/observation'),
     departement = require('../models/departement'),
-    mission = require('../models/mission');
+    mission = require('../models/mission'),
+    config = require('../main/config');
 //i18n = require('i18n');
 
 var Layout = Marionette.LayoutView.extend({
@@ -53,15 +54,15 @@ var Layout = Marionette.LayoutView.extend({
         var data = (formdata !== null) ? formdata : $form.serialize();
 
         $.ajax({
-            url: $form.attr('action'),
-            type: $form.attr('method'),
+            url: config.apiUrl +'/file-upload',
+            type: 'post',
             contentType: false, // obligatoire pour de l'upload
             processData: false, // obligatoire pour de l'upload
             dataType: 'json', // selon le retour attendu
             data: data,
             success: function(response) {
                 //TODO url into config
-                self.addPhoto('http://192.168.0.17/DRUPAL/OBF_BACK/www/sites/default/files/' + response.data[0].label, response.data[0].id);
+                self.addPhoto(config.coreUrl +'/sites/default/files/' + response.data[0].label, response.data[0].id);
             }
         });
     },
@@ -92,7 +93,7 @@ var Layout = Marionette.LayoutView.extend({
             console.log("Response = " + r.response);
             console.log("Sent = " + r.bytesSent);
             var resData = JSON.parse(r.response);
-            self.addPhoto('http://192.168.0.17/DRUPAL/OBF_BACK/www/sites/default/files/' + resData.data[0].label, resData.data[0].id);
+            self.addPhoto(config.coreUrl +'/sites/default/files/' + resData.data[0].label, resData.data[0].id);
         };
 
         var fail = function(error) {
@@ -103,7 +104,7 @@ var Layout = Marionette.LayoutView.extend({
         /* jshint ignore:start */
         var options = new FileUploadOptions();
         options.fileName = f.substr(f.lastIndexOf('/') + 1);
-        ft.upload(f, encodeURI("http://192.168.0.17/DRUPAL/OBF_BACK/www/api/file-upload"), win, fail, options);
+        ft.upload(f, encodeURI(config.apiUrl +"/file-upload"), win, fail, options);
         /* jshint ignore:end */
     },
 
@@ -178,7 +179,7 @@ var Layout = Marionette.LayoutView.extend({
             'mission_id': this.observationModel.get('mission'),
             'photo': clearPhoto(this.observationModel.get('photo'))
         };
-        var virginModel = new ObsModel.ObservationModel();
+        var virginModel = new ObsModel.model.ClassDef();
         virginModel.save(data, {
                 ajaxSync: true
             })

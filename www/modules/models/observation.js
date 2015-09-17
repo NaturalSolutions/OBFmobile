@@ -1,6 +1,7 @@
 'use strict';
 
-var Backbone = require('backbone');
+var Backbone = require('backbone'),
+    config = require('../main/config');
 
 Backbone.LocalStorage = require("backbone.localstorage");
 
@@ -14,7 +15,7 @@ var ObservationModel = Backbone.Model.extend({
         //     shared: 0,
         //     external_id: ''
         // }
-        url: 'http://192.168.0.17/DRUPAL/OBF_BACK/www/api/v1.0/observations',
+        url: config.apiUrl +'/v1.0/observations',
 });
 
 var ObservationCollection = Backbone.Collection.extend({
@@ -26,8 +27,21 @@ var ObservationCollection = Backbone.Collection.extend({
         this.deferred = this.fetch();
     }
 });
+
+var collectionInstance = null;
+
 module.exports = {
-    ObservationModel : ObservationModel,
-    ObservationCollection : ObservationCollection,
-    instanceCollection : new ObservationCollection()
+    model: {
+        ClassDef: ObservationModel
+    },
+    collection: {
+        getClass: function() {
+            return ObservationCollection;
+        },
+        getInstance: function() {
+            if ( !collectionInstance )
+                collectionInstance = new ObservationCollection();
+            return collectionInstance;
+        }
+    }
 };

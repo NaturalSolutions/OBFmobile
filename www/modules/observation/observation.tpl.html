@@ -4,7 +4,7 @@
         <% data.observation.photo.forEach(function(p){ %>
             <img class="editor-picture-img " src=" <%= p.url %>" style="width:200px;"/>
         <% }); %>
-        <form id="form-picture" method="post" action="http://localhost/DRUPAL/OBF_BACK/www/api/file-upload" enctype="multipart/form-data">
+        <form id="form-picture" enctype="multipart/form-data">
             <input type="file" name="image" accept="image/*" />
             <input type="submit" value="upload file"></input>
         </form>
