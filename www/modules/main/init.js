@@ -73,7 +73,7 @@ function init() {
                 } else {
                     $.get('./data/missions.json')
                         .then(function(response) {
-                            var missionDatas = response;
+                            var missionDatas = JSON.parse(response);
                             _.forEach(missionDatas, function(missionData) {
                                 var mission = new Mission.Model({
                                     num: missionData.num,
