@@ -8,7 +8,7 @@ Backbone.LocalStorage = require("backbone.localstorage");
 var ObservationModel = Backbone.Model.extend({
         // Expected attributes : {
         //     date: '',
-        //     mission_id: '',
+        //     missionId: '',
         //     taxon_id: '',
         //     photos:[],
         //     departement: '',

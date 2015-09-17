@@ -1,5 +1,5 @@
 [{
-    "num": 1,
+    "id": 1, "num": 1,
     "title": "Super Morio !",
     "difficulty": 1,
     "seasons": [{
@@ -15,7 +15,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-dessus des ailes viol\u00e9 fonc\u00e9\n-bande marginale blanche \u00e0 jaune\nsur les 4 ailes\nTaille : 7,5 cm"
     }
 }, {
-    "num": 2,
+    "id": 2, "num": 2,
     "title": "Mission Damier du fr\u00eane",
     "difficulty": 3,
     "seasons": [{
@@ -31,7 +31,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-s\u00e9rie de taches blanches en marge des\nailes ant\u00e9rieures\n-grosse tache rousse bien marqu\u00e9e sur\nle dessus des ailes post\u00e9rieures\nTaille : 2,1 \u00e0 2,4 cm"
     }
 }, {
-    "num": 3,
+    "id": 3, "num": 3,
     "title": "\"Ah ! Les belles Bacchantes\u2028  \"",
     "difficulty": 2,
     "seasons": [{
@@ -47,7 +47,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\ndessus des ailes brun\u00e2tre \u00e0\ngris\ngros ocelles marron cercl\u00e9s de\nclair sur le dessus des 4 ailes\nTaille : 5 \u00e0 6 cm"
     }
 }, {
-    "num": 4,
+    "id": 4, "num": 4,
     "title": " Sonne qui peut !",
     "difficulty": 3,
     "seasons": [{
@@ -63,7 +63,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-face ventrale jaune tachet\u00e9e de noir\n-pupille des yeux en forme de coeur ou triangulaire\nTaille : 4 \u00e0 5 cm"
     }
 }, {
-    "num": 5,
+    "id": 5, "num": 5,
     "title": "\"Splendide en Pays d'Oc\u2028  \"",
     "difficulty": 2,
     "seasons": [{
@@ -79,7 +79,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n\u00e9lytres lisses tr\u00e8s\ncolor\u00e9 et renfl\u00e9s \u00e0\nl'arri\u00e8re\nantennes et pattes\nnoires\nTaille : 2,4 \u00e0 3,5 cm"
     }
 }, {
-    "num": 6,
+    "id": 6, "num": 6,
     "title": "Carabe \u00e0 reflets cuivr\u00e9s",
     "difficulty": 3,
     "seasons": [{
@@ -95,7 +95,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-t\u00eate et pronotum (segment du thorax situ\u00e9 derri\u00e8re la t\u00eate) de couleur rouge\n-\u00e9lytres verts portant chacun 3 larges lignes saillantes noires\nTaille : 1,9 \u00e0 2,8 cm"
     }
 }, {
-    "num": 7,
+    "id": 7, "num": 7,
     "title": "\"Calosoma Sycophanta\u2028  \"",
     "difficulty": 2,
     "seasons": [{
@@ -111,7 +111,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-t\u00eate et pronotum (segment du thorax\nsitu\u00e9 derri\u00e8re la t\u00eate) noirs bleu\u00e2tres\n-\u00e9lytres stri\u00e9s aux couleurs m\u00e9talliques\ntr\u00e8s brillantes\n-pattes noires\nTaille : 2,1 \u00e0 3,5 cm"
     }
 }, {
-    "num": 8,
+    "id": 8, "num": 8,
     "title": "Damier du ch\u00e8vrefeuille",
     "difficulty": 3,
     "seasons": [{
@@ -127,7 +127,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\nddessus des ailes couleur marronmarron\nfonc\u00e9 avec un damier orange p\u00e2le\n-large bande sombre sur le dessus des ailes ant\u00e9rieures\nTaille : 4 cm"
     }
 }, {
-    "num": 9,
+    "id": 9, "num": 9,
     "title": "Le carabe aux pinces d'or  ",
     "difficulty": 2,
     "seasons": [{
@@ -143,7 +143,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-\u00e9lytres verts \u00e0 reflets m\u00e9talliques\nportant chacun 3 larges lignes saillantes vertes\n-thorax vert\nTaille : 1,7 \u00e0 2 cm"
     }
 }, {
-    "num": 10,
+    "id": 10, "num": 10,
     "title": "Au bouleau !",
     "difficulty": 1,
     "seasons": [{
@@ -159,7 +159,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n- chapeau en forme de console semi-circulaire\n-surface lisse\n-couleur marron clair sur le dessus et\nblanche dessous\nTaille : 5 \u00e0 30 cm"
     }
 }, {
-    "num": 11,
+    "id": 11, "num": 11,
     "title": "\"Langue de b\u0153uf\u2028  \"",
     "difficulty": 2,
     "seasons": [{
@@ -175,7 +175,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\nchapeau en forme de console ou de\nlangue\nsurface visqueuse couverte de\npetites asp\u00e9rit\u00e9s\ncouleur rouge brique\nTaille : 7 \u00e0 25 cm"
     }
 }, {
-    "num": 12,
+    "id": 12, "num": 12,
     "title": "Fomitopsis pinicola",
     "difficulty": 1,
     "seasons": [{
@@ -191,7 +191,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-chapeau en forme de sabot de cheval ou\nen console de couleur jaune orang\u00e9 \u00e0\nrouge orang\u00e9\n-recouvert d'une cro\u00fbte verniss\u00e9e fonc\u00e9e\n-pas de pied\nTaille : 3 \u00e0 10 cm"
     }
 }, {
-    "num": 13,
+    "id": 13, "num": 13,
     "title": "\"Le champignon au c\u0153ur de feu\u2028\"",
     "difficulty": 1,
     "seasons": [{
@@ -207,7 +207,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-chapeau en forme de sabot de cheval\nou en console grav\u00e9 de sillons\nconcentriques\n-pas de pied\n-bossu au sommet\n-les jeunes sp\u00e9cimens d\u00e9gagent une\nodeur de banane\nTaille : 10 \u00e0 40 cm"
     }
 }, {
-    "num": 14,
+    "id": 14, "num": 14,
     "title": "P'tit gris !",
     "difficulty": 1,
     "seasons": [{
@@ -223,7 +223,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\ncoquille en bandes spirales mouchet\u00e9es\ninterrompues de fines z\u00e9brures claires\ncouleur brune ray\u00e9e de noir\nTaille : 2,5 \u00e0 3,5 cm"
     }
 }, {
-    "num": 15,
+    "id": 15, "num": 15,
     "title": "\"Cap \u00e0 l'Est !\u2028  \"",
     "difficulty": 3,
     "seasons": [{
@@ -239,7 +239,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-dessus de l'aile post\u00e9rieure avec 3\nou 4 ocelles noir\u00e2tres cercl\u00e9s\nd'orange\n-dessous de l'aile post\u00e9rieure avec 6\ngros ocelles noirs pupill\u00e9s de blanc\ndispos\u00e9s en arc-de-cercle et\nentour\u00e9s d'orange vif\nTaille : 1,5 \u00e0 1,7 cm"
     }
 }, {
-    "num": 16,
+    "id": 16, "num": 16,
     "title": "Un Tabac sans risque",
     "difficulty": 1,
     "seasons": [{
@@ -255,7 +255,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-tr\u00e8s grandes ailes de couleur orange fauve avec des gros points noirs sur le dessus \n-revers des ailes post\u00e9rieures de couleur olive et travers\u00e9s par des bandes argen-\nt\u00e9es\nTaille : 6 \u00e0 8 cm"
     }
 }, {
-    "num": 17,
+    "id": 17, "num": 17,
     "title": "Bob le pap' !   ",
     "difficulty": 1,
     "seasons": [{
@@ -271,7 +271,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\nailes tr\u00e8s d\u00e9coup\u00e9es de couleur orange\nvif sur le dessus\ntache blanche en forme de C sur le\ndessous de l'aile post\u00e9rieure\nTaille : 4,5 cm"
     }
 }, {
-    "num": 18,
+    "id": 18, "num": 18,
     "title": "Un p'tit Mars et \u00e7a repart !",
     "difficulty": 1,
     "seasons": [{
@@ -287,7 +287,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-tache sombre nette cercl\u00e9e sur le dessus de l'aile ant\u00e9rieure \n-dessous peu contrast\u00e9 ocre p\u00e2le \u00e0 oran-\ng\u00e9, travers\u00e9 par une bande claire moins marqu\u00e9e que chez le Grand Mars\nTaille : 6 \u00e0 7 cm"
     }
 }, {
-    "num": 19,
+    "id": 19, "num": 19,
     "title": "Mission pour Mars   ",
     "difficulty": 1,
     "seasons": [{
@@ -303,7 +303,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-bande blanche formant presque un V sur le dessus des 4 ailes\n-pas de tache sombre nette cercl\u00e9e sur le dessus des ailes ant\u00e9rieures\n-dessous des ailes post\u00e9rieures tr\u00e8s contrast\u00e9 et marqu\u00e9 d'une large flamme blanche\nTaille : 7 \u00e0 8 cm"
     }
 }, {
-    "num": 20,
+    "id": 20, "num": 20,
     "title": "Quelle Aurore !",
     "difficulty": 1,
     "seasons": [{
@@ -319,7 +319,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-revers des 4 ailes blanc tachet\u00e9 de verd\u00e2tre chez les deux sexes\n-grande t\u00e2che orang\u00e9e sur la moiti\u00e9 des 2\nailes ant\u00e9rieures chez le m\u00e2le\nTaille : 4 cm"
     }
 }, {
-    "num": 21,
+    "id": 21, "num": 21,
     "title": "Attention fragile  ",
     "difficulty": 2,
     "seasons": [{
@@ -335,7 +335,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-petite t\u00eate \u00e0 museau conique et arrondi\n-peau lisse et brillante\n-pr\u00e9sence de paupi\u00e8res mobiles, il peut \ncligner des yeux\nTaille : 30 \u00e0 50 cm"
     }
 }, {
-    "num": 22,
+    "id": 22, "num": 22,
     "title": "Multit\u00e2ches !",
     "difficulty": 2,
     "seasons": [{
@@ -351,7 +351,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-peau noire lisse et luisante avec des\ntaches et des bandes jaunes \u00e0 orange\n-yeux saillants noirs\nTaille : 12 \u00e0 20 cm"
     }
 }, {
-    "num": 23,
+    "id": 23, "num": 23,
     "title": "Un bon cru (de Bourgogne !)  ",
     "difficulty": 3,
     "seasons": [{
@@ -367,7 +367,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-coquille blanc-cr\u00e8me \u00e0 5 ou 6 tours de\nspires avec des stries fines brun fonc\u00e9\n-grande ouverture \u00e0 rebord \u00e9pais\nTaille : 3 \u00e0 5 cm"
     }
 }, {
-    "num": 24,
+    "id": 24, "num": 24,
     "title": "Mission Soucoupe",
     "difficulty": 2,
     "seasons": [{
@@ -383,7 +383,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-coquille grise en forme de soucoupe, ramass\u00e9e et aplatie du haut vers le bas\n-aspect granuleux\nTaille : 1,2 \u00e0 2 cm"
     }
 }, {
-    "num": 25,
+    "id": 25, "num": 25,
     "title": "\u00c7a sent (bon) le musc  ",
     "difficulty": 3,
     "seasons": [{
@@ -399,7 +399,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-\u00e9lytres granuleux aux couleurs m\u00e9talli-\nques, du vert d'airain au violet\n-pronotum (segment du thorax situ\u00e9 der-\nri\u00e8re la t\u00eate) parfois rouge\nTaille : 1,5 \u00e0 3,2 cm"
     }
 }, {
-    "num": 26,
+    "id": 26, "num": 26,
     "title": "Sous le signe du Grand capricorne",
     "difficulty": 1,
     "seasons": [{
@@ -415,7 +415,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-pronotum (segment du thorax situ\u00e9 \nderri\u00e8re la t\u00eate) plus \u00e9troit \u00e0 l'avant qu'\u00e0 \nl'arri\u00e8re\n-\u00e9lytres noirs r\u00e9tr\u00e9cis vers l'arri\u00e8re \u00e0 l'as-\npect granuleux qui s'estompe vers l'arri\u00e8re\n-apex (extr\u00e9mit\u00e9 des \u00e9lytres) brun-rouge\u00e2tre\nTaille : 2,5 \u00e0 5 cm\nAntennes : 8 cm"
     }
 }, {
-    "num": 27,
+    "id": 27, "num": 27,
     "title": "Sous le signe du Petit capricorne  ",
     "difficulty": 1,
     "seasons": [{
@@ -431,7 +431,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-\u00e9lytres tr\u00e8s granuleux, \u00e0 la diff\u00e9rence du Grand capricorne\n-apex (extr\u00e9mit\u00e9 des \u00e9lytres) noir\nTaille : 1,7 \u00e0 2,8 cm"
     }
 }, {
-    "num": 28,
+    "id": 28, "num": 28,
     "title": "Jaune \u00e0 points noirs",
     "difficulty": 1,
     "seasons": [{
@@ -447,7 +447,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-corps jaune avec 4 bandes transversales noires variables et 2 points isol\u00e9s sur le haut des \u00e9lytres\n-antennes noires avec des lignes jaunes\nTaille : 1,5 \u00e0 1,7 cm"
     }
 }, {
-    "num": 29,
+    "id": 29, "num": 29,
     "title": "Z\u00e8bre \u00e0 coquille  ",
     "difficulty": 3,
     "seasons": [{
@@ -463,7 +463,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-coquille moyenne et ovo\u00efde de couleur blanche \u00e0 cr\u00e8me\n-spires (tours de coquille) couvertes de z\u00e9brures brun\u00e2tres\nTaille : 10 \u00e0 18 mm"
     }
 }, {
-    "num": 30,
+    "id": 30, "num": 30,
     "title": "Un rhinoc\u00e9ros dans la for\u00eat",
     "difficulty": 3,
     "seasons": [{
@@ -479,7 +479,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-couleur brun rouge\u00e2tre ou ch\u00e2tain plus ou moins fonc\u00e9, d'aspect verniss\u00e9\n-corne recourb\u00e9e sur le devant de la t\u00eate chez le m\u00e2le\n-poils roux sous le dessous du corps\nTaille : 2 \u00e0 4 cm"
     }
 }, {
-    "num": 31,
+    "id": 31, "num": 31,
     "title": "Mission Anne Tondespins  ",
     "difficulty": 3,
     "seasons": [{
@@ -495,7 +495,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-\u00e9lytres parsem\u00e9s de points et de taches blanches irr\u00e9guli\u00e8res. \n-petites \u00e9cailles blanches sur la t\u00eate\n-le m\u00e2le dispose d'\u00e9normes antennes en \u00e9ventail compos\u00e9es de sept feuillets\nTaille : 3,2 \u00e0 4 cm"
     }
 }, {
-    "num": 32,
+    "id": 32, "num": 32,
     "title": "Champi Jelly",
     "difficulty": 2,
     "seasons": [{
@@ -511,7 +511,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-texture g\u00e9latineuse \u00e0 caoutchouteuse de couleur brun gris\u00e2tre p\u00e2le\n-aiguillons blancs assez \u00e9pais sous le chapeau\nTaille : 3 \u00e0 7 cm"
     }
 }, {
-    "num": 33,
+    "id": 33, "num": 33,
     "title": "Dernier doigt d'la main  ",
     "difficulty": 3,
     "seasons": [{
@@ -527,7 +527,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-chapeau en forme de disque h\u00e9riss\u00e9 de poils gris\u00e2tres\n-bords du chapeau lob\u00e9s de couleur grise\n-face inf\u00e9rieure pliss\u00e9e ou vein\u00e9e et de couleur brune ou pourpre\nTaille : 5 \u00e0 15 cm \nEpaisseur : 0,3 \u00e0 0,5 cm"
     }
 }, {
-    "num": 34,
+    "id": 34, "num": 34,
     "title": "Mission soufr\u00e9e",
     "difficulty": 1,
     "seasons": [{
@@ -543,7 +543,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-plusieurs chapeaux superpos\u00e9s en forme d'\u00e9ventail\n-couleur jaune ros\u00e9 \u00e0 jaune orang\u00e9 \n-bords ondul\u00e9s \n-cassant lorsqu'il s\u00e8che\nTaille : jusqu'\u00e0 50 cm"
     }
 }, {
-    "num": 35,
+    "id": 35, "num": 35,
     "title": "Mission vert-de-gris  ",
     "difficulty": 3,
     "seasons": [{
@@ -559,7 +559,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-couleur bleu-vert vif\n-chapeau lisse en forme de coupe irr\u00e9gu-\nli\u00e8re mince\n-ne se d\u00e9veloppe qu'en amas de plusieurs individus\nTaille : 2 \u00e0 10 mm"
     }
 }, {
-    "num": 36,
+    "id": 36, "num": 36,
     "title": "Le monstre de Daldinie",
     "difficulty": 2,
     "seasons": [{
@@ -575,7 +575,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-chapeau tr\u00e8s dur de couleur marron-vio-\nlac\u00e9 \u00e0 noir brillant\n-aspect globuleux, vaguement bossel\u00e9\n-chair form\u00e9e de zones concentriques altern\u00e9es claires et noir\u00e2tres\nTaille : 5 \u00e0 7 cm"
     }
 }, {
-    "num": 37,
+    "id": 37, "num": 37,
     "title": "Touchons du bois !  ",
     "difficulty": 2,
     "seasons": [{
@@ -591,7 +591,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-pas de chapeau mais des petits rameaux de 2 \u00e0 8 cm\n-couleur blanch\u00e2tre et noire \u00e0 la base\n-pied noir et duveteux\nTaille : 2 \u00e0 8 cm"
     }
 }, {
-    "num": 38,
+    "id": 38, "num": 38,
     "title": "Mission \u00e9trange !",
     "difficulty": 2,
     "seasons": [{
@@ -607,7 +607,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-thorax dens\u00e9ment recouvert de poils blonds\n-\u00e9lytres jaune p\u00e2le \n-petites taches en arri\u00e8re des \u00e9paules\n-apex (extr\u00e9mit\u00e9s des \u00e9lytres) noir\nTaille : 7 \u00e0 12 mm"
     }
 }, {
-    "num": 39,
+    "id": 39, "num": 39,
     "title": "B\u00e9lier \u00e0 \u00e9lytres  ",
     "difficulty": 1,
     "seasons": [{
@@ -623,7 +623,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-antennes noires avec les premiers articles roux\n-pattes rousses\n-deux premi\u00e8res taches jaunes des \u00e9lytres horizontales\n-bande jaune en \u00ab V \u00bb sur les \u00e9lytres\nTaille : 8 \u00e0 14 mm"
     }
 }, {
-    "num": 40,
+    "id": 40, "num": 40,
     "title": "Miss \u00c9l\u00e9gante",
     "difficulty": 2,
     "seasons": [{
@@ -639,7 +639,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-motif de la coquille ressemblant \u00e0 un treillis\n-poss\u00e8de un mufle (sorte de trompe)\n-pied divis\u00e9 longitudinalement en deux parties qui se d\u00e9placent s\u00e9par\u00e9ment\nTaille : 10 \u00e0 15 mm"
     }
 }, {
-    "num": 41,
+    "id": 41, "num": 41,
     "title": "Maillot d'escargot  ",
     "difficulty": 2,
     "seasons": [{
@@ -655,7 +655,7 @@
         "characteristic": "Caract\u00e8res distinctifs :\n-coquille cylindrique en forme de fuseau\n-spires (tours de coquille) finement stri\u00e9es obliquement de couleur gris cendre\n-dents \u00e0 l'orifice d'entr\u00e9e de la coquille\nTaille : 3,5 \u00e0 14 mm"
     }
 }, {
-    "num": 42,
+    "id": 42, "num": 42,
     "title": "Un Lamie pour la vie ?",
     "difficulty": 1,
     "seasons": [{

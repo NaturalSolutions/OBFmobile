@@ -53,12 +53,12 @@ module.exports = Marionette.Object.extend({
             rgMain.currentView.setTab(tab);
     },
 
-    missionSheet: function(num) {
+    missionSheet: function(id) {
         var self = this;
-        num = parseInt(num);
+        id = parseInt(id);
         var MissionModel = require('../models/mission');
         var mission = MissionModel.collection.getInstance().findWhere({
-            num: num
+            srcId: id
         });
 
         var View = require('../mission/mission.view');

@@ -70,11 +70,12 @@ function init() {
                 if ( data.length ) {
                     deferred.resolve();
                 } else {
-                    $.get('./data/missions.json')
-                        .then(function(response) {
-                            var missionDatas = JSON.parse(response);
+                    $.getJSON('./data/missions.json')
+                        .then(function(missionDatas) {
+                            //var missionDatas = JSON.parse(response);
                             _.forEach(missionDatas, function(missionData) {
                                 var mission = new Mission.Model({
+                                    srcId: missionData.id,
                                     num: missionData.num,
                                     title: missionData.title,
                                     seasons: missionData.seasons,

@@ -82,7 +82,7 @@ var View = Marionette.LayoutView.extend({
             console.log("Response = " + r.response);
             console.log("Sent = " + r.bytesSent);
             var resData = JSON.parse(r.response);
-            self.createObservation('http://192.168.0.17/DRUPAL/OBF_BACK/www/sites/default/files/' + resData.data[0].label, resData.data[0].id);
+            self.createObservation(config.coreUrl +'/sites/default/files/' + resData.data[0].label, resData.data[0].id);
         };
 
         var fail = function(error) {
@@ -93,7 +93,7 @@ var View = Marionette.LayoutView.extend({
         /* jshint ignore:start */
         var options = new FileUploadOptions();
         options.fileName = f.substr(f.lastIndexOf('/') + 1);
-        ft.upload(f, encodeURI("http://192.168.0.17/DRUPAL/OBF_BACK/www/api/file-upload"), win, fail, options);
+        ft.upload(f, encodeURI(config.apiUrl +"/file-upload"), win, fail, options);
         /* jshint ignore:end */
     },
 
@@ -141,7 +141,7 @@ var View = Marionette.LayoutView.extend({
         //set observation model
         observationModel.set({
             'date': this.moment().format("X"),
-            'photo': [{
+            'photos': [{
                 'url': fe ? fe : '',
                 'external_id': id ? id : ''
             }]

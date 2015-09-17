@@ -6,6 +6,7 @@ var Backbone = require('backbone'),
 
 var Model = Backbone.Model.extend({
 	defaults: {
+		srcId: 0,
 		externId: '',
 		num: 0,
 		title: '',

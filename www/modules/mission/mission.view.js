@@ -1,5 +1,6 @@
 'use strict';
-var Marionette = require('backbone.marionette');
+var Marionette = require('backbone.marionette'),
+    Observation = require('../models/observation');
 
 module.exports = Marionette.LayoutView.extend({
     header: 'none',
@@ -21,6 +22,10 @@ module.exports = Marionette.LayoutView.extend({
         var self = this;
 
         self.listenTo(self.model, 'change', self.onAcceptChange);
+        self.listenTo(Observation.collection.getInstance(), 'add', function(observation) {
+            observation.set('missionId', self.model.get('srcId'));
+            observation.save();
+        });
     },
 
     serializeData: function() {

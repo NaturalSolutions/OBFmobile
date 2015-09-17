@@ -25,7 +25,7 @@ var Layout = Marionette.LayoutView.extend({
 
     initialize: function() {
         this.observationModel = this.model;
-        this.observationModel.on("change:photo", this.render, this);
+        this.observationModel.on("change:photos", this.render, this);
     },
 
     serializeData: function() {
@@ -150,10 +150,10 @@ var Layout = Marionette.LayoutView.extend({
             'url': fe ? fe : '',
             'external_id': id ? id : ''
         };
-        this.observationModel.get('photo')
+        this.observationModel.get('photos')
             .push(newValue);
         this.observationModel.save();
-        this.observationModel.trigger('change:photo', this.observationModel);
+        this.observationModel.trigger('change:photos', this.observationModel);
     },
 
     //TODO if fields are not update departement and mission don't exist
@@ -163,13 +163,13 @@ var Layout = Marionette.LayoutView.extend({
         e.preventDefault();
 
 
-        //clear data photo
+        //clear data photos
         var clearPhoto = function(args) {
-            var photo = [];
+            var photos = [];
             args.forEach(function(item, key) {
-                photo[key] = item.external_id;
+                photos[key] = item.external_id;
             });
-            return photo.join();
+            return photos.join();
         };
 
         //data expected by the server
@@ -177,8 +177,8 @@ var Layout = Marionette.LayoutView.extend({
             'title': this.observationModel.get('mission') + '_' + this.observationModel.get('date'),
             'date': this.date,
             'departement': this.observationModel.get('departement'),
-            'mission_id': this.observationModel.get('mission'),
-            'photo': clearPhoto(this.observationModel.get('photo'))
+            'missionId': this.observationModel.get('mission'),
+            'photos': clearPhoto(this.observationModel.get('photos'))
         };
         var virginModel = new ObsModel.model.ClassDef();
         virginModel.save(data, {
