@@ -37,37 +37,10 @@ module.exports = function(grunt) {
                 tasks: ['browserify:dev']
             },
             css: {
-                // files: [
-                //     'www/css/page-container.css',
-                //     'www/vendor/bootstrap-dialog/css/bootstrap-dialog.css',
-                    //'www/js/**/*.css',
-                //     'www/css/general.css',
-                // ],
-                // tasks: ['cssmin']
                 files: ['www/modules/**/*.less', 'www/less/*'],
                 tasks: ['less']
             },
         },
-        // cssmin: {
-        //     options: {
-        //         sourceMap: true,
-        //         roundingPrecision: -1
-        //     },
-        //     target: {
-        //         files: {
-        //             'www/css/index.css': [
-        //                 './node_modules/bootstrap-slider/css/bootstrap-slider.css',
-        //                 './node_modules/bootstrap/dist/css/bootstrap.min.css',
-        //                 './node_modules/planet-maps/dist/ol.css',
-        //                 './node_modules/swiper/dist/css/swiper.min.css',
-        //                 './www/vendor/bootstrap-dialog/css/bootstrap-dialog.css',
-        //                 './www/css/general.css',
-        //                 './www/css/page-container.css',
-        //                 './www/js/**/*.css'
-        //             ]
-        //         }
-        //     }
-        // },
         less: {
             dist: {
                 files: {
@@ -119,13 +92,12 @@ module.exports = function(grunt) {
                 dest: 'www/fonts/',
                 filter: 'isFile',
                 flatten: true
-            },
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-contrib-less');
