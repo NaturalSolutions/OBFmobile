@@ -3,21 +3,22 @@
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     $ = require('jquery'),
+    _ = require('lodash'),
     ObsModel = require('../models/observation'),
     departement = require('../models/departement'),
-    mission = require('../models/mission')
-    ;
+    mission = require('../models/mission');
 //i18n = require('i18n');
 
 var Layout = Marionette.LayoutView.extend({
     header: 'none',
     template: require('./observation.tpl.html'),
     className: 'page observation ns-full-height',
-    events: {                
+    events: {
         'click .submit': 'sendObs',
         'focusout .updateDept-js': 'updateField',
         'focusout .updateMission-js': 'updateField',
-        'submit form#form-picture': 'uploadPhoto'
+        'submit form#form-picture': 'uploadPhoto',
+        'click .capturePhoto-js': 'capturePhoto',
     },
 
     initialize: function() {
@@ -63,6 +64,83 @@ var Layout = Marionette.LayoutView.extend({
                 self.addPhoto('http://localhost/DRUPAL/OBF_BACK/www/sites/default/files/' + response.data[0].label, response.data[0].id);
             }
         });
+    },
+
+    capturePhoto: function() {
+        // Take picture using device camera and retrieve image as a local path
+        navigator.camera.getPicture(
+            _.bind(this.onSuccess, this),
+            _.bind(this.onFail, this), {
+                /* jshint ignore:start */
+                quality: 75,
+                destinationType: Camera.DestinationType.FILE_URI,
+                correctOrientation: true,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                /* jshint ignore:end */
+            }
+        );
+    },
+
+    uploadPhotoMob: function(f) {
+        var self = this;
+
+        /* jshint ignore:start */
+        var ft = new FileTransfer();
+        /* jshint ignore:end */
+        var win = function(r) {
+            console.log("Code = " + r.responseCode);
+            console.log("Response = " + r.response);
+            console.log("Sent = " + r.bytesSent);
+            var resData = JSON.parse(r.response);
+            self.addPhoto('http://localhost/DRUPAL/OBF_BACK/www/sites/default/files/' + resData.data[0].label, resData.data[0].id);
+        };
+
+        var fail = function(error) {
+            alert("An error has occurred: Code = " + error.code);
+            console.log("upload error source " + error.source);
+            console.log("upload error target " + error.target);
+        };
+        /* jshint ignore:start */
+        var options = new FileUploadOptions();
+        options.fileName = f.substr(f.lastIndexOf('/') + 1);
+        ft.upload(f, encodeURI("http://192.168.0.17/DRUPAL/OBF_BACK/www/api/file-upload"), win, fail, options);
+        /* jshint ignore:end */
+    },
+
+    onSuccess: function(imageURI) {
+        var self = this;
+
+        if (window.cordova) {
+            //TODO put tag projet in config
+            var tagprojet = "noe-obf";
+            var fsFail = function(error) {
+                console.log("failed with error code: " + error.code);
+            };
+            var copiedFile = function(fileEntry) {
+                // save observation and navigate to obsvertion
+                self.uploadPhotoMob(fileEntry.nativeURL);
+
+            };
+            var gotFileEntry = function(fileEntry) {
+                console.log("got image file entry: " + fileEntry.nativeURL);
+                var gotFileSystem = function(fileSystem) {
+                    fileSystem.root.getDirectory(tagprojet, {
+                        create: true,
+                        exclusive: false
+                    }, function(dossier) {
+                        fileEntry.moveTo(dossier, (new Date()).getTime() + '_' + tagprojet + '.jpg', copiedFile, fsFail);
+                    }, fsFail);
+                };
+                /* jshint ignore:start */
+                window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFileSystem, fsFail);
+                /* jshint ignore:end */
+            };
+            window.resolveLocalFileSystemURI(imageURI, gotFileEntry, fsFail);
+        }
+    },
+
+    onFail: function(message) {
+        alert(message);
     },
 
     addPhoto: function(fe, id) {
