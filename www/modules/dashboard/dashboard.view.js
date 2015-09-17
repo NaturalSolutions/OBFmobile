@@ -19,13 +19,13 @@ var ClassDef = Marionette.LayoutView.extend({
 	curTab: null,
 	tabs: {
 		missions: {
-			ClassDef: require('./missions.view')
+			ClassDef: require('./dashboard_missions.view')
 		},
 		activities: {
-			ClassDef: require('./activities.view')
+			ClassDef: require('./dashboard_activities.view')
 		},
 		observations: {
-			ClassDef: require('./observations.view')
+			ClassDef: require('./dashboard_observations.view')
 		},
 	},
 

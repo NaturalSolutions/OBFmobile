@@ -5,7 +5,7 @@ var Backbone = require('backbone'),
     _ = require('lodash');
 
 var ClassDef = Marionette.LayoutView.extend({
-	template: require('./missions.tpl.html'),
+	template: require('./dashboard_missions.tpl.html'),
 	className: 'inner',
 	events: {
 	},

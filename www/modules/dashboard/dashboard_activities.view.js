@@ -3,7 +3,7 @@ var Backbone = require('backbone'),
     Marionette = require('backbone.marionette');
 
 var ClassDef = Marionette.LayoutView.extend({
-	template: require('./observations.tpl.html'),
+	template: require('./dashboard_activities.tpl.html'),
 	className: 'inner',
 	events: {
 	},
