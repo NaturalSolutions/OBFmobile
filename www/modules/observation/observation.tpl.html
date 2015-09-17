@@ -2,9 +2,17 @@
     <div class="inner">
         <span class="icon-camera material-icons">camera_alt</span>
         <% data.observation.photo.forEach(function(p){ %>
+        <div>
             <img class="editor-picture-img " src=" <%= p.url %>" style="width:200px;"/>
+            <button class="delete-photo-js">DELETE</button>
+        </div>
         <% }); %>
+<<<<<<< HEAD
         <form id="form-picture" enctype="multipart/form-data">
+=======
+        <% if(data.observation.photo.length < 3){ %>
+        <form id="form-picture" method="post" action="http://localhost/DRUPAL/OBF_BACK/www/api/file-upload" enctype="multipart/form-data">
+>>>>>>> the functionnality delete photo started
             <input type="file" name="image" accept="image/*" />
             <input type="submit" value="upload file"></input>
         </form>
@@ -13,6 +21,7 @@
             <span>Prendre une photo</span>
             <span>Modifier la photo</span>
         </button>
+        <% } %>
     </div>
 </div>
 <div class="container">

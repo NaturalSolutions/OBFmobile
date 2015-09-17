@@ -20,6 +20,7 @@ var Layout = Marionette.LayoutView.extend({
         'focusout .updateMission-js': 'updateField',
         'submit form#form-picture': 'uploadPhoto',
         'click .capturePhoto-js': 'capturePhoto',
+        'click .delete-photo-js': 'deletePhotoMobile'
     },
 
     initialize: function() {
@@ -192,6 +193,20 @@ var Layout = Marionette.LayoutView.extend({
             .fail(function(error) {
                 console.log(error);
             });
+    },
+    deletePhotoMobile: function(e){
+        var $currentButton = $(e.currentTarget);
+        this.urlPhoto = $currentButton.siblings().attr('src').trim();
+        var currentPhotos = this.observationModel.get('photo');
+        var functionUrl =  function(element){
+            console.log(element);
+            if(element.url === this.urlPhoto){
+                //delete file and item
+                console.log('match');
+            }
+
+        };
+        currentPhotos.filter(functionUrl,this);
     }
 });
 
