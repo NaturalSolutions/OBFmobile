@@ -61,7 +61,7 @@ var Layout = Marionette.LayoutView.extend({
             data: data,
             success: function(response) {
                 //TODO url into config
-                self.addPhoto('http://localhost/DRUPAL/OBF_BACK/www/sites/default/files/' + response.data[0].label, response.data[0].id);
+                self.addPhoto('http://192.168.0.17/DRUPAL/OBF_BACK/www/sites/default/files/' + response.data[0].label, response.data[0].id);
             }
         });
     },
@@ -92,7 +92,7 @@ var Layout = Marionette.LayoutView.extend({
             console.log("Response = " + r.response);
             console.log("Sent = " + r.bytesSent);
             var resData = JSON.parse(r.response);
-            self.addPhoto('http://localhost/DRUPAL/OBF_BACK/www/sites/default/files/' + resData.data[0].label, resData.data[0].id);
+            self.addPhoto('http://192.168.0.17/DRUPAL/OBF_BACK/www/sites/default/files/' + resData.data[0].label, resData.data[0].id);
         };
 
         var fail = function(error) {

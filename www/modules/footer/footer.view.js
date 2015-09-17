@@ -46,12 +46,7 @@ var View = Marionette.LayoutView.extend({
             success: function(response) {
                 console.log(response);
                 //TODO url into config
-                var urlServer;
-                if(window.cordova) {
-                    urlServer = 'http://192.168.0.17/DRUPAL/OBF_BACK/www/sites/default/files/';
-                }else{
-                    urlServer = 'http://localhost/DRUPAL/OBF_BACK/www/sites/default/files/';
-                }
+                var urlServer = 'http://192.168.0.17/DRUPAL/OBF_BACK/www/sites/default/files/';
                 self.createObservation(urlServer + response.data[0].label, response.data[0].id);
             },
             error: function(response) {
@@ -86,7 +81,7 @@ var View = Marionette.LayoutView.extend({
             console.log("Response = " + r.response);
             console.log("Sent = " + r.bytesSent);
             var resData = JSON.parse(r.response);
-            self.createObservation('http://localhost/DRUPAL/OBF_BACK/www/sites/default/files/' + resData.data[0].label, resData.data[0].id);
+            self.createObservation('http://192.168.0.17/DRUPAL/OBF_BACK/www/sites/default/files/' + resData.data[0].label, resData.data[0].id);
         };
 
         var fail = function(error) {
