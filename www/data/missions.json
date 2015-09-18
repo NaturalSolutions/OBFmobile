@@ -32,7 +32,7 @@
     }
 }, {
     "id": 3, "num": 3,
-    "title": "\"Ah ! Les belles Bacchantes\u2028  \"",
+    "title": "Ah ! Les belles Bacchantes  ",
     "difficulty": 2,
     "seasons": [{
         "startAt": "06",
@@ -64,7 +64,7 @@
     }
 }, {
     "id": 5, "num": 5,
-    "title": "\"Splendide en Pays d'Oc\u2028  \"",
+    "title": "Splendide en Pays d'Oc  ",
     "difficulty": 2,
     "seasons": [{
         "startAt": "04",
@@ -96,7 +96,7 @@
     }
 }, {
     "id": 7, "num": 7,
-    "title": "\"Calosoma Sycophanta\u2028  \"",
+    "title": "Calosoma Sycophanta  ",
     "difficulty": 2,
     "seasons": [{
         "startAt": "03",
@@ -160,7 +160,7 @@
     }
 }, {
     "id": 11, "num": 11,
-    "title": "\"Langue de b\u0153uf\u2028  \"",
+    "title": "Langue de b\u0153uf  ",
     "difficulty": 2,
     "seasons": [{
         "startAt": "08",
@@ -192,7 +192,7 @@
     }
 }, {
     "id": 13, "num": 13,
-    "title": "\"Le champignon au c\u0153ur de feu\u2028\"",
+    "title": "Le champignon au c\u0153ur de feu",
     "difficulty": 1,
     "seasons": [{
         "startAt": "08",
@@ -224,7 +224,7 @@
     }
 }, {
     "id": 15, "num": 15,
-    "title": "\"Cap \u00e0 l'Est !\u2028  \"",
+    "title": "Cap \u00e0 l'Est !  ",
     "difficulty": 3,
     "seasons": [{
         "startAt": "05",
@@ -234,7 +234,7 @@
     "taxon": {
         "title": "M\u00e9lib\u00e9e",
         "family": "lepidopteres",
-        "description": "\"Le M\u00e9lib\u00e9e est un petit papillon de 15 \u00e0 17mm d'envergure. Le dessus de son aile ant\u00e9rieure est uniform\u00e9ment brun fonc\u00e9, tandis que le dessus de son aile post\u00e9rieure est brun avec 3 ou 4 ocelles noir\u00e2tres cercl\u00e9s d'orange.\u2028Le dessous de l'aile post\u00e9rieure est gris-brun dans sa partie basale et pr\u00e9sente successivement vers l'extr\u00e9mit\u00e9 de l'aile : une large bande blanche irr\u00e9guli\u00e8re, 6 gros ocelles noirs pupill\u00e9s de blanc dispos\u00e9s en arc-de-cercle et entour\u00e9s d'orange vif, une ligne argent\u00e9e brillante et une bande orange soulign\u00e9e de noir, puis de blanc.\"",
+        "description": "\"Le M\u00e9lib\u00e9e est un petit papillon de 15 \u00e0 17mm d'envergure. Le dessus de son aile ant\u00e9rieure est uniform\u00e9ment brun fonc\u00e9, tandis que le dessus de son aile post\u00e9rieure est brun avec 3 ou 4 ocelles noir\u00e2tres cercl\u00e9s d'orange.Le dessous de l'aile post\u00e9rieure est gris-brun dans sa partie basale et pr\u00e9sente successivement vers l'extr\u00e9mit\u00e9 de l'aile : une large bande blanche irr\u00e9guli\u00e8re, 6 gros ocelles noirs pupill\u00e9s de blanc dispos\u00e9s en arc-de-cercle et entour\u00e9s d'orange vif, une ligne argent\u00e9e brillante et une bande orange soulign\u00e9e de noir, puis de blanc.\"",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/lepidopteres\/melibee\/",
         "characteristic": "Caract\u00e8res distinctifs :\n-dessus de l'aile post\u00e9rieure avec 3\nou 4 ocelles noir\u00e2tres cercl\u00e9s\nd'orange\n-dessous de l'aile post\u00e9rieure avec 6\ngros ocelles noirs pupill\u00e9s de blanc\ndispos\u00e9s en arc-de-cercle et\nentour\u00e9s d'orange vif\nTaille : 1,5 \u00e0 1,7 cm"
     }
