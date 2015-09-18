@@ -13,7 +13,7 @@ var ObservationModel = Backbone.Model.extend({
         //     photos:[],
         //     departement: '',
         //     shared: 0,
-        //     external_id: ''
+        //     externalId: ''
         // }
         url: config.apiUrl +'/v1.0/observations',
 });

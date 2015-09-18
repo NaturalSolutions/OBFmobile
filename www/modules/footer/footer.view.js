@@ -71,31 +71,31 @@ var View = Marionette.LayoutView.extend({
         );
     },
 
-    uploadPhotoMob: function(f) {
-        var self = this;
+    // uploadPhotoMob: function(f) {
+    //     var self = this;
 
-        /* jshint ignore:start */
-        var ft = new FileTransfer();
-        /* jshint ignore:end */
-        var win = function(r) {
-            console.log("Code = " + r.responseCode);
-            console.log("Response = " + r.response);
-            console.log("Sent = " + r.bytesSent);
-            var resData = JSON.parse(r.response);
-            self.createObservation(config.coreUrl +'/sites/default/files/' + resData.data[0].label, resData.data[0].id);
-        };
+    //     /* jshint ignore:start */
+    //     var ft = new FileTransfer();
+    //     /* jshint ignore:end */
+    //     var win = function(r) {
+    //         console.log("Code = " + r.responseCode);
+    //         console.log("Response = " + r.response);
+    //         console.log("Sent = " + r.bytesSent);
+    //         var resData = JSON.parse(r.response);
+    //         self.createObservation(config.coreUrl +'/sites/default/files/' + resData.data[0].label, resData.data[0].id);
+    //     };
 
-        var fail = function(error) {
-            alert("An error has occurred: Code = " + error.code);
-            console.log("upload error source " + error.source);
-            console.log("upload error target " + error.target);
-        };
-        /* jshint ignore:start */
-        var options = new FileUploadOptions();
-        options.fileName = f.substr(f.lastIndexOf('/') + 1);
-        ft.upload(f, encodeURI(config.apiUrl +"/file-upload"), win, fail, options);
-        /* jshint ignore:end */
-    },
+    //     var fail = function(error) {
+    //         alert("An error has occurred: Code = " + error.code);
+    //         console.log("upload error source " + error.source);
+    //         console.log("upload error target " + error.target);
+    //     };
+    //     /* jshint ignore:start */
+    //     var options = new FileUploadOptions();
+    //     options.fileName = f.substr(f.lastIndexOf('/') + 1);
+    //     ft.upload(f, encodeURI(config.apiUrl +"/file-upload"), win, fail, options);
+    //     /* jshint ignore:end */
+    // },
 
     onSuccess: function(imageURI) {
         var self = this;
@@ -108,7 +108,8 @@ var View = Marionette.LayoutView.extend({
             };
             var copiedFile = function(fileEntry) {
                 // save observation and navigate to obsvertion
-                self.uploadPhotoMob(fileEntry.nativeURL);
+                // self.uploadPhotoMob(fileEntry.nativeURL);
+                self.createObservation(fileEntry.nativeURL);
 
             };
             var gotFileEntry = function(fileEntry) {
@@ -143,7 +144,7 @@ var View = Marionette.LayoutView.extend({
             'date': this.moment().format("X"),
             'photos': [{
                 'url': fe ? fe : '',
-                'external_id': id ? id : ''
+                'externalId': id ? id : ''
             }]
         });
         //Save observation in localstorage

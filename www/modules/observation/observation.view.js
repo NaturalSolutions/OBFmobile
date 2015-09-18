@@ -15,7 +15,7 @@ var Layout = Marionette.LayoutView.extend({
     template: require('./observation.tpl.html'),
     className: 'page observation ns-full-height',
     events: {
-        'click .submit': 'sendObs',
+        'click .submit': 'sendPhoto',
         'focusout .updateDept-js': 'updateField',
         'focusout .updateMission-js': 'updateField',
         'submit form#form-picture': 'uploadPhoto',
@@ -55,7 +55,7 @@ var Layout = Marionette.LayoutView.extend({
         var data = (formdata !== null) ? formdata : $form.serialize();
 
         $.ajax({
-            url: config.apiUrl +'/file-upload',
+            url: config.apiUrl + '/file-upload',
             type: 'post',
             contentType: false, // obligatoire pour de l'upload
             processData: false, // obligatoire pour de l'upload
@@ -63,7 +63,7 @@ var Layout = Marionette.LayoutView.extend({
             data: data,
             success: function(response) {
                 //TODO url into config
-                self.addPhoto(config.coreUrl +'/sites/default/files/' + response.data[0].label, response.data[0].id);
+                self.addPhoto(config.coreUrl + '/sites/default/files/' + response.data[0].label, response.data[0].id);
             }
         });
     },
@@ -85,7 +85,7 @@ var Layout = Marionette.LayoutView.extend({
 
     uploadPhotoMob: function(f) {
         var self = this;
-
+        var dfdUpload = $.Deferred();
         /* jshint ignore:start */
         var ft = new FileTransfer();
         /* jshint ignore:end */
@@ -94,7 +94,18 @@ var Layout = Marionette.LayoutView.extend({
             console.log("Response = " + r.response);
             console.log("Sent = " + r.bytesSent);
             var resData = JSON.parse(r.response);
-            self.addPhoto(config.coreUrl +'/sites/default/files/' + resData.data[0].label, resData.data[0].id);
+
+            var currentPhotos = self.observationModel.get('photos');
+            var photo = _.find(currentPhotos, {
+                url: f
+            });
+            photo.label = resData.data[0].label;
+            photo.externalId = resData.data[0].id;
+
+            self.observationModel.save()
+                .done(function() {
+                    dfdUpload.resolve(self.observationModel.get('photos'));
+                });
         };
 
         var fail = function(error) {
@@ -105,8 +116,10 @@ var Layout = Marionette.LayoutView.extend({
         /* jshint ignore:start */
         var options = new FileUploadOptions();
         options.fileName = f.substr(f.lastIndexOf('/') + 1);
-        ft.upload(f, encodeURI(config.apiUrl +"/file-upload"), win, fail, options);
+        ft.upload(f, encodeURI(config.apiUrl + "/file-upload"), win, fail, options);
         /* jshint ignore:end */
+
+        return dfdUpload;
     },
 
     onSuccess: function(imageURI) {
@@ -119,8 +132,7 @@ var Layout = Marionette.LayoutView.extend({
                 console.log("failed with error code: " + error.code);
             };
             var copiedFile = function(fileEntry) {
-                // save observation and navigate to obsvertion
-                self.uploadPhotoMob(fileEntry.nativeURL);
+                self.addPhoto(fileEntry.nativeURL);
 
             };
             var gotFileEntry = function(fileEntry) {
@@ -145,10 +157,10 @@ var Layout = Marionette.LayoutView.extend({
         alert(message);
     },
 
-    addPhoto: function(fe, id) {
+    addPhoto: function(fe, extId) {
         var newValue = {
-            'url': fe ? fe : '',
-            'external_id': id ? id : ''
+            'url': fe || '',
+            'externalId': extId || ''
         };
         this.observationModel.get('photos')
             .push(newValue);
@@ -157,28 +169,43 @@ var Layout = Marionette.LayoutView.extend({
     },
 
     //TODO if fields are not update departement and mission don't exist
-    sendObs: function(e) {
+    sendPhoto: function(e) {
+        var self = this;
+        e.preventDefault();
+        if (window.cordova) {
+            var nbPhoto = (this.observationModel.get('photos').length) - 1;
+            var Adfd = [];
+            this.observationModel.get('photos').forEach(function(p, key) {
+                Adfd.push(self.uploadPhotoMob(p.url));
+            });
+            $.when.apply($,Adfd).done(function(r) {
+                        console.log(r);
+                        self.sendObs();
+                        });
+        } else {
+            self.sendObs();
+        }
+    },
+    sendObs: function() {
         var self = this;
         //TODO add User in title if exist
-        e.preventDefault();
-
 
         //clear data photos
         var clearPhoto = function(args) {
             var photos = [];
             args.forEach(function(item, key) {
-                photos[key] = item.external_id;
+                photos[key] = item.externalId;
             });
             return photos.join();
         };
 
         //data expected by the server
         var data = {
-            'title': this.observationModel.get('mission') + '_' + this.observationModel.get('date'),
-            'date': this.date,
-            'departement': this.observationModel.get('departement'),
-            'missionId': this.observationModel.get('mission'),
-            'photos': clearPhoto(this.observationModel.get('photos'))
+            'title': self.observationModel.get('mission') + '_' + self.observationModel.get('date'),
+            'date': self.date,
+            'departement': self.observationModel.get('departement'),
+            'missionId': self.observationModel.get('mission'),
+            'photos': clearPhoto(self.observationModel.get('photos'))
         };
         var virginModel = new ObsModel.model.ClassDef();
         virginModel.save(data, {
@@ -186,27 +213,28 @@ var Layout = Marionette.LayoutView.extend({
             })
             .done(function(response) {
                 self.observationModel.set({
-                    'external_id': response.data[0].id,
+                    'externalId': response.data[0].id,
                     'shared': 1
                 }).save();
             })
             .fail(function(error) {
                 console.log(error);
             });
+
     },
-    deletePhotoMobile: function(e){
+    deletePhotoMobile: function(e) {
         var $currentButton = $(e.currentTarget);
         this.urlPhoto = $currentButton.siblings().attr('src').trim();
-        var currentPhotos = this.observationModel.get('photo');
-        var functionUrl =  function(element){
+        var currentPhotos = this.observationModel.get('photos');
+        var functionUrl = function(element) {
             console.log(element);
-            if(element.url === this.urlPhoto){
+            if (element.url === this.urlPhoto) {
                 //delete file and item
                 console.log('match');
             }
 
         };
-        currentPhotos.filter(functionUrl,this);
+        currentPhotos.filter(functionUrl, this);
     }
 });
 
