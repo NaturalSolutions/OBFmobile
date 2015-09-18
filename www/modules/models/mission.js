@@ -2,7 +2,9 @@
 var Backbone = require('backbone'),
 	LocalStorage = require("backbone.localstorage"),
 	_ = require('lodash'),
-	config = require('../main/config');
+	config = require('../main/config'),
+	moment = require('moment'),
+	i18n = require('i18next-client');
 
 var Model = Backbone.Model.extend({
 	defaults: {
@@ -15,7 +17,7 @@ var Model = Backbone.Model.extend({
 		success: false,
 		departements: [],//codes
 		criterias: [],
-		seasons: [],//month-day,
+		seasons: [],//[{"startAt":"05","endAt":"11"}],
 		taxon: {
 			title: "",
 	        family: '',
@@ -25,6 +27,20 @@ var Model = Backbone.Model.extend({
 		},
 	},
 	url: config.coreUrl,
+	toJSON: function() {
+		var self = this;
+		var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
+		result.inSeason = self.inSeason(new Date());
+		result.isInSeason = result.inSeason.isMatch;
+		var momentStart = moment(result.seasons[0].startAt, 'MM');
+		var momentEnd = moment(result.seasons[0].endAt, 'MM');
+		result.displaySeason = i18n.t('common.mission.season.display', {
+			from: momentStart.format('MMMM'),
+			to: momentEnd.format('MMMM')
+		});
+
+		return result;
+	},
 	isInDepartement: function(codes) {
 		var self = this;
 		if ( !_.isArray(codes) )
@@ -33,25 +49,64 @@ var Model = Backbone.Model.extend({
 	},
 	isInSeason: function(startAt, endAt) {
 		var self = this;
+
+		return self.inSeason(startAt, endAt).isMatch;
+	},
+	inSeason: function(startAt, endAt) {
+		var self = this;
 		var seasons = self.get('seasons');
 		var today = new Date();
 		if ( endAt && !startAt )
 			startAt = today;
 		var year = startAt.getFullYear();
 		var isMatch = false;
-		_.forEach(seasons, function(season) {
+		var momentStart = moment(startAt);
+		var momentEnd = moment(endAt ? endAt : startAt);
+
+		var result = null;
+		_.forEach(seasons, function(season, index) {
 			var seasonStart = new Date(year+'-'+season.startAt);
 			var seasonEnd = new Date(year+'-'+season.endAt);
+			var isMatch = false;
 			if ( seasonEnd < seasonStart )
 				seasonEnd.setFullYear(year+1);
-			if ( !endAt && startAt >= seasonStart && startAt <= seasonEnd ) {
-				isMatch = true;
-			} else if ( endAt && !(startAt < seasonStart && endAt < seasonStart) && !(startAt > seasonEnd && endAt > seasonEnd) ) {
-				isMatch = true;
+			if ( !endAt ) {
+				isMatch = startAt >= seasonStart && startAt <= seasonEnd;
+				result = {
+					isMatch: isMatch,
+					start: {
+						src: seasonStart,
+						input: startAt,
+						delta: momentStart.diff(seasonStart, 'days')
+					},
+					end: {
+						src: seasonEnd,
+						input: startAt,
+						delta: Math.abs(momentEnd.diff(seasonEnd, 'days'))
+					}
+				};
+			} else if ( endAt ) {
+				isMatch = !(startAt < seasonStart && endAt < seasonStart) && !(startAt > seasonEnd && endAt > seasonEnd);
+				result = {
+					isMatch: isMatch,
+					start: {
+						src: seasonStart,
+						input: startAt,
+						delta: momentStart.diff(seasonStart, 'days')
+					},
+					end: {
+						src: seasonEnd,
+						input: endAt,
+						delta: Math.abs(momentEnd.diff(seasonEnd, 'days'))
+					}
+				};
 			}
+
+			if ( result.isMatch )
+				return false;
 		});
 
-		return isMatch;
+		return result;
 	},
 	toggleAccept: function() {
 		var self = this;

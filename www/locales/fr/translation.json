@@ -1,4 +1,11 @@
 {
+	"common": {
+		"mission": {
+			"season": {
+				"display": "de __from__ à __to__"
+			}
+		}
+	},
 	"header": {
 		"titles": {
 			"dashboard": "Tableau de bord",

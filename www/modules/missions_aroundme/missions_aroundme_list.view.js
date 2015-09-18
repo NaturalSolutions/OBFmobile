@@ -1,6 +1,7 @@
 'use strict';
 
-var Marionette = require('backbone.marionette'),
+var Backbone = require('backbone'),
+	Marionette = require('backbone.marionette'),
 	_ = require('lodash'),
 	$ = require('jquery'),
 	bootstrap = require('bootstrap'),
@@ -18,21 +19,30 @@ module.exports = Marionette.LayoutView.extend({
 		var self = this;
 
 		var departementCodes = User.model.getInstance().get('departements');
-		self.collection = Mission.collection.getInstance().clone();
-		self.collection.forEach(function(mission) {
-			if (mission) {
-				var isInDepartement = mission.isInDepartement(departementCodes);//_.intersection(departementCodes, mission.get('departements')).length;
-				var isInSeason = mission.isInSeason(new Date());
-				if (!isInDepartement || !isInSeason)
-					self.collection.remove(mission);
-			}
+		self.collection = Mission.collection.getInstance().filter(function(mission) {
+			var isInDepartement = mission.isInDepartement(departementCodes);//_.intersection(departementCodes, mission.get('departements')).length;
+			var isInSeason = mission.isInSeason(new Date());
+
+			return (isInDepartement && isInSeason);
 		});
+
+		self.collection = new Backbone.Collection(self.collection);
+
+		/*_.forEach(self.collection, function(mission) {
+			console.log(mission);
+			var isInDepartement = mission.isInDepartement(departementCodes);//_.intersection(departementCodes, mission.get('departements')).length;
+			var isInSeason = mission.inSeason(new Date());
+			console.log(mission.get('title'), isInSeason);
+			if (!isInDepartement || !isInSeason)
+				self.collection.remove(mission);
+		});*/
 	},
 
 	serializeData: function() {
 		var self = this;
 
 		var missions = self.collection.toJSON();
+		console.log(missions);
 		var missionTabs = [];
 		for (var i = 1; i <= 3; i++) {
 			missionTabs.push({
