@@ -109,7 +109,7 @@ function init() {
         var departementCollection = new Departement.collection.getInstance();
 
         var deferred = $.Deferred();
-        $.get('./data/departements.json')
+        $.getJSON('./data/departements.json')
             .then(function(response) {
                 var departementDatas = response;
                 _.forEach(departementDatas, function(departementData) {
