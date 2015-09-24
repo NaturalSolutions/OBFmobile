@@ -9,9 +9,20 @@
 	<div class="tab-content">
 	<% _.forEach(data.missionTabs, function(missionTab, index) { %>
 		<div role="tabpanel" class="tab-pane <% if ( index == 0 ) { %>active<% } %>" id="tab-difficulty-<%= index %>">
-			<ul>
+			<ul class="list-unstyled missions">
 			<% _.forEach(missionTab.missions, function(mission) { %>
-				<li><%= mission.title %> <%= mission.inSeason.end.delta %></li>
+				<li class="pull-left">
+					<a href="#mission/<%= mission.srcId %>" class="inner">
+						<div class="delta text-nowrap text-primary"><%= i18n.t('pages.missionsAroundme.list.delta', {nb: mission.inSeason.end.delta}) %></div>
+						<div class="thumb">
+							<div class="img" style="background-image:url('./images/taxon/<%= mission.poster %>');"></div>
+							<div class="donutchart" data-donutchart-value="<%= _.round(mission.inSeason.start.ratio, 2) %>"></div>
+						</div>
+						<div class="title">
+							<span class="badge badge-circle"><%= mission.num %></span> <%= mission.title %>
+						</div>
+					</a>
+				</li>
 			<% }); %>
 			</ul>
 		</div>

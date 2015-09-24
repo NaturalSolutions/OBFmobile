@@ -1,11 +1,8 @@
-<div class="container">
-	<h1>Missions</h1>
+<div>
 	<ul>
 	<% _.forEach(data.missions, function(mission) { %>
 		<li><%= mission.title %></li>
 	<% }); %>
 	</ul>
-	<div>
-        <a class="btn btn-primary" href="#missions/aroundme"><%= i18n.t('pages.dashboard.missions.otherMissionsBtn') %></a>
-    </div>
+    <a class="btn btn-primary btn-lg btn-block" href="#missions/aroundme"><%= i18n.t('pages.dashboard.missions.findMissionBtn', { count: (data.missions.length+1) }) %></a>
 </div>

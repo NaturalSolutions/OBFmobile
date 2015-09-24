@@ -42,7 +42,10 @@ module.exports = Marionette.LayoutView.extend({
 		var self = this;
 
 		var missions = self.collection.toJSON();
-		console.log(missions);
+		missions = _.sortBy(missions, function(mission) {
+			return mission.inSeason.end.delta;
+		});
+
 		var missionTabs = [];
 		for (var i = 1; i <= 3; i++) {
 			missionTabs.push({
@@ -60,6 +63,12 @@ module.exports = Marionette.LayoutView.extend({
 		self.$el.find('.js-nav-tabs a').click(function (e) {
 			e.preventDefault();
 			$(this).tab('show');
+		});
+
+		self.$el.find('.donutchart').nsDonutChart({
+			onCreate: function(api) {
+				
+			}
 		});
 	},
 

@@ -10,6 +10,7 @@
 		"titles": {
 			"dashboard": "Tableau de bord",
 			"missions": "Missions",
+			"missionsAroundme": "Missions autour de moi",
 			"observation": "Observation"
 		}
 	},
@@ -27,7 +28,13 @@
 				"observations": "Observations"
 			},
 			"missions": {
-				"otherMissionsBtn": "Trouvez-moi d'autres missions"
+				"findMissionBtn": "Trouvez-moi une mission",
+				"findMissionBtn_plural": "Trouvez-moi d'autres missions"
+			}
+		},
+		"missionsAroundme": {
+			"list": {
+				"delta": "__nb__ j"
 			}
 		}
 	}

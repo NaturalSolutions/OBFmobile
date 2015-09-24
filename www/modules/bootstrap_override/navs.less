@@ -1,0 +1,36 @@
+// Tabs
+// -------------------------
+
+// Give the tabs something to sit on
+.nav-tabs {
+  border-bottom: none;
+  text-align: center;
+  text-transform: uppercase;
+  > li {
+    float: none;
+    // Make the list-items overlay the bottom border
+    margin-bottom: 0;
+    display: inline-block;
+
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0;
+    }
+
+    > a {
+      margin-right: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        border: none;
+        border-bottom: 3px solid @nav-tabs-active-link-hover-border-color;
+      }
+    }
+  }
+}

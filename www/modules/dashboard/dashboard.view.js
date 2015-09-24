@@ -21,9 +21,9 @@ var ClassDef = Marionette.LayoutView.extend({
 		missions: {
 			ClassDef: require('./dashboard_missions.view')
 		},
-		activities: {
+		/*activities: {
 			ClassDef: require('./dashboard_activities.view')
-		},
+		},*/
 		observations: {
 			ClassDef: require('./dashboard_observations.view')
 		},
@@ -52,12 +52,6 @@ var ClassDef = Marionette.LayoutView.extend({
 		var self = this;
 		
 		self.displayTab();
-		/*var donutchart = this.$el.find('.donutchart').nsDonutChart({
-			value: .75,
-			onCreate: function(api) {
-				
-			}
-		}).data('nsDonutChart');*/
 	},
 
 	setTab: function(tab) {

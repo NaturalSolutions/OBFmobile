@@ -7,7 +7,7 @@ var Marionette = require('backbone.marionette'),
 
 module.exports = Marionette.LayoutView.extend({
 	header: {
-		titleKey: 'missions'
+		titleKey: 'missionsAroundme'
 	},
 	template: require('./missions_aroundme.tpl.html'),
 	className: 'page page-missions page-missions-aroundme page-scrollable',

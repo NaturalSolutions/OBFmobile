@@ -1,0 +1,70 @@
+@page_missions_aroundme_item_width: 120px;
+.page-missions-aroundme {
+	.state-list {
+		.missions {
+			li {
+				width: 50%;
+				padding: 10px;
+				&:nth-child(odd) {
+					text-align: right;
+				}
+				> .inner {
+					text-align: left;
+					display: inline-block;
+					position: relative;
+				}
+				.delta {
+					position: absolute;
+					right: 88%;
+					bottom: 88%;
+				}
+				.thumb {
+					position: relative;
+					width: @page_missions_aroundme_item_width;
+					height: @page_missions_aroundme_item_width;
+					.img {
+						position: absolute;
+						top: 14px;
+					    left: 14px;
+					    bottom: 14px;
+					    right: 14px;
+						background: no-repeat center;
+						background-size: cover;
+						border-radius: 50%;
+					}
+					.donutchart {
+						position: absolute;
+						width: 100%;
+						height: 100%;
+						font-size: @page_missions_aroundme_item_width;
+						opacity: .8;
+						&:before {
+							opacity: .2;
+						}
+						> .inner {
+							.circle {
+					            border-color: @brand-primary;
+					        }
+					        .cap-outer {
+					        	> div {
+					        		background: @brand-primary;
+					        	}
+					        }
+						}
+					}
+				}
+				.title {
+					width: ceil((@page_missions_aroundme_item_width+10));
+					position: relative;
+					padding-top: 3px;
+					padding-left: 30px;
+					.badge {
+						position: absolute;
+						left: 0;
+						top: 0;
+					}
+				}
+			}
+		}
+	}
+}

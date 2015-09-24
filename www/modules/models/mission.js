@@ -12,6 +12,7 @@ var Model = Backbone.Model.extend({
 		externId: '',
 		num: 0,
 		title: '',
+		poster: '',
 		difficulty: 0,
 		accept: false,
 		success: false,
@@ -38,6 +39,7 @@ var Model = Backbone.Model.extend({
 			from: momentStart.format('MMMM'),
 			to: momentEnd.format('MMMM')
 		});
+		result.poster = (result.srcId < 10 ? '0' : '')+result.srcId+'.jpg';
 
 		return result;
 	},
@@ -70,34 +72,45 @@ var Model = Backbone.Model.extend({
 			var isMatch = false;
 			if ( seasonEnd < seasonStart )
 				seasonEnd.setFullYear(year+1);
+			var duration = {
+				days: moment(seasonEnd).diff(seasonStart, 'days')
+			};
+			var startDelta = momentStart.diff(seasonStart, 'days');
+			var endDelta = Math.abs(momentEnd.diff(seasonEnd, 'days'));
 			if ( !endAt ) {
 				isMatch = startAt >= seasonStart && startAt <= seasonEnd;
 				result = {
 					isMatch: isMatch,
+					duration: duration,
 					start: {
 						src: seasonStart,
 						input: startAt,
-						delta: momentStart.diff(seasonStart, 'days')
+						delta: startDelta,
+						ratio: (startDelta / duration.days)
 					},
 					end: {
 						src: seasonEnd,
 						input: startAt,
-						delta: Math.abs(momentEnd.diff(seasonEnd, 'days'))
+						delta: endDelta,
+						ratio: (endDelta / duration.days)
 					}
 				};
 			} else if ( endAt ) {
 				isMatch = !(startAt < seasonStart && endAt < seasonStart) && !(startAt > seasonEnd && endAt > seasonEnd);
 				result = {
 					isMatch: isMatch,
+					duration: duration,
 					start: {
 						src: seasonStart,
 						input: startAt,
-						delta: momentStart.diff(seasonStart, 'days')
+						delta: startDelta,
+						ratio: (startDelta / duration.days)
 					},
 					end: {
 						src: seasonEnd,
 						input: endAt,
-						delta: Math.abs(momentEnd.diff(seasonEnd, 'days'))
+						delta: endDelta,
+						ratio: (endDelta / duration.days)
 					}
 				};
 			}

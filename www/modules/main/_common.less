@@ -1,5 +1,14 @@
-.tab-focus() {
-	outline: none;
+@header-height: 44px;
+
+.badge-circle {
+	width: 2em;
+	height: 2em;
+	line-height: 2em;
+	padding: 0;
+	background: #FFF;
+	border: 1px solid @gray-dark;
+	color: @gray-dark;
+	border-radius: 50%;
 }
 
 .page {
@@ -9,7 +18,7 @@
 	width: 100%;
 	height: 100%;
 	top: 0;
-	padding-top: 54px;
+	padding-top: @header-height;
 	background: #FFF;
 	&.animate-close {
 		opacity: 0;

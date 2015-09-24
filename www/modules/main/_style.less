@@ -1,19 +1,37 @@
 @import '../../../node_modules/bootstrap/less/bootstrap.less';
 
-/*==========  Overrides  ==========*/
 
-@import './_bootstrap_override.less';
+
+/*==========  Bootstrap Overrides  ==========*/
+
+@import '../bootstrap_override/variables.less';
+@import '../bootstrap_override/navs.less';
+@import '../bootstrap_override/mixins/tab-focus.less';
+
+
+
+/*==========  Global  =========*/
+
 @import './_font.less';
 @import './_common.less';
 
 
+
+/*==========  Components  =========*/
+
+@import '../header/_header.less';
+@import '../footer/_footer.less';
+@import '../sidenav/_sidenav.less';
+@import '../donutchart/_donutchart.less';
+
+
+
 /*==========  Pages  =========*/
 
+@import '../dashboard/_dashboard.less';
 @import '../mission/_mission.less';
+@import '../missions_aroundme/_missions_aroundme.less';
 
 
-@import '../sidenav/_sidenav.less';
-
-@import '../footer/_footer.less';
 
 @import '../observation/_observation.less';
