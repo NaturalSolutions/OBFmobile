@@ -29,7 +29,6 @@ var Layout = Marionette.LayoutView.extend({
     },
 
     serializeData: function() {
-        console.log(mission.collection.getInstance().toJSON());
         return {
             observation: this.observationModel.toJSON(),
             departement: departement.collection.getInstance(),
@@ -179,10 +178,10 @@ var Layout = Marionette.LayoutView.extend({
             this.observationModel.get('photos').forEach(function(p, key) {
                 Adfd.push(self.uploadPhotoMob(p.url));
             });
-            $.when.apply($,Adfd).done(function(r) {
-                        console.log(r);
-                        self.sendObs();
-                        });
+            $.when.apply($, Adfd).done(function(r) {
+                console.log(r);
+                self.sendObs();
+            });
         } else {
             self.sendObs();
         }
@@ -224,14 +223,34 @@ var Layout = Marionette.LayoutView.extend({
 
     },
     deletePhotoMobile: function(e) {
+        var self = this;
+        var tagprojet = "noe-obf";
         var $currentButton = $(e.currentTarget);
         this.urlPhoto = $currentButton.siblings().attr('src').trim();
         var currentPhotos = this.observationModel.get('photos');
         var functionUrl = function(element) {
             console.log(element);
-            if (element.url === this.urlPhoto) {
-                //delete file and item
+            if (element.url === self.urlPhoto) {
                 console.log('match');
+                /* jshint ignore:start */
+                var fsFail = function(error) {
+                    console.log("failed with error code: " + error.code);
+                };
+                window.resolveLocalFileSystemURL(self.urlPhoto, function(fs) {
+                    //1- Delete file mobile
+                    fs.remove(function() {
+                        //2- Remove sub object
+                        _.remove(self.observationModel.get('photos'), element);
+                        self.observationModel.save()
+                            .done(function() {
+                                self.observationModel.trigger('change:photos', this.observationModel);
+                            })
+                            .fail(function(error) {
+                                console.log(error);
+                            });
+                    }, fsFail);
+                }, fsFail);
+                /* jshint ignore:end */
             }
 
         };

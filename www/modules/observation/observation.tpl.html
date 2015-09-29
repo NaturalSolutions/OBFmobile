@@ -2,10 +2,12 @@
     <div class="inner">
         <span class="icon-camera material-icons">camera_alt</span>
         <% data.observation.photos.forEach(function(p){ %>
-        <div>
-            <img class="editor-picture-img " src=" <%= p.url %>" style="width:200px;"/>
-            <button class="delete-photo-js">DELETE</button>
-        </div>
+            <% if(window.cordova){ %>
+                <div>
+                    <img class="editor-picture-img " src=" <%= p.url %>" style="width:200px;"/>
+                    <button class="delete-photo-js">DELETE</button>
+                </div>
+            <% } %>
         <% }); %>
         <% if(data.observation.photos.length < 3){ %>
         <form id="form-picture" enctype="multipart/form-data">
