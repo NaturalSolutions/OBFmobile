@@ -6,14 +6,15 @@ var Backbone = require('backbone'),
 var Router = Marionette.AppRouter.extend({
     appRoutes: {
         '': 'home',
-    	'observation/:id' : 'observationId',
+        'observation/:id': 'observationId',
         'dashboard(/:tab)': 'dashboard',
         'mission/:id': 'missionSheet',
         'missions/aroundme': 'missionsAroundMe',
-		'missions/aroundme/manually': 'missionsAroundMeManually',
-		//'missions/aroundme/tab-:tab': 'missionsAroundMeTab',
+        'missions/aroundme/manually': 'missionsAroundMeManually',
+        //'missions/aroundme/tab-:tab': 'missionsAroundMeTab',
         'missions/all': 'missionsAll',
         'missions/all/filter': 'missionsAllFilter',
+        'register/*param': 'registerParam'
     },
 });
 
@@ -22,9 +23,9 @@ var instance = null;
 module.exports = {
     getInstance: function() {
         //console.log(Controller);
-        if ( !instance )
+        if (!instance)
             instance = new Router({
-                controller: new (require('./controller'))()
+                controller: new(require('./controller'))()
             });
         return instance;
     }

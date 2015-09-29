@@ -2,7 +2,6 @@
 <widget id="eu.naturalsolutions.obfmobile" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>OBF mobile</name>
     <description>
-
     </description>
     <author email="contact@natural-solutions.eu" href="http://www.natural-solutions.eu/">Natural Solutions</author>
     <content src="index.html" />
@@ -10,7 +9,6 @@
     <hook src="scripts/runGruntDefaultTask.js" type="before_prepare" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="Orientation" value="portrait" />
-
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -31,4 +29,7 @@
     <plugin name="cordova-plugin-geolocation" spec="^1.0.1" />
     <plugin name="cordova-plugin-file" spec="^3.0.0" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.2.1" />
+    <plugin name="cordova-plugin-customurlscheme" spec="^4.0.0">
+        <variable name="URL_SCHEME" value="obfmobile" />
+    </plugin>
 </widget>

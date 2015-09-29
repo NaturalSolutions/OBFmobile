@@ -2,6 +2,7 @@
 
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
+    $ = require('jquery'),
     main = require('./main.view'),
     User = require('../models/user'),
     Home = require('../home/home.view'),
@@ -171,6 +172,14 @@ module.exports = Marionette.Object.extend({
                     tab: 'tab-' + tabSlug
                 }
             }
+        });
+    },
+    //TODO refactoring : i'm waiting the validation of the workflow about registration CV
+    registerParam: function(params) {
+        console.log(params);
+        var res = params.replace("obfmobile://register", "http://192.168.0.16/DRUPAL/OBF_BACK/www/");
+        $.get(res, function(response) {
+            console.log(response);
         });
     }
 });

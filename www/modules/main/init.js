@@ -40,6 +40,8 @@ function init() {
         $('body').removeClass('keyboardshow');
     });
 
+
+
     moment.locale('fr');
 
     Backbone.Marionette.Renderer.render = function(template, data) {
@@ -48,11 +50,11 @@ function init() {
 
     var getI18n = function() {
         var deferred = $.Deferred();
-        
-        i18n.init({ 
-            resGetPath: 'locales/__lng__/__ns__.json', 
-            getAsync : false, 
-            lng : 'fr'
+
+        i18n.init({
+            resGetPath: 'locales/__lng__/__ns__.json',
+            getAsync: false,
+            lng: 'fr'
         }, function(t) {
             deferred.resolve();
         });
@@ -66,8 +68,8 @@ function init() {
         //TODO manage updates
         var deferred = $.Deferred();
         missionCollection.fetch({
-            success : function(data){
-                if ( data.length ) {
+            success: function(data) {
+                if (data.length) {
                     deferred.resolve();
                 } else {
                     $.getJSON('./data/missions.json')
@@ -97,7 +99,7 @@ function init() {
                         });
                 }
             },
-            error : function(error){
+            error: function(error) {
                 console.log(error);
             }
         });
@@ -134,9 +136,9 @@ function init() {
 
         var deferred = $.Deferred();
         userCollection.fetch({
-            success : function(data){
+            success: function(data) {
                 console.log('user fetch', data);
-                if ( data.length ) {
+                if (data.length) {
                     User.model.init(data.at(0));
                     deferred.resolve();
                 } else {
@@ -145,7 +147,7 @@ function init() {
                     deferred.resolve();
                 }
             },
-            error : function(error){
+            error: function(error) {
                 console.log(error);
             }
         });
@@ -163,6 +165,14 @@ function init() {
         main.init();
         main.getInstance().render();
         Backbone.history.start();
+        //TODO refactoring : i'm waiting the validation of the workflow about registration CV
+        window.handleOpenURL = function(url) {
+            setTimeout(function() {
+                alert("received url: " + url);
+                var router = Router.getInstance();
+                router.navigate("register/"+url,{trigger: true, replace: true});
+            }, 500);
+        };
     });
 
     $.when(getI18n(), getMissions(), getDepartements(), getUser(), getObservations())
