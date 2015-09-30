@@ -13,7 +13,7 @@ var Model = Backbone.Model.extend({
 		num: 0,
 		title: '',
 		poster: '',
-		difficulty: 0,
+		difficulty: 0,//0 == unset
 		accept: false,
 		success: false,
 		departements: [],//codes
@@ -28,16 +28,31 @@ var Model = Backbone.Model.extend({
 		},
 	},
 	url: config.coreUrl,
+	initialize: function() {
+		var self = this;
+
+		var id = self.get('srcId');
+		self.set('poster', (id < 10 ? '0' : '')+id+'.jpg');
+
+		var difficultyNames = ['beginner', 'confirmed', 'expert'];
+		self.set('difficultyName', difficultyNames[self.get('difficulty')-1]);
+
+		var seasons = self.get('seasons');
+		_.forEach(seasons, function(season) {
+			if ( _.isString(season.startAt) ) {}
+				season.startAt = new Date(season.startAt);
+			if ( _.isString(season.endAt) )
+				season.endAt = new Date(season.endAt);
+		});
+	},
 	toJSON: function() {
 		var self = this;
 		var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
 		result.inSeason = self.inSeason(new Date());
 		result.isInSeason = result.inSeason.isMatch;
-		var momentStart = moment(result.seasons[0].startAt, 'MM');
-		var momentEnd = moment(result.seasons[0].endAt, 'MM');
 		result.displaySeason = i18n.t('common.mission.season.display', {
-			from: momentStart.format('MMMM'),
-			to: momentEnd.format('MMMM')
+			from: moment(result.seasons[0].startAt).format('MMMM'),
+			to: moment(result.seasons[0].endAt).format('MMMM')
 		});
 		result.poster = (result.srcId < 10 ? '0' : '')+result.srcId+'.jpg';
 
@@ -67,18 +82,24 @@ var Model = Backbone.Model.extend({
 
 		var result = null;
 		_.forEach(seasons, function(season, index) {
-			var seasonStart = new Date(year+'-'+season.startAt);
+			/*var seasonStart = new Date(year+'-'+season.startAt);
 			var seasonEnd = new Date(year+'-'+season.endAt);
-			var isMatch = false;
 			if ( seasonEnd < seasonStart )
-				seasonEnd.setFullYear(year+1);
+				seasonEnd.setFullYear(year+1);*/
+			var seasonStart = season.startAt;
+			var seasonEnd = season.endAt;
+			var isMatch = false;
 			var duration = {
 				days: moment(seasonEnd).diff(seasonStart, 'days')
 			};
 			var startDelta = momentStart.diff(seasonStart, 'days');
 			var endDelta = Math.abs(momentEnd.diff(seasonEnd, 'days'));
+
 			if ( !endAt ) {
 				isMatch = startAt >= seasonStart && startAt <= seasonEnd;
+				if ( self.get('num') == 14 ) {
+					console.log(startAt,seasonStart,seasonEnd);
+				}
 				result = {
 					isMatch: isMatch,
 					duration: duration,

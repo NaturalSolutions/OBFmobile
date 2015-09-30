@@ -1,0 +1,16 @@
+<div class="media-left thumb">
+    <a href="#mission/<%= data.mission.srcId %>">
+        <img class="media-object" src="./images/FFFFFF-0.png" style="background-image:url('./images/taxon/<%= data.mission.poster %>');" />
+    </a>
+</div>
+<div class="media-body text">
+	<a href="#mission/<%= data.mission.srcId %>">
+	    <div class="media-heading title"><span class="badge-circle num"><%= data.mission.num %></span> <%= data.mission.title %></div>
+	    <div class="meta">
+	    	<span class="taxon"><%= data.mission.taxon.title %></span> 
+	    	<span class="delta text-primary">
+	    		<span class="icon icomoon">time</span> <%= i18n.t('mission.deltaLong', {count: data.mission.inSeason.end.delta }) %>
+	    	</span>
+	    </div>
+	</a>
+</div>

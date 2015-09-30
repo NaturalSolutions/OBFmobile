@@ -62,7 +62,7 @@ module.exports = Marionette.Object.extend({
             srcId: id
         });
 
-        var View = require('../mission/mission.view');
+        var View = require('../mission_sheet/mission_sheet.view');
         main.getInstance().rgMain.show(new View({
             model: mission
         }), {

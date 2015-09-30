@@ -1,0 +1,79 @@
+.page-mission_sheet {
+	.header {
+		&:extend(.header-app);
+		position: relative;
+		top: -2px;
+		background: rgba(255, 255, 255, 0.5);
+		border-top: 2px solid rgba(255, 255, 255, 0.5);
+		-webkit-background-clip: padding-box;
+	    background-clip: padding-box;
+	    .title {
+	    	color: @gray-light;
+	    	font-size: 2rem;
+			font-weight: 400;
+			text-shadow: 0 2px 9px rgba(0, 0, 0, 0.2);
+			padding: 16px;
+    		padding-right: 90px;
+    		position: relative;
+			.icon {
+				font-size: 1.2em;
+				position: absolute;
+				transform: translateY(.1em);
+				color: inherit;
+			}
+			.text {
+				display: block;
+				margin-left: 1.6em;
+			}
+	    }
+	    .accept {
+	    	top: 0;
+	    	text-align: center;
+	    	.translate(0, -40%);
+	    	.text {
+	    		display: block;
+	    		font-size: 12px;
+	    		margin-top: 4px;
+	    	}
+	    }
+	}
+	.meta {
+		padding: 16px 0 16px 20px;
+		> span {
+			vertical-align: top;
+			margin-left: 6px;
+			&:first-child {
+				margin-left: 0;
+			}
+		}
+		.icon {
+			vertical-align: top;
+		}
+	}
+	.accordion {
+		margin: 0 12px;
+		.panel-body {
+			.btn-block {
+				margin-top: 20px;
+			}
+		}
+	}
+
+	&.is-accept {
+		.btn-accept {
+			.bg-blue();
+		}
+		.meta {
+			.period {
+				display: none;
+			}
+		}
+	}
+	&:not(.is-accept) {
+		.meta {
+			.delta {
+				display: none;
+			}
+		}
+	}
+}

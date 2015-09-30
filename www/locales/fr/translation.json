@@ -14,6 +14,13 @@
 			"observation": "Observation"
 		}
 	},
+	"mission": {
+		"deltaLong": "plus que __count__ jour",
+		"deltaLong_plural": "plus que __count__ jours",
+		"difficulty_1": "Facile",
+		"difficulty_2": "Confirmé",
+		"difficulty_3": "Expert"
+	},
 	"pages": {
 		"home": {
 			"btns": {
@@ -36,6 +43,9 @@
 			"list": {
 				"delta": "__nb__ j"
 			}
+		},
+		"missionSheet": {
+			"acceptBtnLabel": "accepter"
 		}
 	}
 }

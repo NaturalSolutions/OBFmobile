@@ -2,12 +2,21 @@
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     Mission = require('../models/mission'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    MissionListItem = require('../mission_list_item/mission_list_item.view');
+
+var CollectionView = Marionette.CollectionView.extend({
+	childView: MissionListItem
+});
 
 var ClassDef = Marionette.LayoutView.extend({
 	template: require('./dashboard_missions.tpl.html'),
-	className: 'inner',
+	className: 'inner missions',
 	events: {
+	},
+
+	regions: {
+		list: '.list-outer'
 	},
 
 	initialize: function() {
@@ -15,7 +24,8 @@ var ClassDef = Marionette.LayoutView.extend({
 		
 		self.missions = Mission.collection.getInstance().toJSON();
 		self.missions = _.filter(self.missions, {accept: true});
-		console.log(self.missions);
+
+		//console.log(self.missions);
 	},
 
 	serializeData: function() {
@@ -26,8 +36,14 @@ var ClassDef = Marionette.LayoutView.extend({
 		};
 	},
 
-	onRender: function(options) {
-		//this.$el.i18n();
+	onRender: function() {
+		var self = this;
+
+		var collectionView = new CollectionView({
+			collection: new Backbone.Collection(self.missions)
+		});
+
+		self.showChildView('list', collectionView);
 	}
 });
 

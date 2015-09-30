@@ -13,7 +13,7 @@ var View = Marionette.LayoutView.extend({
     template: require('./footer.tpl.html'),
     className: '',
     events: {
-        'click .capturePhoto-js': 'capturePhoto',
+        'click .capture-photo-js': 'capturePhoto',
         'submit form': 'uploadPhoto'
     },
 
@@ -31,8 +31,10 @@ var View = Marionette.LayoutView.extend({
     },
     uploadPhoto: function(e) {
         var self = this;
-
         e.preventDefault();
+
+        self.$el.removeClass('show-form');
+
         var $form = $(e.currentTarget);
         var formdata = (window.FormData) ? new FormData($form[0]) : null;
         var data = (formdata !== null) ? formdata : $form.serialize();
@@ -57,18 +59,24 @@ var View = Marionette.LayoutView.extend({
     },
 
     capturePhoto: function() {
-        // Take picture using device camera and retrieve image as a local path
-        navigator.camera.getPicture(
-            _.bind(this.onSuccess, this),
-            _.bind(this.onFail, this), {
-                /* jshint ignore:start */
-                quality: 75,
-                destinationType: Camera.DestinationType.FILE_URI,
-                correctOrientation: true,
-                sourceType: Camera.PictureSourceType.CAMERA,
-                /* jshint ignore:end */
-            }
-        );
+        var self = this;
+
+        if ( !window.cordova )
+            self.$el.addClass('show-form');
+        else {
+            // Take picture using device camera and retrieve image as a local path
+            navigator.camera.getPicture(
+                _.bind(self.onSuccess, self),
+                _.bind(self.onFail, self), {
+                    /* jshint ignore:start */
+                    quality: 75,
+                    destinationType: Camera.DestinationType.FILE_URI,
+                    correctOrientation: true,
+                    sourceType: Camera.PictureSourceType.CAMERA,
+                    /* jshint ignore:end */
+                }
+            );
+        }
     },
 
     // uploadPhotoMob: function(f) {

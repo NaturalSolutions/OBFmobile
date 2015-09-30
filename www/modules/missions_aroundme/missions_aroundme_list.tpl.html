@@ -2,7 +2,7 @@
 	<ul class="nav nav-tabs js-nav-tabs" role="tablist">
 	<% _.forEach(data.missionTabs, function(missionTab, index) { %>
 		<li role="presentation" class=" <% if ( index == 0 ) { %>active<% } %>">
-			<a href="#tab-difficulty-<%= index %>" role="tab">Difficulty <%= index %></a>
+			<a href="#tab-difficulty-<%= index %>" role="tab"><%= i18n.t('mission.difficulty_'+ (index+1)) %></a>
 		</li>
 	<% }); %>
 	</ul>

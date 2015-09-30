@@ -1,5 +1,28 @@
-<button class="capturePhoto-js capturePhoto">PHOTOS</button>
+<!-- <button class="capturePhoto-js capturePhoto">PHOTOS</button> -->
 <form method="post" action="http://localhost/DRUPAL/OBF_BACK/www/api/file-upload" enctype="multipart/form-data">
     <input type="file" name="image" accept="image/*" />
     <input type="submit"></input>
 </form>
+<div class="dropleft fab-dial floating floating-bottom floating-right">
+    <button class="btn dropdown-toggle btn-fab btn-lg bg-yellow" type="button" data-toggle="dropdown">
+        <span class="icon-close icon material">more_horiz</span>
+        <span class="icon-open icon icomoon">close</span>
+    </button>
+    <ul class="dropdown-menu">
+        <li>
+            <a class="btn-lg btn-fab bg-primary" href="#">
+                <span class="icon icomoon">loctime</span>
+            </a>
+        </li>
+        <li>
+            <a class="btn-lg btn-fab bg-orange" href="#">
+                <span class="icon icomoon">indices</span>
+            </a>
+        </li>
+        <li>
+            <a class="btn-lg btn-fab bg-brown capture-photo-js" href="#">
+                <span class="icon icomoon">camera</span>
+            </a>
+        </li>
+    </ul>
+</div>

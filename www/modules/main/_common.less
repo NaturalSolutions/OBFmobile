@@ -1,37 +1,188 @@
 @header-height: 44px;
 
+@yellow: #ffcd06;
+@brown: #97511A;
+@orange: #CA4715;
+@blue: #3DBADB;
+
+.generate-theme(@name; @color1; @color2) {
+	.bg-@{name},
+	.dropdown-menu > li > a.bg-@{name} {
+		background-color: @color1;
+		color: @color2;
+		.button-variant(@color2; @color1; transparent);
+	}
+	.text-@{name},
+	.dropdown-menu > li > a.text-@{name} {
+		color: @color1;
+	}
+}
+
+.generate-theme(yellow; @yellow; #000);
+.generate-theme(brown; @brown; #FFF);
+.generate-theme(orange; @orange; #FFF);
+.generate-theme(primary; @brand-primary; #FFF);
+.generate-theme(blue; @blue; #FFF);
+
+body, html {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background: url("./images/bg.jpg") no-repeat center;
+    background-size: cover;
+    &:before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(251, 242, 227, 0.4);
+        .box-shadow(inset 0 1px 37px 4px #d1c7b5);
+    }
+}
+
 .badge-circle {
-	width: 2em;
-	height: 2em;
-	line-height: 2em;
-	padding: 0;
-	background: #FFF;
-	border: 1px solid @gray-dark;
-	color: @gray-dark;
-	border-radius: 50%;
+    font-size: .63em;
+    width: 2em;
+    height: 2em;
+    line-height: 2em;
+    vertical-align: top;
+    padding: 0;
+    background: #FFF;
+    border: 1px solid @gray-dark;
+    color: @gray-dark;
+    border-radius: 50%;
+    display: inline-block;
+    text-align: center;
 }
 
 .page {
-	opacity: 1;
-	transition: opacity .3s linear;
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	padding-top: @header-height;
-	background: #FFF;
-	&.animate-close {
-		opacity: 0;
-	}
-	&.page-scrollable {
-		overflow: auto;
-	}
-	.page-states {
-		> .state {
-			transition: opacity .3s linear;
-			&.animate-close {
-				opacity: 0;
-			}
-		}
-	}
+    opacity: 1;
+    transition: opacity .3s linear;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    padding-top: @header-height;
+    padding-bottom: 90px;
+    overflow: auto;
+    &.animate-close {
+        opacity: 0;
+    }
+    &.page-scrollable {
+        overflow: auto;
+    }
+    &.no-header {
+        padding-top: 0;
+    }
+    .page-states {
+        > .state {
+            transition: opacity .3s linear;
+            &.animate-close {
+                opacity: 0;
+            }
+        }
+    }
 }
+
+.floating {
+    position: absolute;
+}
+.floating-bottom {
+    bottom: 2rem;
+}
+.floating-left {
+    left: 2rem;
+}
+.floating-right {
+    right: 2rem;
+}
+
+.btn-fab {
+    padding: 0;
+    border-radius: 50%;
+    border: none;
+    display: inline-block;
+    width: 3em;
+    height: 3em;
+    line-height: 3em !important;
+    text-align: center;
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+    /*&.btn-lg {
+        width: 3em;
+        height: 3em;
+        line-height: 3em !important;
+        > span {
+    		top: 0;
+		    left: 1px;
+		}
+    }*/
+    > span {
+        vertical-align: middle;
+        font-size: 1.9em;
+        &.icon-open {
+            display: none;
+        }
+    }
+}
+
+.fab-dial {
+	.dropdown-menu {
+    	background: transparent;
+	    border: none;
+	    min-width: auto;
+	    .box-shadow(none);
+	    margin: 0;
+    	padding: 0;
+    	visibility: hidden;
+    	opacity: 0;
+    	display: block;
+    	.transition(visibility 0s linear 0.2s, opacity 0.2s linear;);
+    	> li {
+    		> a {
+    			margin: 0;
+    			padding: 0;
+    		}
+    	}
+    	.btn-fab {
+    		position: relative;
+    		z-index: 1;
+    	}
+    }
+    &.dropleft {
+    	.dropdown-menu {
+    		left: auto;
+    		top: 0;
+    		right: 100%;
+    		margin-right: 8px;
+    		white-space: nowrap;
+    		> li {
+    			display: inline-block;
+    			padding: 0 4px;
+    			vertical-align: middle;
+    		}
+    	}
+    }
+    &.open {
+        .btn-fab {
+        	> span {
+        		&.icon-open {
+	                display: inline-block;
+	            }
+	            &.icon-close {
+	                display: none;
+	            }
+        	}
+        }
+        .dropdown-menu {
+		    visibility: visible;
+		    opacity: 1;
+		    .transition-delay(0s);
+		}
+    }
+}
+

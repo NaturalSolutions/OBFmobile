@@ -76,6 +76,16 @@ function init() {
                         .then(function(missionDatas) {
                             //var missionDatas = JSON.parse(response);
                             _.forEach(missionDatas, function(missionData) {
+                                _.forEach(missionData.seasons, function(season) {
+                                    season.startAt = moment(season.startAt, 'MM');
+                                    season.endAt = moment(season.endAt, 'MM');
+                                    if ( season.startAt > season.endAt ) {
+                                        season.endAt.add(1, 'y');
+                                    }
+                                    season.endAt.endOf('month');
+                                    season.startAt = season.startAt.toDate();
+                                    season.endAt = season.endAt.toDate();
+                                });
                                 var mission = new Mission.Model({
                                     srcId: missionData.id,
                                     num: missionData.num,

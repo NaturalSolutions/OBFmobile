@@ -1,4 +1,15 @@
-footer{
+footer {
 	position: absolute;
 	bottom: 0;
+	width: 100%;
+	> div {
+		form {
+			display: none;
+		}
+		&.show-form {
+			form {
+				display: block
+			}
+		}
+	}
 }

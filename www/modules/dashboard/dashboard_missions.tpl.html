@@ -1,8 +1,2 @@
-<div>
-	<ul>
-	<% _.forEach(data.missions, function(mission) { %>
-		<li><%= mission.title %></li>
-	<% }); %>
-	</ul>
-    <a class="btn btn-primary btn-lg btn-block" href="#missions/aroundme"><%= i18n.t('pages.dashboard.missions.findMissionBtn', { count: (data.missions.length+1) }) %></a>
-</div>
+<div class="list-outer"></div>
+<a class="btn btn-primary btn-lg btn-block" href="#missions/aroundme"><%= i18n.t('pages.dashboard.missions.findMissionBtn', { count: (data.missions.length+1) }) %></a>

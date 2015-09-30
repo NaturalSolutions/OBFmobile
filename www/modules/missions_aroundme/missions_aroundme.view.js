@@ -7,7 +7,10 @@ var Marionette = require('backbone.marionette'),
 
 module.exports = Marionette.LayoutView.extend({
 	header: {
-		titleKey: 'missionsAroundme'
+		titleKey: 'missionsAroundme',
+		buttons: {
+			right: ['plus']
+		}
 	},
 	template: require('./missions_aroundme.tpl.html'),
 	className: 'page page-missions page-missions-aroundme page-scrollable',
@@ -29,7 +32,7 @@ module.exports = Marionette.LayoutView.extend({
 		var self = this;
 
 		self.listenTo(header.getInstance(), 'btn:plus:click', function(e) {
-			console.log('onBtnPlusClick');
+			Router.getInstance().navigate('#missions/all', {trigger:true});
 		});
 
 		console.log(options);

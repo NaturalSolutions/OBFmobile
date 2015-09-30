@@ -1,6 +1,6 @@
 <div class="header img-preview hidden-by-keyboard">
     <div class="inner">
-        <span class="icon-camera material-icons">camera_alt</span>
+        <span class="icon-camera icon icomoon">camera</span>
         <% data.observation.photos.forEach(function(p){ %>
             <% if(window.cordova){ %>
                 <div>
@@ -41,7 +41,7 @@
             </select>
         </div>
         <div class="form-group required">
-            <span class="icon-field material-icons">Date</span>
+            <span class="icon-field icon icomoon">date</span>
             <input id="date" name="date" type="text" class="form-control" value="<%= data.observation.date %>" readonly >
         </div>
     </form>

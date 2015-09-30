@@ -4,13 +4,13 @@ var Marionette = require('backbone.marionette'),
 
 module.exports = Marionette.LayoutView.extend({
     header: 'none',
-    template: require('./mission.tpl.html'),
+    template: require('./mission_sheet.tpl.html'),
     events: {
         'click .btn-accept': 'onBtnAcceptClick'
     },
     attributes: function() {
         var self = this;
-        var classNames = 'page page-mission page-scrollable';
+        var classNames = 'page page-mission_sheet page-scrollable no-header';
         if ( self.model.get('accept') )
             classNames += ' is-accept';
         return {
@@ -30,6 +30,8 @@ module.exports = Marionette.LayoutView.extend({
 
     serializeData: function() {
         var self = this;
+
+        console.log(self.model.inSeason(new Date()));
 
         return {
             mission: self.model.toJSON()

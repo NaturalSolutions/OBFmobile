@@ -38,6 +38,8 @@ var ClassDef = Marionette.LayoutView.extend({
 
 		self.defaultTab = _.keys(self.tabs)[0];
 		self.curTab = options.tab || self.defaultTab;
+
+		console.log('dashboard initialize');
 	},
 
 	serializeData: function() {
@@ -50,12 +52,16 @@ var ClassDef = Marionette.LayoutView.extend({
 
 	onRender: function(options) {
 		var self = this;
+
+		console.log('dashboard onRender');
 		
 		self.displayTab();
 	},
 
 	setTab: function(tab) {
 		var self = this;
+
+		console.log('dashboard setTab');
 
 		tab = tab || self.defaultTab;
 		if ( tab == self.curTab )
