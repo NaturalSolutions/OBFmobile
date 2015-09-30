@@ -4,6 +4,7 @@ var Backbone = require('backbone'),
     LocalStorage = require("backbone.localstorage"),
     Marionette = require('backbone.marionette'),
     $ = require('jquery'),
+    autocomplete = require('jquery-ui/autocomplete'),
     $ns = require('jquery-ns'),
     bootstrap = require('bootstrap'),
     main = require('./main.view'),
@@ -127,6 +128,7 @@ function init() {
                 _.forEach(departementDatas, function(departementData) {
                     var departement = new Departement.Model({
                         code: departementData.code,
+                        label: departementData.title,
                         title: departementData.title,
                         lat: departementData.lat,
                         lon: departementData.lon

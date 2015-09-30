@@ -1,11 +1,18 @@
 'use strict';
 var Marionette = require('backbone.marionette'),
 	_ = require('lodash'),
-	Router = require('../main/router');
+	Router = require('../main/router'),
+    Departement = require('../models/departement');
 
 var filters = null;
 
 var View = Marionette.LayoutView.extend({
+    header: {
+        titleKey: 'missions',
+        buttons: {
+            left: ['back']
+        }
+    },
     template: require('./missions_all_filter.tpl.html'),
     className: 'page page-missions-all-filter page-scrollable',
     events: {
@@ -31,8 +38,15 @@ var View = Marionette.LayoutView.extend({
 
         //TODO: autocomplete
 
-        if (self.filters.departement)
-            self.$el.find('input.js-autocomplete').val(self.filters.departement.get('title'));
+        console.log(Departement.collection.getInstance().toJSON());
+
+        self.$el.find('input.js-autocomplete').autocomplete({
+            source: Departement.collection.getInstance().toJSON(),
+            appendTo: self.$el.find('.js-autocomplete-result')
+        });
+
+        /*if (self.filters.departement)
+            self.$el.find('input.js-autocomplete').val(self.filters.departement.get('title'));*/
 
         self.$el.find('.js-datetimepicker').datetimepicker({
             //locale: 'fr',
