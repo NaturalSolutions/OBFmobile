@@ -84,7 +84,7 @@ module.exports = Marionette.Object.extend({
         var removables = [];
         missions.forEach(function(mission) {
             var isMatch = true;
-            if (isMatch && departement && !mission.isInDepartement(departement.get('code'))) {
+            if (isMatch && departement && !mission.isInDepartement(departement)) {
                 isMatch = false;
             }
             if (isMatch && (startAt || endAt) && !mission.isInSeason(startAt, endAt)) {
@@ -96,6 +96,8 @@ module.exports = Marionette.Object.extend({
 
         if (removables.length)
             missions.remove(removables);
+
+        console.log(removables.length);
 
         var View = require('../missions_all/missions_all.view');
         main.getInstance().rgMain.show(new View({

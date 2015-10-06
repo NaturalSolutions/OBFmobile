@@ -14,9 +14,10 @@ var View = Marionette.LayoutView.extend({
 		//'click .btn_menu': 'onBtnMenuClick'
 	},
 	triggers: {
+		'click .btn_back': 'btn:back:click',
 		'click .btn_menu': 'btn:menu:click',
-		'click .btn_plus': 'btn:plus:click',
-		'click .btn_option': 'btn:option:click'
+		'click .btn_option': 'btn:option:click',
+		'click .btn_plus': 'btn:plus:click'
 	},
 	btns: {
 		menu: {

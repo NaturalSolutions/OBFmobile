@@ -1,6 +1,7 @@
 'use strict';
 var Marionette = require('backbone.marionette'),
 	_ = require('lodash'),
+    Header = require('../header/header'),
 	Router = require('../main/router'),
     Departement = require('../models/departement');
 
@@ -27,6 +28,12 @@ var View = Marionette.LayoutView.extend({
     initialize: function() {
         var self = this;
         self.filters = filters ? _.clone(filters) : {};
+
+        self.listenTo(Header.getInstance(), 'btn:back:click', function(e) {
+            Router.getInstance().navigate('missions/all', {
+                trigger: true
+            });
+        });
     },
 
     onRender: function() {
@@ -38,11 +45,12 @@ var View = Marionette.LayoutView.extend({
 
         //TODO: autocomplete
 
-        console.log(Departement.collection.getInstance().toJSON());
-
         self.$el.find('input.js-autocomplete').autocomplete({
             source: Departement.collection.getInstance().toJSON(),
-            appendTo: self.$el.find('.js-autocomplete-result')
+            appendTo: self.$el.find('.js-autocomplete-result'),
+            change: function(e, ui) {
+                self.filters.departement = ui.item.code;
+            }
         });
 
         /*if (self.filters.departement)

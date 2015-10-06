@@ -21,6 +21,10 @@ var View = Marionette.ItemView.extend({
 
 	onRender: function(options) {
 		var self = this;
+
+		if ( self.model.get('accept') ) {
+			self.$el.addClass('is-accept');
+		}
 	}
 });
 

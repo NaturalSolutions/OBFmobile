@@ -97,9 +97,6 @@ var Model = Backbone.Model.extend({
 
 			if ( !endAt ) {
 				isMatch = startAt >= seasonStart && startAt <= seasonEnd;
-				if ( self.get('num') == 14 ) {
-					console.log(startAt,seasonStart,seasonEnd);
-				}
 				result = {
 					isMatch: isMatch,
 					duration: duration,
@@ -134,6 +131,8 @@ var Model = Backbone.Model.extend({
 						ratio: (endDelta / duration.days)
 					}
 				};
+				if ( self.get('num') == 10 )
+					console.log(result);
 			}
 
 			if ( result.isMatch )
