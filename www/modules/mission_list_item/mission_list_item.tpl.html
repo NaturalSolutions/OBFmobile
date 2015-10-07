@@ -5,7 +5,10 @@
 </div>
 <div class="media-body text">
 	<a href="#mission/<%= data.mission.srcId %>">
-	    <div class="media-heading title"><span class="badge-circle num"><%= data.mission.num %></span> <%= data.mission.title %></div>
+	    <div class="media-heading title">
+	    	<span class="badge-circle num"><%= data.mission.num %></span> 
+	    	<span><%= data.mission.title %></span> 
+	    </div>
 	    <div class="meta">
 	    	<span class="taxon"><%= data.mission.taxon.title %></span> 
 	    	<span class="season text-primary">
@@ -13,6 +16,12 @@
 	    		<span class="period"><%= data.mission.displaySeason %></span>
             	<span class="delta"><%= i18n.t('mission.deltaLong', {count: data.mission.inSeason.end.delta }) %></span>
 	    	</span>
+	    </div>
+		<div class="options">
+			<div class="badge-circle no-border bg-blue accept">
+		    	<span class="icon icomoon">check</span>
+		    </div>
+		    <div class="icon icomoon difficulty">difficulty_<%= data.mission.difficultyName %></div>
 	    </div>
 	</a>
 </div>

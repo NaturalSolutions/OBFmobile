@@ -11,14 +11,27 @@
 		}
 	}
 	.text {
+		position: relative;
 		vertical-align: middle;
 		border-bottom: 1px solid @gray-lighter;
+		> a {
+			display: block;
+			position: relative;
+		}
+		.title {
+			padding-right: 3em;
+		}
 		.num {
 			font-size: .63em;
 			vertical-align: top;
 		}
 		.meta {
 			font-size: 12px;
+		}
+		.options {
+			position: absolute;
+			right: 0;
+			top: 0;
 		}
 	}
 	&.is-accept {
@@ -33,6 +46,9 @@
 			.delta {
 				display: none;
 			}
+		}
+		.accept {
+			display: none;
 		}
 	}
 }

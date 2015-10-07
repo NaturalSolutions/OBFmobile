@@ -5,7 +5,8 @@
 .nav-tabs {
   border-bottom: none;
   text-align: center;
-  text-transform: uppercase;
+  text-transform: lowercase;
+  font-size: 15px;
   background: rgba(255, 255, 255, 0.9);
   .box-shadow(0 0 6px rgba(0, 0, 0, 0.2));
   > li {
@@ -30,9 +31,55 @@
       &,
       &:hover,
       &:focus {
+        color: @gray-dark;
         border: none;
         border-bottom: 3px solid @nav-tabs-active-link-hover-border-color;
       }
+    }
+  }
+
+  // pulling this in mainly for less shorthand
+  &.nav-justified {
+    .nav-justified();
+    .nav-tabs-justified();
+  }
+}
+
+.nav-justified {
+  > li {
+    display: table-cell;
+    width: 1%;
+    > a {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.nav-tabs-justified {
+  border-bottom: 0;
+
+  > li > a {
+    // Override margin from .nav-tabs
+    margin-right: 0;
+    border-radius: @border-radius-base;
+  }
+
+  > .active > a,
+  > .active > a:hover,
+  > .active > a:focus {
+    border: none;
+    border-bottom: 3px solid;
+  }
+
+  @media (min-width: @screen-sm-min) {
+    > li > a {
+      border-bottom: 1px solid @nav-tabs-justified-link-border-color;
+      border-radius: @border-radius-base @border-radius-base 0 0;
+    }
+    > .active > a,
+    > .active > a:hover,
+    > .active > a:focus {
+      border-bottom-color: @nav-tabs-justified-active-link-border-color;
     }
   }
 }

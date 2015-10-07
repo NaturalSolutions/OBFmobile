@@ -21,9 +21,9 @@ module.exports = Marionette.LayoutView.extend({
 		var departementCodes = User.model.getInstance().get('departements');
 		self.collection = Mission.collection.getInstance().filter(function(mission) {
 			var isInDepartement = mission.isInDepartement(departementCodes);//_.intersection(departementCodes, mission.get('departements')).length;
-			var isInSeason = mission.isInSeason(new Date());
-			
-			return (isInDepartement && isInSeason);
+			var inSeason = mission.inSeason(new Date());
+			console.log(inSeason);
+			return (isInDepartement && inSeason.isMatch);
 		});
 
 		self.collection = new Backbone.Collection(self.collection);

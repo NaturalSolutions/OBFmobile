@@ -8,7 +8,8 @@ var Backbone = require('backbone'),
     Home = require('../home/home.view'),
     ObservationView = require('../observation/observation.view'),
     Dashboard = require('../dashboard/dashboard.view'),
-    MissionsAroundMe = require('../missions_aroundme/missions_aroundme.view');
+    MissionsAroundMe = require('../missions_aroundme/missions_aroundme.view'),
+    Router = require('../main/router');
 
 module.exports = Marionette.Object.extend({
     initialize: function(options) {
@@ -18,9 +19,10 @@ module.exports = Marionette.Object.extend({
     home: function() {
         var self = this;
 
-        main.getInstance().rgMain.show(new Home(), {
+        Router.getInstance().navigate('#dashboard', {trigger: true});
+        /*main.getInstance().rgMain.show(new Home(), {
             preventDestroy: true
-        });
+        });*/
     },
 
     observationId: function(id) {
@@ -84,7 +86,7 @@ module.exports = Marionette.Object.extend({
         var removables = [];
         missions.forEach(function(mission) {
             var isMatch = true;
-            if (isMatch && departement && !mission.isInDepartement(departement)) {
+            if (isMatch && departement && !mission.isInDepartement(departement.code)) {
                 isMatch = false;
             }
             if (isMatch && (startAt || endAt) && !mission.isInSeason(startAt, endAt)) {

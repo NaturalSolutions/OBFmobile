@@ -14,6 +14,7 @@ var Model = Backbone.Model.extend({
 		title: '',
 		poster: '',
 		difficulty: 0,//0 == unset
+		difficultyName: '',
 		accept: false,
 		success: false,
 		departements: [],//codes
@@ -28,35 +29,59 @@ var Model = Backbone.Model.extend({
 		},
 	},
 	url: config.coreUrl,
-	initialize: function() {
+	//Usefull to preserve equality between get() and toJSON()
+	getDynAttrs: function() {
+		return ['poster', 'difficultyName', 'seasons'];
+	},
+	get: function(attr) {
 		var self = this;
+		if ( self.getDynAttrs().indexOf(attr) > -1 ) {
+			return self['get'+ _.capitalize(attr)]();
+		}
 
-		var id = self.get('srcId');
-		self.set('poster', (id < 10 ? '0' : '')+id+'.jpg');
-
-		var difficultyNames = ['beginner', 'confirmed', 'expert'];
-		self.set('difficultyName', difficultyNames[self.get('difficulty')-1]);
-
-		var seasons = self.get('seasons');
-		_.forEach(seasons, function(season) {
-			if ( _.isString(season.startAt) ) {}
-				season.startAt = new Date(season.startAt);
-			if ( _.isString(season.endAt) )
-				season.endAt = new Date(season.endAt);
-		});
+		return Backbone.Model.prototype.get.call(self, attr);
 	},
 	toJSON: function() {
 		var self = this;
 		var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
+
+		_.forEach(self.getDynAttrs(), function(attr) {
+			result[attr] = self.get(attr);
+		});
+
 		result.inSeason = self.inSeason(new Date());
 		result.isInSeason = result.inSeason.isMatch;
 		result.displaySeason = i18n.t('common.mission.season.display', {
 			from: moment(result.seasons[0].startAt).format('MMMM'),
 			to: moment(result.seasons[0].endAt).format('MMMM')
 		});
-		result.poster = (result.srcId < 10 ? '0' : '')+result.srcId+'.jpg';
 
 		return result;
+	},
+	getPoster: function() {
+		var self = this;
+		var id = self.get('srcId');
+
+		return (id < 10 ? '0' : '')+ id +'.jpg';
+	},
+	getDifficultyName: function() {
+		var self = this;
+		var difficultyNames = ['beginner', 'confirmed', 'expert'];
+
+		return difficultyNames[self.get('difficulty')-1];
+	},
+	getSeasons: function() {
+		var self = this;
+
+		var seasons = self.attributes.seasons;
+		_.forEach(seasons, function(season) {
+			if ( _.isString(season.startAt) ) {}
+				season.startAt = new Date(season.startAt);
+			if ( _.isString(season.endAt) )
+				season.endAt = new Date(season.endAt);
+		});
+
+		return seasons;
 	},
 	isInDepartement: function(codes) {
 		var self = this;

@@ -21,10 +21,10 @@ var View = Marionette.LayoutView.extend({
 	},
 	btns: {
 		menu: {
-			icon: 'menu-hamburger'
+			icon: 'hamburger'
 		},
 		back: {
-			icon: 'menu-left'
+			icon: 'arrow_left'
 		},
 		plus: {
 			icon: 'plus'
@@ -33,7 +33,7 @@ var View = Marionette.LayoutView.extend({
 			icon: 'search'
 		},
 		option: {
-			icon: 'option-vertical'
+			icon: 'khebab'
 		},
 		cancel: {
 			icon: 'remove'

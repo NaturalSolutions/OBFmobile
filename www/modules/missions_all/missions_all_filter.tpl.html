@@ -1,6 +1,6 @@
 <div class="container">
     <div class="form-group">
-    	<input type="text" class="form-control js-autocomplete" placeholder="Saisir un département" />
+    	<input type="text" class="form-control js-autocomplete" placeholder="<%= data.departement ? data.departement.title : 'Saisir un département' %>" />
         <div class="js-autocomplete-result autocomplete-result"></div>
     </div>
 	<div class="form-group">
