@@ -32,7 +32,7 @@
     }
 }, {
     "id": 3, "num": 3,
-    "title": "Ah ! Les belles Bacchantes  ",
+    "title": "Ah ! Les belles Bacchantes",
     "difficulty": 2,
     "seasons": [{
         "startAt": "06",
@@ -48,7 +48,7 @@
     }
 }, {
     "id": 4, "num": 4,
-    "title": " Sonne qui peut !",
+    "title": "Sonne qui peut !",
     "difficulty": 3,
     "seasons": [{
         "startAt": "04",
@@ -64,7 +64,7 @@
     }
 }, {
     "id": 5, "num": 5,
-    "title": "Splendide en Pays d'Oc  ",
+    "title": "Splendide en Pays d'Oc",
     "difficulty": 2,
     "seasons": [{
         "startAt": "04",
@@ -90,13 +90,13 @@
     "taxon": {
         "title": "Carabe \u00e0 reflets cuivr\u00e9s",
         "family": "carabes",
-        "description": "\"D'une taille comprise entre 19 et 28 mm, le Carabe \u00e0 reflets cuivr\u00e9s, ou Carabe \u00e0 reflets d'or, se reconna\u00eet \u00e0 sa t\u00eate et son pronotum (segment du thorax situ\u00e9 derri\u00e8re la t\u00eate) de couleur rouge et ses \u00e9lytres verts qui portent chacun 3 larges lignes saillantes noires.\n\nComme tous les col\u00e9opt\u00e8res, il poss\u00e8de deux paires d'ailes : la premi\u00e8re, appel\u00e9e \u00e9lytres, est transform\u00e9e en carapace allong\u00e9e, tandis que la deuxi\u00e8me est atrophi\u00e9e si bien qu'ils sont incapables de voler.\n\nIl se diff\u00e9rencie du Carabe dor\u00e9 par ses cotes de couleur noires, alors qu'elles sont vertes chez le dor\u00e9.\"",
+        "description": "D'une taille comprise entre 19 et 28 mm, le Carabe \u00e0 reflets cuivr\u00e9s, ou Carabe \u00e0 reflets d'or, se reconna\u00eet \u00e0 sa t\u00eate et son pronotum (segment du thorax situ\u00e9 derri\u00e8re la t\u00eate) de couleur rouge et ses \u00e9lytres verts qui portent chacun 3 larges lignes saillantes noires.\n\nComme tous les col\u00e9opt\u00e8res, il poss\u00e8de deux paires d'ailes : la premi\u00e8re, appel\u00e9e \u00e9lytres, est transform\u00e9e en carapace allong\u00e9e, tandis que la deuxi\u00e8me est atrophi\u00e9e si bien qu'ils sont incapables de voler.\n\nIl se diff\u00e9rencie du Carabe dor\u00e9 par ses cotes de couleur noires, alors qu'elles sont vertes chez le dor\u00e9.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/carabes\/carabe-a-reflets-dor\/",
         "characteristic": "Caract\u00e8res distinctifs :\n-t\u00eate et pronotum (segment du thorax situ\u00e9 derri\u00e8re la t\u00eate) de couleur rouge\n-\u00e9lytres verts portant chacun 3 larges lignes saillantes noires\nTaille : 1,9 \u00e0 2,8 cm"
     }
 }, {
     "id": 7, "num": 7,
-    "title": "Calosoma Sycophanta  ",
+    "title": "Calosoma Sycophanta",
     "difficulty": 2,
     "seasons": [{
         "startAt": "03",
@@ -128,7 +128,7 @@
     }
 }, {
     "id": 9, "num": 9,
-    "title": "Le carabe aux pinces d'or  ",
+    "title": "Le carabe aux pinces d'or",
     "difficulty": 2,
     "seasons": [{
         "startAt": "05",
@@ -138,7 +138,7 @@
     "taxon": {
         "title": "Carabe dor\u00e9",
         "family": "carabes",
-        "description": "\"D'une taille comprise entre 17 et 20 mm, il se reconna\u00eet \u00e0 ses \u00e9lytres et son thorax verts avec des reflets m\u00e9talliques. On le distingue \u00e0 ses trois larges lignes saillantes sur chaque \u00e9lytre appel\u00e9es cotes. Comme la plupart des carabes, il ne vole pas car ses ailes post\u00e9rieures sont rudimentaires.\n\nIl se diff\u00e9rencie du Carabe \u00e0 reflets cuivr\u00e9s par ses cotes de couleur vertes alors qu'elles sont noires chez le cuivr\u00e9.\"",
+        "description": "D'une taille comprise entre 17 et 20 mm, il se reconna\u00eet \u00e0 ses \u00e9lytres et son thorax verts avec des reflets m\u00e9talliques. On le distingue \u00e0 ses trois larges lignes saillantes sur chaque \u00e9lytre appel\u00e9es cotes. Comme la plupart des carabes, il ne vole pas car ses ailes post\u00e9rieures sont rudimentaires.\n\nIl se diff\u00e9rencie du Carabe \u00e0 reflets cuivr\u00e9s par ses cotes de couleur vertes alors qu'elles sont noires chez le cuivr\u00e9.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/carabes\/148-2\/",
         "characteristic": "Caract\u00e8res distinctifs :\n-\u00e9lytres verts \u00e0 reflets m\u00e9talliques\nportant chacun 3 larges lignes saillantes vertes\n-thorax vert\nTaille : 1,7 \u00e0 2 cm"
     }
@@ -154,13 +154,13 @@
     "taxon": {
         "title": "Polypore du bouleau",
         "family": "champignons",
-        "description": "\"De couleur marron-clair, en forme de console semi-circulaire et de surface lisse, le chapeau du Polypore du bouleau fait de 5 \u00e0 30 cm de large pour 2 \u00e0 6 cm d'\u00e9paisseur. Il poss\u00e8de un pied rudimentaire voire inexistant.\n\nSa chair est blanche ou l\u00e9g\u00e8rement jaune, presque g\u00e9latineuse. Il d\u00e9gage une odeur aigrelette et \u00e0 une saveur acidul\u00e9e. Sa face inf\u00e9rieure reste blanch\u00e2tre : elle est compos\u00e9e d'un r\u00e9seau dense de pores qui lib\u00e8rent les spores et dispersent ainsi le champignon vers de nouveaux arbres.\n\nC'est une esp\u00e8ce annuelle mais elle peut rester en place plusieurs ann\u00e9es.\"",
+        "description": "De couleur marron-clair, en forme de console semi-circulaire et de surface lisse, le chapeau du Polypore du bouleau fait de 5 \u00e0 30 cm de large pour 2 \u00e0 6 cm d'\u00e9paisseur. Il poss\u00e8de un pied rudimentaire voire inexistant.\n\nSa chair est blanche ou l\u00e9g\u00e8rement jaune, presque g\u00e9latineuse. Il d\u00e9gage une odeur aigrelette et \u00e0 une saveur acidul\u00e9e. Sa face inf\u00e9rieure reste blanch\u00e2tre : elle est compos\u00e9e d'un r\u00e9seau dense de pores qui lib\u00e8rent les spores et dispersent ainsi le champignon vers de nouveaux arbres.\n\nC'est une esp\u00e8ce annuelle mais elle peut rester en place plusieurs ann\u00e9es.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/champignons\/polyphore-du-bouleau\/",
         "characteristic": "Caract\u00e8res distinctifs :\n- chapeau en forme de console semi-circulaire\n-surface lisse\n-couleur marron clair sur le dessus et\nblanche dessous\nTaille : 5 \u00e0 30 cm"
     }
 }, {
     "id": 11, "num": 11,
-    "title": "Langue de b\u0153uf  ",
+    "title": "Langue de b\u0153uf",
     "difficulty": 2,
     "seasons": [{
         "startAt": "08",
@@ -186,7 +186,7 @@
     "taxon": {
         "title": "Polypore margin\u00e9",
         "family": "champignons",
-        "description": "\"En forme de sabot de cheval ou en console (il ne pousse pas sur pied), le chapeau du Polypore margin\u00e9 fait de 3 \u00e0 10 cm de large. Il est zon\u00e9 concentriquement et irr\u00e9guli\u00e8rement bossel\u00e9, de couleur allant du jaune orang\u00e9 \u00e0 brun rouge\u00e2tre ou parfois rouge orang\u00e9. Le chapeau du Polypore margin\u00e9 est partiellement ou presqu'enti\u00e8rement couvert d'une cro\u00fbte verniss\u00e9e (r\u00e9sine) noire \u00e0 partir du point d'attache.\n\nLa face sup\u00e9rieure du champignon est constitu\u00e9e par l'addition de couches successives d'abord jaun\u00e2tre, puis gris\u00e2tre et orange. La marge (le bord du chapeau) est quant \u00e0 elle plus claire que le reste du chapeau. Lorsque le champignon est en croissance, l'hym\u00e9nium (face inf\u00e9rieure fertile) suinte des gouttelettes. Les pores, entre 3 et 4 par mm, sont arrondis et de couleur jaune cr\u00e8me.\n\nOn trouve cette esp\u00e8ce tout au long de l'ann\u00e9e.\"",
+        "description": "En forme de sabot de cheval ou en console (il ne pousse pas sur pied), le chapeau du Polypore margin\u00e9 fait de 3 \u00e0 10 cm de large. Il est zon\u00e9 concentriquement et irr\u00e9guli\u00e8rement bossel\u00e9, de couleur allant du jaune orang\u00e9 \u00e0 brun rouge\u00e2tre ou parfois rouge orang\u00e9. Le chapeau du Polypore margin\u00e9 est partiellement ou presqu'enti\u00e8rement couvert d'une cro\u00fbte verniss\u00e9e (r\u00e9sine) noire \u00e0 partir du point d'attache.\n\nLa face sup\u00e9rieure du champignon est constitu\u00e9e par l'addition de couches successives d'abord jaun\u00e2tre, puis gris\u00e2tre et orange. La marge (le bord du chapeau) est quant \u00e0 elle plus claire que le reste du chapeau. Lorsque le champignon est en croissance, l'hym\u00e9nium (face inf\u00e9rieure fertile) suinte des gouttelettes. Les pores, entre 3 et 4 par mm, sont arrondis et de couleur jaune cr\u00e8me.\n\nOn trouve cette esp\u00e8ce tout au long de l'ann\u00e9e.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/champignons\/polypore-margine\/",
         "characteristic": "Caract\u00e8res distinctifs :\n-chapeau en forme de sabot de cheval ou\nen console de couleur jaune orang\u00e9 \u00e0\nrouge orang\u00e9\n-recouvert d'une cro\u00fbte verniss\u00e9e fonc\u00e9e\n-pas de pied\nTaille : 3 \u00e0 10 cm"
     }
@@ -202,7 +202,7 @@
     "taxon": {
         "title": "Amadouvier",
         "family": "champignons",
-        "description": "\"L'Amadouvier se reconna\u00eet \u00e0 son chapeau de 10 \u00e0 40 cm de large et en forme de sabot de cheval ou de console (absence de pied). Celui-ci est bossu au sommet, grav\u00e9 de sillons concentriques formant entre eux des bourrelets plus amples au d\u00e9but, puis plus \u00e9troits avec l'\u00e2ge. Sa couleur est jaun\u00e2tre, brun-rouge, brunissant vers son point d'attache et s'\u00e9claircissant vers la marge (bord du chapeau). Cette derni\u00e8re est \u00e9paisse en forme de bourrelet et s\u00e9cr\u00e8te de grosses gouttes tr\u00e8s limpides au printemps. Les pores sont tr\u00e8s fins de couleur blanche, puis cr\u00e8me et enfin roussissant avec l'\u00e2ge.\n\nC'est une esp\u00e8ce p\u00e9renne, c'est-\u00e0-dire qu'elle reste en place plusieurs ann\u00e9es, et reprend sa croissance au d\u00e9but du printemps. Les jeunes amadouviers d\u00e9gagent une odeur de banane.\"",
+        "description": "L'Amadouvier se reconna\u00eet \u00e0 son chapeau de 10 \u00e0 40 cm de large et en forme de sabot de cheval ou de console (absence de pied). Celui-ci est bossu au sommet, grav\u00e9 de sillons concentriques formant entre eux des bourrelets plus amples au d\u00e9but, puis plus \u00e9troits avec l'\u00e2ge. Sa couleur est jaun\u00e2tre, brun-rouge, brunissant vers son point d'attache et s'\u00e9claircissant vers la marge (bord du chapeau). Cette derni\u00e8re est \u00e9paisse en forme de bourrelet et s\u00e9cr\u00e8te de grosses gouttes tr\u00e8s limpides au printemps. Les pores sont tr\u00e8s fins de couleur blanche, puis cr\u00e8me et enfin roussissant avec l'\u00e2ge.\n\nC'est une esp\u00e8ce p\u00e9renne, c'est-\u00e0-dire qu'elle reste en place plusieurs ann\u00e9es, et reprend sa croissance au d\u00e9but du printemps. Les jeunes amadouviers d\u00e9gagent une odeur de banane.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/champignons\/amadouvier\/",
         "characteristic": "Caract\u00e8res distinctifs :\n-chapeau en forme de sabot de cheval\nou en console grav\u00e9 de sillons\nconcentriques\n-pas de pied\n-bossu au sommet\n-les jeunes sp\u00e9cimens d\u00e9gagent une\nodeur de banane\nTaille : 10 \u00e0 40 cm"
     }
@@ -224,7 +224,7 @@
     }
 }, {
     "id": 15, "num": 15,
-    "title": "Cap \u00e0 l'Est !  ",
+    "title": "Cap \u00e0 l'Est !",
     "difficulty": 3,
     "seasons": [{
         "startAt": "05",
@@ -234,7 +234,7 @@
     "taxon": {
         "title": "M\u00e9lib\u00e9e",
         "family": "lepidopteres",
-        "description": "\"Le M\u00e9lib\u00e9e est un petit papillon de 15 \u00e0 17mm d'envergure. Le dessus de son aile ant\u00e9rieure est uniform\u00e9ment brun fonc\u00e9, tandis que le dessus de son aile post\u00e9rieure est brun avec 3 ou 4 ocelles noir\u00e2tres cercl\u00e9s d'orange.Le dessous de l'aile post\u00e9rieure est gris-brun dans sa partie basale et pr\u00e9sente successivement vers l'extr\u00e9mit\u00e9 de l'aile : une large bande blanche irr\u00e9guli\u00e8re, 6 gros ocelles noirs pupill\u00e9s de blanc dispos\u00e9s en arc-de-cercle et entour\u00e9s d'orange vif, une ligne argent\u00e9e brillante et une bande orange soulign\u00e9e de noir, puis de blanc.\"",
+        "description": "Le M\u00e9lib\u00e9e est un petit papillon de 15 \u00e0 17mm d'envergure. Le dessus de son aile ant\u00e9rieure est uniform\u00e9ment brun fonc\u00e9, tandis que le dessus de son aile post\u00e9rieure est brun avec 3 ou 4 ocelles noir\u00e2tres cercl\u00e9s d'orange.Le dessous de l'aile post\u00e9rieure est gris-brun dans sa partie basale et pr\u00e9sente successivement vers l'extr\u00e9mit\u00e9 de l'aile : une large bande blanche irr\u00e9guli\u00e8re, 6 gros ocelles noirs pupill\u00e9s de blanc dispos\u00e9s en arc-de-cercle et entour\u00e9s d'orange vif, une ligne argent\u00e9e brillante et une bande orange soulign\u00e9e de noir, puis de blanc.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/lepidopteres\/melibee\/",
         "characteristic": "Caract\u00e8res distinctifs :\n-dessus de l'aile post\u00e9rieure avec 3\nou 4 ocelles noir\u00e2tres cercl\u00e9s\nd'orange\n-dessous de l'aile post\u00e9rieure avec 6\ngros ocelles noirs pupill\u00e9s de blanc\ndispos\u00e9s en arc-de-cercle et\nentour\u00e9s d'orange vif\nTaille : 1,5 \u00e0 1,7 cm"
     }
@@ -256,7 +256,7 @@
     }
 }, {
     "id": 17, "num": 17,
-    "title": "Bob le pap' !   ",
+    "title": "Bob le pap' !",
     "difficulty": 1,
     "seasons": [{
         "startAt": "03",
@@ -288,7 +288,7 @@
     }
 }, {
     "id": 19, "num": 19,
-    "title": "Mission pour Mars   ",
+    "title": "Mission pour Mars",
     "difficulty": 1,
     "seasons": [{
         "startAt": "06",
@@ -320,7 +320,7 @@
     }
 }, {
     "id": 21, "num": 21,
-    "title": "Attention fragile  ",
+    "title": "Attention fragile",
     "difficulty": 2,
     "seasons": [{
         "startAt": "05",
@@ -352,7 +352,7 @@
     }
 }, {
     "id": 23, "num": 23,
-    "title": "Un bon cru (de Bourgogne !)  ",
+    "title": "Un bon cru (de Bourgogne !)",
     "difficulty": 3,
     "seasons": [{
         "startAt": "05",
@@ -384,7 +384,7 @@
     }
 }, {
     "id": 25, "num": 25,
-    "title": "\u00c7a sent (bon) le musc  ",
+    "title": "\u00c7a sent (bon) le musc",
     "difficulty": 3,
     "seasons": [{
         "startAt": "06",
@@ -410,13 +410,13 @@
     "taxon": {
         "title": "Grand capricorne",
         "family": "capricornes",
-        "description": "\"L'insecte est noir et brun-rouge\u00e2tre \u00e0 l'arri\u00e8re. Le m\u00e2le mesure de 25 \u00e0 50 mm de long (corps) avec des antennes atteignant 80 mm. La femelle est plus petite, moins \u00e9lanc\u00e9e et ses antennes sont plus courtes que le corps. Le Grand capricorne pr\u00e9sente un pronotum (segment du thorax situ\u00e9 derri\u00e8re la t\u00eate) plus \u00e9troit \u00e0 l'avant qu'\u00e0 l'arri\u00e8re, avec de profondes rides transverses et une forte pointe conique de chaque c\u00f4t\u00e9. Les \u00e9lytres sont r\u00e9tr\u00e9cis vers l'arri\u00e8re, et plus fortement granuleux \u00e0 l'avant.\n\n\"",
+        "description": "L'insecte est noir et brun-rouge\u00e2tre \u00e0 l'arri\u00e8re. Le m\u00e2le mesure de 25 \u00e0 50 mm de long (corps) avec des antennes atteignant 80 mm. La femelle est plus petite, moins \u00e9lanc\u00e9e et ses antennes sont plus courtes que le corps. Le Grand capricorne pr\u00e9sente un pronotum (segment du thorax situ\u00e9 derri\u00e8re la t\u00eate) plus \u00e9troit \u00e0 l'avant qu'\u00e0 l'arri\u00e8re, avec de profondes rides transverses et une forte pointe conique de chaque c\u00f4t\u00e9. Les \u00e9lytres sont r\u00e9tr\u00e9cis vers l'arri\u00e8re, et plus fortement granuleux \u00e0 l'avant.\n\n",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/capricornes\/grand-capricorne\/",
         "characteristic": "Caract\u00e8res distinctifs :\n-pronotum (segment du thorax situ\u00e9 \nderri\u00e8re la t\u00eate) plus \u00e9troit \u00e0 l'avant qu'\u00e0 \nl'arri\u00e8re\n-\u00e9lytres noirs r\u00e9tr\u00e9cis vers l'arri\u00e8re \u00e0 l'as-\npect granuleux qui s'estompe vers l'arri\u00e8re\n-apex (extr\u00e9mit\u00e9 des \u00e9lytres) brun-rouge\u00e2tre\nTaille : 2,5 \u00e0 5 cm\nAntennes : 8 cm"
     }
 }, {
     "id": 27, "num": 27,
-    "title": "Sous le signe du Petit capricorne  ",
+    "title": "Sous le signe du Petit capricorne",
     "difficulty": 1,
     "seasons": [{
         "startAt": "05",
@@ -448,7 +448,7 @@
     }
 }, {
     "id": 29, "num": 29,
-    "title": "Z\u00e8bre \u00e0 coquille  ",
+    "title": "Z\u00e8bre \u00e0 coquille",
     "difficulty": 3,
     "seasons": [{
         "startAt": "06",
@@ -480,7 +480,7 @@
     }
 }, {
     "id": 31, "num": 31,
-    "title": "Mission Anne Tondespins  ",
+    "title": "Mission Anne Tondespins",
     "difficulty": 3,
     "seasons": [{
         "startAt": "04",
@@ -506,13 +506,13 @@
     "taxon": {
         "title": "Faux-Hydne g\u00e9latineux",
         "family": "champignons",
-        "description": "\"Le chapeau du faux-hydne g\u00e9latineux mesure de 3 \u00e0 7 cm et est de couleur brun gris\u00e2tre p\u00e2le. Il est en forme d'\u00e9ventail avec les bords (\u00e9galement appel\u00e9s la marge) fins. Comme son nom l'indique, la chair du faux-hydne a une texture g\u00e9latineuse \u00e0 caoutchouteuse.\n\nCe champignon ne poss\u00e8de pas de lames sous le chapeau. Elles sont remplac\u00e9es par des aiguillons blancs \u00e9pais et assez serr\u00e9s, de consistance g\u00e9latineuse et d\u00e9bordant parfois jusque sur la marge. Le pied du champignon est inexistant ou tr\u00e8s court et translucide.\n\nLe faux-hydne g\u00e9latineux se d\u00e9veloppe principalement en amas de quelques individus plus ou moins imbriqu\u00e9s.\"",
+        "description": "Le chapeau du faux-hydne g\u00e9latineux mesure de 3 \u00e0 7 cm et est de couleur brun gris\u00e2tre p\u00e2le. Il est en forme d'\u00e9ventail avec les bords (\u00e9galement appel\u00e9s la marge) fins. Comme son nom l'indique, la chair du faux-hydne a une texture g\u00e9latineuse \u00e0 caoutchouteuse.\n\nCe champignon ne poss\u00e8de pas de lames sous le chapeau. Elles sont remplac\u00e9es par des aiguillons blancs \u00e9pais et assez serr\u00e9s, de consistance g\u00e9latineuse et d\u00e9bordant parfois jusque sur la marge. Le pied du champignon est inexistant ou tr\u00e8s court et translucide.\n\nLe faux-hydne g\u00e9latineux se d\u00e9veloppe principalement en amas de quelques individus plus ou moins imbriqu\u00e9s.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/champignons\/faux-hydne-gelatineux\/",
         "characteristic": "Caract\u00e8res distinctifs :\n-texture g\u00e9latineuse \u00e0 caoutchouteuse de couleur brun gris\u00e2tre p\u00e2le\n-aiguillons blancs assez \u00e9pais sous le chapeau\nTaille : 3 \u00e0 7 cm"
     }
 }, {
     "id": 33, "num": 33,
-    "title": "Dernier doigt d'la main  ",
+    "title": "Dernier doigt d'la main",
     "difficulty": 3,
     "seasons": [{
         "startAt": "11",
@@ -522,7 +522,7 @@
     "taxon": {
         "title": "Auriculaire m\u00e9sent\u00e9rique",
         "family": "champignons",
-        "description": "\"L' Auriculaire m\u00e9sent\u00e9rique se reconna\u00eet \u00e0 son chapeau de 5 \u00e0 15 cm de largeur et de 0,3 \u00e0 0,5 cm d'\u00e9paisseur, et en forme de disque. Celui-ci est h\u00e9riss\u00e9 de poils gris\u00e2tres et les bords sont lob\u00e9s de couleur grise. La face inf\u00e9rieure du chapeau est pliss\u00e9e et de couleur brune ou pourpre.\n\nLa chair du champignon est brune et de consistance g\u00e9latineuse et \u00e9lastique. Elle durcit en vieillissant.\n\nL'auriculaire m\u00e9sent\u00e9rique entame sa phase de d\u00e9veloppement plut\u00f4t en automne.\"",
+        "description": "L' Auriculaire m\u00e9sent\u00e9rique se reconna\u00eet \u00e0 son chapeau de 5 \u00e0 15 cm de largeur et de 0,3 \u00e0 0,5 cm d'\u00e9paisseur, et en forme de disque. Celui-ci est h\u00e9riss\u00e9 de poils gris\u00e2tres et les bords sont lob\u00e9s de couleur grise. La face inf\u00e9rieure du chapeau est pliss\u00e9e et de couleur brune ou pourpre.\n\nLa chair du champignon est brune et de consistance g\u00e9latineuse et \u00e9lastique. Elle durcit en vieillissant.\n\nL'auriculaire m\u00e9sent\u00e9rique entame sa phase de d\u00e9veloppement plut\u00f4t en automne.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/champignons\/auriculaire-mesenterique\/",
         "characteristic": "Caract\u00e8res distinctifs :\n-chapeau en forme de disque h\u00e9riss\u00e9 de poils gris\u00e2tres\n-bords du chapeau lob\u00e9s de couleur grise\n-face inf\u00e9rieure pliss\u00e9e ou vein\u00e9e et de couleur brune ou pourpre\nTaille : 5 \u00e0 15 cm \nEpaisseur : 0,3 \u00e0 0,5 cm"
     }
@@ -538,13 +538,13 @@
     "taxon": {
         "title": "Polypore soufr\u00e9",
         "family": "champignons",
-        "description": "\"Pouvant atteindre jusqu'\u00e0 50 cm de largeur, le Polypore soufr\u00e9 poss\u00e8de plusieurs chapeaux qui se superposent les uns sur les autres en forme d'\u00e9ventail. Sa face sup\u00e9rieure est de couleur jaune ros\u00e9 \u00e0 jaune orang\u00e9, avec une marge (le bord du chapeau) ondul\u00e9e. Sa face inf\u00e9rieure est de couleur jaune soufre, d'o\u00f9 son nom. \nSa chair est \u00e9paisse d'1 \u00e0 5 cm, de couleur blanche et charnue \u00e0 l'\u00e9tat frais. En revanche, elle devient cassante lorsque le champignon s\u00e8che. Les pores, situ\u00e9s sous le chapeau \u00e9mettent souvent des gouttelettes de sudation.\nLe polypore soufr\u00e9 se reconna\u00eet gr\u00e2ce \u00e0 son odeur forte et piquante.\"",
+        "description": "Pouvant atteindre jusqu'\u00e0 50 cm de largeur, le Polypore soufr\u00e9 poss\u00e8de plusieurs chapeaux qui se superposent les uns sur les autres en forme d'\u00e9ventail. Sa face sup\u00e9rieure est de couleur jaune ros\u00e9 \u00e0 jaune orang\u00e9, avec une marge (le bord du chapeau) ondul\u00e9e. Sa face inf\u00e9rieure est de couleur jaune soufre, d'o\u00f9 son nom. \nSa chair est \u00e9paisse d'1 \u00e0 5 cm, de couleur blanche et charnue \u00e0 l'\u00e9tat frais. En revanche, elle devient cassante lorsque le champignon s\u00e8che. Les pores, situ\u00e9s sous le chapeau \u00e9mettent souvent des gouttelettes de sudation.\nLe polypore soufr\u00e9 se reconna\u00eet gr\u00e2ce \u00e0 son odeur forte et piquante.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/champignons\/polypore-soufre\/",
         "characteristic": "Caract\u00e8res distinctifs :\n-plusieurs chapeaux superpos\u00e9s en forme d'\u00e9ventail\n-couleur jaune ros\u00e9 \u00e0 jaune orang\u00e9 \n-bords ondul\u00e9s \n-cassant lorsqu'il s\u00e8che\nTaille : jusqu'\u00e0 50 cm"
     }
 }, {
     "id": 35, "num": 35,
-    "title": "Mission vert-de-gris  ",
+    "title": "Mission vert-de-gris",
     "difficulty": 3,
     "seasons": [{
         "startAt": "07",
@@ -554,7 +554,7 @@
     "taxon": {
         "title": "P\u00e9zize vert-de-gris",
         "family": "champignons",
-        "description": "\"Ce champignon de couleur bleu-vert vif poss\u00e8de un chapeau mesurant de 2 \u00e0 10 mm. Celui-ci est en forme de coupe irr\u00e9guli\u00e8re et d'aspect lisse. Les bords, ou marges, du chapeau peuvent \u00eatre ondul\u00e9es et devenir jaune lorsque le champignon est vieux.\n\nSon pied est souvent court, excentr\u00e9 et de m\u00eame couleur ou l\u00e9g\u00e8rement plus fonc\u00e9 que le chapeau.\n\nLe p\u00e9zize vert-de-gris ne se d\u00e9veloppe qu'en amas de plusieurs individus, parfois nombreux.\"",
+        "description": "Ce champignon de couleur bleu-vert vif poss\u00e8de un chapeau mesurant de 2 \u00e0 10 mm. Celui-ci est en forme de coupe irr\u00e9guli\u00e8re et d'aspect lisse. Les bords, ou marges, du chapeau peuvent \u00eatre ondul\u00e9es et devenir jaune lorsque le champignon est vieux.\n\nSon pied est souvent court, excentr\u00e9 et de m\u00eame couleur ou l\u00e9g\u00e8rement plus fonc\u00e9 que le chapeau.\n\nLe p\u00e9zize vert-de-gris ne se d\u00e9veloppe qu'en amas de plusieurs individus, parfois nombreux.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/champignons\/pezize-vert-de-gris\/",
         "characteristic": "Caract\u00e8res distinctifs :\n-couleur bleu-vert vif\n-chapeau lisse en forme de coupe irr\u00e9gu-\nli\u00e8re mince\n-ne se d\u00e9veloppe qu'en amas de plusieurs individus\nTaille : 2 \u00e0 10 mm"
     }
@@ -570,13 +570,13 @@
     "taxon": {
         "title": "Daldanie concentrique",
         "family": "champignons",
-        "description": "\"La Daldinie concentrique est de forme sph\u00e9rique (de globuleux \u00e0 vaguement bossel\u00e9). Elle se reconna\u00eet \u00e0 son chapeau tr\u00e8s dur de 5 \u00e0 7 cm de diam\u00e8tre. Il est de couleur vari\u00e9, allant du marron-violac\u00e9 au noir brillant.\n\nLa chair du chapeau est form\u00e9e par des zones concentriques claires altern\u00e9es avec des zones noir\u00e2tres.\n\nEn vieillissant, ce champignon a le m\u00eame aspect qu'un morceau de charbon.\"",
+        "description": "La Daldinie concentrique est de forme sph\u00e9rique (de globuleux \u00e0 vaguement bossel\u00e9). Elle se reconna\u00eet \u00e0 son chapeau tr\u00e8s dur de 5 \u00e0 7 cm de diam\u00e8tre. Il est de couleur vari\u00e9, allant du marron-violac\u00e9 au noir brillant.\n\nLa chair du chapeau est form\u00e9e par des zones concentriques claires altern\u00e9es avec des zones noir\u00e2tres.\n\nEn vieillissant, ce champignon a le m\u00eame aspect qu'un morceau de charbon.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/champignons\/daldinie-concentrique\/",
         "characteristic": "Caract\u00e8res distinctifs :\n-chapeau tr\u00e8s dur de couleur marron-vio-\nlac\u00e9 \u00e0 noir brillant\n-aspect globuleux, vaguement bossel\u00e9\n-chair form\u00e9e de zones concentriques altern\u00e9es claires et noir\u00e2tres\nTaille : 5 \u00e0 7 cm"
     }
 }, {
     "id": 37, "num": 37,
-    "title": "Touchons du bois !  ",
+    "title": "Touchons du bois !",
     "difficulty": 2,
     "seasons": [{
         "startAt": "10",
@@ -602,13 +602,13 @@
     "taxon": {
         "title": "Strangalie \u00e0 forme de capricorne",
         "family": "capricornes",
-        "description": "\"De 7 \u00e0 12 mm de long, la Strangalie \u00e0 forme de capricorne est de forme plus terne et trapue que les autres leptures, tel le Lepture tachet\u00e9. Le thorax, de couleur noir, est court, globuleux et dens\u00e9ment recouvert de poils blonds.\n\nSes \u00e9lytres mats et peu velus (contrairement au thorax) sont \u00e0 dessins noirs et jaunes variables mais la tache m\u00e9diane n'atteint pas la ligne de suture des \u00e9lytres.\n\nLa larve se d\u00e9veloppe dans les racines moisies des feuillus ou des conif\u00e8res et se nymphose dans le sol humide. Son cycle de vie est de 2 ans.\"",
+        "description": "De 7 \u00e0 12 mm de long, la Strangalie \u00e0 forme de capricorne est de forme plus terne et trapue que les autres leptures, tel le Lepture tachet\u00e9. Le thorax, de couleur noir, est court, globuleux et dens\u00e9ment recouvert de poils blonds.\n\nSes \u00e9lytres mats et peu velus (contrairement au thorax) sont \u00e0 dessins noirs et jaunes variables mais la tache m\u00e9diane n'atteint pas la ligne de suture des \u00e9lytres.\n\nLa larve se d\u00e9veloppe dans les racines moisies des feuillus ou des conif\u00e8res et se nymphose dans le sol humide. Son cycle de vie est de 2 ans.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/capricornes\/strangalie-a-forme-de-capricorne\/",
         "characteristic": "Caract\u00e8res distinctifs :\n-thorax dens\u00e9ment recouvert de poils blonds\n-\u00e9lytres jaune p\u00e2le \n-petites taches en arri\u00e8re des \u00e9paules\n-apex (extr\u00e9mit\u00e9s des \u00e9lytres) noir\nTaille : 7 \u00e0 12 mm"
     }
 }, {
     "id": 39, "num": 39,
-    "title": "B\u00e9lier \u00e0 \u00e9lytres  ",
+    "title": "B\u00e9lier \u00e0 \u00e9lytres",
     "difficulty": 1,
     "seasons": [{
         "startAt": "05",
@@ -618,7 +618,7 @@
     "taxon": {
         "title": "Clyte b\u00e9lier",
         "family": "capricornes",
-        "description": "\"De 8 \u00e0 14 mm de long, le Clyte b\u00e9lier se reconna\u00eet \u00e0 ses \u00e9lytres tr\u00e8s courts de couleur noir alternant avec des bandes jaun\u00e2tres. Son pronotum (segment du thorax situ\u00e9 derri\u00e8re la t\u00eate) est \u00e9galement noir et de forme carr\u00e9e.\n\nSes pattes sont longues de couleur jaune-orang\u00e9, avec les f\u00e9murs plus sombres.\"",
+        "description": "De 8 \u00e0 14 mm de long, le Clyte b\u00e9lier se reconna\u00eet \u00e0 ses \u00e9lytres tr\u00e8s courts de couleur noir alternant avec des bandes jaun\u00e2tres. Son pronotum (segment du thorax situ\u00e9 derri\u00e8re la t\u00eate) est \u00e9galement noir et de forme carr\u00e9e.\n\nSes pattes sont longues de couleur jaune-orang\u00e9, avec les f\u00e9murs plus sombres.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/capricornes\/clyte-belier\/",
         "characteristic": "Caract\u00e8res distinctifs :\n-antennes noires avec les premiers articles roux\n-pattes rousses\n-deux premi\u00e8res taches jaunes des \u00e9lytres horizontales\n-bande jaune en \u00ab V \u00bb sur les \u00e9lytres\nTaille : 8 \u00e0 14 mm"
     }
@@ -634,13 +634,13 @@
     "taxon": {
         "title": "El\u00e9gante stri\u00e9e",
         "family": "gasteropodes",
-        "description": "\"La coquille de l'\u00c9l\u00e9gante stri\u00e9e \u00e0 un diam\u00e8tre de 10 mm pour une hauteur de 15 mm. Elle est conique avec une ouverture bien ronde dont le rebord est \u00e9paissi. Le motif de la coquille ressemble \u00e0 un treillis, bien visible \u00e0 la loupe.\n\nL'opercule (membrane corn\u00e9e ou calcaire attach\u00e9e au pied qui sert \u00e0 refermer l'entr\u00e9e de la coquille) de l'animal est bien visible lorsqu'il est rentre\u0301 dans sa coquille. Le pied est divis\u00e9 longitudinalement en deux parties qui se d\u00e9placent s\u00e9par\u00e9ment ce qui accentue la lenteur de ses d\u00e9placements !\n\nL'\u00c9l\u00e9gante stri\u00e9e dispose d'un mufle, une sorte de trompe, qui le diff\u00e9rencie des autres escargots.\"",
+        "description": "La coquille de l'\u00c9l\u00e9gante stri\u00e9e \u00e0 un diam\u00e8tre de 10 mm pour une hauteur de 15 mm. Elle est conique avec une ouverture bien ronde dont le rebord est \u00e9paissi. Le motif de la coquille ressemble \u00e0 un treillis, bien visible \u00e0 la loupe.\n\nL'opercule (membrane corn\u00e9e ou calcaire attach\u00e9e au pied qui sert \u00e0 refermer l'entr\u00e9e de la coquille) de l'animal est bien visible lorsqu'il est rentre\u0301 dans sa coquille. Le pied est divis\u00e9 longitudinalement en deux parties qui se d\u00e9placent s\u00e9par\u00e9ment ce qui accentue la lenteur de ses d\u00e9placements !\n\nL'\u00c9l\u00e9gante stri\u00e9e dispose d'un mufle, une sorte de trompe, qui le diff\u00e9rencie des autres escargots.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/gasteropodes\/elegante-striee\/",
         "characteristic": "Caract\u00e8res distinctifs :\n-motif de la coquille ressemblant \u00e0 un treillis\n-poss\u00e8de un mufle (sorte de trompe)\n-pied divis\u00e9 longitudinalement en deux parties qui se d\u00e9placent s\u00e9par\u00e9ment\nTaille : 10 \u00e0 15 mm"
     }
 }, {
     "id": 41, "num": 41,
-    "title": "Maillot d'escargot  ",
+    "title": "Maillot d'escargot",
     "difficulty": 2,
     "seasons": [{
         "startAt": "08",
@@ -650,7 +650,7 @@
     "taxon": {
         "title": "Maillot cendr\u00e9",
         "family": "gasteropodes",
-        "description": "\"La taille de sa coquille mesure de 3,5 \u00e0 14 mm de hauteur pour un diam\u00e8tre de 1,5 \u00e0 4 mm. Elle est cylindrique en forme de fuseau et de coloration grise cendr\u00e9e (c'est une couleur typique des emplacements calcaires). Elle pr\u00e9sente des spires assez aigu\u00eb, finement stri\u00e9e obliquement.\n\nLe maillot cendr\u00e9 dispose de dents \u00e0 l'ouverture (orifice d'entr\u00e9e de la coquille) lui permettant de se prot\u00e9ger des scolopendres.\n\nParfois aussi sur des massifs de plantes (thym, sarriette).\"",
+        "description": "La taille de sa coquille mesure de 3,5 \u00e0 14 mm de hauteur pour un diam\u00e8tre de 1,5 \u00e0 4 mm. Elle est cylindrique en forme de fuseau et de coloration grise cendr\u00e9e (c'est une couleur typique des emplacements calcaires). Elle pr\u00e9sente des spires assez aigu\u00eb, finement stri\u00e9e obliquement.\n\nLe maillot cendr\u00e9 dispose de dents \u00e0 l'ouverture (orifice d'entr\u00e9e de la coquille) lui permettant de se prot\u00e9ger des scolopendres.\n\nParfois aussi sur des massifs de plantes (thym, sarriette).",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/gasteropodes\/maillot-cendre\/",
         "characteristic": "Caract\u00e8res distinctifs :\n-coquille cylindrique en forme de fuseau\n-spires (tours de coquille) finement stri\u00e9es obliquement de couleur gris cendre\n-dents \u00e0 l'orifice d'entr\u00e9e de la coquille\nTaille : 3,5 \u00e0 14 mm"
     }
@@ -666,7 +666,7 @@
     "taxon": {
         "title": "Lamie tisserand",
         "family": "capricornes",
-        "description": "\"De 15 \u00e0 32 mm de long, le Lamie tisserand est enti\u00e8rement de couleur noir et son corps (\u00e9lytres + pronotum) pr\u00e9sente une texture granuleuse. Le pronotum (segment du thorax situ\u00e9 derri\u00e8re la t\u00eate) est orn\u00e9 de deux pointes lat\u00e9rales et les \u00e9lytres sont recouverts d'une fine pubescence jaune.\nBien que normalement ail\u00e9, et donc apte au vol, le Lamie tisserand ne vole quasiment pas, il se d\u00e9place en marchant.\"",
+        "description": "De 15 \u00e0 32 mm de long, le Lamie tisserand est enti\u00e8rement de couleur noir et son corps (\u00e9lytres + pronotum) pr\u00e9sente une texture granuleuse. Le pronotum (segment du thorax situ\u00e9 derri\u00e8re la t\u00eate) est orn\u00e9 de deux pointes lat\u00e9rales et les \u00e9lytres sont recouverts d'une fine pubescence jaune.\nBien que normalement ail\u00e9, et donc apte au vol, le Lamie tisserand ne vole quasiment pas, il se d\u00e9place en marchant.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/capricornes\/lamie-tisserand\/",
         "characteristic": "Caract\u00e8res distinctifs :\n-corps de texture granuleuse\n-\u00e9lytres soud\u00e9s \n-pronotum (segment du thorax situ\u00e9 derri\u00e8re la t\u00eate) pr\u00e9sentant deux pointes lat\u00e9rales\nTaille : jusqu'\u00e0 3 cm"
     }
