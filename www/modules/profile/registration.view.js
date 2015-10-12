@@ -45,17 +45,60 @@ var Layout = Marionette.LayoutView.extend({
         e.preventDefault();
         //TODO : formData(myformregistration)
         var formData = new FormData();
-        formData.append('name', this.model.get('lastname'));
+        formData.append('field_first_name', {
+            und: [{
+                value: this.model.get('firstname')
+            }]
+        });
+        formData.append('field_last_name', {
+            und: [{
+                value: this.model.get('lastname')
+            }]
+        });
         formData.append('mail', this.model.get('email'));
         formData.append('pass', this.model.get('password'));
         formData.append('pass2', this.model.get('password'));
+        formData.append('field_newsletter', {
+            und: [{
+                value: this.model.get('newsletter')
+            }]
+        });
+
+        var data = {
+            field_first_name: {
+                und: [{
+                    value: this.model.get('firstname'),
+                    format: null,
+                    safe_value: this.model.get('firstname')
+                }]
+            },
+            field_last_name: {
+                und: [{
+                    value: this.model.get('lastname'),
+                    format: null,
+                    safe_value: this.model.get('lastname')
+                }]
+            },
+            mail: this.model.get('email'),
+            pass: this.model.get('password'),
+            pass2: this.model.get('password'),
+            account: {
+                mail: this.model.get('email'),
+                pass: this.model.get('password')
+                //pass2: this.model.get('password')
+            }
+            /*field_newsletter: {
+                und: [{
+                    value: this.model.get('newsletter')
+                }]
+            }*/
+        };
 
         $.ajax({
             url: config.coreUrl + "/user_mobile/user/register.json",
             type: 'post',
-            contentType: false,
-            processData: false,
-            data: formData,
+            contentType: "application/json",
+            data: JSON.stringify(data),
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log(errorThrown);
             },
