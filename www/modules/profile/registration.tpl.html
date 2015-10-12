@@ -1,0 +1,38 @@
+<div class="header hidden-by-keyboard text-center">
+    <img src="./images/dashboard-header.png" />
+</div>
+<div class="container">
+    <form id="signin">
+        <% console.log(data.user); %>
+        <div class="form-group required">
+			<label for="lastname">Nom</label>
+            <input id="lastname" name="lastname" type="text" class="form-control updateModel-js" value="<%= data.user.get('lastname') %>" placeholder="Votre nom">
+        </div>
+        <div class="form-group required">
+            <label for="firstname">Prénom</label>
+            <input id="firstname" name="firstname" type="text" class="form-control updateModel-js" value="<%= data.user.get('firstname') %>" placeholder="Votre prénom">
+        </div>
+        <div class="form-group required">
+            <label for="email">email</label>
+            <input id="email" name="email" type="text" class="form-control updateModel-js" value="<%= data.user.get('email') %>" placeholder="Un email valide">
+        </div>
+        <div class="form-group">
+    		<label for="password">Mot de passe</label>
+    		<input type="password" name="password" class="form-control updateModel-js" id="password" placeholder="Entrez un mot de passe">
+  		</div>
+        <div class="form-group required">
+            <legend for="newsletter" >Newsletter</legend>
+            <label>
+            	M'abonner à la newsletter <input id="newsletter" name="newsletter" type="checkbox"  class="updateModel-js" <% if(data.user.get('newsletter')) { %> <%= 'checked' %> <% } %> >
+            </label>
+        </div>
+    </form>
+    <div class="footer btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-lg cancel-js">Annuler</button>
+        </div>
+        <div class="btn-group form-actions" role="group">
+            <input type="submit" class="btn btn-lg submit" name="Ajouter" value="S'inscrire">
+        </div>
+    </div>
+</div>

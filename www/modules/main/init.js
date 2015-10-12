@@ -176,6 +176,7 @@ function init() {
         Router.getInstance();
         main.init();
         main.getInstance().render();
+        
         Backbone.history.start();
         //TODO refactoring : i'm waiting the validation of the workflow about registration CV
         window.handleOpenURL = function(url) {

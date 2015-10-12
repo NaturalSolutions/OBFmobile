@@ -11,7 +11,10 @@
 			"dashboard": "Tableau de bord",
 			"missions": "Missions",
 			"missionsAroundme": "Missions autour de moi",
-			"observation": "Observation"
+			"observation": "Observation",
+			"profile": "mon profil",
+			"registration": "Inscription",
+			"login": "Connexion"
 		}
 	},
 	"mission": {

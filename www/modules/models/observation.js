@@ -15,7 +15,11 @@ var ObservationModel = Backbone.Model.extend({
         //     shared: 0,
         //     externalId: ''
         // }
-        url: config.apiUrl +'/v1.0/observations',
+        defaults:{
+            type:'observation'
+        },
+        // url: config.apiUrl +'/v1.0/observations',
+        url: config.coreUrl +'/user_mobile/node.json',
 });
 
 var ObservationCollection = Backbone.Collection.extend({

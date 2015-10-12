@@ -9,7 +9,10 @@ var Backbone = require('backbone'),
     ObservationView = require('../observation/observation.view'),
     Dashboard = require('../dashboard/dashboard.view'),
     MissionsAroundMe = require('../missions_aroundme/missions_aroundme.view'),
-    Router = require('../main/router');
+    Router = require('../main/router'),
+    Registration = require('../profile/registration.view'),
+    Login = require('../profile/login.view');
+
 
 module.exports = Marionette.Object.extend({
     initialize: function(options) {
@@ -29,9 +32,6 @@ module.exports = Marionette.Object.extend({
         var self = this;
         var Observation = require('../models/observation');
         var currentObservation = Observation.collection.getInstance().get(id);
-        //var observation = this.app.observationCollection.get(id);
-        // console.log(observation);
-        //self.rgHeader.currentView.setState('observation');
         main.getInstance().rgMain.show(new ObservationView({
             name: 'observation',
             model: currentObservation
@@ -176,6 +176,28 @@ module.exports = Marionette.Object.extend({
                     tab: 'tab-' + tabSlug
                 }
             }
+        });
+    },
+    registration: function(id) {
+        var user = User.model.getInstance();
+
+        if (!id) {
+            main.getInstance().rgMain.show(new Registration({
+                name: 'registration',
+                model: user
+            }), {
+                preventDestroy: true
+            });
+        }
+    },
+    login: function() {
+        var user = User.model.getInstance();
+
+        main.getInstance().rgMain.show(new Login({
+            name: 'login',
+            model: user
+        }), {
+            preventDestroy: true
         });
     },
     //TODO refactoring : i'm waiting the validation of the workflow about registration CV

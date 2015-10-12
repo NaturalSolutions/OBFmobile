@@ -1,0 +1,23 @@
+<div class="header hidden-by-keyboard text-center">
+    <img src="./images/dashboard-header.png" />
+</div>
+<div class="container">
+    <form id="signup">
+        <div class="form-group required">
+            <label for="lastname">Nom</label>
+            <input id="lastname" name="lastname" type="text" class="form-control updateModel-js" value="<%= data.user.get('lastname') %>" placeholder="Votre nom">
+        </div>
+        <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" name="password" class="form-control updateModel-js" id="password" placeholder="Entrez un mot de passe">
+        </div>
+    </form>
+    <div class="footer btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-lg cancel-js">Se déconnecter</button>
+        </div>
+        <div class="btn-group form-actions" role="group">
+            <input type="submit" class="btn btn-lg submit" name="Ajouter" value="Se connecter">
+        </div>
+    </div>
+</div>
