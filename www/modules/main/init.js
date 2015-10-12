@@ -17,6 +17,7 @@ var Backbone = require('backbone'),
     Observation = require('../models/observation'),
     i18n = require('i18next-client'),
     User = require('../models/user'),
+    Log = require('../models/log'),
     Departement = require('../models/departement'),
     Mission = require('../models/mission'),
     Router = require('./router');
@@ -158,6 +159,23 @@ function init() {
                     userCollection.add(User.model.getInstance()).save();
                     deferred.resolve();
                 }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+
+        return deferred;
+    };
+
+    var getLogs = function() {
+        var logCollection = Log.collection.getInstance();
+
+        var deferred = $.Deferred();
+        logCollection.fetch({
+            success: function(data) {
+                console.log('log fetch', data);
+                deferred.resolve();
             },
             error: function(error) {
                 console.log(error);
