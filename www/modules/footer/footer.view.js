@@ -133,9 +133,6 @@ var View = Marionette.LayoutView.extend({
         Observation.collection.getInstance().add(observationModel)
             .save()
             .done(function(data) {
-                //reset input file
-                var $form = $('form');
-                self.resetForm($form);
                 //navigate
                 router.getInstance().navigate('observation/' + data.id, {
                     trigger: true
@@ -144,9 +141,6 @@ var View = Marionette.LayoutView.extend({
             .fail(function(e) {
                 console.log(e);
             });
-    },
-    resetForm: function(i) {
-        i.get(0).reset();
     }
 
 });
