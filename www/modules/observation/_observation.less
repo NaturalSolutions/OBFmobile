@@ -1,3 +1,21 @@
-button#take-picture {
-    color: gray;
+.page.observation {
+	.imgs {
+		height: 60%;
+		position: relative;
+		> .inner {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			.swiper-wrapper {
+				margin-bottom: 0;
+				.swiper-slide {
+					background: no-repeat top center;
+					background-size: contain;
+				}
+			}
+		}
+	}
+	button#take-picture {
+	    color: gray;
+	}
 }

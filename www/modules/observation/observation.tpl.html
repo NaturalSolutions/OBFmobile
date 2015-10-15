@@ -1,56 +1,60 @@
-<div class="header img-preview hidden-by-keyboard">
+<div class="imgs img-preview hidden-by-keyboard">
+    <!-- <span class="icon-camera icon icomoon">camera</span> -->
     <div class="inner">
-        <span class="icon-camera icon icomoon">camera</span>
+        <ul class="swiper-wrapper list-unstyled">
         <% data.observation.photos.forEach(function(p){ %>
-            <% if(window.cordova){ %>
-                <div>
-                    <img class="editor-picture-img " src=" <%= p.url %>" style="width:200px;"/>
-                    <button class="delete-photo-js">DELETE</button>
-                </div>
-            <% } %>
+            <li class="img swiper-slide" style="background-image:url('<%= p.url %>');">
+                <button class="delete-photo-js btn-fab floating floating-top floating-right">
+                    <span class="icon icomoon">close</span>
+                </button>
+            </li>
         <% }); %>
-        <% if(data.observation.photos.length < 3){ %>
+        </ul>
+    </div>
+</div>
+<div class="container">
+    <% if(data.observation.photos.length < 3){ %>
         <form id="form-picture" enctype="multipart/form-data">
             <input type="file" name="image" accept="image/*" />
             <input type="submit" value="upload file"></input>
         </form>
-
         <button id="take-picture" type="button" class="btn btn-link capturePhoto-js">
             <span>Prendre une photo</span>
             <span>Modifier la photo</span>
         </button>
-        <% } %>
-    </div>
-</div>
-<div class="container">
-    <form>
-        <div class="form-group">
-            <label for="missions">Mission</label>
-            <select id="missions" name="mission" class="form-control updateMission-js">
-                <% data.mission.forEach(function(m, key){ %>
-                    <option value='<%= m.get('num') %>'><%= m.get('title')%></option>
-                <% }); %>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="departement">Département</label>
-            <select id="departement" name="departement" class="form-control updateDept-js">
-                <% data.departement.forEach(function(d, key){ %>
-                    <option value='<%= d.get('code') %>'><%= d.get('title') %></option>
-                <% }); %>
-            </select>
-        </div>
-        <div class="form-group required">
-            <span class="icon-field icon icomoon">date</span>
-            <input id="date" name="date" type="text" class="form-control" value="<%= data.observation.date %>" readonly >
-        </div>
-    </form>
-    <div class="footer btn-group btn-group-justified" role="group" aria-label="...">
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-lg cancel-js">Annuler</button>
-        </div>
-        <div class="btn-group form-actions" role="group">
-            <input type="submit" class="btn btn-lg submit" name="Ajouter" value="Transmettre">
-        </div>
-    </div>
+    <% } %>
+            <form>
+                <div class="form-group">
+                    <label for="missions">Mission</label>
+                    <select id="missions" name="mission" class="form-control updateMission-js">
+                        <% data.mission.forEach(function(m, key){ %>
+                            <option value='<%= m.get(' num ') %>'>
+                                <%= m.get('title')%>
+                            </option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="departement">Département</label>
+                    <select id="departement" name="departement" class="form-control updateDept-js">
+                        <% data.departement.forEach(function(d, key){ %>
+                            <option value='<%= d.get(' code ') %>'>
+                                <%= d.get('title') %>
+                            </option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div class="form-group required">
+                    <span class="icon-field icon icomoon">date</span>
+                    <input id="date" name="date" type="text" class="form-control" value="<%= data.observation.date %>" readonly>
+                </div>
+            </form>
+            <div class="footer btn-group btn-group-justified" role="group" aria-label="...">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-lg cancel-js">Annuler</button>
+                </div>
+                <div class="btn-group form-actions" role="group">
+                    <input type="submit" class="btn btn-lg submit" name="Ajouter" value="Transmettre">
+                </div>
+            </div>
 </div>

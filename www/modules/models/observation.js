@@ -15,11 +15,10 @@ var ObservationModel = Backbone.Model.extend({
         //     shared: 0,
         //     externalId: ''
         // }
-        defaults:{
+        defaults: {
             type:'observation'
         },
-        // url: config.apiUrl +'/v1.0/observations',
-        url: config.coreUrl +'/user_mobile/node.json',
+        url: config.apiUrl +'/node.json',
 });
 
 var ObservationCollection = Backbone.Collection.extend({
@@ -36,7 +35,9 @@ var collectionInstance = null;
 
 module.exports = {
     model: {
-        ClassDef: ObservationModel
+        getClass: function() {
+            return ObservationModel;
+        }
     },
     collection: {
         getClass: function() {

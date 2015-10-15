@@ -2,67 +2,93 @@
 
 var Backbone = require('backbone'),
     $ = require('jquery'),
-    config = require('../main/config');
+    config = require('../main/config'),
+    _ = require('lodash');
 
-var token = null;
 
 var SessionModel = Backbone.Model.extend({
 
-    url: config.coreUrl + '/user_mobile/node.json',
+    token: null,
     initialize: function() {
-        // Hook into jquery
-        // Use withCredentials to send the server cookies
-        // The server must allow this through response headers
-        $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-            options.xhrFields = {
-                withCredentials: true
-            };
-        });
+        
     },
 
-    //request a token
-    services_get_csrf_token: function() {
+    getToken: function() {
+        var self = this;
+        var dfd = $.Deferred();
+
         // Call system connect with session token.
-        return $.ajax({
-            url: config.coreUrl + '/user_mobile/user/token',
+        $.ajax({
+            url: config.apiUrl + '/user/token.json',
+            type: "post",
+            dataType: "json",
+            contentType: "application/json",
+            xhrFields: {
+                withCredentials: true
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+                dfd.resolve();
+            },
+            success: function(response) {
+                self.token = response.token;
+                dfd.resolve();
+            }
+        });
+
+        return dfd;
+    },
+
+    //test if user is connecting
+    isConnected: function() {
+        var self = this;
+        // Call system connect with session token.
+        var query = {
+            url: config.apiUrl + '/system/connect.json',
             type: "post",
             dataType: "json",
             contentType: "application/json",
             error: function(jqXHR, textStatus, errorThrown) {
-                alert(errorThrown);
+                console.log(errorThrown);
             },
-            success: function(response) {
-                $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-                    jqXHR.setRequestHeader('X-CSRF-Token', response.token);
-                });
+            success: function(data) {
+                console.log('Hello user #' + data.user.uid);
             }
+        };
+        self.getCredentials(query).then(function() {
+            console.log(query);
+            $.ajax(query);
         });
     },
-    //test if user is connecting
-    services_connect: function() {
+
+    getCredentials: function(query) {
         var self = this;
-        // Call system connect with session token.
-        var getToken = this.services_get_csrf_token();
-        getToken.done(function() {
-            $.ajax({
-                url: config.coreUrl + '/user_mobile/system/connect.json',
-                type: "post",
-                dataType: "json",
-                error: function(jqXHR, textStatus, errorThrown) {
-                    alert(errorThrown);
-                },
-                success: function(data) {
-                    alert('Hello user #' + data.user.uid);
-                    document.cookie = "SESSaedf9c561727dc9d8f34277a1e78f952=0ikjGWqDZw7ciJWgiXiCwBP5yTMKt4IVypvYjYz48Og";
-                }
-            });
+        var dfd = $.Deferred();
+
+        query.xhrFields = query.xhrFields || {};
+        query.xhrFields.withCredentials = true;
+        self.getToken().then(function() {
+            query.headers = query.headers || {};
+            query.headers['X-CSRF-Token'] = self.token;
+            dfd.resolve();
         });
-    },
+
+        return dfd;
+    }
 });
 
+var modelInstance = null;
 
 module.exports = {
     model: {
-        ClassDef: SessionModel
+        ClassDef: SessionModel,
+        getClass: function() {
+            return SessionModel;
+        },
+        getInstance: function() {
+            if ( !modelInstance )
+                modelInstance = new SessionModel();
+            return modelInstance;
+        }
     }
 };

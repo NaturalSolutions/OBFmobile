@@ -2,14 +2,14 @@
     <img src="./images/dashboard-header.png" />
 </div>
 <div class="container">
-    <form id="signup">
+    <form>
         <div class="form-group required">
-            <label for="lastname">Nom</label>
-            <input id="lastname" name="lastname" type="text" class="form-control updateModel-js" value="<%= data.user.get('lastname') %>" placeholder="Votre nom">
+            <label>Email</label>
+            <input name="login" type="text" class="form-control" value="<%= data.user.get('lastname') %>" placeholder="Entrez votre email">
         </div>
         <div class="form-group">
-            <label for="password">Mot de passe</label>
-            <input type="password" name="password" class="form-control updateModel-js" id="password" placeholder="Entrez un mot de passe">
+            <label>Mot de passe</label>
+            <input type="password" name="password" class="form-control" placeholder="Entrez un mot de passe">
         </div>
     </form>
     <div class="footer btn-group btn-group-justified" role="group" aria-label="...">

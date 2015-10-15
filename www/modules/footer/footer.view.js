@@ -119,7 +119,7 @@ var View = Marionette.LayoutView.extend({
     createObservation: function(fe, id) {
         var self = this;
         var router = require('../main/router');
-        var observationModel = new Observation.model.ClassDef();
+        var observationModel = new (Observation.model.getClass())();
 
         //set observation model
         observationModel.set({
