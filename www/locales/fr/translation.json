@@ -49,6 +49,12 @@
 		},
 		"missionSheet": {
 			"acceptBtnLabel": "accepter"
+		},
+		"observation": {
+			"btns": {
+				"save": "Enregistrer",
+				"send": "Transmettre"
+			}
 		}
 	}
 }

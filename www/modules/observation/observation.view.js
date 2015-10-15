@@ -10,7 +10,7 @@ var Backbone = require('backbone'),
     mission = require('../models/mission'),
     Session = require('../models/session'),
     config = require('../main/config'),
-    Swiper = require('swiper');
+    Slideshow = require('./observation_slideshow.view.js');
 
 var Layout = Marionette.LayoutView.extend({
     header: {
@@ -22,12 +22,12 @@ var Layout = Marionette.LayoutView.extend({
     template: require('./observation.tpl.html'),
     className: 'page observation ns-full-height',
     events: {
-        'click .submit': 'sendObs',
+        'submit form.infos': 'sendObs',
+        'click .photo': 'onPhotoClick',
         'focusout .updateDept-js': 'updateField',
         'focusout .updateMission-js': 'updateField',
         //'submit form#form-picture': 'uploadPhoto',
-        'click .capturePhoto-js': 'capturePhoto',
-        'click .delete-photo-js': 'deletePhotoMobile'
+        'click .capturePhoto-js': 'capturePhoto'
     },
 
     initialize: function() {
@@ -44,14 +44,21 @@ var Layout = Marionette.LayoutView.extend({
         };
     },
 
-    onShow: function(options) {
+    onRender: function(options) {
         var self = this;
 
-        self.swiper = new Swiper(self.$el.find('.imgs > .inner'), {
-            slidesPerView: 1,
-            spaceBetween: 30,
-            loop: false
+        self.$el.find('select').selectPlaceholder();
+    },
+
+    onPhotoClick: function() {
+        var self = this;
+
+        var $body = $('body');
+        var slideshow = new (Slideshow.getClass())({
+            model: self.model
         });
+        $body.append(slideshow.$el);
+        slideshow.render();
     },
 
     updateField: function(e) {
@@ -141,8 +148,9 @@ var Layout = Marionette.LayoutView.extend({
         this.observationModel.trigger('change:photos', this.observationModel);
     },
 
-    sendObs: function() {
+    sendObs: function(e) {
         var self = this;
+        e.preventDefault();
         //TODO add User in title if exist
         var user = User.model.getInstance();
         //clear data photos
@@ -243,41 +251,6 @@ var Layout = Marionette.LayoutView.extend({
         }, self.onFail);
         /* jshint ignore:end */
         return dfdUpload;
-    },
-
-    deletePhotoMobile: function(e) {
-        var self = this;
-        var tagprojet = "noe-obf";
-        var $currentButton = $(e.currentTarget);
-        this.urlPhoto = $currentButton.siblings().attr('src').trim();
-        var currentPhotos = this.observationModel.get('photos');
-        var functionUrl = function(element) {
-            console.log(element);
-            if (element.url === self.urlPhoto) {
-                console.log('match');
-                /* jshint ignore:start */
-                var fsFail = function(error) {
-                    console.log("failed with error code: " + error.code);
-                };
-                window.resolveLocalFileSystemURL(self.urlPhoto, function(fs) {
-                    //1- Delete file mobile
-                    fs.remove(function() {
-                        //2- Remove sub object
-                        _.remove(self.observationModel.get('photos'), element);
-                        self.observationModel.save()
-                            .done(function() {
-                                self.observationModel.trigger('change:photos', this.observationModel);
-                            })
-                            .fail(function(error) {
-                                console.log(error);
-                            });
-                    }, fsFail);
-                }, fsFail);
-                /* jshint ignore:end */
-            }
-
-        };
-        currentPhotos.filter(functionUrl, this);
     }
 });
 
