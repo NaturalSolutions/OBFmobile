@@ -80,6 +80,7 @@ var Layout = Marionette.LayoutView.extend({
             },
             success: function(response) {
                 console.log(response);
+                self.model.set('externId', response.uid).save();
                 Dialog.show({
                     title: 'Félicitation !',
                     message: 'Votre inscription a été prise en compte!',
