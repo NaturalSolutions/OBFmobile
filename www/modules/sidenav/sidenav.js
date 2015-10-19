@@ -3,47 +3,56 @@
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     header = require('../header/header'),
+    User = require('../models/user'),
     $ = require('jQuery');
 
 var View = Marionette.LayoutView.extend({
-	template: require('./sidenav.html'),
-	className: 'sidenav',
-	events: {
-		'click': 'hide'
-	},
+    template: require('./sidenav.html'),
+    className: 'sidenav',
+    events: {
+        'click': 'hide'
+    },
 
-	initialize: function() {
-		var self = this;
-		
-		self.listenTo(header.getInstance(), 'btn:menu:click', self.toggleShow);
-	},
+    initialize: function() {
+        var self = this;
 
-	onRender: function(options) {
-		var self = this;
+        self.listenTo(header.getInstance(), 'btn:menu:click', self.toggleShow);
+    },
 
-		//self.$el.i18n();
-	},
+    serializeData: function() {
+        var user = User.model.getInstance();
 
-	toggleShow: function() {
-		$('body').toggleClass('show-sidenav');
-	},
+        return {
+            linkregister: (user.get('externId') ? '#registration/' + user.get('externId') : '#registration')
+        };
+    },
 
-	show: function() {
-		$('body').addClass('show-sidenav');
-	},
+    onRender: function(options) {
+        var self = this;
 
-	hide: function() {
-		console.log('ok');
-		$('body').removeClass('show-sidenav');
-	}
+        //self.$el.i18n();
+    },
+
+    toggleShow: function() {
+        $('body').toggleClass('show-sidenav');
+    },
+
+    show: function() {
+        $('body').addClass('show-sidenav');
+    },
+
+    hide: function() {
+        console.log('ok');
+        $('body').removeClass('show-sidenav');
+    }
 });
 
 var instance = null;
 
 module.exports = {
-	getInstance: function() {
-		if ( !instance )
-			instance = new View();
-		return instance;
-	}
+    getInstance: function() {
+        if (!instance)
+            instance = new View();
+        return instance;
+    }
 };
