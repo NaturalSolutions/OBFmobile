@@ -1,24 +1,27 @@
 'use strict';
 
 var Backbone = require('backbone'),
-    config = require('../main/config');
+    _ = require('lodash'),
+config = require('../main/config');
 
 Backbone.LocalStorage = require("backbone.localstorage");
 
 var ObservationModel = Backbone.Model.extend({
-        // Expected attributes : {
-        //     date: '',
-        //     missionId: '',
-        //     taxon_id: '',
-        //     photos:[],
-        //     departement: '',
-        //     shared: 0,
-        //     externalId: ''
-        // }
-        defaults: {
-            type:'observation'
-        },
-        url: config.apiUrl +'/node.json',
+    // Expected attributes : {
+    //     date: '',
+    //     missionId: '',
+    //     taxon_id: '',
+    //     photos:[],
+    //     departement: '',
+    //     shared: 0,
+    //     externalId: ''
+    // }
+    defaults: {
+        type: 'observation'
+    },
+    url: config.apiUrl + '/node.json',
+
+
 });
 
 var ObservationCollection = Backbone.Collection.extend({
@@ -44,7 +47,7 @@ module.exports = {
             return ObservationCollection;
         },
         getInstance: function() {
-            if ( !collectionInstance )
+            if (!collectionInstance)
                 collectionInstance = new ObservationCollection();
             return collectionInstance;
         }
