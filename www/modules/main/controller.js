@@ -22,7 +22,9 @@ module.exports = Marionette.Object.extend({
     home: function() {
         var self = this;
 
-        Router.getInstance().navigate('#dashboard', {trigger: true});
+        Router.getInstance().navigate('#dashboard', {
+            trigger: true
+        });
         /*main.getInstance().rgMain.show(new Home(), {
             preventDestroy: true
         });*/
@@ -184,6 +186,13 @@ module.exports = Marionette.Object.extend({
         if (!id) {
             main.getInstance().rgMain.show(new Registration({
                 name: 'registration',
+                model: user
+            }), {
+                preventDestroy: true
+            });
+        } else {
+            main.getInstance().rgMain.show(new Registration({
+                name: 'profile',
                 model: user
             }), {
                 preventDestroy: true

@@ -14,7 +14,7 @@ var Router = Marionette.AppRouter.extend({
         //'missions/aroundme/tab-:tab': 'missionsAroundMeTab',
         'missions/all': 'missionsAll',
         'missions/all/filter': 'missionsAllFilter',
-        'registration' : 'registration',
+        'registration/:id' : 'registration',
         'login': 'login',
         'register/*param': 'registerParam'
     },
