@@ -56,9 +56,16 @@ var Layout = Marionette.LayoutView.extend({
             },
             success: function(response) {
                 console.log(response);
+                //UPDATE instance, model User  because if several users the user should be changed at each login
+                self.model.set({
+                    "lastname": response.user.field_last_name.und[0].value,
+                    "firstname": response.user.field_first_name.und[0].value,
+                    "email": response.user.mail,
+                    "externId": response.user.uid,
+                    "newsletter": response.user.field_newsletter.und[0].value
+                }).save();
             }
         };
-
         this.session.getCredentials(query).done(function() {
             $.ajax(query);
         });
