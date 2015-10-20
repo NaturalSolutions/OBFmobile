@@ -58,23 +58,25 @@ var Layout = Marionette.LayoutView.extend({
         var data = {
             field_first_name: {
                 und: [{
-                    value: this.model.get('firstname')
+                    value: self.model.get('firstname')
                 }]
             },
             field_last_name: {
                 und: [{
-                    value: this.model.get('lastname')
+                    value: self.model.get('lastname')
                 }]
             },
-            mail: this.model.get('email'),
+            'mail': self.model.get('email'),
+            'conf_mail': self.model.get('email'),
+
             pass: passwd,
             pass2: passwd2
         };
 
-        if (this.model.get('newsletter'))
+        if (self.model.get('newsletter'))
             data.field_newsletter = {
                 und: [{
-                    value: this.model.get('newsletter')
+                    value: self.model.get('newsletter')
                 }]
             };
 
@@ -87,23 +89,54 @@ var Layout = Marionette.LayoutView.extend({
                 console.log(errorThrown);
             },
             success: function(response) {
-                console.log(response);
+                self.login(data.mail, data.pass);
                 self.model.set('externId', response.uid).save();
-                Dialog.show({
-                    title: 'Félicitation !',
-                    message: 'Votre inscription a été prise en compte!',
-                    type: 'type-success',
-                    buttons: [{
-                        label: 'Fermer',
-                        action: function(dialogItself) {
-                            dialogItself.close();
-                        }
-                    }]
-                });
             }
         });
     },
 
+    login: function(mail, pass) {
+        var self = this;
+
+        var query = {
+            url: config.apiUrl + "/user/logintoboggan.json",
+            type: 'post',
+            contentType: "application/json",
+            data: JSON.stringify({
+                username: mail,
+                password: pass,
+            }),
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+            },
+            success: function(response) {
+                console.log(response);
+                //UPDATE instance, model User  because if several users the user should be changed at each login
+                self.model.set({
+                    "lastname": response.user.field_last_name.und[0].value,
+                    "firstname": response.user.field_first_name.und[0].value,
+                    "email": response.user.mail,
+                    "externId": response.user.uid,
+                    "newsletter": response.user.field_newsletter.und[0].value
+                }).save().done(function() {
+                    Dialog.show({
+                        title: 'Félicitation !',
+                        message: 'Votre inscription a été prise en compte!',
+                        type: 'type-success',
+                        buttons: [{
+                            label: 'Fermer',
+                            action: function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        }]
+                    });
+                });
+            }
+        };
+        this.session.getCredentials(query).done(function() {
+            $.ajax(query);
+        });
+    },
 
     updateFields: function() {
         var self = this;
