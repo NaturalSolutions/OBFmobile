@@ -44,7 +44,7 @@ var Layout = Marionette.LayoutView.extend({
         var $form = self.$el.find('form');
 
         var query = {
-            url: config.apiUrl + "/user/login.json",
+            url: config.apiUrl + "/user/logintoboggan.json",
             type: 'post',
             contentType: "application/json",
             data: JSON.stringify({
