@@ -5,6 +5,7 @@ var Backbone = require('backbone'),
     $ = require('jquery'),
     _ = require('lodash'),
     config = require('../main/config'),
+    Dialog = require('bootstrap-dialog'),
     Session = require('../models/session');
 
 var Layout = Marionette.LayoutView.extend({
@@ -18,7 +19,8 @@ var Layout = Marionette.LayoutView.extend({
     className: 'page login ns-full-height',
     events: {
         'click .submit': 'login',
-        'click .cancel-js': 'logout'
+        'click .cancel-js': 'logout',
+        'click .request-npw-js': 'requestNewPassword'
     },
 
     initialize: function() {
@@ -27,7 +29,7 @@ var Layout = Marionette.LayoutView.extend({
 
     serializeData: function() {
         return {
-            user: this.model
+            user: this.model,
         };
     },
 
@@ -45,7 +47,7 @@ var Layout = Marionette.LayoutView.extend({
 
         var query = {
             url: config.apiUrl + "/user/logintoboggan.json",
-            type: 'post',
+            type: 'POST',
             contentType: "application/json",
             data: JSON.stringify({
                 username: $form.find('input[name="login"]').val(),
@@ -71,6 +73,27 @@ var Layout = Marionette.LayoutView.extend({
         });
     },
 
+    requestNewPassword: function(e) {
+        e.preventDefault();
+        var self = this;
+
+        $.ajax({
+            url: config.apiUrl + "/user/request_new_password.json",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+                name: self.model.get('email')
+            }),
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+            },
+            success: function(response) {
+                if (response)
+                    self.dialogRequestNewpassword();
+            }
+        });
+    },
+
     logout: function(e) {
         var query = {
             url: config.apiUrl + "/user/logout.json",
@@ -89,6 +112,20 @@ var Layout = Marionette.LayoutView.extend({
         });
 
         e.preventDefault();
+    },
+
+    dialogRequestNewpassword: function() {
+        Dialog.show({
+            title: 'Demande de renouvellement de mot de passe',
+            message: 'Un mail vous a été envoyé avec les instructions à suivre pour le renouvellement de votre mot de passe',
+            type: 'type-success',
+            buttons: [{
+                label: 'Fermer',
+                action: function(dialogItself) {
+                    dialogItself.close();
+                }
+            }]
+        });
     }
 });
 
