@@ -143,6 +143,7 @@ var Layout = Marionette.LayoutView.extend({
         var $form = self.$el.find('form');
         var $modelFields = $form.find('.updateModel-js');
         var attributeChanged = {};
+        var previousAttributes = {};
         var attrsChanged = [];
         $modelFields.each(function() {
             var $field = $(this);
@@ -152,11 +153,13 @@ var Layout = Marionette.LayoutView.extend({
             if (previous !== newValue) {
                 self.model.set(fieldName, newValue);
                 attributeChanged[fieldName] = newValue;
+                previousAttributes[fieldName] = previous;
             }
         });
         return {
             "dfd": self.model.save(),
             "attributesChanged": attributeChanged,
+            "previousattributes": previousAttributes
         };
     },
 
@@ -164,12 +167,12 @@ var Layout = Marionette.LayoutView.extend({
     updateUser: function(e) {
         var self = this;
         e.preventDefault();
-        var saveFieldsFinished = this.updateFields();
+        this.saveFieldsFinished = this.updateFields();
 
-        saveFieldsFinished.dfd.then(function() {
+        this.saveFieldsFinished.dfd.then(function() {
             var $form = self.$el.find('form');
             var passwd = $form.find('input[name="password"]').val();
-            var dataUser = saveFieldsFinished.attributesChanged;
+            var dataUser = self.saveFieldsFinished.attributesChanged;
             var data = {
                 field_first_name: {
                     und: [{
@@ -195,9 +198,13 @@ var Layout = Marionette.LayoutView.extend({
                     data: JSON.stringify(data),
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.log(errorThrown);
+                        var previousAttrs = self.saveFieldsFinished.previousattributes;
+                        self.model.set(previousAttrs).save();
+                        self.render();
                     },
                     success: function(response) {
                         self.dialogSuccess();
+                        self.render();
                     }
                 };
                 self.session.getCredentials(query).done(function() {
