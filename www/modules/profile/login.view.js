@@ -73,24 +73,40 @@ var Layout = Marionette.LayoutView.extend({
         });
     },
 
-    requestNewPassword: function(e) {
-        e.preventDefault();
+    requestNewPassword: function() {
+        // e.preventDefault();
         var self = this;
 
-        $.ajax({
-            url: config.apiUrl + "/user/request_new_password.json",
-            method: "POST",
-            contentType: "application/json",
-            data: JSON.stringify({
-                name: self.model.get('email')
-            }),
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(errorThrown);
-            },
-            success: function(response) {
-                if (response)
-                    self.dialogRequestNewpassword();
-            }
+        Dialog.show({
+            title: 'Demande de renouvellement de mot de passe',
+            message: 'Voulez-vous renouveler votre mot de passe ?',
+            type: 'type-success',
+            buttons: [{
+                label: 'Fermer',
+                action: function(dialogItself) {
+                    dialogItself.close();
+                }
+            }, {
+                label: 'Renouveler',
+                action: function(dialogItself) {
+                    $.ajax({
+                        url: config.apiUrl + "/user/request_new_password.json",
+                        method: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({
+                            name: self.model.get('email')
+                        }),
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.log(errorThrown);
+                        },
+                        success: function(response) {
+                            if (response)
+                                dialogItself.close();
+                                self.dialogRequestNewpwSuccess();
+                        }
+                    });
+                }
+            }]
         });
     },
 
@@ -114,7 +130,7 @@ var Layout = Marionette.LayoutView.extend({
         e.preventDefault();
     },
 
-    dialogRequestNewpassword: function() {
+    dialogRequestNewpwSuccess: function() {
         Dialog.show({
             title: 'Demande de renouvellement de mot de passe',
             message: 'Un mail vous a été envoyé avec les instructions à suivre pour le renouvellement de votre mot de passe',
