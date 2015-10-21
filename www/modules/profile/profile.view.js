@@ -144,12 +144,16 @@ var Layout = Marionette.LayoutView.extend({
         var $modelFields = $form.find('.updateModel-js');
         var attributeChanged = {};
         var previousAttributes = {};
-        var attrsChanged = [];
         $modelFields.each(function() {
-            var $field = $(this);
-            var fieldName = $field.attr('name');
-            var previous = self.model.get(fieldName);
-            var newValue = $field.val();
+            var $field = $(this),
+                fieldName = $field.attr('name'),
+                previous = self.model.get(fieldName),
+                newValue;
+            if (fieldName !== "newsletter") {
+                newValue = $field.val();
+            } else {
+                newValue = $field.is(':checked');
+            }
             if (previous !== newValue) {
                 self.model.set(fieldName, newValue);
                 attributeChanged[fieldName] = newValue;
@@ -184,12 +188,15 @@ var Layout = Marionette.LayoutView.extend({
                         value: dataUser.lastname
                     }]
                 },
+                field_newsletter: {
+                    und: ((dataUser.newsletter)? "[0]{value:"+true+"}" : null)
+                },
                 uid: self.model.get('externId'),
                 mail: self.model.get('email'),
                 current_pass: passwd,
             };
 
-            if (self.model.get('externId')) {
+            if (self.model.get('externId') && !(_.isEmpty(dataUser)) ) {
                 //update serveur
                 var query = {
                     url: config.apiUrl + "/user/" + self.model.get('externId') + ".json",
