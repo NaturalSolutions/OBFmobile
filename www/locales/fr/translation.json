@@ -15,7 +15,8 @@
 			"profile": "mon profil",
 			"registration": "Inscription",
 			"profile": "Profil",
-			"login": "Connexion"
+			"login": "Connexion",
+			"updatepassword": "Modifier le mot de passe"
 		}
 	},
 	"mission": {

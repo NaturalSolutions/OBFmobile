@@ -14,7 +14,8 @@ var Router = Marionette.AppRouter.extend({
         //'missions/aroundme/tab-:tab': 'missionsAroundMeTab',
         'missions/all': 'missionsAll',
         'missions/all/filter': 'missionsAllFilter',
-        'profile(/:id)' : 'profile',
+        'profile(/:id)': 'profile',
+        'updatepassword': 'updatePassword',
         'login': 'login',
     },
 });

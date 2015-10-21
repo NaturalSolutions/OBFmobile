@@ -74,19 +74,12 @@ var Layout = Marionette.LayoutView.extend({
             field_newsletter: {
                 und: ((self.model.get('newsletter')) ? "[0]{value:" + true + "}" : null)
             },
-            'mail': self.model.get('email'),
-            'conf_mail': self.model.get('email'),
+            mail: self.model.get('email'),
+            conf_mail: self.model.get('email'),
 
             pass: passwd,
             pass2: passwd2
         };
-
-        // if (self.model.get('newsletter'))
-        //     data.field_newsletter = {
-        //         und: [{
-        //             value: self.model.get('newsletter')
-        //         }]
-        //     };
 
         $.ajax({
             url: config.apiUrl + "/obfmobile_user.json",
@@ -184,6 +177,8 @@ var Layout = Marionette.LayoutView.extend({
         this.saveFieldsFinished.dfd.then(function() {
             var $form = self.$el.find('form');
             var passwd = $form.find('input[name="password"]').val();
+            var passwordNew = $form.find('input[name="password-new"]').val();
+
             var dataUser = self.saveFieldsFinished.attributesChanged;
             var data = {
                 field_first_name: {
@@ -202,6 +197,7 @@ var Layout = Marionette.LayoutView.extend({
                 uid: self.model.get('externId'),
                 mail: self.model.get('email'),
                 current_pass: passwd,
+                pass: passwordNew,
             };
 
             if (self.model.get('externId') && !(_.isEmpty(dataUser))) {

@@ -11,6 +11,7 @@ var Backbone = require('backbone'),
     MissionsAroundMe = require('../missions_aroundme/missions_aroundme.view'),
     Router = require('../main/router'),
     Profile = require('../profile/profile.view'),
+    UpdatePassword = require('../profile/update_password.view'),
     Login = require('../profile/login.view');
 
 
@@ -204,6 +205,16 @@ module.exports = Marionette.Object.extend({
 
         main.getInstance().rgMain.show(new Login({
             name: 'login',
+            model: user
+        }), {
+            preventDestroy: true
+        });
+    },
+    updatePassword:function(){
+        var user = User.model.getInstance();
+
+        main.getInstance().rgMain.show(new UpdatePassword({
+            name: 'updatepassword',
             model: user
         }), {
             preventDestroy: true

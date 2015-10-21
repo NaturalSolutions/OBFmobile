@@ -31,7 +31,7 @@
             <% if(!data.user.get('externId')) {%>
             <div class="form-group">
                 <label for="password2">Confirmer le mot de passe</label>
-                <input type="password" name="password2" class="form-control" id="password" placeholder="Confirmer le mot de passe">
+                <input type="password2" name="password2" class="form-control" id="password2" placeholder="Confirmer le mot de passe">
             </div>
             <% } %>
         </fieldset>
@@ -45,6 +45,9 @@
             </label>
         </div>
     </form>
+    <% if(data.user.get('externId')) {%>
+    <div><a class="request-npw-js" >Demander un nouveau mot de passe</a></div>
+    <% } %>
     <div class="footer btn-group btn-group-justified" role="group" aria-label="...">
         <div class="btn-group" role="group">
             <button type="button" class="btn btn-lg cancel-js">Annuler</button>
