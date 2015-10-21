@@ -10,7 +10,7 @@ var Backbone = require('backbone'),
     Dashboard = require('../dashboard/dashboard.view'),
     MissionsAroundMe = require('../missions_aroundme/missions_aroundme.view'),
     Router = require('../main/router'),
-    Registration = require('../profile/registration.view'),
+    Profile = require('../profile/profile.view'),
     Login = require('../profile/login.view');
 
 
@@ -180,18 +180,18 @@ module.exports = Marionette.Object.extend({
             }
         });
     },
-    registration: function(id) {
+    profile: function(id) {
         var user = User.model.getInstance();
 
         if (!id) {
-            main.getInstance().rgMain.show(new Registration({
+            main.getInstance().rgMain.show(new Profile({
                 name: 'registration',
                 model: user
             }), {
                 preventDestroy: true
             });
         } else {
-            main.getInstance().rgMain.show(new Registration({
+            main.getInstance().rgMain.show(new Profile({
                 name: 'profile',
                 model: user
             }), {
@@ -207,14 +207,6 @@ module.exports = Marionette.Object.extend({
             model: user
         }), {
             preventDestroy: true
-        });
-    },
-    //TODO refactoring : i'm waiting the validation of the workflow about registration CV
-    registerParam: function(params) {
-        console.log(params);
-        var res = params.replace("obfmobile://register", "http://192.168.0.16/DRUPAL/OBF_BACK/www/");
-        $.get(res, function(response) {
-            console.log(response);
         });
     }
 });

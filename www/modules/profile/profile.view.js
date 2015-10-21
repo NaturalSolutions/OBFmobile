@@ -10,8 +10,8 @@ var Backbone = require('backbone'),
     Session = require('../models/session');
 
 var Layout = Marionette.LayoutView.extend({
-    template: require('./registration.tpl.html'),
-    className: 'page registration ns-full-height',
+    template: require('./profile.tpl.html'),
+    className: 'page profile ns-full-height',
     events: {
         'click .signin-js': 'signin',
         'click .update-js': 'updateUser'

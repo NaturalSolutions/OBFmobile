@@ -16,7 +16,7 @@ module.exports = {
 
 	//test desktop
 	// coreUrl: 'http://localhost/DRUPAL/OBF_BACK/www',
-	// apiUrl: 'http://localhost/DRUPAL/OBF_BACK/www/api',
+	// apiUrl: 'http://localhost/DRUPAL/OBF_BACK/www/obfmobileapi',
 	dateLabel: 'jj/mm/aaaa hh:mm:ss',
 	dateFormats: ['DD/MM/YYYY', 'DD/MM/YYYY HH:mm:ss']
 };

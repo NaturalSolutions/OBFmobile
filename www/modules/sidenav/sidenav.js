@@ -23,7 +23,7 @@ var View = Marionette.LayoutView.extend({
         var user = User.model.getInstance();
 
         return {
-            linkregister: (user.get('externId') ? '#registration/' + user.get('externId') : '#registration')
+            linkregister: (user.get('externId') ? '#profile/' + user.get('externId') : '#profile')
         };
     },
 

@@ -196,14 +196,6 @@ function init() {
         main.getInstance().render();
         
         Backbone.history.start();
-        //TODO refactoring : i'm waiting the validation of the workflow about registration CV
-        window.handleOpenURL = function(url) {
-            setTimeout(function() {
-                alert("received url: " + url);
-                var router = Router.getInstance();
-                router.navigate("register/"+url,{trigger: true, replace: true});
-            }, 500);
-        };
     });
 
     $.when(getI18n(), getMissions(), getDepartements(), getUser(), getObservations())
