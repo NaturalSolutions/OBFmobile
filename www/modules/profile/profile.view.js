@@ -46,7 +46,12 @@ var Layout = Marionette.LayoutView.extend({
         $modelFields.each(function() {
             var $field = $(this);
             var fieldName = $field.attr('name');
-            var newValue = $field.val();
+            var newValue;
+            if (fieldName !== "newsletter") {
+                newValue = $field.val();
+            } else {
+                newValue = $field.is(':checked');
+            }
             self.model.set(fieldName, newValue);
         });
 
@@ -66,6 +71,9 @@ var Layout = Marionette.LayoutView.extend({
                     value: self.model.get('lastname')
                 }]
             },
+            field_newsletter: {
+                und: ((self.model.get('newsletter')) ? "[0]{value:" + true + "}" : null)
+            },
             'mail': self.model.get('email'),
             'conf_mail': self.model.get('email'),
 
@@ -73,12 +81,12 @@ var Layout = Marionette.LayoutView.extend({
             pass2: passwd2
         };
 
-        if (self.model.get('newsletter'))
-            data.field_newsletter = {
-                und: [{
-                    value: self.model.get('newsletter')
-                }]
-            };
+        // if (self.model.get('newsletter'))
+        //     data.field_newsletter = {
+        //         und: [{
+        //             value: self.model.get('newsletter')
+        //         }]
+        //     };
 
         $.ajax({
             url: config.apiUrl + "/obfmobile_user.json",
@@ -189,14 +197,14 @@ var Layout = Marionette.LayoutView.extend({
                     }]
                 },
                 field_newsletter: {
-                    und: ((dataUser.newsletter)? "[0]{value:"+true+"}" : null)
+                    und: ((dataUser.newsletter) ? "[0]{value:" + true + "}" : null)
                 },
                 uid: self.model.get('externId'),
                 mail: self.model.get('email'),
                 current_pass: passwd,
             };
 
-            if (self.model.get('externId') && !(_.isEmpty(dataUser)) ) {
+            if (self.model.get('externId') && !(_.isEmpty(dataUser))) {
                 //update serveur
                 var query = {
                     url: config.apiUrl + "/user/" + self.model.get('externId') + ".json",
