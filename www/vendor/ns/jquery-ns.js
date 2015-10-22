@@ -78,8 +78,13 @@
             //.css('color', PLACEHOLDER_COLOR)
             .find('option')
                 //.css('color', originalColor)
-                .end()
-            .prepend(placeholderOptionBuilder.build(placeholderText));
+                .end();
+
+        var option = placeholderOptionBuilder.build(placeholderText);
+        if ( !select.children('option[selected="selected"]').length )
+            option.attr('selected', true);
+
+        select.prepend(option);
 
         function itemChanged(){
             if (select.val() !== PLACEHOLDER_VALUE){
@@ -106,7 +111,7 @@
                 $('<option>')
                     .val(placeholderValue)
                     .text(placeholderText)
-                    .attr('selected', true);
+                    ;
             lastSelectedValue = option.val();
             return option;
         }

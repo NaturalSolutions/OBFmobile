@@ -33,6 +33,10 @@
 					background: @gray-light;
 					margin-top: 8px;
 				}
+				.display-value {
+					display: none;
+					padding-left: 8px;
+				}
 				&:last-child {
 					margin-bottom: 0;
 					.form-control-outer:after {
@@ -43,6 +47,47 @@
 		}
 		.actions {
 			margin-top: 15px;
+		}
+	}
+
+	&:not(.form-status-unsaved) {
+		.btn-save {
+			display: none;
+		}
+	}
+
+	&:not(.form-status-shared-0) {
+		.btn-send {
+			display: none;
+		}
+	}
+
+	&:not(.form-status-shared-1) {
+		.btn-share {
+			display: none;
+		}
+	}
+
+	&.form-status-shared-1 {
+		form {
+			select {
+				display: none;
+			}
+			.display-value {
+				display: inline-block;
+			}
+		}
+		form {
+			fieldset {
+				.form-group {
+					select {
+						display: none;
+					}
+					.display-value {
+						display: inline-block;
+					}
+				}
+			}
 		}
 	}
 }

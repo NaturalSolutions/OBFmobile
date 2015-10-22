@@ -23,13 +23,21 @@
                 <span class="icon icomoon">taxon</span>
             </label>
             <div class="col-xs-11 form-control-outer">
-                <select id="missions" name="mission" class="form-control updateMission-js" placeholder="Mission / Espèce">
-                    <% data.mission.forEach(function(m, key){ %>
-                    <option value='<%= m.get('num') %>'>
-                        <%= m.get('num') < 10 ? '0':'' %><%= m.get('num') %>. <%= m.get('title') %> / <%= m.get('taxon').title %>
+                <% var displayValue = ''; %>
+                <% var displayNum = ''; %>
+                <select id="missions" name="missionId" class="form-control updateMission-js" placeholder="Mission / Espèce">
+                <% data.missions.forEach(function(m, key){ %>
+                    <% var isSelected = ( data.observation.missionId && data.observation.missionId == m.get('srcId') ) %>
+                    <% if ( isSelected ) { %>
+                        <% displayValue = m.get('title')+ '<br />' + m.get('taxon').title; %>
+                        <% displayNum = (m.get('num') < 10 ? '0':'') + m.get('num');  %>
+                    <% } %>
+                    <option value='<%= m.get('srcId') %>' <%= isSelected ? 'selected="selected"' : '' %>>
+                        <%= displayNum %>. <%= m.get('title') %> / <%= m.get('taxon').title %>
                     </option>
-                    <% }); %>
+                <% }); %>
                 </select>
+                <span class="display-value"><%= displayNum %>. <%= displayValue %></span>
             </div>
         </div>
         <div class="form-group">
@@ -38,17 +46,22 @@
             </label>
             <div class="col-xs-11 form-control-outer">
                 <select id="departement" name="departement" class="form-control updateDept-js" placeholder="Département">
-                    <% data.departement.forEach(function(d, key){ %>
-                    <option value='<%= d.get(' code ') %>'>
+                <% data.departement.forEach(function(d, key){ %>
+                    <% var isSelected = ( data.observation.departement && data.observation.departement == d.get('code') ) %>
+                    <% if ( isSelected ) { displayValue = d.get('title'); } %>
+                    <option value='<%= d.get('code') %>' <%= isSelected ? 'selected="selected"' : '' %>>
                         <%= d.get('title') %>
                     </option>
-                    <% }); %>
+                <% }); %>
                 </select>
+                <span class="display-value"><%= displayValue %></span>
             </div>
         </div>
     </fieldset>
     <input name="date" type="hidden" value="<%= data.observation.date %>" />
     <div class="actions">
-        <button type="submit" class="btn btn-lg btn-block btn-primary"><%= i18n.t('pages.observation.btns.send') %></button>
+        <button type="submit" class="btn btn-save btn-lg btn-block btn-primary"><%= i18n.t('pages.observation.btns.save') %></button>
+        <button type="submit" class="btn btn-send btn-lg btn-block btn-primary"><%= i18n.t('pages.observation.btns.send') %></button>
+        <button type="button" class="btn btn-share btn-lg btn-block btn-primary"><%= i18n.t('pages.observation.btns.share') %></button>
     </div>
 </form>

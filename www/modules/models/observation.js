@@ -31,6 +31,14 @@ var ObservationCollection = Backbone.Collection.extend({
     initialize: function() {
         // Assign the Deferred issued by fetch() as a property
         this.deferred = this.fetch();
+    },
+    toJSON: function() {
+        var self = this;
+        var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
+
+        result.mission = result.mission.toJSON();
+
+        return result;
     }
 });
 

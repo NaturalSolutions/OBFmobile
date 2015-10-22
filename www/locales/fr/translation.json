@@ -1,4 +1,8 @@
 {
+	"test": {
+		"key": "singular",
+		"key_plural_2": "few"
+	},
 	"common": {
 		"mission": {
 			"season": {
@@ -55,7 +59,8 @@
 		"observation": {
 			"btns": {
 				"save": "Enregistrer",
-				"send": "Transmettre"
+				"send": "Transmettre",
+				"share": "Partager"
 			}
 		}
 	}

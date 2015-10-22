@@ -10,7 +10,9 @@ var Backbone = require('backbone'),
     mission = require('../models/mission'),
     Session = require('../models/session'),
     config = require('../main/config'),
-    Slideshow = require('./observation_slideshow.view.js');
+    Slideshow = require('./observation_slideshow.view.js'),
+    bootstrap = require('bootstrap'),
+    Dialog = require('bootstrap-dialog');
 
 var Layout = Marionette.LayoutView.extend({
     header: {
@@ -22,29 +24,47 @@ var Layout = Marionette.LayoutView.extend({
     template: require('./observation.tpl.html'),
     className: 'page observation ns-full-height',
     events: {
-        'submit form.infos': 'sendObs',
+        'submit form.infos': 'onFormSubmit',
         'click .photo': 'onPhotoClick',
         'focusout .updateDept-js': 'updateField',
-        'focusout .updateMission-js': 'updateField',
+        'change .updateMission-js': 'updateField',
         //'submit form#form-picture': 'uploadPhoto',
-        'click .capturePhoto-js': 'capturePhoto'
+        'click .capturePhoto-js': 'capturePhoto',
+        'click .btn-save': 'onSaveClick'
     },
 
     initialize: function() {
         this.observationModel = this.model;
         this.observationModel.on("change:photos", this.render, this);
+        this.observationModel.on("change:shared", this.render, this);
         this.session = Session.model.getInstance();
     },
 
     serializeData: function() {
+        var observation = this.observationModel.toJSON();
+
         return {
-            observation: this.observationModel.toJSON(),
+            observation: observation,
             departement: departement.collection.getInstance(),
-            mission: mission.collection.getInstance(),
+            missions: mission.collection.getInstance()
         };
     },
 
-    onRender: function(options) {
+    onRender: function() {
+        var self = this;
+
+        var isSaved = self.observationModel.get('missionId') && self.observationModel.get('departement');
+        if ( !isSaved )
+            self.setFormStatus('unsaved');
+        else {
+            self.setFormStatus('saved');
+        }
+
+        if ( self.observationModel.get('shared') > 0 )
+            self.$el.addClass('read-only');
+    },
+
+    onDomRefresh: function(options) {
         var self = this;
 
         self.$el.find('select').selectPlaceholder();
@@ -61,11 +81,32 @@ var Layout = Marionette.LayoutView.extend({
         slideshow.render();
     },
 
+    /*onMissionChange: function(e) {
+        var self = this;
+        var missionId = $(e.currentTarget).val();
+        
+        self.observationModel.set('mission', _.find(mission.collection.getInstance(), {srcId: missionId}));
+    },*/
+
     updateField: function(e) {
-        var $currentTarget = $(e.target);
+        var self = this;
+        /*var $currentTarget = $(e.target);
         var fieldName = $currentTarget.attr('name');
         var newValue = $currentTarget.val();
-        this.observationModel.set(fieldName, newValue).save();
+        this.observationModel.set(fieldName, newValue).save();*/
+
+        self.setFormStatus('unsaved');
+    },
+
+    setFormStatus: function(status) {
+        var self = this;
+        
+        if ( status == 'unsaved' )
+            self.$el.alterClass('form-status-*', 'form-status-unsaved');
+        else {
+            var shared = self.observationModel.get('shared') || 0;
+            self.$el.alterClass('form-status-*', 'form-status-shared-'+shared);
+        }
     },
 
     /*uploadPhoto: function(e) {
@@ -148,9 +189,41 @@ var Layout = Marionette.LayoutView.extend({
         this.observationModel.trigger('change:photos', this.observationModel);
     },
 
-    sendObs: function(e) {
+    onFormSubmit: function(e) {
         var self = this;
         e.preventDefault();
+
+        if ( !self.$el.hasClass('is-saved') )
+            self.saveObs();
+        else if ( !self.$el.hasClass('is-shared') )
+            self.sendObs();
+    },
+
+    saveObs: function() {
+        var self = this;
+        var $form = self.$el.find('form.infos');
+        var missionId = $form.find('*[name="missionId"]').val();
+        var missions = mission.collection.getInstance();
+        mission = missions.findWhere({
+            srcId: missionId
+        });
+        self.observationModel.set({
+            missionId: missionId,
+            mission: mission,
+            departement: $form.find('*[name="departement"]').val()
+        }).save();
+
+        self.setFormStatus('saved');
+    },
+
+    sendObs: function(e) {
+        var self = this;
+
+        if ( self.$el.hasClass('sending') || self.observationModel.get('shared') == 1 )
+            return false;
+
+        self.$el.addClass('sending');
+
         //TODO add User in title if exist
         var user = User.model.getInstance();
         //clear data photos
@@ -180,10 +253,8 @@ var Layout = Marionette.LayoutView.extend({
             virginModel.save(data, query)
                 .then(function(response) {
                     self.observationModel.set({
-                        'externalId': response.nid,
-                        'shared': 1
+                        'externalId': response.nid
                     }).save().done(function() {
-                        console.log(response);
                         self.sendPhoto();
                     });
                 }, function(error) {
@@ -204,16 +275,31 @@ var Layout = Marionette.LayoutView.extend({
 
                 Adfd.push(self.uploadPhotoMob(p.url));
             });
-            $.when.apply($, Adfd).done(function(r) {
-                console.log(r);
-                //Dialog
+            $.when.apply($, Adfd).done(function(response) {
+                console.log(response);
+                self.$el.removeClass('sending');
+                Dialog.show({
+                    title: 'Félicitation !',
+                    message: 'Votre observation a été prise en compte !',
+                    type: 'type-success',
+                    buttons: [{
+                        label: 'Fermer',
+                        action: function(dialog) {
+                            dialog.close();
+                            self.observationModel.set({
+                                'shared': 1
+                            }).save();
+                            self.setFormStatus('shared');
+                        }
+                    }]
+                });
             });
         }
     },
 
     uploadPhotoMob: function(f) {
         var self = this;
-        var dfdUpload = $.Deferred();
+        var dfd = $.Deferred();
 
         /* jshint ignore:start */
         window.resolveLocalFileSystemURL(f, function(fe) {
@@ -236,6 +322,7 @@ var Layout = Marionette.LayoutView.extend({
                         data: fd,
                         success: function(response) {
                             console.log(response);
+                            dfd.resolve();
                         },
                         error: function(error) {
                             console.log(error);
@@ -250,7 +337,7 @@ var Layout = Marionette.LayoutView.extend({
 
         }, self.onFail);
         /* jshint ignore:end */
-        return dfdUpload;
+        return dfd;
     }
 });
 

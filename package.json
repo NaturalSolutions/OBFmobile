@@ -58,7 +58,7 @@
     "browserify-shim": "^3.8.9",
     "eonasdan-bootstrap-datetimepicker": "^4.15.35",
     "geocomplete": "git://github.com/ubilabs/geocomplete.git#1.6.5",
-    "i18next-client": "^1.10.2",
+    "i18next-client": "^1.10.3",
     "jquery": "^2.1.4",
     "jquery-ui": "^1.10.5",
     "lodash": "^3.10.0",
