@@ -19,7 +19,7 @@ var Backbone = require('backbone'),
     User = require('../profile/user.model'),
     Log = require('../models/log'),
     Departement = require('../models/departement'),
-    Mission = require('../models/mission'),
+    Mission = require('../mission/mission.model'),
     Router = require('./router');
 
 /*var badgesInstanceColl = require('./models/badge').instanceColl;

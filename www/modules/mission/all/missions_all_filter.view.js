@@ -1,9 +1,9 @@
 'use strict';
 var Marionette = require('backbone.marionette'),
 	_ = require('lodash'),
-    Header = require('../header/header'),
-	Router = require('../main/router'),
-    Departement = require('../models/departement');
+    Header = require('../../header/header'),
+	Router = require('../../main/router'),
+    Departement = require('../../models/departement');
 
 var filters = null;
 

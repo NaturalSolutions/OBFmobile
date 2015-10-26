@@ -1,8 +1,8 @@
 'use strict';
 
 var Marionette = require('backbone.marionette'),
-	User = require('../profile/user.model'),
-	Departement = require('../models/departement'),
+	User = require('../../profile/user.model'),
+	Departement = require('../../models/departement'),
 	_ = require('lodash');
 
 module.exports = Marionette.LayoutView.extend({

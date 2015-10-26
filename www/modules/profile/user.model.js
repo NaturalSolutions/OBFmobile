@@ -1,7 +1,8 @@
 'use strict';
 var Backbone = require('backbone'),
     LocalStorage = require("backbone.localstorage"),
-    config = require('../main/config');
+    config = require('../main/config'),
+    _ = require('lodash');
 
 var Model = Backbone.Model.extend({
     defaults: {
@@ -21,7 +22,34 @@ var Model = Backbone.Model.extend({
             lon: null
         }
     },
-    url: config.coreUrl
+    url: config.coreUrl,
+    //Usefull to preserve equality between get() and toJSON()
+    getDynAttrs: function() {
+        return ['level'];
+    },
+    get: function(attr) {
+        var self = this;
+        if ( self.getDynAttrs().indexOf(attr) > -1 ) {
+            return self['get'+ _.capitalize(attr)]();
+        }
+
+        return Backbone.Model.prototype.get.call(self, attr);
+    },
+    toJSON: function() {
+        var self = this;
+        var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
+
+        _.forEach(self.getDynAttrs(), function(attr) {
+            result[attr] = self.get(attr);
+        });
+
+        return result;
+    },
+    getLevel: function() {
+        var self = this;
+
+        return 0;
+    }
 });
 
 var Collection = Backbone.Collection.extend({

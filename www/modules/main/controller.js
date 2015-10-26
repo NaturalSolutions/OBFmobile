@@ -8,7 +8,7 @@ var Backbone = require('backbone'),
     Home = require('../home/home.view'),
     ObservationView = require('../observation/observation.view'),
     Dashboard = require('../dashboard/dashboard.view'),
-    MissionsAroundMe = require('../missions_aroundme/missions_aroundme.view'),
+    MissionsAroundMe = require('../mission/aroundme/missions_aroundme.view'),
     Router = require('../main/router'),
     Profile = require('../profile/profile.view'),
     UpdatePassword = require('../profile/update_password.view'),
@@ -62,12 +62,12 @@ module.exports = Marionette.Object.extend({
     missionSheet: function(id) {
         var self = this;
         id = parseInt(id);
-        var MissionModel = require('../models/mission');
+        var MissionModel = require('../mission/mission.model');
         var mission = MissionModel.collection.getInstance().findWhere({
             srcId: id
         });
 
-        var View = require('../mission_sheet/mission_sheet.view');
+        var View = require('../mission/sheet/mission_sheet.view');
         main.getInstance().rgMain.show(new View({
             model: mission
         }), {
@@ -78,8 +78,8 @@ module.exports = Marionette.Object.extend({
     missionsAll: function() {
         var self = this;
 
-        var Mission = require('../models/mission');
-        var MissionsAllFilter = require('../missions_all/missions_all_filter.view');
+        var Mission = require('../mission/mission.model');
+        var MissionsAllFilter = require('../mission/all/missions_all_filter.view');
 
         var missions = Mission.collection.getInstance().clone();
         var params = MissionsAllFilter.getFilters() || {};
@@ -104,7 +104,7 @@ module.exports = Marionette.Object.extend({
 
         console.log(removables.length);
 
-        var View = require('../missions_all/missions_all.view');
+        var View = require('../mission/all/missions_all.view');
         main.getInstance().rgMain.show(new View({
             collection: missions
         }), {
@@ -115,7 +115,7 @@ module.exports = Marionette.Object.extend({
     missionsAllFilter: function() {
         var self = this;
 
-        var View = (require('../missions_all/missions_all_filter.view')).getClass();
+        var View = (require('../mission/all/missions_all_filter.view')).getClass();
         main.getInstance().rgMain.show(new View(), {
             preventDestroy: true
         });

@@ -1,8 +1,8 @@
 'use strict';
 
 var Marionette = require('backbone.marionette'),
-	header = require('../header/header'),
-	Router = require('../main/router'),
+	header = require('../../header/header'),
+	Router = require('../../main/router'),
 	_ = require('lodash');
 
 module.exports = Marionette.LayoutView.extend({

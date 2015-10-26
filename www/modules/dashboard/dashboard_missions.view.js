@@ -1,9 +1,9 @@
 'use strict';
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
-    Mission = require('../models/mission'),
+    Mission = require('../mission/mission.model'),
     _ = require('lodash'),
-    MissionListItem = require('../mission_list_item/mission_list_item.view');
+    MissionListItem = require('../mission/list_item/mission_list_item.view');
 
 var CollectionView = Marionette.CollectionView.extend({
 	childView: MissionListItem

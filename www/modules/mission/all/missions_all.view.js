@@ -1,8 +1,8 @@
 'use strict';
 var Marionette = require('backbone.marionette'),
-    Header = require('../header/header'),
-    Router = require('../main/router'),
-    MissionListItem = require('../mission_list_item/mission_list_item.view');
+    Header = require('../../header/header'),
+    Router = require('../../main/router'),
+    MissionListItem = require('../list_item/mission_list_item.view');
 
 module.exports = Marionette.CompositeView.extend({
 	header: {
