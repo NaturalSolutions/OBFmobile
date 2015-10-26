@@ -1,7 +1,7 @@
 'use strict';
 
 var Marionette = require('backbone.marionette'),
-	User = require('../models/user'),
+	User = require('../profile/user.model'),
 	Departement = require('../models/departement'),
 	_ = require('lodash');
 

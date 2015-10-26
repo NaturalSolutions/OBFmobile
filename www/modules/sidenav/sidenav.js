@@ -3,7 +3,7 @@
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     header = require('../header/header'),
-    User = require('../models/user'),
+    User = require('../profile/user.model'),
     $ = require('jQuery');
 
 var View = Marionette.LayoutView.extend({

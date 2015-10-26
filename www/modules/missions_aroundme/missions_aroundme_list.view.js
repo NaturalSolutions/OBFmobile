@@ -5,7 +5,7 @@ var Backbone = require('backbone'),
 	_ = require('lodash'),
 	$ = require('jquery'),
 	bootstrap = require('bootstrap'),
-	User = require('../models/user'),
+	User = require('../profile/user.model'),
 	Mission = require('../models/mission'),
 	Router = require('../main/router');
 
