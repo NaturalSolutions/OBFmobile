@@ -2,7 +2,7 @@
     <img src="./images/dashboard-header.png" />
 </div>
 <div class="container">
-    <form id="signin">
+    <form>
         <div class="form-group required">
             <label for="lastname">Nom</label>
             <input id="lastname" name="lastname" type="text" class="form-control registerModel-js updateModel-js" value="<%= data.user.get('lastname') %>" placeholder="Votre nom">
@@ -52,13 +52,7 @@
         <div class="btn-group" role="group">
             <button type="button" class="btn btn-lg cancel-js">Annuler</button>
         </div>
-        <% if(!data.user.get('externId')) {%>
-            <div class="btn-group form-actions" role="group">
-                <input type="submit" class="btn btn-lg submit signin-js" name="Ajouter" value="S'inscrire">
-            </div>
-        <% }else{ %>
-            <div class="btn-group form-actions" role="group">
-                <input type="submit" class="btn btn-lg submit update-js" name="Ajouter" value="Modifier">
-            </div>
-        <% } %>
+        <div class="btn-group form-actions" role="group">
+            <button type="submit" class="btn btn-lg submit" name="Ajouter">Valider</button>
+        </div>
     </div>

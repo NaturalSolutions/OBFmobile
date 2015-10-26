@@ -11,14 +11,16 @@ var Backbone = require('backbone'),
 
 var Layout = Marionette.LayoutView.extend({
     template: require('./profile.tpl.html'),
-    className: 'page profile ns-full-height',
+    className: function() {
+        return 'page profile ns-full-height';
+    },
     events: {
-        'click .signin-js': 'signin',
-        'click .update-js': 'updateUser'
+        'submit form': 'onFormSubmit'
     },
     initialize: function() {
         this.session = Session.model.getInstance();
         var self = this;
+
         this.header = {
             titleKey: ((self.model.get('externId')) ? 'profile' : 'registration'),
             buttons: {
@@ -35,6 +37,15 @@ var Layout = Marionette.LayoutView.extend({
 
     onRender: function(options) {
 
+    },
+
+    onFormSubmit: function(e) {
+        e.preventDefault();
+
+        if ( this.model.get('externId') )
+            this.updateUser();
+        else
+            this.signin();
     },
 
     signin: function(e) {
