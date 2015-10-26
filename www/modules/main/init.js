@@ -17,8 +17,8 @@ var Backbone = require('backbone'),
     Observation = require('../observation/observation.model'),
     i18n = require('i18next-client'),
     User = require('../profile/user.model'),
-    Log = require('../models/log'),
-    Departement = require('../models/departement'),
+    Log = require('../logs/log.model'),
+    Departement = require('../main/departement.model'),
     Mission = require('../mission/mission.model'),
     Router = require('../routing/router');
 

@@ -6,7 +6,7 @@ var Backbone = require('backbone'),
     _ = require('lodash'),
     config = require('../main/config'),
     Dialog = require('bootstrap-dialog'),
-    Session = require('../models/session');
+    Session = require('../main/session.model');
 
 var Layout = Marionette.LayoutView.extend({
     header: {

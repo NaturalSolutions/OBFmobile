@@ -2,7 +2,7 @@
 
 var Marionette = require('backbone.marionette'),
 	User = require('../../profile/user.model'),
-	Departement = require('../../models/departement'),
+	Departement = require('../../main/departement.model'),
 	_ = require('lodash');
 
 module.exports = Marionette.LayoutView.extend({

@@ -7,7 +7,7 @@ var Backbone = require('backbone'),
     bootstrap = require('bootstrap'),
     Dialog = require('bootstrap-dialog'),
     config = require('../main/config'),
-    Session = require('../models/session');
+    Session = require('../main/session.model');
 
 var Layout = Marionette.LayoutView.extend({
     template: require('./profile.tpl.html'),
