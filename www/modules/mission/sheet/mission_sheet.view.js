@@ -1,6 +1,6 @@
 'use strict';
 var Marionette = require('backbone.marionette'),
-    Observation = require('../../models/observation');
+    Observation = require('../../observation/observation.model');
 
 module.exports = Marionette.LayoutView.extend({
     header: 'none',

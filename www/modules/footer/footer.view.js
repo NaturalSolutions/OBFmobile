@@ -4,7 +4,7 @@ var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     $ = require('jquery'),
     _ = require('lodash'),
-    Observation = require('../models/observation'),
+    Observation = require('../observation/observation.model'),
     config = require('../main/config');
 //i18n = require('i18n');
 

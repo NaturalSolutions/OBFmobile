@@ -1,7 +1,7 @@
 'use strict';
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
-    Observation = require('../models/observation');
+    Observation = require('../observation/observation.model');
 
 var ClassDef = Marionette.LayoutView.extend({
 	template: require('./dashboard_observations.tpl.html'),
