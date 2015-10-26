@@ -2,7 +2,7 @@
 var Marionette = require('backbone.marionette'),
 	_ = require('lodash'),
     Header = require('../../header/header'),
-	Router = require('../../main/router'),
+	Router = require('../../routing/router'),
     Departement = require('../../models/departement');
 
 var filters = null;

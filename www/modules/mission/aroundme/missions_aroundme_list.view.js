@@ -7,7 +7,7 @@ var Backbone = require('backbone'),
 	bootstrap = require('bootstrap'),
 	User = require('../../profile/user.model'),
 	Mission = require('../../mission/mission.model'),
-	Router = require('../../main/router');
+	Router = require('../../routing/router');
 
 module.exports = Marionette.LayoutView.extend({
 	template: require('./missions_aroundme_list.tpl.html'),

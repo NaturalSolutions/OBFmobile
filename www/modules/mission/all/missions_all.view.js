@@ -1,7 +1,7 @@
 'use strict';
 var Marionette = require('backbone.marionette'),
     Header = require('../../header/header'),
-    Router = require('../../main/router'),
+    Router = require('../../routing/router'),
     MissionListItem = require('../list_item/mission_list_item.view');
 
 module.exports = Marionette.CompositeView.extend({

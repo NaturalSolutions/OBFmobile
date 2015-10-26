@@ -2,7 +2,7 @@
 
 var Marionette = require('backbone.marionette'),
 	header = require('../../header/header'),
-	Router = require('../../main/router'),
+	Router = require('../../routing/router'),
 	_ = require('lodash');
 
 module.exports = Marionette.LayoutView.extend({

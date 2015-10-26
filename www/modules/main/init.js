@@ -20,7 +20,7 @@ var Backbone = require('backbone'),
     Log = require('../models/log'),
     Departement = require('../models/departement'),
     Mission = require('../mission/mission.model'),
-    Router = require('./router');
+    Router = require('../routing/router');
 
 /*var badgesInstanceColl = require('./models/badge').instanceColl;
 var badgesColl = require('./models/badge').BadgeCollection;*/

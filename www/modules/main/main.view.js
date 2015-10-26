@@ -2,7 +2,7 @@
 
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
-    controller = require('./controller'),
+    controller = require('../routing/router_controller'),
     MainRegion = require('./main.region'),
     footer = require('../footer/footer.view'),
     header = require('../header/header'),

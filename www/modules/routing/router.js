@@ -27,7 +27,7 @@ module.exports = {
         //console.log(Controller);
         if (!instance)
             instance = new Router({
-                controller: new(require('./controller'))()
+                controller: new(require('./router_controller'))()
             });
         return instance;
     }
