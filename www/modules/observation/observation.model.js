@@ -20,7 +20,42 @@ var ObservationModel = Backbone.Model.extend({
         type: 'observation'
     },
     url: config.apiUrl + '/node.json',
+    get: function(attr) {
+        var self = this;
+        var accessorName = 'get'+ _.capitalize(attr);
+        if ( self[accessorName] ) {
+            return self[accessorName]();
+        }
 
+        return Backbone.Model.prototype.get.call(self, attr);
+    },
+    toJSON: function() {
+        var self = this;
+        var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
+        _.forEach(['missionId'], function(attr) {
+            result[attr] = self['get'+ _.capitalize(attr)]();
+        }, this);
+
+        if ( result.mission )
+            result.mission = result.mission.toJSON();
+
+        return result;
+    },
+    getMissionId: function() {
+        var self = this;
+
+        return parseInt(self.attributes.missionId);
+    },
+    getMission: function() {
+        var self = this;
+        var missionId = self.get('missionId');
+        if ( !missionId )
+            return null;
+
+        var missions = require('../mission/mission.model').collection.getInstance();
+
+        return missions.findWhere({srcId: missionId});
+    }
 
 });
 
@@ -31,15 +66,15 @@ var ObservationCollection = Backbone.Collection.extend({
     initialize: function() {
         // Assign the Deferred issued by fetch() as a property
         this.deferred = this.fetch();
-    },
-    toJSON: function() {
+    }
+    /*toJSON: function() {
         var self = this;
         var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
 
         result.mission = result.mission.toJSON();
 
         return result;
-    }
+    }*/
 });
 
 var collectionInstance = null;

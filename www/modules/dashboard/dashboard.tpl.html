@@ -1,5 +1,40 @@
 <div class="header text-center">
-	<img src="./images/dashboard-header.png" />
+	<div class="score-explode container">
+		<ul class="list-unstyled">
+			<li class="media">
+				<div class="media-left thumb">
+					<img src="images/level-squirrel-thumb.png" />
+				</div>
+				<div class="media-body text media-middle">
+					<div class="value"><%= i18n.t('user.score.level.'+data.user.level+'.label') %></div>
+					<div class="description"><%= i18n.t('user.score.level.'+data.user.level+'.description') %></div>
+				</div>
+			</li>
+			<% if ( data.user.palmName ) { %>
+			<li class="media">
+				<div class="media-left thumb">
+					<img src="images/palm-silver-thumb.png" />
+				</div>
+				<div class="media-body text media-middle">
+					<div class="value"><%= i18n.t('user.score.palm.'+data.user.palmName+'.label') %></div>
+					<div class="description"><%= i18n.t('user.score.palm.'+data.user.palmName+'.description') %></div>
+				</div>
+			</li>
+			<% } %>
+			<li class="media">
+				<div class="media-left thumb">
+					<img src="images/sky-turquoise-thumb.png" />
+				</div>
+				<div class="media-body text media-middle">
+					<div class="value"><%= i18n.t('user.score.timeOnMission.'+data.user.timeOnMissionName+'.label') %></div>
+					<div class="description"><%= i18n.t('user.score.timeOnMission.'+data.user.timeOnMissionName+'.description') %></div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="score-implode">
+		<img src="./images/dashboard-header.png" />
+	</div>
 </div>
 <!-- Fake Nav tabs -->
 <ul class="nav nav-tabs page-nav-tabs nav-justified" role="tablist">
@@ -8,9 +43,6 @@
 		<a href="#dashboard/<%= tabName %>"><%= i18n.t('pages.dashboard.tabs.'+ tabName) %></a>
 	</li>
 <% }); %>
-	<li class="tab tab-activity">
-		<a href="#">activités</a>
-	</li>
 	<!-- <li class="tab-missions"><a href="#dashboard/missions">Missions</a></li>
     <li class="tab-activities"><a href="#dashboard/activities">Activités</a></li>
     <li class="tab-observations"><a href="#dashboard/observations">Photos</a></li> -->

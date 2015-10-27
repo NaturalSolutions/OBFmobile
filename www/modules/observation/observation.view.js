@@ -12,7 +12,9 @@ var Backbone = require('backbone'),
     config = require('../main/config'),
     Slideshow = require('./observation_slideshow.view.js'),
     bootstrap = require('bootstrap'),
-    Dialog = require('bootstrap-dialog');
+    Dialog = require('bootstrap-dialog'),
+    Main = require('../main/main.view'),
+    i18n = require('i18next-client');
 
 var Layout = Marionette.LayoutView.extend({
     header: {
@@ -53,7 +55,7 @@ var Layout = Marionette.LayoutView.extend({
     onRender: function() {
         var self = this;
 
-        var isSaved = self.observationModel.get('missionId') && self.observationModel.get('departement');
+        var isSaved = (self.observationModel.get('missionId') && self.observationModel.get('departement'));
         if ( !isSaved )
             self.setFormStatus('unsaved');
         else {
@@ -193,9 +195,9 @@ var Layout = Marionette.LayoutView.extend({
         var self = this;
         e.preventDefault();
 
-        if ( !self.$el.hasClass('is-saved') )
+        if ( self.$el.hasClass('form-status-unsaved') )
             self.saveObs();
-        else if ( !self.$el.hasClass('is-shared') )
+        else if ( self.$el.hasClass('form-status-shared-0') )
             self.sendObs();
     },
 
@@ -203,13 +205,13 @@ var Layout = Marionette.LayoutView.extend({
         var self = this;
         var $form = self.$el.find('form.infos');
         var missionId = $form.find('*[name="missionId"]').val();
-        var missions = mission.collection.getInstance();
+        /*var missions = mission.collection.getInstance();
         mission = missions.findWhere({
             srcId: missionId
-        });
+        });*/
         self.observationModel.set({
             missionId: missionId,
-            mission: mission,
+            //mission: mission,
             departement: $form.find('*[name="departement"]').val()
         }).save();
 
@@ -237,12 +239,12 @@ var Layout = Marionette.LayoutView.extend({
 
         //data expected by the server
         var data = {
-            'title': self.observationModel.get('mission') + '_' + self.observationModel.get('date'),
+            'title': 'mission_'+ self.observationModel.get('missionId') +'_'+ self.observationModel.get('date'),
             'date': self.date,
             'departement': self.observationModel.get('departement'),
             'missionId': [{
                 "und": {
-                    "value": self.observationModel.get('mission')
+                    "value": self.observationModel.get('missionId')
                 }
             }]
         };
@@ -276,9 +278,20 @@ var Layout = Marionette.LayoutView.extend({
                 Adfd.push(self.uploadPhotoMob(p.url));
             });
             $.when.apply($, Adfd).done(function(response) {
-                console.log(response);
                 self.$el.removeClass('sending');
-                Dialog.show({
+                self.observationModel.set({
+                    'shared': 1
+                }).save();
+                Main.getInstance().addDialog({
+                    cssClass: 'theme-orange-light obs-shared title-has-palm',
+                    title: i18n.t('dialogs.obsShared.title'),
+                    message: i18n.t('dialogs.obsShared.message'),
+                    button: i18n.t('dialogs.obsShared.button')
+                });
+                self.setFormStatus('shared');
+                var user = User.model.getInstance();
+                user.computeScore();
+                /*Dialog.show({
                     title: 'Félicitation !',
                     message: 'Votre observation a été prise en compte !',
                     type: 'type-success',
@@ -292,7 +305,7 @@ var Layout = Marionette.LayoutView.extend({
                             self.setFormStatus('shared');
                         }
                     }]
-                });
+                });*/
             });
         }
     },

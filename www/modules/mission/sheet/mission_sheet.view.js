@@ -6,7 +6,7 @@ module.exports = Marionette.LayoutView.extend({
     header: 'none',
     template: require('./mission_sheet.tpl.html'),
     events: {
-        'click .btn-accept': 'onBtnAcceptClick'
+        'click .btn-accept': 'onAcceptClick'
     },
     attributes: function() {
         var self = this;
@@ -31,8 +31,6 @@ module.exports = Marionette.LayoutView.extend({
     serializeData: function() {
         var self = this;
 
-        console.log(self.model.inSeason(new Date()));
-
         return {
             mission: self.model.toJSON()
         };
@@ -42,7 +40,7 @@ module.exports = Marionette.LayoutView.extend({
         var self = this;
     },
 
-    onBtnAcceptClick: function(e) {
+    onAcceptClick: function(e) {
         var self = this;
 
         self.model.toggleAccept();

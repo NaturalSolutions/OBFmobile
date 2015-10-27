@@ -2,7 +2,8 @@
 
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    User = require('../profile/user.model');
 
 var ClassDef = Marionette.LayoutView.extend({
 	header: {
@@ -14,6 +15,7 @@ var ClassDef = Marionette.LayoutView.extend({
 	template: require('./dashboard.tpl.html'),
 	className: 'page dashboard ns-full-height',
 	events: {
+		'click .header': 'onHeaderClick'
 	},
 
 	curTab: null,
@@ -21,9 +23,9 @@ var ClassDef = Marionette.LayoutView.extend({
 		missions: {
 			ClassDef: require('./dashboard_missions.view')
 		},
-		/*activities: {
+		activities: {
 			ClassDef: require('./dashboard_activities.view')
-		},*/
+		},
 		observations: {
 			ClassDef: require('./dashboard_observations.view')
 		},
@@ -45,7 +47,10 @@ var ClassDef = Marionette.LayoutView.extend({
 	serializeData: function() {
 		var self = this;
 
+		console.log(User.model.getInstance().toJSON());
+
 		return {
+			user: User.model.getInstance().toJSON(),
 			tabs: self.tabs
 		};
 	},
@@ -56,6 +61,12 @@ var ClassDef = Marionette.LayoutView.extend({
 		console.log('dashboard onRender');
 		
 		self.displayTab();
+	},
+
+	onHeaderClick: function() {
+		var self = this;
+
+		self.$el.find('.header').toggleClass('show-score-explode');
 	},
 
 	setTab: function(tab) {

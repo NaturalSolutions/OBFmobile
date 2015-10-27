@@ -12,13 +12,13 @@ var types = {
     checkout: {
         icon: 'locatime'
     },
-    'mission.complete': {
+    mission_complete: {
         icon: 'palms'
     },
-    'mission.accept': {
+    mission_accept: {
         icon: 'check'
     },
-    'mission.unaccept': {
+    mission_unaccept: {
         icon: 'check'
     }
 };
@@ -43,7 +43,7 @@ var collectionInstance = null;
 module.exports = {
     model: {
         getClass: function() {
-            return LogCollection;
+            return LogModel;
         },
     },
     collection: {

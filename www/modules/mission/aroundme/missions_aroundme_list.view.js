@@ -22,7 +22,6 @@ module.exports = Marionette.LayoutView.extend({
 		self.collection = Mission.collection.getInstance().filter(function(mission) {
 			var isInDepartement = mission.isInDepartement(departementCodes);//_.intersection(departementCodes, mission.get('departements')).length;
 			var inSeason = mission.inSeason(new Date());
-			console.log(inSeason);
 			return (isInDepartement && inSeason.isMatch);
 		});
 

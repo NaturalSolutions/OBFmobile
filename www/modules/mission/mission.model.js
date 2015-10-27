@@ -170,6 +170,15 @@ var Model = Backbone.Model.extend({
 		var self = this;
 		self.set('accept', !self.get('accept'));
 		self.save();
+
+		var logs = require('../logs/log.model').collection.getInstance();
+		logs.add({
+			createdAt: new Date(),
+			type: ( self.get('accept') ? 'mission_accept' : 'mission_unaccept' ),
+			data: {
+				missionId: self.get('srcId')
+			}
+		}).save();
 	}
 });
 

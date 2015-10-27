@@ -5,14 +5,13 @@ var Backbone = require('backbone'),
 
 var ClassDef = Marionette.LayoutView.extend({
 	template: require('./dashboard_observations.tpl.html'),
-	className: 'inner',
+	className: 'inner observations',
 	events: {
 	},
 
 	initialize: function() {
 		var self = this;
 		self.observations = Observation.collection.getInstance().toJSON();
-		console.log(self.observations);
 	},
 
 	serializeData: function() {

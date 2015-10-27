@@ -1,3 +1,7 @@
 <div class="container">
-	<h1>Activités</h1>
+<% _.forEach(data.logs, function(log) { %>
+	<li>
+		<%= log.type %>
+	</li>
+<% }); %>
 </div>

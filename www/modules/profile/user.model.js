@@ -17,20 +17,19 @@ var Model = Backbone.Model.extend({
         displayHelp: true,
         departements: [],//codes
         positionEnabled: true,
+        level: 0,
+        palm: 0,
         position: {
             lat: null,
             lon: null
         }
     },
     url: config.coreUrl,
-    //Usefull to preserve equality between get() and toJSON()
-    getDynAttrs: function() {
-        return ['level'];
-    },
     get: function(attr) {
         var self = this;
-        if ( self.getDynAttrs().indexOf(attr) > -1 ) {
-            return self['get'+ _.capitalize(attr)]();
+        var accessorName = 'get'+ _.capitalize(attr);
+        if ( self[accessorName] ) {
+            return self[accessorName]();
         }
 
         return Backbone.Model.prototype.get.call(self, attr);
@@ -38,17 +37,60 @@ var Model = Backbone.Model.extend({
     toJSON: function() {
         var self = this;
         var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
+        _.forEach(['palmName', 'timeOnMissionName'], function(attr) {
+            result[attr] = self['get'+ _.capitalize(attr)]();
+        }, this);
 
-        _.forEach(self.getDynAttrs(), function(attr) {
-            result[attr] = self.get(attr);
-        });
+        if ( result.mission )
+            result.mission = result.mission.toJSON();
 
         return result;
     },
-    getLevel: function() {
+    getPalmName: function() {
         var self = this;
 
-        return 0;
+        var names = ['bronze', 'silver', 'gold'];
+        var palm = self.get('palm');
+
+        return names[palm-1] || '';
+    },
+    getTimeOnMissionName: function() {
+        var self = this;
+
+        var names = ['none', 'short', 'medium', 'long'];
+
+        return names[0];
+    },
+    computeScore: function() {
+        var self = this;
+        var observations = require('../observation/observation.model').collection.getInstance();
+        var shared =  observations.filter(function(obs) {
+            return obs.get('shared') > 0;
+        });
+        var nbShared = shared.length;
+
+        //TODO: define rules
+        var palmPad = [2, 10, 15];
+        for ( var palmPadIndex = palmPad.length-1; palmPadIndex >= 0; palmPadIndex-- ) {
+            if ( nbShared >= palmPad[palmPadIndex] ) {
+                self.set('palm', palmPadIndex+1);
+                break;
+            }
+        }
+        
+        var difficulties = _.countBy(shared, function(obs) {
+            return obs.get('mission').get('difficulty');
+        });
+        var level = 0;
+        //TODO: define rules
+        for ( var i=3; i>=1; i-- ) {
+            if ( difficulties[i] ) {
+                self.set('level', i);
+                break;
+            }
+        }
+
+        self.save();
     }
 });
 

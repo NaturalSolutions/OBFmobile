@@ -30,6 +30,87 @@
 		"difficulty_2": "Confirmé",
 		"difficulty_3": "Expert"
 	},
+	"logs": {
+		"checkin": "Vous êtes entré en forêt",
+		"checkout": "Vous êtes sorti de forêt <span>__duration__</span>",
+		"mission_accept": "Vous avez accepté la mission",
+		"mission_unaccept": "Vous avez désaccepté la mission",
+		"mission_complete": "Vous avez réussi la mission"
+	},
+	"user": {
+		"score": {
+			"level": {
+				"1": {
+					"label": "Ecureuil",
+					"description": "Au moins une mission de niveau débutant"
+				},
+				"2": {
+					"label": "Chouette",
+					"description": "Au moins une mission de niveau confirmé"
+				},
+				"3": {
+					"label": "Loup",
+					"description": "Au moins une mission de niveau expert"
+				}
+			},
+			"palm": {
+				"bronze": {
+					"label": "Bronze",
+					"description": "Au moins 2 missions"
+				},
+				"silver": {
+					"label": "Argent",
+					"description": "Au moins 10 missions"
+				},
+				"gold": {
+					"label": "Or",
+					"description": "Au moins 15 missions"
+				}
+			},
+			"timeOnMission": {
+				"none": {
+					"label": "Ciel blanc",
+					"description": "Vous n'êtes pas encore allé en forêt"
+				},
+				"short": {
+					"label": "Ciel rose",
+					"description": "Temps court passé en forêt"
+				},
+				"medium": {
+					"label": "Ciel turquoise",
+					"description": "Temps moyen passé en forêt"
+				},
+				"long": {
+					"label": "Ciel jaune",
+					"description": "Temps long passé en forêt"
+				}
+			}
+		}
+	},
+	"dialogs": {
+		"obsShared": {
+			"title": "Mission accomplie !",
+			"message": "Bravo, vous transmis avez votre observation.",
+			"button": "Continuer"
+		},
+		"palm": {
+			"title": "Bravo !",
+			"message": {
+				"bronze": "Vous avez palme de bronze",
+				"silver": "Vous avez palme d'argent",
+				"gold": "Vous avez palme d'or"
+			},
+			"button": "Continuer"
+		},
+		"level": {
+			"title": "Bravo !",
+			"message": {
+				"level_2": "Vous êtes maintenant chouette",
+				"level_3": "Vous êtes maintenant loup"
+			},
+			"button": "Continuer"
+		}
+	},
 	"pages": {
 		"home": {
 			"btns": {

@@ -150,7 +150,6 @@ function init() {
         var deferred = $.Deferred();
         userCollection.fetch({
             success: function(data) {
-                console.log('user fetch', data);
                 if (data.length) {
                     User.model.init(data.at(0));
                     deferred.resolve();
@@ -169,20 +168,7 @@ function init() {
     };
 
     var getLogs = function() {
-        var logCollection = Log.collection.getInstance();
-
-        var deferred = $.Deferred();
-        logCollection.fetch({
-            success: function(data) {
-                console.log('log fetch', data);
-                deferred.resolve();
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-
-        return deferred;
+        return Log.collection.getInstance().fetch();
     };
 
     var getObservations = function() {
@@ -198,7 +184,7 @@ function init() {
         Backbone.history.start();
     });
 
-    $.when(getI18n(), getMissions(), getDepartements(), getUser(), getObservations())
+    $.when(getI18n(), getMissions(), getDepartements(), getUser(), getObservations(), getLogs())
         .done(function() {
             app.start();
         });

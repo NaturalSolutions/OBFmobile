@@ -3,6 +3,7 @@
 @yellow: #ffcd06;
 @brown: #97511A;
 @orange: #CA4715;
+@orange-light: #fd7939;
 @blue: #3DBADB;
 
 .ui-helper-hidden-accessible {
@@ -60,13 +61,102 @@ body {
     .dropdown-menu > li > a.text-@{name} {
         color: @color1;
     }
+    .modal.theme-@{name} {
+        .modal-content {
+            background-color: @color1;
+            color: @color2;
+        }
+    }
 }
 
 .generate-theme(yellow; @yellow; #000);
 .generate-theme(brown; @brown; #FFF);
 .generate-theme(orange; @orange; #FFF);
+.generate-theme(orange-light; @orange-light; #FFF);
 .generate-theme(primary; @brand-primary; #FFF);
 .generate-theme(blue; @blue; #FFF);
+
+.modal {
+    &.fs-dialog {
+        &.fade .modal-dialog {
+            opacity: 0;
+            .translate(0, 0);
+            .transition(opacity 0.2s ease-out);
+        }
+        &.in .modal-dialog {
+            opacity: 1;
+        }
+        .modal-dialog {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            .modal-content {
+                height: 100%;
+                .modal-body {
+                    height: 80%;
+                    .bootstrap-dialog-body {
+                        position: absolute;
+                        width: 100%;
+                        left: 0;
+                        bottom: 0;
+                        p {
+                            width: 70%;
+                            margin: auto;
+                            font-size: 16px;
+                        }
+                    }
+                }
+                .modal-footer {
+                    border-top: none;
+                    text-align: center;
+                    .btn {
+                        background: transparent;
+                        border-color: #FFF;
+                        color: #FFF;
+                    }
+                }
+            }
+        }
+    }
+    &.obs-shared {
+        .modal-content {
+            background-image: url("images/fireworks.png");
+            background-repeat: no-repeat;
+            background-position: center 5%;
+            background-size: 75% auto;
+        }
+    }
+    &.title-has-palm {
+        .bootstrap-dialog-body {
+            h3 {
+                position: relative;
+                display: inline-block;
+                margin-bottom: 30px;
+                &:before,
+                &:after {
+                    content: "";
+                    position: absolute;
+                    width: 23px;
+                    height: 55px;
+                    top: 50%;
+                    margin-top: -27px;
+                    background: no-repeat center;
+                }
+                &:before {
+                    right: 100%;
+                    margin-right: 10px;
+                    background-image: url("images/palm-white-left.png");
+                }
+                &:after {
+                    left: 100%;
+                    margin-left: 10px;
+                    background-image: url("images/palm-white-right.png");
+                }
+            }
+        }
+    }
+}
 
 .page {
     opacity: 1;
