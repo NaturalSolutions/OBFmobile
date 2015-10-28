@@ -28,7 +28,7 @@ var SessionModel = Backbone.Model.extend({
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log(errorThrown);
-                dfd.resolve();
+                dfd.reject();
             },
             success: function(response) {
                 self.token = response.token;

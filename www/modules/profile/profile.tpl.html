@@ -19,7 +19,7 @@
             <% if(!data.user.get('externId')) {%>
             <div class="form-group required">
                 <label for="email2">Confirmer votre Email</label>
-                <input id="email2" name="email2" type="text" class="form-control registerModel-js" value="<%= data.user.get('email') %>" placeholder="Confirmer votre email">
+                <input id="email2" name="email2" type="text" class="form-control registerModel-js no-paste-js" value="<%= data.user.get('email') %>" placeholder="Confirmer votre email">
             </div>
             <% } %>
         </fieldset>
@@ -31,7 +31,7 @@
             <% if(!data.user.get('externId')) {%>
             <div class="form-group">
                 <label for="password2">Confirmer le mot de passe</label>
-                <input type="password2" name="password2" class="form-control" id="password2" placeholder="Confirmer le mot de passe">
+                <input type="password2" name="password2" class="form-control no-paste-js" id="password2" placeholder="Confirmer le mot de passe">
             </div>
             <% } %>
         </fieldset>

@@ -36,7 +36,7 @@ var Layout = Marionette.LayoutView.extend({
     },
 
     onRender: function(options) {
-
+        this.$el.find('.no-paste-js').nsNoPaste();
     },
 
     onFormSubmit: function(e) {

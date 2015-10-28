@@ -102,8 +102,6 @@ module.exports = Marionette.Object.extend({
         if (removables.length)
             missions.remove(removables);
 
-        console.log(removables.length);
-
         var View = require('../mission/all/missions_all.view');
         main.getInstance().rgMain.show(new View({
             collection: missions

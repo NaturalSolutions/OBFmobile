@@ -53,6 +53,20 @@
         return self;
     };
 
+    $.fn.nsNoPaste = function(methodOrOptions) {
+
+        var self = this;
+
+        self.each(function() {
+            var $me = $(this);
+            $me.on('paste', function(e) {
+                e.preventDefault();
+            });
+        });
+
+        return self;
+    };
+
 })(jQuery);
 
 
