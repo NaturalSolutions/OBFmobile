@@ -36,7 +36,7 @@ var ObservationModel = Backbone.Model.extend({
             result[attr] = self['get'+ _.capitalize(attr)]();
         }, this);
 
-        if ( result.mission )
+        if ( result.missionId )
             result.mission = result.mission.toJSON();
 
         return result;

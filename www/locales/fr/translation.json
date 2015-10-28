@@ -121,7 +121,7 @@
 		"dashboard": {
 			"tabs": {
 				"missions": "Missions",
-				"activities": "Activités",
+				"logs": "Activités",
 				"observations": "Observations"
 			},
 			"missions": {

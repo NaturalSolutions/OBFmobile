@@ -1,32 +1,70 @@
 'use strict';
 
 var Backbone = require('backbone'),
-    config = require('../main/config');
+    config = require('../main/config'),
+    _ = require('lodash');
 
 Backbone.LocalStorage = require("backbone.localstorage");
 
 var types = {
     checkin: {
+        category: 'checkin',
         icon: 'locatime'
     },
     checkout: {
+        category: 'checkin',
         icon: 'locatime'
     },
     mission_complete: {
+        category: 'mission',
         icon: 'palms'
     },
     mission_accept: {
+        category: 'mission',
         icon: 'check'
     },
     mission_unaccept: {
+        category: 'mission',
         icon: 'check'
     }
 };
 
 var LogModel = Backbone.Model.extend({
-    createdAt: null,//Date
-    type: '',//cf: var types
-    data: {}
+    defaults: {
+        createdAt: new Date(),
+        type: '',//cf: var types
+        data: null//An object
+    },
+    get: function(attr) {
+        var self = this;
+
+        var accessorName = 'get'+ _.capitalize(attr);
+        if ( self[accessorName] ) {
+            return self[accessorName]();
+        }
+
+        return Backbone.Model.prototype.get.call(self, attr);
+    },
+    toJSON: function() {
+        var self = this;
+
+        var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
+        _.forEach(['category','icon'], function(attr) {
+            result[attr] = self['get'+ _.capitalize(attr)]();
+        }, this);
+
+        return result;
+    },
+    getCategory: function() {
+        var self = this;
+
+        return _.get(types, self.get('type')+'.category');
+    },
+    getIcon: function() {
+        var self = this;
+
+        return _.get(types, self.get('type')+'.icon', 'info');
+    }
 });
 
 var LogCollection = Backbone.Collection.extend({
