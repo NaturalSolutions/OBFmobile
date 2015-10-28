@@ -76,6 +76,65 @@ body {
 .generate-theme(primary; @brand-primary; #FFF);
 .generate-theme(blue; @blue; #FFF);
 
+.bg-contain {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.user-level-1-bg {
+    &:extend(.bg-contain);
+    background-image: url("images/score/level_1_awake.png");
+}
+.user-level-2-bg {
+    &:extend(.bg-contain);
+    background-image: url("images/score/level_2_awake.png");
+}
+.user-level-3-bg {
+    &:extend(.bg-contain);
+    background-image: url("images/score/level_3_awake.png");
+}
+
+.user-palm-bronze-bg {
+    &:extend(.bg-contain);
+    background-image: url("images/score/palm_bronze.png");
+}
+
+.user-palm-silver-bg {
+    &:extend(.bg-contain);
+    background-image: url("images/score/palm_silver.png");
+}
+
+.user-palm-gold-bg {
+    &:extend(.bg-contain);
+    background-image: url("images/score/palm_gold.png");
+}
+
+.user-sky {
+    .box-shadow(inset 0 3px 7px rgba(0, 0, 0, 0.73););
+    position: relative;
+    &.user-sky-1 {
+        background-image: radial-gradient(circle at 45% 55%, #0099D8 0%, #27277D 100%);
+    }
+    &.user-sky-2 {
+        background-image: radial-gradient(circle at 45% 55%, #00d889 0%, #28a5be 100%);
+    }
+    &.user-sky-3 {
+        background-image: radial-gradient(circle at 45% 55%, #98D800 0%, #3D7D27 100%);
+    }
+    &.user-sky-sun:before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        border-radius: 50%;
+        background: url("images/score/sun.png") no-repeat center;
+        background-size: cover;
+    }
+}
+
 .modal {
     &.fs-dialog {
         &.fade .modal-dialog {
@@ -119,7 +178,7 @@ body {
             }
         }
     }
-    &.obs-shared {
+    &.has-fireworks {
         .modal-content {
             background-image: url("images/fireworks.png");
             background-repeat: no-repeat;
@@ -154,6 +213,41 @@ body {
                     background-image: url("images/palm-white-right.png");
                 }
             }
+        }
+    }
+    &.user-score {
+        .bootstrap-dialog-body {
+            &:before {
+                content: "";
+                position: absolute;
+                width: 150px;
+                height: 150px;
+                bottom: 130%;
+                left: 50%;
+                margin-left: -75px;
+                border-radius: 50%;
+                overflow: hidden;
+                /*background-color: rgba(255,255,255,0.2);
+                .box-shadow(0px 2px 5px 0px rgba(0, 0, 0, 0.3););*/
+            }
+        }
+        &.user-level-1 .bootstrap-dialog-body:before {
+            &:extend(.user-level-1-bg);
+        }
+        &.user-level-2 .bootstrap-dialog-body:before {
+            &:extend(.user-level-2-bg);
+        }
+        &.user-level-3 .bootstrap-dialog-body:before {
+            &:extend(.user-level-3-bg);
+        }
+        &.user-palm-bronze .bootstrap-dialog-body:before {
+            &:extend(.user-palm-bronze-bg);
+        }
+        &.user-palm-silver .bootstrap-dialog-body:before {
+            &:extend(.user-palm-silver-bg);
+        }
+        &.user-palm-gold .bootstrap-dialog-body:before {
+            &:extend(.user-palm-gold-bg);
         }
     }
 }
@@ -215,9 +309,7 @@ body {
     height: 3em;
     line-height: 3em !important;
     text-align: center;
-    -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
-    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+    .box-shadow(0px 2px 5px 0px rgba(0, 0, 0, 0.3));
     /*&.btn-lg {
         width: 3em;
         height: 3em;

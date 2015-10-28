@@ -68,20 +68,16 @@
 				}
 			},
 			"timeOnMission": {
-				"none": {
-					"label": "Ciel blanc",
-					"description": "Vous n'êtes pas encore allé en forêt"
+				"1": {
+					"label": "Ciel bleu",
+					"description": "Vous avez passé moins d'une heure en forêt"
 				},
-				"short": {
-					"label": "Ciel rose",
-					"description": "Temps court passé en forêt"
-				},
-				"medium": {
+				"2": {
 					"label": "Ciel turquoise",
 					"description": "Temps moyen passé en forêt"
 				},
-				"long": {
-					"label": "Ciel jaune",
+				"3": {
+					"label": "Ciel vert",
 					"description": "Temps long passé en forêt"
 				}
 			}

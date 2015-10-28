@@ -17,7 +17,7 @@ var Model = Backbone.Model.extend({
         displayHelp: true,
         departements: [],//codes
         positionEnabled: true,
-        level: 0,
+        level: 1,
         palm: 0,
         position: {
             lat: null,
@@ -37,7 +37,7 @@ var Model = Backbone.Model.extend({
     toJSON: function() {
         var self = this;
         var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
-        _.forEach(['palmName', 'timeOnMissionName'], function(attr) {
+        _.forEach(['palmName', 'timeOnMissionLevel'], function(attr) {
             result[attr] = self['get'+ _.capitalize(attr)]();
         }, this);
 
@@ -54,12 +54,11 @@ var Model = Backbone.Model.extend({
 
         return names[palm-1] || '';
     },
-    getTimeOnMissionName: function() {
+    getTimeOnMissionLevel: function() {
         var self = this;
 
-        var names = ['none', 'short', 'medium', 'long'];
-
-        return names[0];
+        //TODO
+        return 1;
     },
     computeScore: function() {
         var self = this;

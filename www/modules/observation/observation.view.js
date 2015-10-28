@@ -283,7 +283,7 @@ var Layout = Marionette.LayoutView.extend({
                     'shared': 1
                 }).save();
                 Main.getInstance().addDialog({
-                    cssClass: 'theme-orange-light obs-shared title-has-palm',
+                    cssClass: 'theme-orange-light has-fireworks title-has-palm',
                     title: i18n.t('dialogs.obsShared.title'),
                     message: i18n.t('dialogs.obsShared.message'),
                     button: i18n.t('dialogs.obsShared.button')

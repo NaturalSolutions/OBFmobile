@@ -1,9 +1,9 @@
 <div class="header text-center">
 	<div class="score-explode container">
 		<ul class="list-unstyled">
-			<li class="media">
+			<li class="media level">
 				<div class="media-left thumb">
-					<img src="images/level-squirrel-thumb.png" />
+					<img class="thumb-icon" src="images/score/level_<%= data.user.level %>_awake.png" />
 				</div>
 				<div class="media-body text media-middle">
 					<div class="value"><%= i18n.t('user.score.level.'+data.user.level+'.label') %></div>
@@ -11,9 +11,9 @@
 				</div>
 			</li>
 			<% if ( data.user.palmName ) { %>
-			<li class="media">
+			<li class="media palm">
 				<div class="media-left thumb">
-					<img src="images/palm-silver-thumb.png" />
+					<img class="thumb-icon" src="images/score/palm_<%= data.user.palm %>.png" />
 				</div>
 				<div class="media-body text media-middle">
 					<div class="value"><%= i18n.t('user.score.palm.'+data.user.palmName+'.label') %></div>
@@ -21,19 +21,25 @@
 				</div>
 			</li>
 			<% } %>
-			<li class="media">
+			<li class="media time">
 				<div class="media-left thumb">
-					<img src="images/sky-turquoise-thumb.png" />
+					<div class="thumb-icon user-sky user-sky-<%= data.user.timeOnMissionLevel %> user-sky-sun"></div>
 				</div>
 				<div class="media-body text media-middle">
-					<div class="value"><%= i18n.t('user.score.timeOnMission.'+data.user.timeOnMissionName+'.label') %></div>
-					<div class="description"><%= i18n.t('user.score.timeOnMission.'+data.user.timeOnMissionName+'.description') %></div>
+					<div class="value"><%= i18n.t('user.score.timeOnMission.'+data.user.timeOnMissionLevel+'.label') %></div>
+					<div class="description"><%= i18n.t('user.score.timeOnMission.'+data.user.timeOnMissionLevel+'.description') %></div>
 				</div>
 			</li>
 		</ul>
 	</div>
 	<div class="score-implode">
-		<img src="./images/dashboard-header.png" />
+		<div class="score">
+			<div class="score-icon user-sky user-sky-<%= data.user.timeOnMissionLevel %> user-sky-sun"></div>
+			<% if ( data.user.palmName ) { %>
+			<img class="score-icon" src="images/score/palm_<%= data.user.palm %>.png" />
+			<% } %>
+			<img class="score-icon" src="images/score/level_<%= data.user.level %>_awake.png" />
+		</div>
 	</div>
 </div>
 <!-- Fake Nav tabs -->

@@ -61,6 +61,25 @@ var Layout = Marionette.LayoutView.extend({
                 button: i18n.t('dialogs.level.button')
             });
         });
+
+        /*self.addDialog({
+            cssClass: 'theme-orange-light has-fireworks title-has-palm user-score user-level-1',
+            title: i18n.t('dialogs.obsShared.title'),
+            message: i18n.t('dialogs.obsShared.message'),
+            button: i18n.t('dialogs.obsShared.button')
+        });
+        self.addDialog({
+            cssClass: 'theme-orange-light has-fireworks user-score user-palm-bronze',
+            title: i18n.t('dialogs.palm.title'),
+            message: i18n.t('dialogs.palm.message.bronze'),
+            button: i18n.t('dialogs.palm.button')
+        });
+        self.addDialog({
+            cssClass: 'theme-orange-light has-fireworks user-score user-level-2',
+            title: i18n.t('dialogs.level.title'),
+            message: i18n.t('dialogs.level.message.level_2'),
+            button: i18n.t('dialogs.level.button')
+        });*/
     },
 
     addDialog: function(data) {
