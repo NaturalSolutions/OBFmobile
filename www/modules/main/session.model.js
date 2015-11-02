@@ -3,12 +3,16 @@
 var Backbone = require('backbone'),
     $ = require('jquery'),
     config = require('../main/config'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    User = require('../profile/user.model');
 
 
 var SessionModel = Backbone.Model.extend({
-
-    token: null,
+    defaults: {
+        token: null,
+        isAuth: false,
+        authStatus: ''
+    },
     initialize: function() {
         
     },
@@ -31,7 +35,7 @@ var SessionModel = Backbone.Model.extend({
                 dfd.reject();
             },
             success: function(response) {
-                self.token = response.token;
+                self.set('token', response.token);
                 dfd.resolve();
             }
         });
@@ -69,11 +73,69 @@ var SessionModel = Backbone.Model.extend({
         query.xhrFields.withCredentials = true;
         self.getToken().then(function() {
             query.headers = query.headers || {};
-            query.headers['X-CSRF-Token'] = self.token;
+            query.headers['X-CSRF-Token'] = self.get('token');
             dfd.resolve();
         });
 
         return dfd;
+    },
+
+    login: function(username, password) {
+        var self = this;
+        var dfd = $.Deferred();
+        var query = {
+            url: config.apiUrl + "/user/logintoboggan.json",
+            type: 'POST',
+            contentType: "application/json",
+            data: JSON.stringify({
+                username: username,
+                password: password,
+            }),
+            error: function(error) {
+                console.log(error);
+                dfd.reject(error);
+            },
+            success: function(response) {
+                console.log(response);
+                //UPDATE instance, model User  because if several users the user should be changed at each login
+                User.model.getInstance().set({
+                    "lastname": _.get(response.user.field_last_name,'und[0].value', ''),
+                    "firstname": _.get(response.user.field_first_name,'und[0].value', ''),
+                    "email": response.user.mail,
+                    "externId": response.user.uid,
+                    "newsletter": _.get(response.user.field_newsletter,'und[0].value', '')
+                }).save().then(function() {
+                    self.set('isAuth', true);
+                    self.set('authStatus', 'logged');
+                    dfd.resolve();
+                });
+            }
+        };
+        self.getCredentials(query).done(function() {
+            $.ajax(query);
+        });
+
+        return dfd;
+    },
+
+    logout: function() {
+        var self = this;
+        var query = {
+            url: config.apiUrl + "/user/logout.json",
+            type: 'post',
+            contentType: "application/json",
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+            },
+            success: function(response) {
+                console.log(response);
+                self.set('isAuth', false);
+                self.set('authStatus', 'unlogged');
+            }
+        };
+        this.getCredentials(query).then(function() {
+            $.ajax(query);
+        });
     }
 });
 

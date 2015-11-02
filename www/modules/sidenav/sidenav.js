@@ -4,13 +4,15 @@ var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     header = require('../header/header'),
     User = require('../profile/user.model'),
-    $ = require('jQuery');
+    $ = require('jQuery'),
+    Session = require('../main/session.model');
 
 var View = Marionette.LayoutView.extend({
     template: require('./sidenav.html'),
     className: 'sidenav',
     events: {
-        'click': 'hide'
+        'click': 'hide',
+        'click .btn-logout': 'onLogoutClick'
     },
 
     initialize: function() {
@@ -44,6 +46,10 @@ var View = Marionette.LayoutView.extend({
     hide: function() {
         console.log('ok');
         $('body').removeClass('show-sidenav');
+    },
+
+    onLogoutClick: function() {
+        Session.model.getInstance().logout();
     }
 });
 

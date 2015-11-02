@@ -6,21 +6,17 @@ var Backbone = require('backbone'),
     _ = require('lodash'),
     config = require('../main/config'),
     Dialog = require('bootstrap-dialog'),
-    Session = require('../main/session.model');
+    Session = require('../main/session.model'),
+    i18n = require('i18next-client'),
+    User = require('../profile/user.model');
 
-var Layout = Marionette.LayoutView.extend({
-    header: {
-        titleKey: 'login',
-        buttons: {
-            left: ['back']
-        }
-    },
+var View = Marionette.LayoutView.extend({
     template: require('./login.tpl.html'),
-    className: 'page login ns-full-height',
+    className: 'login view',
     events: {
-        'click .submit': 'login',
-        'click .cancel-js': 'logout',
-        'click .request-npw-js': 'requestNewPassword'
+        'submit form': 'onFormSubmit',
+        'click .request-npw-js': 'requestNewPassword',
+        'click .btn-registration': 'onRegistrationClick'
     },
 
     initialize: function() {
@@ -34,18 +30,37 @@ var Layout = Marionette.LayoutView.extend({
     },
 
     onRender: function(options) {
-        this.session.isConnected();
+        //this.session.isConnected();
     },
 
     //log a user for 23 days (see cookie)
-    login: function(e) {
+    onFormSubmit: function(e) {
         e.preventDefault();
 
         var self = this;
-
         var $form = self.$el.find('form');
 
-        var query = {
+        if ( $form.hasClass('sending') )
+            return false;
+
+        self.$el.addClass('block-ui');
+        $form.addClass('sending');
+        $form.removeClass('form-has-error');
+
+        var username = $form.find('input[name="login"]').val();
+        var password = $form.find('input[name="password"]').val();
+
+        this.session.login(username, password).then(function() {
+            self.$el.removeClass('block-ui');
+            $form.removeClass('sending');
+        }, function() {
+            self.$el.removeClass('block-ui');
+            $form.removeClass('sending');
+
+            $form.addClass('form-has-error');
+        });
+
+        /*var query = {
             url: config.apiUrl + "/user/logintoboggan.json",
             type: 'POST',
             contentType: "application/json",
@@ -70,7 +85,14 @@ var Layout = Marionette.LayoutView.extend({
         };
         this.session.getCredentials(query).done(function() {
             $.ajax(query);
-        });
+        });*/
+    },
+
+    onRegistrationClick: function() {
+        //TODO page/popin mode
+        if ( true ) {
+            this.trigger('click:registration');
+        }
     },
 
     requestNewPassword: function() {
@@ -110,26 +132,6 @@ var Layout = Marionette.LayoutView.extend({
         });
     },
 
-    logout: function(e) {
-        var query = {
-            url: config.apiUrl + "/user/logout.json",
-            type: 'post',
-            contentType: "application/json",
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(errorThrown);
-            },
-            success: function(response) {
-                console.log(response);
-
-            }
-        };
-        this.session.getCredentials(query).then(function() {
-            $.ajax(query);
-        });
-
-        e.preventDefault();
-    },
-
     dialogRequestNewpwSuccess: function() {
         Dialog.show({
             title: 'Demande de renouvellement de mot de passe',
@@ -145,4 +147,61 @@ var Layout = Marionette.LayoutView.extend({
     }
 });
 
-module.exports = Layout;
+var Page = View.extend({
+    header: {
+        titleKey: 'login',
+        buttons: {
+            left: ['back']
+        }
+    },
+    className: 'page login container'
+});
+
+module.exports = {
+    Page: Page,
+    View: View,
+    openDialog: function(data) {
+        var dfd = $.Deferred();
+        var state = 'login';
+        var session = Session.model.getInstance();
+        var loginView = new View({
+            model: User.model.getInstance()
+        });
+        loginView.render();
+        var $message = $('<div><p class="lead">'+data.message+'</p></div>');
+        $message.append(loginView.$el);
+
+        var loginDialog = Dialog.show({
+            title: i18n.t('header.titles.login'),
+            message: $message,
+            onhide: function(dialog) {
+                if ( state == 'login' && !session.get('isAuth') ) {
+                    session.off('change:isAuth', onAuthChange);
+                    dfd.reject();
+                }
+                /*if ( session.get('isAuth') )
+                    dfd.resolve();*/
+                /*if ( !_.includes(['logged', 'registration'], session.get('authStatus')) )
+                    dfd.resolve();
+                else
+                    dfd.reject();*/
+            }
+        });
+        function onAuthChange() {
+            console.log('onAuthChange', session);
+            loginDialog.close();
+            if ( session.get('isAuth') )
+                dfd.resolve();
+        }
+        session.once('change:isAuth', onAuthChange);
+
+        loginView.once('click:registration', function() {
+            state = 'registration';
+            loginDialog.close();
+
+            //
+        });
+
+        return dfd;
+    }
+};

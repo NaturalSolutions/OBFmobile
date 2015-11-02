@@ -1,24 +1,18 @@
-<div class="header hidden-by-keyboard text-center">
-    <img src="./images/dashboard-header.png" />
-</div>
-<div class="container">
-    <form>
-        <div class="form-group required">
-            <label>Email</label>
-            <input name="login" type="text" class="form-control" value="<%= data.user.get('email') %>" placeholder="Entrez votre email">
-        </div>
-        <div class="form-group">
-            <label>Mot de passe</label>
-            <input type="password" name="password" class="form-control" placeholder="Entrez un mot de passe">
-        </div>
-    </form>
-    <div><a class="request-npw-js" >Demander un nouveau mot de passe</a></div>
-    <div class="footer btn-group btn-group-justified" role="group" aria-label="...">
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-lg cancel-js">Se déconnecter</button>
-        </div>
-        <div class="btn-group form-actions" role="group">
-            <input type="submit" class="btn btn-lg submit" name="Ajouter" value="Se connecter">
-        </div>
+<form>
+    <div class="form-group required">
+        <label>Email</label>
+        <input name="login" type="text" class="form-control" value="<%= data.user.get('email') %>" placeholder="Entrez votre email">
     </div>
-</div>
+    <div class="form-group">
+        <label>Mot de passe</label>
+        <input type="password" name="password" class="form-control" placeholder="Entrez un mot de passe">
+        <button class="btn btn-link btn-block forget-passwd-js"><div class="text-right">Mot de passe oublié ?</div></button>
+    </div>
+    <div class="messages help-block">
+        <span class="text-info message-sending">Connexion...</span>
+        <span class="text-danger message-error">Login ou mot de passe incorrect</span>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block btn-lg">Se connecter</button>
+</form>
+<h5>Vous n'avez pas de compte ?</h5>
+<a class="btn btn-block bg-blue btn-lg btn-registration" href="#">Créer un compte</a>

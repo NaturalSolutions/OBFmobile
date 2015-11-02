@@ -62,6 +62,10 @@ var Layout = Marionette.LayoutView.extend({
             });
         });
 
+        require('../profile/login.view').openDialog({
+            message: 'Vous devez être connecté pour transmettre votre observation.'
+        });
+
         /*self.addDialog({
             cssClass: 'theme-orange-light has-fireworks title-has-palm user-score user-level-1',
             title: i18n.t('dialogs.obsShared.title'),
@@ -115,6 +119,14 @@ var Layout = Marionette.LayoutView.extend({
         dialog.realize();
         dialog.getModalHeader().hide();
         dialog.open();
+    },
+
+    blockUI: function() {
+        $('body').addClass('block-ui');
+    },
+
+    unblockUI: function() {
+        $('body').removeClass('block-ui');
     }
 });
 

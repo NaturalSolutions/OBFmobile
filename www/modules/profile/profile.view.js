@@ -9,24 +9,14 @@ var Backbone = require('backbone'),
     config = require('../main/config'),
     Session = require('../main/session.model');
 
-var Layout = Marionette.LayoutView.extend({
+var View = Marionette.LayoutView.extend({
     template: require('./profile.tpl.html'),
-    className: function() {
-        return 'page profile ns-full-height';
-    },
+    className: 'view profile',
     events: {
         'submit form': 'onFormSubmit'
     },
     initialize: function() {
         this.session = Session.model.getInstance();
-        var self = this;
-
-        this.header = {
-            titleKey: ((self.model.get('externId')) ? 'profile' : 'registration'),
-            buttons: {
-                left: ['back']
-            }
-        };
     },
 
     serializeData: function() {
@@ -101,13 +91,18 @@ var Layout = Marionette.LayoutView.extend({
                 console.log(errorThrown);
             },
             success: function(response) {
-                self.login(data.mail, data.pass);
-                self.model.set('externId', response.uid).save();
+                self.session.login(data.mail, data.pass)
+                    .then(function() {
+
+                        //Dialog.alert('Vous êtes inscrit');
+                    });
+                //self.login(data.mail, data.pass);
+                //self.model.set('externId', response.uid).save();
             }
         });
     },
 
-    login: function(mail, pass) {
+    /*login: function(mail, pass) {
         var self = this;
 
         var query = {
@@ -148,7 +143,7 @@ var Layout = Marionette.LayoutView.extend({
         this.session.getCredentials(query).done(function() {
             $.ajax(query);
         });
-    },
+    },*/
 
     updateFields: function() {
         var self = this;
@@ -252,4 +247,21 @@ var Layout = Marionette.LayoutView.extend({
     }
 });
 
-module.exports = Layout;
+var Page = View.extend({
+    className: 'page profile container',
+    initialize: function() {
+        this.session = Session.model.getInstance();
+
+        this.header = {
+            titleKey: ((this.model.get('externId')) ? 'profile' : 'registration'),
+            buttons: {
+                left: ['back']
+            }
+        };
+    },
+});
+
+module.exports = {
+    Page: Page,
+    View: View
+};

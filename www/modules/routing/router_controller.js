@@ -182,26 +182,32 @@ module.exports = Marionette.Object.extend({
     profile: function(id) {
         var user = User.model.getInstance();
 
-        if (!id) {
-            main.getInstance().rgMain.show(new Profile({
+        main.getInstance().rgMain.show(new Profile.Page({
+            model: user
+        }), {
+            preventDestroy: true
+        });
+
+        /*if (!id) {
+            main.getInstance().rgMain.show(new Profile.page({
                 name: 'registration',
                 model: user
             }), {
                 preventDestroy: true
             });
         } else {
-            main.getInstance().rgMain.show(new Profile({
+            main.getInstance().rgMain.show(new Profile.page({
                 name: 'profile',
                 model: user
             }), {
                 preventDestroy: true
             });
-        }
+        }*/
     },
     login: function() {
         var user = User.model.getInstance();
 
-        main.getInstance().rgMain.show(new Login({
+        main.getInstance().rgMain.show(new Login.Page({
             name: 'login',
             model: user
         }), {

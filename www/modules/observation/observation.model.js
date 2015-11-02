@@ -32,11 +32,11 @@ var ObservationModel = Backbone.Model.extend({
     toJSON: function() {
         var self = this;
         var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
-        _.forEach(['missionId'], function(attr) {
+        _.forEach(['missionId', 'mission'], function(attr) {
             result[attr] = self['get'+ _.capitalize(attr)]();
         }, this);
 
-        if ( result.missionId )
+        if ( result.mission )
             result.mission = result.mission.toJSON();
 
         return result;

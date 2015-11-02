@@ -14,14 +14,15 @@ var Backbone = require('backbone'),
     bootstrap = require('bootstrap'),
     Dialog = require('bootstrap-dialog'),
     Main = require('../main/main.view'),
-    i18n = require('i18next-client');
+    i18n = require('i18next-client'),
+    Login = require('../profile/login.view');
 
 var Layout = Marionette.LayoutView.extend({
     header: {
-        titleKey: 'observation',
-        buttons: {
+        titleKey: 'observation'
+        /*buttons: {
             left: ['back']
-        }
+        }*/
     },
     template: require('./observation.tpl.html'),
     className: 'page observation ns-full-height',
@@ -225,9 +226,10 @@ var Layout = Marionette.LayoutView.extend({
             return false;
 
         self.$el.addClass('sending');
+        Main.getInstance().blockUI();
 
         //TODO add User in title if exist
-        var user = User.model.getInstance();
+        //var user = User.model.getInstance();
         //clear data photos
         var clearPhoto = function(args) {
             var photos = [];
@@ -260,7 +262,13 @@ var Layout = Marionette.LayoutView.extend({
                         self.sendPhoto();
                     });
                 }, function(error) {
-                    console.log(error);
+                    self.$el.removeClass('sending');
+                    Main.getInstance().unblockUI();
+                    Login.openDialog({
+                        message: 'Vous devez être connecté pour transmettre votre observation.'
+                    }).then(function() {
+                        Dialog.alert('Vous êtes connecté vous pouvez transmettre votre obs');
+                    });
                 });
         });
     },
@@ -291,21 +299,6 @@ var Layout = Marionette.LayoutView.extend({
                 self.setFormStatus('shared');
                 var user = User.model.getInstance();
                 user.computeScore();
-                /*Dialog.show({
-                    title: 'Félicitation !',
-                    message: 'Votre observation a été prise en compte !',
-                    type: 'type-success',
-                    buttons: [{
-                        label: 'Fermer',
-                        action: function(dialog) {
-                            dialog.close();
-                            self.observationModel.set({
-                                'shared': 1
-                            }).save();
-                            self.setFormStatus('shared');
-                        }
-                    }]
-                });*/
             });
         }
     },
