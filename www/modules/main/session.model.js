@@ -14,7 +14,7 @@ var SessionModel = Backbone.Model.extend({
         authStatus: ''
     },
     initialize: function() {
-        
+
     },
 
     getToken: function() {
@@ -43,9 +43,11 @@ var SessionModel = Backbone.Model.extend({
         return dfd;
     },
 
-    //test if user is connecting
+    //test if user is connected
     isConnected: function() {
         var self = this;
+        var dfd = $.Deferred();
+
         // Call system connect with session token.
         var query = {
             url: config.apiUrl + '/system/connect.json',
@@ -57,12 +59,14 @@ var SessionModel = Backbone.Model.extend({
             },
             success: function(data) {
                 console.log('Hello user #' + data.user.uid);
+                dfd.resolve(data);
             }
         };
         self.getCredentials(query).then(function() {
             console.log(query);
             $.ajax(query);
         });
+        return dfd;
     },
 
     getCredentials: function(query) {
@@ -99,11 +103,11 @@ var SessionModel = Backbone.Model.extend({
                 console.log(response);
                 //UPDATE instance, model User  because if several users the user should be changed at each login
                 User.model.getInstance().set({
-                    "lastname": _.get(response.user.field_last_name,'und[0].value', ''),
-                    "firstname": _.get(response.user.field_first_name,'und[0].value', ''),
+                    "lastname": _.get(response.user.field_last_name, 'und[0].value', ''),
+                    "firstname": _.get(response.user.field_first_name, 'und[0].value', ''),
                     "email": response.user.mail,
                     "externId": response.user.uid,
-                    "newsletter": _.get(response.user.field_newsletter,'und[0].value', '')
+                    "newsletter": _.get(response.user.field_newsletter, 'und[0].value', '')
                 }).save().then(function() {
                     self.set('isAuth', true);
                     self.set('authStatus', 'logged');
@@ -148,7 +152,7 @@ module.exports = {
             return SessionModel;
         },
         getInstance: function() {
-            if ( !modelInstance )
+            if (!modelInstance)
                 modelInstance = new SessionModel();
             return modelInstance;
         }

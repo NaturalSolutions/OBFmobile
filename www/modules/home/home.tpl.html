@@ -1,23 +1,42 @@
-<div>
-    <h1>Hello</h1>
-    <ul class="list-unstyled">
-        <!-- <li>
-                <a href="#"><span class="icon icomoon">person</span> Mon profil</a>
-            </li> -->
-        <li>
-            <a class="btn btn-link" href="#profile">
-                <span>S'inscrire</span>
-            </a>
-        </li>
-        <li>
-            <a class="btn btn-link" href="#login">
-                <span>Se connecter</span>
-            </a>
-        </li>
-        <li>
-            <a class="btn btn-link" href="#observation/b91aa5a0-1dac-f579-9827-4e4a09a82bba">
-                <span>OBS</span>
-            </a>
-        </li>
-    </ul>
+<div class="header text-center">
+    <div class="lead-outer">
+        <div class="lead">
+            <div class="lead-icon user-sky user-sky-3 user-sky-sun"></div>
+            <img class="lead-icon" src="images/score/level_2_awake.png">
+        </div>
+    </div>
+    <div>
+        <h1><%= i18n.t('pages.home.title') %></h1>
+    </div>
+</div>
+<div class="container">
+    <div class="content">
+        <ul class="list-unstyled">
+            <li>
+                <a class="btn btn-primary btn-lg btn-block" href="#profile">
+                    <span><%= i18n.t('pages.home.btns.subscribe') %></span>
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-primary btn-lg btn-block" href="#login">
+                    <span><%= i18n.t('pages.home.btns.logged') %></span>
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-soon btn-lg btn-block" href="#dashboard">
+                    <span> <%= i18n.t('pages.home.btns.soon') %> </span>
+                </a>
+            </li>
+        </ul>
+        <div class="container-fluid logo">
+            <div class="row"> 
+                <div class="col-md-4 col-xs-4 col-sm-4">
+                    <img class="img-responsive" src="images/logos/logotype-noe.png">
+                </div>
+                <div class="col-md-8 col-xs-8 col-sm-8">
+                    <img class="img-responsive" src="images/logos/cropped-bandeau-site-web.png">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

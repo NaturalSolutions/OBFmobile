@@ -12,6 +12,7 @@ var Backbone = require('backbone'),
     Router = require('../routing/router'),
     Profile = require('../profile/profile.view'),
     UpdatePassword = require('../profile/update_password.view'),
+    Session = require('../main/session.model'),
     Login = require('../profile/login.view');
 
 
@@ -23,12 +24,22 @@ module.exports = Marionette.Object.extend({
     home: function() {
         var self = this;
 
-        Router.getInstance().navigate('#dashboard', {
-            trigger: true
-        });
-        /*main.getInstance().rgMain.show(new Home(), {
-            preventDestroy: true
-        });*/
+        var session = Session.model.getInstance();
+        var user = User.model.getInstance();
+
+
+        if (!session.get('isAuth')) {
+            main.getInstance().rgMain.show(new Home({
+                name: 'home',
+                model: user,
+            }), {
+                preventDestroy: true
+            });
+        } else {
+            Router.getInstance().navigate('#dashboard', {
+                trigger: true
+            });
+        }
     },
 
     observationId: function(id) {
@@ -214,7 +225,7 @@ module.exports = Marionette.Object.extend({
             preventDestroy: true
         });
     },
-    updatePassword:function(){
+    updatePassword: function() {
         var user = User.model.getInstance();
 
         main.getInstance().rgMain.show(new UpdatePassword({

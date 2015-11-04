@@ -1,144 +1,146 @@
 {
-	"test": {
-		"key": "singular",
-		"key_plural_2": "few"
-	},
-	"common": {
-		"mission": {
-			"season": {
-				"display": "de __from__ à __to__"
-			}
-		}
-	},
-	"header": {
-		"titles": {
-			"dashboard": "Tableau de bord",
-			"missions": "Missions",
-			"missionsAroundme": "Missions autour de moi",
-			"observation": "Observation",
-			"profile": "mon profil",
-			"registration": "Inscription",
-			"profile": "Profil",
-			"login": "Connexion",
-			"updatepassword": "Modifier le mot de passe"
-		}
-	},
-	"mission": {
-		"deltaLong": "plus que __count__ jour",
-		"deltaLong_plural": "plus que __count__ jours",
-		"difficulty_1": "Facile",
-		"difficulty_2": "Confirmé",
-		"difficulty_3": "Expert"
-	},
-	"logs": {
-		"checkin": "Vous êtes entré en forêt",
-		"checkout": "Vous êtes sorti de forêt <span>__duration__</span>",
-		"mission_accept": "Vous avez accepté la mission",
-		"mission_unaccept": "Vous avez désaccepté la mission",
-		"mission_complete": "Vous avez réussi la mission"
-	},
-	"user": {
-		"score": {
-			"level": {
-				"1": {
-					"label": "Ecureuil",
-					"description": "Au moins une mission de niveau débutant"
-				},
-				"2": {
-					"label": "Chouette",
-					"description": "Au moins une mission de niveau confirmé"
-				},
-				"3": {
-					"label": "Loup",
-					"description": "Au moins une mission de niveau expert"
-				}
-			},
-			"palm": {
-				"bronze": {
-					"label": "Bronze",
-					"description": "Au moins 2 missions"
-				},
-				"silver": {
-					"label": "Argent",
-					"description": "Au moins 10 missions"
-				},
-				"gold": {
-					"label": "Or",
-					"description": "Au moins 15 missions"
-				}
-			},
-			"timeOnMission": {
-				"1": {
-					"label": "Ciel bleu",
-					"description": "Vous avez passé moins d'une heure en forêt"
-				},
-				"2": {
-					"label": "Ciel turquoise",
-					"description": "Temps moyen passé en forêt"
-				},
-				"3": {
-					"label": "Ciel vert",
-					"description": "Temps long passé en forêt"
-				}
-			}
-		}
-	},
-	"dialogs": {
-		"obsShared": {
-			"title": "Mission accomplie !",
-			"message": "Bravo, vous transmis avez votre observation.",
-			"button": "Continuer"
-		},
-		"palm": {
-			"title": "Bravo !",
-			"message": {
-				"bronze": "Vous avez palme de bronze",
-				"silver": "Vous avez palme d'argent",
-				"gold": "Vous avez palme d'or"
-			},
-			"button": "Continuer"
-		},
-		"level": {
-			"title": "Bravo !",
-			"message": {
-				"level_2": "Vous êtes maintenant chouette",
-				"level_3": "Vous êtes maintenant loup"
-			},
-			"button": "Continuer"
-		}
-	},
-	"pages": {
-		"home": {
-			"btns": {
-				"subscribe": "Inscription",
-				"soon": "Je ferais ça plus tard"
-			}
-		},
-		"dashboard": {
-			"tabs": {
-				"missions": "Missions",
-				"logs": "Activités",
-				"observations": "Observations"
-			},
-			"missions": {
-				"findMissionBtn": "Trouvez-moi une mission",
-				"findMissionBtn_plural": "Trouvez-moi d'autres missions"
-			}
-		},
-		"missionsAroundme": {
-			"list": {
-				"delta": "__nb__ j"
-			}
-		},
-		"missionSheet": {
-			"acceptBtnLabel": "accepter"
-		},
-		"observation": {
-			"btns": {
-				"save": "Enregistrer",
-				"send": "Transmettre",
-				"share": "Partager"
-			}
-		}
-	}
+    "test": {
+        "key": "singular",
+        "key_plural_2": "few"
+    },
+    "common": {
+        "mission": {
+            "season": {
+                "display": "de __from__ à __to__"
+            }
+        }
+    },
+    "header": {
+        "titles": {
+            "dashboard": "Tableau de bord",
+            "missions": "Missions",
+            "missionsAroundme": "Missions autour de moi",
+            "observation": "Observation",
+            "profile": "mon profil",
+            "registration": "Inscription",
+            "profile": "Profil",
+            "login": "Connexion",
+            "updatepassword": "Modifier le mot de passe"
+        }
+    },
+    "mission": {
+        "deltaLong": "plus que __count__ jour",
+        "deltaLong_plural": "plus que __count__ jours",
+        "difficulty_1": "Facile",
+        "difficulty_2": "Confirmé",
+        "difficulty_3": "Expert"
+    },
+    "logs": {
+        "checkin": "Vous êtes entré en forêt",
+        "checkout": "Vous êtes sorti de forêt <span>__duration__</span>",
+        "mission_accept": "Vous avez accepté la mission",
+        "mission_unaccept": "Vous avez désaccepté la mission",
+        "mission_complete": "Vous avez réussi la mission"
+    },
+    "user": {
+        "score": {
+            "level": {
+                "1": {
+                    "label": "Ecureuil",
+                    "description": "Au moins une mission de niveau débutant"
+                },
+                "2": {
+                    "label": "Chouette",
+                    "description": "Au moins une mission de niveau confirmé"
+                },
+                "3": {
+                    "label": "Loup",
+                    "description": "Au moins une mission de niveau expert"
+                }
+            },
+            "palm": {
+                "bronze": {
+                    "label": "Bronze",
+                    "description": "Au moins 2 missions"
+                },
+                "silver": {
+                    "label": "Argent",
+                    "description": "Au moins 10 missions"
+                },
+                "gold": {
+                    "label": "Or",
+                    "description": "Au moins 15 missions"
+                }
+            },
+            "timeOnMission": {
+                "1": {
+                    "label": "Ciel bleu",
+                    "description": "Vous avez passé moins d'une heure en forêt"
+                },
+                "2": {
+                    "label": "Ciel turquoise",
+                    "description": "Temps moyen passé en forêt"
+                },
+                "3": {
+                    "label": "Ciel vert",
+                    "description": "Temps long passé en forêt"
+                }
+            }
+        }
+    },
+    "dialogs": {
+        "obsShared": {
+            "title": "Mission accomplie !",
+            "message": "Bravo, vous transmis avez votre observation.",
+            "button": "Continuer"
+        },
+        "palm": {
+            "title": "Bravo !",
+            "message": {
+                "bronze": "Vous avez palme de bronze",
+                "silver": "Vous avez palme d'argent",
+                "gold": "Vous avez palme d'or"
+            },
+            "button": "Continuer"
+        },
+        "level": {
+            "title": "Bravo !",
+            "message": {
+                "level_2": "Vous êtes maintenant chouette",
+                "level_3": "Vous êtes maintenant loup"
+            },
+            "button": "Continuer"
+        }
+    },
+    "pages": {
+        "home": {
+            "title": "Dans le forêt avec Noé",
+            "btns": {
+                "subscribe": "Inscription",
+                "logged": "Connexion",
+                "soon": "Je ferais ça plus tard"
+            }
+        },
+        "dashboard": {
+            "tabs": {
+                "missions": "Missions",
+                "logs": "Activités",
+                "observations": "Observations"
+            },
+            "missions": {
+                "findMissionBtn": "Trouvez-moi une mission",
+                "findMissionBtn_plural": "Trouvez-moi d'autres missions"
+            }
+        },
+        "missionsAroundme": {
+            "list": {
+                "delta": "__nb__ j"
+            }
+        },
+        "missionSheet": {
+            "acceptBtnLabel": "accepter"
+        },
+        "observation": {
+            "btns": {
+                "save": "Enregistrer",
+                "send": "Transmettre",
+                "share": "Partager"
+            }
+        }
+    }
 }

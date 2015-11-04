@@ -20,6 +20,7 @@ var Backbone = require('backbone'),
     Log = require('../logs/log.model'),
     Departement = require('../main/departement.model'),
     Mission = require('../mission/mission.model'),
+    Session = require('../main/session.model'),
     Router = require('../routing/router');
 
 /*var badgesInstanceColl = require('./models/badge').instanceColl;
@@ -81,7 +82,7 @@ function init() {
                                 _.forEach(missionData.seasons, function(season) {
                                     season.startAt = moment(season.startAt, 'MM');
                                     season.endAt = moment(season.endAt, 'MM');
-                                    if ( season.startAt > season.endAt ) {
+                                    if (season.startAt > season.endAt) {
                                         season.endAt.add(1, 'y');
                                     }
                                     season.endAt.endOf('month');
@@ -175,16 +176,33 @@ function init() {
         return Observation.collection.getInstance().fetch();
     };
 
+    var getSessionStatus = function() {
+        var deferred = $.Deferred();
+
+        //TODO test connection
+        var session = Session.model.getInstance();
+        var userState = session.isConnected();
+        userState.then(function(data) {
+            if (data.user.uid) {
+                Session.model.getInstance().set({
+                    'isAuth': true
+                });
+            }
+            deferred.resolve();
+        });
+        return deferred;
+    };
+
     var app = new Marionette.Application();
     app.on('start', function() {
         Router.getInstance();
         main.init();
         main.getInstance().render();
-        
+
         Backbone.history.start();
     });
 
-    $.when(getI18n(), getMissions(), getDepartements(), getUser(), getObservations(), getLogs())
+    $.when(getI18n(), getMissions(), getDepartements(), getUser(), getObservations(), getLogs(), getSessionStatus())
         .done(function() {
             app.start();
         });

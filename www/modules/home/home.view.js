@@ -2,6 +2,7 @@
 
 var Backbone = require('backbone'),
     $ = require('jquery'),
+    _ = require('lodash'),
     Marionette = require('backbone.marionette');
 
 var Layout = Marionette.LayoutView.extend({
@@ -10,17 +11,18 @@ var Layout = Marionette.LayoutView.extend({
     className: 'page home ns-full-height',
     events: {},
 
-    initialize: function() {
-        
-    },
-    serializeData: function() {
-        return {
-            tata: 'lorem'
-        };
-    },
+    initialize: function() {},
+    serializeData: function() {},
 
-    onRender: function(options) {
+    onRender: function(options) {},
+
+    onShow: function() {
+        $('body').addClass('footer-none');
+    },
+    onBeforeDestroy: function(options) {
+        $('body').removeClass('footer-none');
     }
+
 });
 
 module.exports = Layout;
