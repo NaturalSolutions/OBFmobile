@@ -19,7 +19,6 @@ var View = Marionette.LayoutView.extend({
         var self = this;
 
         self.listenTo(header.getInstance(), 'btn:menu:click', self.toggleShow);
-        self.listenTo(header.getInstance(), 'btn:back:click', self.historyBack);
 
     },
 
@@ -53,9 +52,7 @@ var View = Marionette.LayoutView.extend({
     onLogoutClick: function() {
         Session.model.getInstance().logout();
     },
-    historyBack: function(){
-        window.history.back();
-    }
+
 });
 
 var instance = null;
