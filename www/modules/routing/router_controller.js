@@ -13,7 +13,8 @@ var Backbone = require('backbone'),
     Profile = require('../profile/profile.view'),
     UpdatePassword = require('../profile/update_password.view'),
     Session = require('../main/session.model'),
-    Login = require('../profile/login.view');
+    Login = require('../profile/login.view'),
+    Settings = require('../settings/settings.view');
 
 
 module.exports = Marionette.Object.extend({
@@ -231,6 +232,13 @@ module.exports = Marionette.Object.extend({
         main.getInstance().rgMain.show(new UpdatePassword({
             name: 'updatepassword',
             model: user
+        }), {
+            preventDestroy: true
+        });
+    },
+    settings: function(){
+        main.getInstance().rgMain.show(new Settings({
+            name: 'settings',
         }), {
             preventDestroy: true
         });

@@ -5,34 +5,50 @@
                 <a href="#"><span class="icon icomoon">person</span> Mon profil</a>
             </li> -->
             <li>
-                <a class="btn btn-link" href="#dashboard">
-                    <span class="icon icomoon">dashboard</span> <span>Tableau de bord</span>
+                <a class="btn btn-link" href="#login">
+                    <span class="icon icomoon">profile</span> <span> <%= i18n.t('sidenav.btns.login') %> </span>
                 </a>
             </li>
+            <li>
+                <a class="btn btn-link" href="#dashboard">
+                    <span class="icon icomoon">dashboard</span> <span> <%= i18n.t('sidenav.btns.dashboard') %> </span>
+                </a>
+            </li>
+        </ul>
+        <ul class="list-unstyled">
             <li>
                 <a class="btn btn-link" href="#missions/all">
-                    <span class="icon icomoon">missions</span> <span>Missions</span>
+                    <span class="icon icomoon">missions</span> <span> <%= i18n.t('sidenav.btns.missions') %> </span>
                 </a>
             </li>
             <li>
-                <a class="btn btn-link" href='<%= data.linkregister %>' >
-                    <span>Profile</span>
+                <a class="btn btn-link">
+                    <span class="icon icomoon">indices</span> <span> <%= i18n.t('sidenav.btns.indices') %> </span>
+                </a>
+            </li>
+        </ul>
+        <ul class="list-unstyled">
+            <li>
+                <a class="btn btn-link" href="#settings">
+                    <span class="icon icomoon">settings</span> <span> <%= i18n.t('sidenav.btns.settings') %> </span>
                 </a>
             </li>
             <li>
-                <a class="btn btn-link" href="#login">
-                    <span>Login</span>
+                <a class="btn btn-link">
+                    <span class="icon icomoon">info</span> <span> <%= i18n.t('sidenav.btns.about') %> </span>
                 </a>
             </li>
+            <li>
+                <a class="btn btn-link">
+                    <span class="icon icomoon">help</span> <span> <%= i18n.t('sidenav.btns.help') %> </span>
+                </a>
+            </li>
+        </ul>
+        <ul class="list-unstyled">
             <li>
                 <button type="button" class="btn btn-link btn-logout">
-                    <span>logout</span>
+                    <span><%= i18n.t('sidenav.btns.logout') %> </span>
                 </button>
-            </li>
-            <li>
-                <a class="btn btn-link" href="#updatepassword">
-                    <span>Modifier son mot de passe</span>
-                </a>
             </li>
         </ul>
     </nav>
