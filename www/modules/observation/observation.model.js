@@ -10,7 +10,8 @@ var ObservationModel = Backbone.Model.extend({
     // Expected attributes : {
     //     date: '',
     //     missionId: '',
-    //     taxon_id: '',
+    //     scientific_name: '',
+    //     cd_nom: '',
     //     photos:[],
     //     departement: '',
     //     shared: 0,
