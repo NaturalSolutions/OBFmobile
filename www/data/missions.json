@@ -9,6 +9,8 @@
     "departements": ["01", "02", "03", "07", "08", "09", "10", "12", "15", "16", "17", "18", "19", "21", "23", "24", "25", "26", "27", "28", "31", "32", "33", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "49", "51", "52", "53", "58", "59", "60", "62", "63", "64", "65", "67", "68", "69", "70", "71", "72", "73", "74", "76", "79", "80", "81", "82", "85", "86", "87", "89", "90"],
     "taxon": {
         "title": "Morio",
+        "scientific_name": "Nymphalis antiopa (Linnaeus, 1758)",
+        "cd_nom": "53733",
         "family": "lepidopteres",
         "description": "Le Morio est un grand papillon pouvant atteindre 7,5 cm d'envergure. On le reconnait au dessus de ses ailes violet fonc\u00e9 pr\u00e9sentant une bande marginale jaune (blanche apr\u00e8s hibernation) et une s\u00e9rie de taches marginales bleues. Le dessous des ailes est noir avec la m\u00eame bande marginale jaune.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/lepidopteres\/morio\/",
@@ -25,6 +27,8 @@
     "departements": ["01", "02", "07", "08", "10", "18", "21", "25", "26", "28", "36", "37", "38", "39", "41", "42", "45", "51", "52", "54", "55", "57", "58", "59", "60", "62", "67", "68", "69", "70", "71", "73", "74", "80", "88", "89", "90"],
     "taxon": {
         "title": "Damier du fr\u00eane",
+        "scientific_name": "Euphydryas maturna (Linnaeus, 1758)",
+        "cd_nom": "53856",
         "family": "lepidopteres",
         "description": "Le Damier du fr\u00eane a une envergure comprise entre 21 et 24 mm. Le dessus de ses ailes est bigarr\u00e9 de fauve rouge\u00e2tre, de blanc jaun\u00e2tre et de brun noir\u00e2tre plus ou moins fonc\u00e9. Les ailes post\u00e9rieures pr\u00e9sentent une grosse tache rousse souvent bien marqu\u00e9e sur le dessus et une s\u00e9rie de taches blanches suivie d'une large bande rousse. Les ailes ant\u00e9rieures sont marqu\u00e9es de lunules (taches en forme de croissant) noires irr\u00e9guli\u00e8res et d'\u00e9paisseur variable au revers.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/lepidopteres\/damier-du-frene\/",
@@ -41,6 +45,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "10", "11", "13", "15", "16", "17", "21", "24", "25", "26", "30", "33", "34", "38", "39", "40", "42", "43", "44", "47", "48", "49", "51", "52", "53", "54", "55", "57", "58", "60", "63", "64", "66", "69", "70", "71", "72", "73", "74", "75", "77", "78", "79", "80", "83", "84", "85", "86", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Bacchante",
+        "scientific_name": "Lopinga achine (Scopoli, 1763)",
+        "cd_nom": "53615",
         "family": "lepidopteres",
         "description": "La Bacchante est un papillon de 5 \u00e0 6 cm d'envergure. Il se reconna\u00eet par sa couleur brune et ses taches noir\u00e2tres sur le dessus des ailes. La face inf\u00e9rieure des ailes est bord\u00e9e par une large bande blanche et une s\u00e9rie d'ocelles noires pupill\u00e9es de blanc et cercl\u00e9es de jaune.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/lepidopteres\/bacchante\/",
@@ -57,6 +63,8 @@
     "departements": ["01", "02", "04", "05", "06", "07", "09", "11", "12", "13", "24", "26", "30", "31", "32", "33", "34", "38", "40", "42", "46", "47", "48", "59", "60", "62", "64", "65", "66", "69", "73", "74", "75", "77", "78", "80", "81", "82", "83", "84", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Sonneur \u00e0 ventre jaune",
+        "scientific_name": "Bombina variegata (Linnaeus, 1758)",
+        "cd_nom": "212",
         "family": "reptiles_amphibiens",
         "description": "Petit crapaud de 4 \u00e0 5 cm de longueur, la coloration du Sonneur \u00e0 ventre jaune est tr\u00e8s typique : la face dorsale du corps est brun terreux, la face ventrale, la gorge et le dessous des pattes sont marbr\u00e9s de jaune vif \u00e0 orang\u00e9 sur fond noir cendr\u00e9 ou bleu nuit. Les verrues cutan\u00e9es sont souvent rehauss\u00e9es de petites \u00e9pines noires. Le corps du Sonneur \u00e0 ventre jaune est aplati et son museau est tr\u00e8s arrondi de profil. Outre sa coloration typique, on le reconna\u00eet \u00e0 sa pupille arrondie, triangulaire ou en forme de c\u0153ur.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/reptiles-amphibiens\/sonneur-a-ventre-jaune\/",
@@ -73,6 +81,8 @@
     "departements": ["01", "07", "09", "11", "12", "24", "26", "30", "31", "32", "33", "34", "38", "40", "42", "46", "47", "48", "64", "65", "66", "69", "73", "74", "81", "82"],
     "taxon": {
         "title": "Carabe splendide",
+        "scientific_name": "Carabus splendens (Olivier, 1790)",
+        "cd_nom": "8459",
         "family": "carabes",
         "description": "D'une taille comprise entre 24 et 35 mm, le Carabe splendide est une des esp\u00e8ces de carabe les plus color\u00e9es, allant du vert cuivr\u00e9 au parme. Le dessus de son corps, (thorax et \u00e9lytres), est vert dor\u00e9 tr\u00e8s brillant, plus rarement pourpr\u00e9. Les antennes et les pattes sont noires. Les \u00e9lytres sont lisses et renfl\u00e9s vers l'arri\u00e8re.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/carabes\/carabe-splendide\/",
@@ -89,6 +99,8 @@
     "departements": ["01", "02", "03", "07", "08", "09", "10", "11", "12", "14", "15", "18", "21", "25", "26", "28", "30", "31", "32", "34", "36", "37", "38", "39", "41", "42", "43", "44", "45", "46", "48", "49", "50", "51", "52", "53", "54", "55", "57", "58", "60", "61", "63", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "77", "78", "80", "81", "82", "85", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Carabe \u00e0 reflets cuivr\u00e9s",
+        "scientific_name": "Carabus auronitens (Fabricius, 1792)",
+        "cd_nom": "8369",
         "family": "carabes",
         "description": "D'une taille comprise entre 19 et 28 mm, le Carabe \u00e0 reflets cuivr\u00e9s, ou Carabe \u00e0 reflets d'or, se reconna\u00eet \u00e0 sa t\u00eate et son pronotum (segment du thorax situ\u00e9 derri\u00e8re la t\u00eate) de couleur rouge et ses \u00e9lytres verts qui portent chacun 3 larges lignes saillantes noires.\n\nComme tous les col\u00e9opt\u00e8res, il poss\u00e8de deux paires d'ailes : la premi\u00e8re, appel\u00e9e \u00e9lytres, est transform\u00e9e en carapace allong\u00e9e, tandis que la deuxi\u00e8me est atrophi\u00e9e si bien qu'ils sont incapables de voler.\n\nIl se diff\u00e9rencie du Carabe dor\u00e9 par ses cotes de couleur noires, alors qu'elles sont vertes chez le dor\u00e9.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/carabes\/carabe-a-reflets-dor\/",
@@ -105,6 +117,8 @@
     "departements": ["01", "04", "05", "06", "07", "09", "11", "12", "13", "14", "16", "17", "24", "26", "2a", "2b", "30", "31", "32", "33", "34", "38", "40", "42", "44", "46", "47", "48", "49", "50", "53", "54", "55", "57", "61", "64", "65", "66", "69", "72", "73", "74", "75", "77", "78", "79", "81", "82", "83", "84", "85", "86", "88", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Grand calosome",
+        "scientific_name": "Calosoma sycophanta (Linnaeus, 1758)",
+        "cd_nom": "8344",
         "family": "carabes",
         "description": "D'une taille moyenne de 21 \u00e0 35 mm, le Grand calosome est reconnaissable \u00e0 sa t\u00eate noir bleu\u00e2tre et ses \u00e9lytres stri\u00e9s aux couleurs m\u00e9talliques tr\u00e8s brillantes (vertes, bleues, bronz\u00e9es ou noires, avec des points verts ou cuivreux) et dont la coloration change selon le rayonnement re\u00e7u. Le pronotum (segment du thorax situ\u00e9 derri\u00e8re la t\u00eate) est noir bleu\u00e2tre, les antennes et les pattes sont noires. La face ventrale est bleu m\u00e9tallique.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/carabes\/grand-calosome\/",
@@ -121,6 +135,8 @@
     "departements": ["01", "07", "26", "38", "42", "69", "73", "74"],
     "taxon": {
         "title": "Damier du ch\u00e8vrefeuille",
+        "scientific_name": "Euphydryas intermedia (M\u00e9n\u00e9tri\u00e8s, 1859)",
+        "cd_nom": "53851",
         "family": "lepidopteres",
         "description": "Le Damier du ch\u00e8vrefeuille se distingue par sa couleur marron-marron fonc\u00e9, les damiers orange p\u00e2le sur le dessus des ailes et orange-blanc sur le dessous. Une large bande sombre est pr\u00e9sente sur le dessus des ailes ant\u00e9rieures et une bande marginale orange plus fine sur le revers.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/lepidopteres\/damier-du-chevrefeuille\/",
@@ -137,6 +153,8 @@
     "departements": ["01", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "21", "24", "25", "26", "28", "30", "31", "32", "33", "34", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "57", "58", "61", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "77", "78", "79", "81", "82", "83", "84", "85", "86", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Carabe dor\u00e9",
+        "scientific_name": "Carabus auratus (Linnaeus, 1761)",
+        "cd_nom": "8358",
         "family": "carabes",
         "description": "D'une taille comprise entre 17 et 20 mm, il se reconna\u00eet \u00e0 ses \u00e9lytres et son thorax verts avec des reflets m\u00e9talliques. On le distingue \u00e0 ses trois larges lignes saillantes sur chaque \u00e9lytre appel\u00e9es cotes. Comme la plupart des carabes, il ne vole pas car ses ailes post\u00e9rieures sont rudimentaires.\n\nIl se diff\u00e9rencie du Carabe \u00e0 reflets cuivr\u00e9s par ses cotes de couleur vertes alors qu'elles sont noires chez le cuivr\u00e9.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/carabes\/148-2\/",
@@ -153,6 +171,8 @@
     "departements": ["01", "03", "04", "05", "06", "07", "13", "14", "15", "18", "19", "22", "23", "25", "26", "28", "29", "2a", "2b", "35", "36", "37", "38", "39", "41", "42", "43", "44", "45", "49", "50", "53", "54", "55", "56", "57", "61", "63", "67", "68", "69", "70", "72", "73", "74", "75", "77", "78", "83", "84", "85", "87", "88", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Polypore du bouleau",
+        "scientific_name": "Piptoporus betulinus (Bull. : Fr.) P. Karsten",
+        "cd_nom": "44020",
         "family": "champignons",
         "description": "De couleur marron-clair, en forme de console semi-circulaire et de surface lisse, le chapeau du Polypore du bouleau fait de 5 \u00e0 30 cm de large pour 2 \u00e0 6 cm d'\u00e9paisseur. Il poss\u00e8de un pied rudimentaire voire inexistant.\n\nSa chair est blanche ou l\u00e9g\u00e8rement jaune, presque g\u00e9latineuse. Il d\u00e9gage une odeur aigrelette et \u00e0 une saveur acidul\u00e9e. Sa face inf\u00e9rieure reste blanch\u00e2tre : elle est compos\u00e9e d'un r\u00e9seau dense de pores qui lib\u00e8rent les spores et dispersent ainsi le champignon vers de nouveaux arbres.\n\nC'est une esp\u00e8ce annuelle mais elle peut rester en place plusieurs ann\u00e9es.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/champignons\/polyphore-du-bouleau\/",
@@ -169,6 +189,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "2a", "2b", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Langue de b\u0153uf",
+        "scientific_name": "Fistulina hepatica (J.C. Sch. : Fr.) Withering",
+        "cd_nom": "42445",
         "family": "champignons",
         "description": "La Langue de b\u0153uf se reconna\u00eet \u00e0 son chapeau de 7 \u00e0 25 cm de large en forme de console ou de langue parfois port\u00e9e par un pied court fix\u00e9 sur le support. Il est tr\u00e8s visqueux, couvert de petites asp\u00e9rit\u00e9s donnant l'impression d'une langue r\u00e2peuse, et sa couleur est rouge brique, devenant plus fonc\u00e9e en vieillissant. Sur sa face inf\u00e9rieure, les pores forment des tubes courts et serr\u00e9s de couleur cr\u00e8me qui s'assombrissent rapidement lorsqu'ils sont bless\u00e9s. Il peut exsuder un jus couleur sang.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/champignons\/langue-de-boeuf\/",
@@ -185,6 +207,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "2a", "2b", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Polypore margin\u00e9",
+        "scientific_name": "Fomitopsis pinicola (Swartz : Fr.) P. Karsten",
+        "cd_nom": "42514",
         "family": "champignons",
         "description": "En forme de sabot de cheval ou en console (il ne pousse pas sur pied), le chapeau du Polypore margin\u00e9 fait de 3 \u00e0 10 cm de large. Il est zon\u00e9 concentriquement et irr\u00e9guli\u00e8rement bossel\u00e9, de couleur allant du jaune orang\u00e9 \u00e0 brun rouge\u00e2tre ou parfois rouge orang\u00e9. Le chapeau du Polypore margin\u00e9 est partiellement ou presqu'enti\u00e8rement couvert d'une cro\u00fbte verniss\u00e9e (r\u00e9sine) noire \u00e0 partir du point d'attache.\n\nLa face sup\u00e9rieure du champignon est constitu\u00e9e par l'addition de couches successives d'abord jaun\u00e2tre, puis gris\u00e2tre et orange. La marge (le bord du chapeau) est quant \u00e0 elle plus claire que le reste du chapeau. Lorsque le champignon est en croissance, l'hym\u00e9nium (face inf\u00e9rieure fertile) suinte des gouttelettes. Les pores, entre 3 et 4 par mm, sont arrondis et de couleur jaune cr\u00e8me.\n\nOn trouve cette esp\u00e8ce tout au long de l'ann\u00e9e.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/champignons\/polypore-margine\/",
@@ -201,6 +225,8 @@
     "departements": ["01", "03", "04", "05", "06", "07", "13", "15", "18", "24", "25", "26", "28", "33", "36", "37", "38", "39", "40", "41", "42", "43", "45", "47", "54", "55", "57", "63", "64", "67", "68", "69", "70", "73", "74", "75", "77", "78", "83", "84", "88", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Amadouvier",
+        "scientific_name": "Fomes fomentarius (L. : Fr.)Fr.",
+        "cd_nom": "42504",
         "family": "champignons",
         "description": "L'Amadouvier se reconna\u00eet \u00e0 son chapeau de 10 \u00e0 40 cm de large et en forme de sabot de cheval ou de console (absence de pied). Celui-ci est bossu au sommet, grav\u00e9 de sillons concentriques formant entre eux des bourrelets plus amples au d\u00e9but, puis plus \u00e9troits avec l'\u00e2ge. Sa couleur est jaun\u00e2tre, brun-rouge, brunissant vers son point d'attache et s'\u00e9claircissant vers la marge (bord du chapeau). Cette derni\u00e8re est \u00e9paisse en forme de bourrelet et s\u00e9cr\u00e8te de grosses gouttes tr\u00e8s limpides au printemps. Les pores sont tr\u00e8s fins de couleur blanche, puis cr\u00e8me et enfin roussissant avec l'\u00e2ge.\n\nC'est une esp\u00e8ce p\u00e9renne, c'est-\u00e0-dire qu'elle reste en place plusieurs ann\u00e9es, et reprend sa croissance au d\u00e9but du printemps. Les jeunes amadouviers d\u00e9gagent une odeur de banane.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/champignons\/amadouvier\/",
@@ -217,6 +243,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "2a", "2b", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Petit-gris",
+        "scientific_name": "Cornu aspersum (O.F. M\u00fcller, 1774)",
+        "cd_nom": "199863",
         "family": "gasteropodes",
         "description": "La coquille du Petit-gris \u00e0 un diam\u00e8tre de 25 \u00e0 35 mm pour une hauteur de 25 \u00e0 40 mm. Sa coquille globuleuse pr\u00e9sente des bandes spirales mouchet\u00e9es, interrompues par des fines z\u00e9brures claires. Sa coloration est le plus souvent brune ray\u00e9e de noir.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/gasteropodes\/petit-gris\/",
@@ -233,6 +261,8 @@
     "departements": ["01", "02", "07", "08", "10", "21", "25", "26", "38", "39", "42", "51", "52", "54", "55", "57", "58", "60", "69", "70", "71", "73", "74", "80", "88", "89", "90"],
     "taxon": {
         "title": "M\u00e9lib\u00e9e",
+        "scientific_name": "Coenonympha hero (Linnaeus, 1761)",
+        "cd_nom": "53651",
         "family": "lepidopteres",
         "description": "Le M\u00e9lib\u00e9e est un petit papillon de 15 \u00e0 17mm d'envergure. Le dessus de son aile ant\u00e9rieure est uniform\u00e9ment brun fonc\u00e9, tandis que le dessus de son aile post\u00e9rieure est brun avec 3 ou 4 ocelles noir\u00e2tres cercl\u00e9s d'orange.Le dessous de l'aile post\u00e9rieure est gris-brun dans sa partie basale et pr\u00e9sente successivement vers l'extr\u00e9mit\u00e9 de l'aile : une large bande blanche irr\u00e9guli\u00e8re, 6 gros ocelles noirs pupill\u00e9s de blanc dispos\u00e9s en arc-de-cercle et entour\u00e9s d'orange vif, une ligne argent\u00e9e brillante et une bande orange soulign\u00e9e de noir, puis de blanc.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/lepidopteres\/melibee\/",
@@ -249,6 +279,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "2a", "2b", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Tabac d'Espagne",
+        "scientific_name": "Argynnis paphia (Linnaeus, 1758)",
+        "cd_nom": "53878",
         "family": "lepidopteres",
         "description": "Le Tabac d'Espagne est un grand papillon de 6 \u00e0 8 cm d'envergure. On le reconnait au dessus de ses ailes de couleur fauve avec des points noirs et orn\u00e9 d'une ligne de taches rondes. Le revers des ailes ant\u00e9rieures est identique au dessus, tandis que celui des ailes post\u00e9rieures pr\u00e9sente un lavis argent\u00e9 de grandeur variable.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/lepidopteres\/tabac-despagne\/",
@@ -265,6 +297,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "2a", "2b", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Robert-le-Diable",
+        "scientific_name": "Polygonia c-album (Linnaeus, 1758)",
+        "cd_nom": "53759",
         "family": "lepidopteres",
         "description": "Le Robert-le-Diable est facilement reconnaissable avec ses ailes tr\u00e8s d\u00e9coup\u00e9es. Le dessus des ailes pr\u00e9sente un fond orange vif, des marques brunes et des taches claires en bordure. Le revers est marbr\u00e9 de brun et pr\u00e9sente une tache blanche en forme de C. Repli\u00e9, le papillon ressemble \u00e0 une feuille morte.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/lepidopteres\/robert-le-diable\/",
@@ -281,6 +315,8 @@
     "departements": ["01", "03", "04", "05", "06", "07", "08", "10", "13", "14", "15", "16", "17", "19", "21", "22", "23", "25", "26", "29", "2a", "2b", "35", "38", "39", "42", "43", "44", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "61", "62", "63", "69", "70", "71", "72", "73", "74", "79", "83", "84", "85", "86", "87", "88", "89", "90"],
     "taxon": {
         "title": "Petit Mars changeant",
+        "scientific_name": "Apatura ilia ([Denis & Schifferm\u00fcller], 1775)",
+        "cd_nom": "53783",
         "family": "lepidopteres",
         "description": "Contrairement \u00e0 son nom, le Petit Mars changeant est un grand papillon, de 6 \u00e0 7 cm d'envergure pour le m\u00e2le. On le reconnait au dessus de ses ailes de couleur marron \u00e0 reflets violets\/bleu m\u00e9tallique orn\u00e9 d'une bande blanche en forme de V. Il poss\u00e8de un ocelle orange centr\u00e9 de noir sur les ailes ant\u00e9rieure et post\u00e9rieure. Le revers de l'aile ant\u00e9rieure est marron tandis que le revers de l'aile post\u00e9rieure est marron terne avec un ocelle orange centr\u00e9 de noir (comme le Grand Mars changeant).",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/lepidopteres\/petit-mars-changeant\/",
@@ -297,6 +333,8 @@
     "departements": ["01", "03", "07", "08", "10", "11", "15", "18", "22", "24", "26", "28", "29", "30", "33", "34", "35", "36", "37", "38", "40", "41", "42", "43", "44", "45", "47", "48", "49", "51", "52", "53", "54", "55", "56", "57", "63", "64", "66", "67", "68", "69", "72", "73", "74", "85", "88"],
     "taxon": {
         "title": "Grand Mars changeant",
+        "scientific_name": "Apatura iris (Linnaeus, 1758)",
+        "cd_nom": "53786",
         "family": "lepidopteres",
         "description": "D'une envergure de 7 \u00e0 8 cm, le Grand Mars changeant se reconnait \u00e0 la couleur brune de ses ailes, travers\u00e9es d'une bande claire sur les post\u00e9rieures et de quelques taches claires sur les ant\u00e9rieures.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/lepidopteres\/grand-mars-changeant\/",
@@ -313,6 +351,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "2a", "2b", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Aurore",
+        "scientific_name": "Anthocharis cardamines (Linnaeus, 1758)",
+        "cd_nom": "54451",
         "family": "lepidopteres",
         "description": "Petit papillon blanc de 4 cm d'envergure, l'Aurore poss\u00e8de un dimorphisme sexuel tr\u00e8s marqu\u00e9 : le m\u00e2le est tr\u00e8s facile \u00e0 reconnaitre avec la grande tache orang\u00e9e qui occupe toute la moiti\u00e9 de l'aile ant\u00e9rieure blanche \u00e0 bordure noire. La femelle, elle, ne poss\u00e8de pas cette coloration orang\u00e9e. Chez les deux sexes, le revers des ailes est blanc tachet\u00e9 de verd\u00e2tre.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/lepidopteres\/aurore\/",
@@ -329,6 +369,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Orvet fragile",
+        "scientific_name": "Anguis fragilis (Linnaeus, 1758)",
+        "cd_nom": "77490",
         "family": "reptiles_amphibiens",
         "description": "Les m\u00e2les Orvet mesure de 30 \u00e0 40 cm tandis que les femelles atteignent jusqu'\u00e0 50 cm. L'Orvet fragile poss\u00e8de une petite t\u00eate \u00e0 museau conique et arrondi et sa peau est d'aspect lisse et brillant. La couleur de l'animal \u00e9volue au cours de sa vie : le dos varie du jaune au rouge\u00e2tre, parfois bleut\u00e9 ou noir uni, et peut pr\u00e9senter de grandes bandes sombres.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/reptiles-amphibiens\/lorvet-fragile\/",
@@ -345,6 +387,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "2a", "2b", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Salamandre tachet\u00e9e",
+        "scientific_name": "Salamandra salamandra (Linnaeus, 1758)",
+        "cd_nom": "92",
         "family": "reptiles_amphibiens",
         "description": "La salamandre tachet\u00e9e est facilement reconnaissable. D'une longueur comprise entre 12 \u00e0 20 cm, sa peau est noire, lisse et luisante avec des bandes ou taches jaunes \u00e0 oranges irr\u00e9guli\u00e8res, plus ou moins larges. Le ventre est plus clair, gris\u00e2tre, parfois piquet\u00e9 de points clairs. La t\u00eate de la salamandre tachet\u00e9e est large, avec de grosses glandes paroto\u00efdes (glandes qui produisent un venin servant \u00e0 tuer ou dissuader les pr\u00e9dateurs) \u00e0 l'arri\u00e8re bien visibles. Plus particuli\u00e8rement, son museau est arrondi et ses yeux saillants tr\u00e8s noirs.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/reptiles-amphibiens\/salamandre-tachetee\/",
@@ -361,6 +405,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "18", "19", "21", "23", "25", "26", "27", "28", "30", "31", "32", "34", "36", "37", "38", "39", "41", "42", "43", "45", "46", "48", "50", "51", "52", "54", "55", "57", "58", "59", "60", "61", "62", "63", "65", "66", "67", "68", "69", "70", "71", "73", "74", "75", "76", "77", "78", "80", "81", "82", "83", "84", "87", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Escargot de Bourgogne",
+        "scientific_name": "Helix pomatia (Linnaeus, 1758)",
+        "cd_nom": "64260",
         "family": "gasteropodes",
         "description": "La coquille de l'Escargot de Bourgogne \u00e0 un diam\u00e8tre de 30 \u00e0 50 mm pour une hauteur de 30 \u00e0 45 mm. Elle pr\u00e9sente 5 \u00e0 6 tours de spires (une boucle ouverte qui annonce ou amorce un mouvement de spirale) et une ouverture de grande taille dont le rebord est \u00e9paissi. La couleur est g\u00e9n\u00e9ralement blanc-cr\u00e8me avec des stries fines brun fonc\u00e9 et des bandes de croissance visibles. Des bandes plus color\u00e9es et dans le sens d'enroulement de la coquille sont parfois pr\u00e9sentes.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/gasteropodes\/escargot-de-bourgogne\/",
@@ -377,6 +423,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "15", "18", "21", "26", "28", "30", "31", "32", "34", "36", "37", "38", "41", "42", "43", "45", "46", "48", "51", "52", "54", "55", "57", "58", "59", "60", "62", "63", "65", "66", "67", "68", "69", "71", "73", "74", "75", "77", "78", "80", "81", "82", "83", "84", "88", "89", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Soucoupe commune",
+        "scientific_name": "Helicigona lapicida (Linnaeus, 1758)",
+        "cd_nom": "64266",
         "family": "gasteropodes",
         "description": "La coquille de la Soucoupe commune \u00e0 un diam\u00e8tre de 12 \u00e0 20 mm pour une hauteur de 6 \u00e0 9 mm. On reconnait cet escargot \u00e0 sa coquille caract\u00e9ristique en forme de soucoupe : ronde, ramass\u00e9e et solide, aplatie du haut vers le bas, peu transparente et mate, \u00e0 spires \u00e9troites coniques et \u00e9largies. Les parois sont \u00e9paisses avec des stries peu marqu\u00e9es et un aspect granuleux clairement reconnaissable. La coloration de la Soucoupe commune peut varier du gris clair \u00e0 une teinte corne avec des taches irr\u00e9guli\u00e8res et obliques marron brun.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/gasteropodes\/soucoupe-commune\/",
@@ -393,6 +441,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Aromie musqu\u00e9e",
+        "scientific_name": "Aromia moschata (Linnaeus, 1758)",
+        "cd_nom": "12346",
         "family": "capricornes",
         "description": "De 15 et 32 mm de long, l'Aromie musqu\u00e9e se reconna\u00eet \u00e0 ses \u00e9lytres granuleux de couleurs m\u00e9talliques, allant du vert d'airain au violet en passant par le cuivr\u00e9 ou le bleu. Le pronotum (segment du thorax situ\u00e9 derri\u00e8re la t\u00eate) est parfois rouge. Les antennes du m\u00e2le d\u00e9passent les \u00e9lytres alors que celles des femelles sont l\u00e9g\u00e8rement plus courtes. Les tibias des pattes post\u00e9rieures sont fortement aplatis et plus ou moins courb\u00e9s.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/capricornes\/aromie-musquee\/",
@@ -409,6 +459,8 @@
     "departements": ["01", "02", "07", "08", "10", "11", "14", "18", "21", "22", "26", "27", "28", "29", "30", "34", "35", "36", "37", "38", "41", "42", "45", "48", "50", "51", "52", "54", "55", "56", "57", "58", "59", "60", "61", "62", "66", "69", "71", "73", "74", "75", "76", "77", "78", "80", "88", "89", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Grand capricorne",
+        "scientific_name": "Cerambyx cerdo (Linnaeus, 1758)",
+        "cd_nom": "12336",
         "family": "capricornes",
         "description": "L'insecte est noir et brun-rouge\u00e2tre \u00e0 l'arri\u00e8re. Le m\u00e2le mesure de 25 \u00e0 50 mm de long (corps) avec des antennes atteignant 80 mm. La femelle est plus petite, moins \u00e9lanc\u00e9e et ses antennes sont plus courtes que le corps. Le Grand capricorne pr\u00e9sente un pronotum (segment du thorax situ\u00e9 derri\u00e8re la t\u00eate) plus \u00e9troit \u00e0 l'avant qu'\u00e0 l'arri\u00e8re, avec de profondes rides transverses et une forte pointe conique de chaque c\u00f4t\u00e9. Les \u00e9lytres sont r\u00e9tr\u00e9cis vers l'arri\u00e8re, et plus fortement granuleux \u00e0 l'avant.\n\n",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/capricornes\/grand-capricorne\/",
@@ -425,6 +477,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "15", "16", "17", "18", "19", "21", "23", "24", "25", "26", "28", "30", "31", "32", "33", "34", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "51", "52", "53", "54", "55", "57", "58", "60", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Petit capricorne",
+        "scientific_name": "Cerambyx scopolii  (Fuessly, 1775)",
+        "cd_nom": "12338",
         "family": "capricornes",
         "description": "De 17 \u00e0 28 mm de long, le Petit capricorne est de couleur noir. Le pronotum (segment du thorax situ\u00e9 derri\u00e8re la t\u00eate) et les \u00e9lytres sont granuleux d'aspect, \u00e0 la diff\u00e9rence du Grand capricorne. Les bords des \u00e9lytres sont pratiquement parall\u00e8les, et leur extr\u00e9mit\u00e9 est arrondie. Leurs antennes mesurent environ deux fois la longueur du corps chez le m\u00e2le, et un peu moins que cette longueur chez la femelle.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/capricornes\/petit-capricorne\/",
@@ -441,6 +495,8 @@
     "departements": ["04", "05", "06", "09", "12", "13", "16", "17", "31", "32", "46", "54", "55", "57", "59", "62", "65", "79", "81", "82", "83", "84", "86", "88"],
     "taxon": {
         "title": "Lepture tachet\u00e9",
+        "scientific_name": "Rutpela maculata (Poda, 1761)",
+        "cd_nom": "223152",
         "family": "capricornes",
         "description": "Son corps (15 \u00e0 17 mm de long) est allong\u00e9 et se r\u00e9tr\u00e9cit vers l'arri\u00e8re. Il est de couleur jaune marqu\u00e9 de 4 bandes transversales noires variables : les 2 premi\u00e8res peuvent former des taches ou des points isol\u00e9s. La t\u00eate et le pronotum (segment du thorax situ\u00e9 derri\u00e8re la t\u00eate) sont noirs, les antennes sont noires avec des lignes jaunes.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/capricornes\/lepture-tachete\/",
@@ -457,6 +513,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "2a", "2b", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Bulime z\u00e9br\u00e9",
+        "scientific_name": "Zebrina detrita (O.F. M\u00fcller, 1774)",
+        "cd_nom": "348303",
         "family": "gasteropodes",
         "description": "La coquille du Bulime z\u00e9br\u00e9 \u00e0 un diam\u00e8tre de 10 mm pour une hauteur de 18 mm. Elle est ovale, \u00e9paisse et porte des z\u00e9brures brun\u00e2tres. Sa couleur va de blanch\u00e2tre \u00e0 cr\u00e8me.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/gasteropodes\/bulime-zebre\/",
@@ -473,6 +531,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "2a", "2b", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Scarab\u00e9e rhinoc\u00e9ros europ\u00e9en",
+        "scientific_name": "Oryctes nasicornis (Linnaeus, 1758)",
+        "cd_nom": "10964",
         "family": "scarabeides",
         "description": "Avec une longueur de 20 \u00e0 40 mm, le Scarab\u00e9e rhinoc\u00e9ros europ\u00e9en est l'un des plus gros col\u00e9opt\u00e8res qui se rencontrent en France ! Il est de couleur brun rouge\u00e2tre ou ch\u00e2tain plus ou moins fonc\u00e9 et d'aspect verniss\u00e9. Le dessous du corps et les jambes sont couverts de longs poils roux. Le dimorphisme sexuel est tr\u00e8s marqu\u00e9 chez cette esp\u00e8ce : le m\u00e2le se reconna\u00eet facilement par sa longue corne sur le devant de la t\u00eate et recourb\u00e9e en arri\u00e8re. La femelle est d\u00e9pourvue de corne et poss\u00e8de un simple tubercule \u00e0 la place.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/scarabeides\/scarabee-rhinoceros\/",
@@ -489,6 +549,8 @@
     "departements": ["01", "02", "04", "05", "06", "07", "11", "13", "14", "16", "17", "22", "24", "26", "27", "29", "2a", "2b", "30", "33", "34", "35", "38", "40", "42", "44", "47", "48", "49", "50", "53", "56", "59", "60", "61", "62", "64", "66", "69", "72", "73", "74", "76", "79", "80", "83", "84", "85", "86"],
     "taxon": {
         "title": "Hanneton des pins",
+        "scientific_name": "Polyphylla fullo (Linnaeus, 1758)",
+        "cd_nom": "10881",
         "family": "scarabeides",
         "description": "Le Hanneton est un gros insecte, mesurant entre 32 et 40 mm. Il est facilement reconnaissable \u00e0 ses couleurs et aux antennes chez le m\u00e2le. Sa t\u00eate est recouverte de petites \u00e9cailles blanches. Les antennes, les pattes ainsi que les bords de son corselet (partie du thorax) sont de couleur brune. Ses \u00e9lytres ont la particularit\u00e9 d'\u00eatre parsem\u00e9s de points et de taches blanches irr\u00e9guli\u00e8res. Son \u00e9cusson (petite plaque plac\u00e9e \u00e0 la base des \u00e9lytres, \u00e0 l'origine de la suture) est en forme de c\u0153ur et est marqu\u00e9 de deux taches blanches. Sa face ventrale est couverte de poils longs, fins, d'un gris fauve. Le m\u00e2le dispose d'\u00e9normes antennes en \u00e9ventail compos\u00e9es de sept feuillets. Ces derniers lui servent \u00e0 \u00ab sentir \u00bb les odeurs d\u00e9gag\u00e9es par les femelles, dont les antennes sont petites et de forme ovale.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/scarabeides\/hanneton-des-pins\/",
@@ -505,6 +567,8 @@
     "departements": ["01", "03", "04", "05", "06", "07", "11", "13", "15", "18", "21", "22", "24", "25", "26", "28", "29", "2a", "2b", "30", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "47", "48", "49", "53", "56", "58", "63", "64", "66", "69", "70", "71", "72", "73", "74", "83", "84", "85", "89", "90"],
     "taxon": {
         "title": "Faux-Hydne g\u00e9latineux",
+        "scientific_name": "Pseudohydnum gelatinosum (Scop. : Fr.) P. Karsten",
+        "cd_nom": "44138",
         "family": "champignons",
         "description": "Le chapeau du faux-hydne g\u00e9latineux mesure de 3 \u00e0 7 cm et est de couleur brun gris\u00e2tre p\u00e2le. Il est en forme d'\u00e9ventail avec les bords (\u00e9galement appel\u00e9s la marge) fins. Comme son nom l'indique, la chair du faux-hydne a une texture g\u00e9latineuse \u00e0 caoutchouteuse.\n\nCe champignon ne poss\u00e8de pas de lames sous le chapeau. Elles sont remplac\u00e9es par des aiguillons blancs \u00e9pais et assez serr\u00e9s, de consistance g\u00e9latineuse et d\u00e9bordant parfois jusque sur la marge. Le pied du champignon est inexistant ou tr\u00e8s court et translucide.\n\nLe faux-hydne g\u00e9latineux se d\u00e9veloppe principalement en amas de quelques individus plus ou moins imbriqu\u00e9s.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/champignons\/faux-hydne-gelatineux\/",
@@ -521,6 +585,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "2a", "2b", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Auriculaire m\u00e9sent\u00e9rique",
+        "scientific_name": "Auricularia mesenterica (Dicks. : Fr.) Pers.",
+        "cd_nom": "41575",
         "family": "champignons",
         "description": "L' Auriculaire m\u00e9sent\u00e9rique se reconna\u00eet \u00e0 son chapeau de 5 \u00e0 15 cm de largeur et de 0,3 \u00e0 0,5 cm d'\u00e9paisseur, et en forme de disque. Celui-ci est h\u00e9riss\u00e9 de poils gris\u00e2tres et les bords sont lob\u00e9s de couleur grise. La face inf\u00e9rieure du chapeau est pliss\u00e9e et de couleur brune ou pourpre.\n\nLa chair du champignon est brune et de consistance g\u00e9latineuse et \u00e9lastique. Elle durcit en vieillissant.\n\nL'auriculaire m\u00e9sent\u00e9rique entame sa phase de d\u00e9veloppement plut\u00f4t en automne.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/champignons\/auriculaire-mesenterique\/",
@@ -537,6 +603,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "2a", "2b", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Polypore soufr\u00e9",
+        "scientific_name": "Laetiporus sulphureus (Bull. : Fr.) Murrill",
+        "cd_nom": "43216",
         "family": "champignons",
         "description": "Pouvant atteindre jusqu'\u00e0 50 cm de largeur, le Polypore soufr\u00e9 poss\u00e8de plusieurs chapeaux qui se superposent les uns sur les autres en forme d'\u00e9ventail. Sa face sup\u00e9rieure est de couleur jaune ros\u00e9 \u00e0 jaune orang\u00e9, avec une marge (le bord du chapeau) ondul\u00e9e. Sa face inf\u00e9rieure est de couleur jaune soufre, d'o\u00f9 son nom. \nSa chair est \u00e9paisse d'1 \u00e0 5 cm, de couleur blanche et charnue \u00e0 l'\u00e9tat frais. En revanche, elle devient cassante lorsque le champignon s\u00e8che. Les pores, situ\u00e9s sous le chapeau \u00e9mettent souvent des gouttelettes de sudation.\nLe polypore soufr\u00e9 se reconna\u00eet gr\u00e2ce \u00e0 son odeur forte et piquante.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/champignons\/polypore-soufre\/",
@@ -553,6 +621,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "2a", "2b", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "P\u00e9zize vert-de-gris",
+        "scientific_name": "Chlorociboria aeruginescens (Nylander) Kanouse",
+        "cd_nom": "46239",
         "family": "champignons",
         "description": "Ce champignon de couleur bleu-vert vif poss\u00e8de un chapeau mesurant de 2 \u00e0 10 mm. Celui-ci est en forme de coupe irr\u00e9guli\u00e8re et d'aspect lisse. Les bords, ou marges, du chapeau peuvent \u00eatre ondul\u00e9es et devenir jaune lorsque le champignon est vieux.\n\nSon pied est souvent court, excentr\u00e9 et de m\u00eame couleur ou l\u00e9g\u00e8rement plus fonc\u00e9 que le chapeau.\n\nLe p\u00e9zize vert-de-gris ne se d\u00e9veloppe qu'en amas de plusieurs individus, parfois nombreux.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/champignons\/pezize-vert-de-gris\/",
@@ -569,6 +639,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "2a", "2b", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Daldanie concentrique",
+        "scientific_name": "Daldinia concentrica (Bolton ex Fries) Cesati & de Notaris",
+        "cd_nom": "46706",
         "family": "champignons",
         "description": "La Daldinie concentrique est de forme sph\u00e9rique (de globuleux \u00e0 vaguement bossel\u00e9). Elle se reconna\u00eet \u00e0 son chapeau tr\u00e8s dur de 5 \u00e0 7 cm de diam\u00e8tre. Il est de couleur vari\u00e9, allant du marron-violac\u00e9 au noir brillant.\n\nLa chair du chapeau est form\u00e9e par des zones concentriques claires altern\u00e9es avec des zones noir\u00e2tres.\n\nEn vieillissant, ce champignon a le m\u00eame aspect qu'un morceau de charbon.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/champignons\/daldinie-concentrique\/",
@@ -585,6 +657,8 @@
     "departements": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "2a", "2b", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Xylaire du bois",
+        "scientific_name": "Xylaria hypoxylon (Linnaeus ex Fries) Greville",
+        "cd_nom": "50337",
         "family": "champignons",
         "description": "La Xylaire du bois se reconna\u00eet \u00e0 ses petits rameaux de 2 \u00e0 8 cm de hauteur. Ces rameaux sont aplatis et couverts d'une poussi\u00e8re blanche. Ils sont de couleur blanch\u00e2tre et noir \u00e0 la base, puis deviennent progressivement noir en atteignant la maturit\u00e9. Ces rameaux sont appel\u00e9s des stromas et leur forme peut faire penser \u00e0 certains lichens ou \u00e0 des bois de cervid\u00e9s. Les pieds des stromas sont eux de couleur noir et finement duveteux.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/champignons\/xylaire-du-bois\/",
@@ -601,6 +675,8 @@
     "departements": ["02", "03", "04", "05", "06", "08", "09", "10", "11", "12", "13", "15", "16", "17", "21", "24", "2a", "2b", "30", "31", "32", "33", "34", "40", "43", "46", "47", "48", "51", "52", "54", "55", "57", "58", "59", "60", "62", "63", "64", "65", "66", "71", "75", "77", "78", "79", "80", "81", "82", "83", "84", "86", "88", "89", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Strangalie \u00e0 forme de capricorne",
+        "scientific_name": "Pachytodes cerambyciformis (Schrank, 1781)",
+        "cd_nom": "12261",
         "family": "capricornes",
         "description": "De 7 \u00e0 12 mm de long, la Strangalie \u00e0 forme de capricorne est de forme plus terne et trapue que les autres leptures, tel le Lepture tachet\u00e9. Le thorax, de couleur noir, est court, globuleux et dens\u00e9ment recouvert de poils blonds.\n\nSes \u00e9lytres mats et peu velus (contrairement au thorax) sont \u00e0 dessins noirs et jaunes variables mais la tache m\u00e9diane n'atteint pas la ligne de suture des \u00e9lytres.\n\nLa larve se d\u00e9veloppe dans les racines moisies des feuillus ou des conif\u00e8res et se nymphose dans le sol humide. Son cycle de vie est de 2 ans.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/capricornes\/strangalie-a-forme-de-capricorne\/",
@@ -617,6 +693,8 @@
     "departements": ["02", "03", "04", "05", "06", "08", "09", "10", "11", "12", "13", "15", "24", "2a", "2b", "30", "31", "32", "33", "34", "40", "43", "46", "47", "48", "51", "52", "60", "63", "64", "65", "66", "80", "81", "82", "83", "84"],
     "taxon": {
         "title": "Clyte b\u00e9lier",
+        "scientific_name": "Clytus arietis (Linnaeus, 1758)",
+        "cd_nom": "12380",
         "family": "capricornes",
         "description": "De 8 \u00e0 14 mm de long, le Clyte b\u00e9lier se reconna\u00eet \u00e0 ses \u00e9lytres tr\u00e8s courts de couleur noir alternant avec des bandes jaun\u00e2tres. Son pronotum (segment du thorax situ\u00e9 derri\u00e8re la t\u00eate) est \u00e9galement noir et de forme carr\u00e9e.\n\nSes pattes sont longues de couleur jaune-orang\u00e9, avec les f\u00e9murs plus sombres.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/capricornes\/clyte-belier\/",
@@ -633,6 +711,8 @@
     "departements": ["01", "02", "04", "05", "06", "07", "09", "11", "12", "13", "14", "18", "22", "26", "27", "28", "29", "2a", "2b", "30", "31", "32", "34", "35", "36", "37", "38", "41", "42", "45", "46", "48", "50", "56", "59", "60", "61", "62", "65", "66", "67", "68", "69", "73", "74", "75", "76", "77", "78", "80", "81", "82", "83", "84", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "El\u00e9gante stri\u00e9e",
+        "scientific_name": "Pomatias elegans (O.F. M\u00fcller, 1774)",
+        "cd_nom": "62032",
         "family": "gasteropodes",
         "description": "La coquille de l'\u00c9l\u00e9gante stri\u00e9e \u00e0 un diam\u00e8tre de 10 mm pour une hauteur de 15 mm. Elle est conique avec une ouverture bien ronde dont le rebord est \u00e9paissi. Le motif de la coquille ressemble \u00e0 un treillis, bien visible \u00e0 la loupe.\n\nL'opercule (membrane corn\u00e9e ou calcaire attach\u00e9e au pied qui sert \u00e0 refermer l'entr\u00e9e de la coquille) de l'animal est bien visible lorsqu'il est rentre\u0301 dans sa coquille. Le pied est divis\u00e9 longitudinalement en deux parties qui se d\u00e9placent s\u00e9par\u00e9ment ce qui accentue la lenteur de ses d\u00e9placements !\n\nL'\u00c9l\u00e9gante stri\u00e9e dispose d'un mufle, une sorte de trompe, qui le diff\u00e9rencie des autres escargots.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/gasteropodes\/elegante-striee\/",
@@ -649,6 +729,8 @@
     "departements": ["01", "04", "05", "06", "07", "11", "13", "26", "2a", "2b", "30", "34", "38", "42", "48", "66", "69", "73", "74", "83", "84"],
     "taxon": {
         "title": "Maillot cendr\u00e9",
+        "scientific_name": "Solatopupa similis (Brugui\u00e8re, 1792)",
+        "cd_nom": "162979",
         "family": "gasteropodes",
         "description": "La taille de sa coquille mesure de 3,5 \u00e0 14 mm de hauteur pour un diam\u00e8tre de 1,5 \u00e0 4 mm. Elle est cylindrique en forme de fuseau et de coloration grise cendr\u00e9e (c'est une couleur typique des emplacements calcaires). Elle pr\u00e9sente des spires assez aigu\u00eb, finement stri\u00e9e obliquement.\n\nLe maillot cendr\u00e9 dispose de dents \u00e0 l'ouverture (orifice d'entr\u00e9e de la coquille) lui permettant de se prot\u00e9ger des scolopendres.\n\nParfois aussi sur des massifs de plantes (thym, sarriette).",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/gasteropodes\/maillot-cendre\/",
@@ -665,6 +747,8 @@
     "departements": ["01", "02", "03", "07", "08", "09", "10", "11", "12", "14", "15", "16", "17", "18", "19", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95"],
     "taxon": {
         "title": "Lamie tisserand",
+        "scientific_name": "Lamia textor (Linnaeus, 1758)",
+        "cd_nom": "11777",
         "family": "capricornes",
         "description": "De 15 \u00e0 32 mm de long, le Lamie tisserand est enti\u00e8rement de couleur noir et son corps (\u00e9lytres + pronotum) pr\u00e9sente une texture granuleuse. Le pronotum (segment du thorax situ\u00e9 derri\u00e8re la t\u00eate) est orn\u00e9 de deux pointes lat\u00e9rales et les \u00e9lytres sont recouverts d'une fine pubescence jaune.\nBien que normalement ail\u00e9, et donc apte au vol, le Lamie tisserand ne vole quasiment pas, il se d\u00e9place en marchant.",
         "url": "http:\/\/biodiversite-foret.fr\/les-especes-2\/capricornes\/lamie-tisserand\/",
