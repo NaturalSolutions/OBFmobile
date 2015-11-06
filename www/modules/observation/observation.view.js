@@ -20,9 +20,9 @@ var Backbone = require('backbone'),
 var Layout = Marionette.LayoutView.extend({
     header: {
         titleKey: 'observation'
-        /*buttons: {
-            left: ['back']
-        }*/
+            /*buttons: {
+                left: ['back']
+            }*/
     },
     template: require('./observation.tpl.html'),
     className: 'page observation ns-full-height',
@@ -57,13 +57,13 @@ var Layout = Marionette.LayoutView.extend({
         var self = this;
 
         var isSaved = (self.observationModel.get('missionId') && self.observationModel.get('departement'));
-        if ( !isSaved )
+        if (!isSaved)
             self.setFormStatus('unsaved');
         else {
             self.setFormStatus('saved');
         }
 
-        if ( self.observationModel.get('shared') > 0 )
+        if (self.observationModel.get('shared') > 0)
             self.$el.addClass('read-only');
     },
 
@@ -77,7 +77,7 @@ var Layout = Marionette.LayoutView.extend({
         var self = this;
 
         var $body = $('body');
-        var slideshow = new (Slideshow.getClass())({
+        var slideshow = new(Slideshow.getClass())({
             model: self.model
         });
         $body.append(slideshow.$el);
@@ -103,12 +103,12 @@ var Layout = Marionette.LayoutView.extend({
 
     setFormStatus: function(status) {
         var self = this;
-        
-        if ( status == 'unsaved' )
+
+        if (status == 'unsaved')
             self.$el.alterClass('form-status-*', 'form-status-unsaved');
         else {
             var shared = self.observationModel.get('shared') || 0;
-            self.$el.alterClass('form-status-*', 'form-status-shared-'+shared);
+            self.$el.alterClass('form-status-*', 'form-status-shared-' + shared);
         }
     },
 
@@ -196,9 +196,9 @@ var Layout = Marionette.LayoutView.extend({
         var self = this;
         e.preventDefault();
 
-        if ( self.$el.hasClass('form-status-unsaved') )
+        if (self.$el.hasClass('form-status-unsaved'))
             self.saveObs();
-        else if ( self.$el.hasClass('form-status-shared-0') )
+        else if (self.$el.hasClass('form-status-shared-0'))
             self.sendObs();
     },
 
@@ -222,7 +222,7 @@ var Layout = Marionette.LayoutView.extend({
     sendObs: function(e) {
         var self = this;
 
-        if ( self.$el.hasClass('sending') || self.observationModel.get('shared') == 1 )
+        if (self.$el.hasClass('sending') || self.observationModel.get('shared') == 1)
             return false;
 
         self.$el.addClass('sending');
@@ -241,43 +241,60 @@ var Layout = Marionette.LayoutView.extend({
 
         //data expected by the server
         var data = {
-            'title': 'mission_'+ self.observationModel.get('missionId') +'_'+ self.observationModel.get('date'),
-            'date': self.date,
-            'departement': self.observationModel.get('departement'),
-            'missionId': [{
-                "und": {
-                    "value": self.observationModel.get('missionId')
-                }
-            }]
+            type: 'observation',
+            title: 'mission_' + self.observationModel.get('missionId') + '_' + self.observationModel.get('date'),
+            field_observation_timestamp: {
+                und: [{
+                    value: self.observationModel.get('date')
+                }]
+            },
+            field_observation_code_dept: {
+                und: [{
+                    value: self.observationModel.get('departement')
+                }]
+            },
+            field_observation_id_mission: {
+                und: [{
+                    value: self.observationModel.get('missionId')
+                }]
+            },
+            field_cd_nom: {
+                und: self.observationModel.get('mission').get('taxon').cd_nom
+            }
         };
-        var virginModel = new (ObsModel.model.getClass())();
-        var query = {ajaxSync: true};
+        var query = {
+            url: config.apiUrl + '/node.json',
+            type: 'POST',
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            error: function(error) {
+                self.$el.removeClass('sending');
+                Main.getInstance().unblockUI();
+                Login.openDialog({
+                    message: 'Vous devez être connecté pour transmettre votre observation.'
+                }).then(function() {
+                    Dialog.alert('Vous êtes connecté vous pouvez transmettre votre obs');
+                });
+            },
+            success: function(response) {
+                self.observationModel.set({
+                    'externalId': response.nid
+                }).save().done(function() {
+                    self.sendPhoto();
+                });
+            }
+        };
 
         self.session.getCredentials(query).then(function() {
-            virginModel.save(data, query)
-                .then(function(response) {
-                    self.observationModel.set({
-                        'externalId': response.nid
-                    }).save().done(function() {
-                        self.sendPhoto();
-                    });
-                }, function(error) {
-                    self.$el.removeClass('sending');
-                    Main.getInstance().unblockUI();
-                    Login.openDialog({
-                        message: 'Vous devez être connecté pour transmettre votre observation.'
-                    }).then(function() {
-                        Dialog.alert('Vous êtes connecté vous pouvez transmettre votre obs');
-                    });
-                });
+            $.ajax(query);
         });
     },
 
     //TODO if fields are not update departement and mission don't exist
     sendPhoto: function() {
         var self = this;
-        
-        if ( window.cordova ) {
+
+        if (window.cordova) {
             var nbPhoto = (this.observationModel.get('photos').length) - 1;
             var Adfd = [];
             this.observationModel.get('photos').forEach(function(p, key) {
