@@ -98,6 +98,8 @@ function init() {
                                     difficulty: missionData.difficulty,
                                     taxon: {
                                         title: missionData.taxon.title,
+                                        scientific_name: missionData.taxon.scientific_name,
+                                        cd_nom: missionData.taxon.cd_nom,
                                         family: missionData.taxon.family,
                                         description: missionData.taxon.description,
                                         url: missionData.taxon.url,
@@ -187,6 +189,7 @@ function init() {
                 Session.model.getInstance().set({
                     'isAuth': true
                 });
+                // $('body').addClass('user-logged');
             }
             deferred.resolve();
         });

@@ -149,9 +149,9 @@
     },
     "sidenav": {
         "btns": {
-            "login": "Se connecter",
+            "login": "se connecter",
             "logout": "Se déconnecter",
-            "profile": "S'inscrire",
+            "profile": "Mon profil",
             "settings": "Paramètres",
             "about": "A propos",
             "help": "Aide",

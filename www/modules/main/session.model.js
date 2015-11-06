@@ -14,7 +14,9 @@ var SessionModel = Backbone.Model.extend({
         authStatus: ''
     },
     initialize: function() {
-
+        this.on('change:isAuth', function(){
+            $('body').toggleClass('user-logged user-unlogged');
+        });
     },
 
     getToken: function() {
@@ -63,7 +65,6 @@ var SessionModel = Backbone.Model.extend({
             }
         };
         self.getCredentials(query).then(function() {
-            console.log(query);
             $.ajax(query);
         });
         return dfd;
@@ -135,12 +136,14 @@ var SessionModel = Backbone.Model.extend({
                 console.log(response);
                 self.set('isAuth', false);
                 self.set('authStatus', 'unlogged');
+                // $('body').removeClass('user-logged');
             }
         };
         this.getCredentials(query).then(function() {
             $.ajax(query);
         });
-    }
+    },
+
 });
 
 var modelInstance = null;

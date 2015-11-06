@@ -5,6 +5,7 @@ var Backbone = require('backbone'),
     header = require('../header/header'),
     User = require('../profile/user.model'),
     $ = require('jQuery'),
+    Router = require('../routing/router'),
     Session = require('../main/session.model');
 
 var View = Marionette.LayoutView.extend({
@@ -12,14 +13,15 @@ var View = Marionette.LayoutView.extend({
     className: 'sidenav',
     events: {
         'click': 'hide',
-        'click .btn-logout': 'onLogoutClick'
+        'click .btn-logout': 'onLogoutClick',
+        'click .btn-profile': 'navigateToProfile',
+        'click .btn-connexion': 'navigateToConnexion'
     },
 
     initialize: function() {
         var self = this;
 
         self.listenTo(header.getInstance(), 'btn:menu:click', self.toggleShow);
-
     },
 
     serializeData: function() {
@@ -52,6 +54,18 @@ var View = Marionette.LayoutView.extend({
     onLogoutClick: function() {
         Session.model.getInstance().logout();
     },
+
+    navigateToProfile: function() {
+        Router.getInstance().navigate('#profile', {
+            trigger: true
+        });
+    },
+
+    navigateToConnexion: function() {
+        Router.getInstance().navigate('#login', {
+            trigger: true
+        });
+    }
 
 });
 
