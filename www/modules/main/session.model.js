@@ -115,23 +115,37 @@ var SessionModel = Backbone.Model.extend({
     userExist: function(response) {
         var self = this;
         var dfd = $.Deferred();
-
-        //Find user in coll
-        var userCollection = User.collection.getInstance();
-        userCollection.fetch({
-            success: function(users) {
-                var userLogged = users.findWhere({
-                    'externId': response.user.uid
-                });
-                if (userLogged) {
-                    User.model.getInstance(userLogged);
+        // test if response.user = instance
+        if (response.user.uid === User.model.getInstance().get('externId')) {
+            dfd.resolve();
+        } else if (User.model.getInstance().get('email')) {
+            // user in base
+            User.model.clean();
+            User.model.init();
+        } else {
+            //Find user in user coll
+            var userCollection = User.collection.getInstance();
+            userCollection.fetch({
+                success: function(users) {
+                    if (users.length > 1) {
+                        var userLogged = users.findWhere({
+                            'externId': response.user.uid
+                        });
+                        if (userLogged) {
+                            // user existe in local
+                            User.model.clean();
+                            User.model.getInstance(userLogged.attributes);
+                            User.model.getInstance().id = userLogged.id;
+                        }
+                    }
+                    dfd.resolve();
+                },
+                error: function(error) {
+                    console.log(error);
+                    dfd.reject();
                 }
-                dfd.resolve();
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
+            });
+        }
         return dfd;
     },
 

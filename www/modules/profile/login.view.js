@@ -94,12 +94,16 @@ var View = Marionette.LayoutView.extend({
         var self = this;
         var dfd = $.Deferred();
         // sync user
+        //TODO manage obs etc.
         User.model.getInstance().set({
                 "lastname": _.get(response.user.field_last_name, 'und[0].value', ''),
                 "firstname": _.get(response.user.field_first_name, 'und[0].value', ''),
                 "email": response.user.mail,
                 "externId": response.user.uid,
                 "newsletter": _.get(response.user.field_newsletter, 'und[0].value', ''),
+                // "count_obs": response.count_obs,
+                // "time_forest": response.time_forest,
+                // "obs": response.obs,
             })
             .save()
             .then(function() {
