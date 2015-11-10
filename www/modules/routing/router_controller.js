@@ -28,7 +28,6 @@ module.exports = Marionette.Object.extend({
         var session = Session.model.getInstance();
         var user = User.model.getInstance();
 
-
         if (!session.get('isAuth')) {
             main.getInstance().rgMain.show(new Home({
                 name: 'home',

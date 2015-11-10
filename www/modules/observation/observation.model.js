@@ -15,7 +15,7 @@ var ObservationModel = Backbone.Model.extend({
     //     photos:[],
     //     departement: '',
     //     shared: 0,
-    //     externalId: ''
+    //     externId: ''
     // }
     defaults: {
         type: 'observation'

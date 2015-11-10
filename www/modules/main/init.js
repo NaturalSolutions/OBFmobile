@@ -147,14 +147,21 @@ function init() {
         return deferred;
     };
 
-    var getUser = function() {
+    var getUser = function(id) {
         var userCollection = User.collection.getInstance();
 
         var deferred = $.Deferred();
         userCollection.fetch({
             success: function(data) {
                 if (data.length) {
-                    User.model.init(data.at(0));
+                    if (id) {
+                        var currentUser = _.findIndex(userCollection.models, function(item) {
+                            return item.id === id;
+                        });
+                        User.model.init(data.at(currentUser));
+                    } else {
+                        User.model.init(data.at(0));
+                    }
                     deferred.resolve();
                 } else {
                     User.model.init();
@@ -170,6 +177,7 @@ function init() {
         return deferred;
     };
 
+
     var getLogs = function() {
         return Log.collection.getInstance().fetch();
     };
@@ -181,17 +189,34 @@ function init() {
     var getSessionStatus = function() {
         var deferred = $.Deferred();
 
+        var userCollection = User.collection.getInstance();
+
         //TODO test connection
         var session = Session.model.getInstance();
         var userState = session.isConnected();
+
         userState.then(function(data) {
             if (data.user.uid) {
-                Session.model.getInstance().set({
-                    'isAuth': true
+                userCollection.fetch({
+                    success: function(users) {
+                        var userLogged = users.findWhere({
+                            'externId': data.user.uid
+                        });
+                        getUser(userLogged);
+                        Session.model.getInstance().set({
+                            'isAuth': true
+                        });
+                        deferred.resolve();
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
                 });
-                // $('body').addClass('user-logged');
+            } else {
+                getUser().then(function() {
+                    deferred.resolve();
+                });
             }
-            deferred.resolve();
         });
         return deferred;
     };
@@ -205,7 +230,7 @@ function init() {
         Backbone.history.start();
     });
 
-    $.when(getI18n(), getMissions(), getDepartements(), getUser(), getObservations(), getLogs(), getSessionStatus())
+    $.when(getI18n(), getMissions(), getDepartements(), getObservations(), getLogs(), getSessionStatus())
         .done(function() {
             app.start();
         });

@@ -4,6 +4,7 @@ var Backbone = require('backbone'),
     $ = require('jquery'),
     config = require('../main/config'),
     _ = require('lodash'),
+    Router = require('../routing/router'),
     User = require('../profile/user.model');
 
 
@@ -14,7 +15,7 @@ var SessionModel = Backbone.Model.extend({
         authStatus: ''
     },
     initialize: function() {
-        this.on('change:isAuth', function(){
+        this.on('change:isAuth', function() {
             $('body').toggleClass('user-logged user-unlogged');
         });
     },
@@ -101,25 +102,36 @@ var SessionModel = Backbone.Model.extend({
                 dfd.reject(error);
             },
             success: function(response) {
-                console.log(response);
-                //UPDATE instance, model User  because if several users the user should be changed at each login
-                User.model.getInstance().set({
-                    "lastname": _.get(response.user.field_last_name, 'und[0].value', ''),
-                    "firstname": _.get(response.user.field_first_name, 'und[0].value', ''),
-                    "email": response.user.mail,
-                    "externId": response.user.uid,
-                    "newsletter": _.get(response.user.field_newsletter, 'und[0].value', '')
-                }).save().then(function() {
-                    self.set('isAuth', true);
-                    self.set('authStatus', 'logged');
-                    dfd.resolve();
-                });
+                dfd.resolve(response);
             }
         };
         self.getCredentials(query).done(function() {
             $.ajax(query);
         });
 
+        return dfd;
+    },
+
+    userExist: function(response) {
+        var self = this;
+        var dfd = $.Deferred();
+
+        //Find user in coll
+        var userCollection = User.collection.getInstance();
+        userCollection.fetch({
+            success: function(users) {
+                var userLogged = users.findWhere({
+                    'externId': response.user.uid
+                });
+                if (userLogged) {
+                    User.model.getInstance(userLogged);
+                }
+                dfd.resolve();
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
         return dfd;
     },
 
@@ -136,7 +148,9 @@ var SessionModel = Backbone.Model.extend({
                 console.log(response);
                 self.set('isAuth', false);
                 self.set('authStatus', 'unlogged');
-                // $('body').removeClass('user-logged');
+                Router.getInstance().navigate('', {
+                    trigger: true
+                });
             }
         };
         this.getCredentials(query).then(function() {

@@ -15,7 +15,7 @@ var Model = Backbone.Model.extend({
         totalTimeOnMission: 0,
         newsletter: false,
         displayHelp: true,
-        departements: [],//codes
+        departements: [], //codes
         positionEnabled: true,
         level: 1,
         palm: 0,
@@ -27,8 +27,8 @@ var Model = Backbone.Model.extend({
     url: config.coreUrl,
     get: function(attr) {
         var self = this;
-        var accessorName = 'get'+ _.capitalize(attr);
-        if ( self[accessorName] ) {
+        var accessorName = 'get' + _.capitalize(attr);
+        if (self[accessorName]) {
             return self[accessorName]();
         }
 
@@ -38,10 +38,10 @@ var Model = Backbone.Model.extend({
         var self = this;
         var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
         _.forEach(['palmName', 'timeOnMissionLevel'], function(attr) {
-            result[attr] = self['get'+ _.capitalize(attr)]();
+            result[attr] = self['get' + _.capitalize(attr)]();
         }, this);
 
-        if ( result.mission )
+        if (result.mission)
             result.mission = result.mission.toJSON();
 
         return result;
@@ -52,7 +52,7 @@ var Model = Backbone.Model.extend({
         var names = ['bronze', 'silver', 'gold'];
         var palm = self.get('palm');
 
-        return names[palm-1] || '';
+        return names[palm - 1] || '';
     },
     getTimeOnMissionLevel: function() {
         var self = this;
@@ -63,27 +63,30 @@ var Model = Backbone.Model.extend({
     computeScore: function() {
         var self = this;
         var observations = require('../observation/observation.model').collection.getInstance();
-        var shared =  observations.filter(function(obs) {
+        var obsByUid = observations.where({
+            'userId': this.id
+        });
+        var shared = obsByUid.filter(function(obs) {
             return obs.get('shared') > 0;
         });
         var nbShared = shared.length;
 
         //TODO: define rules
         var palmPad = [2, 10, 15];
-        for ( var palmPadIndex = palmPad.length-1; palmPadIndex >= 0; palmPadIndex-- ) {
-            if ( nbShared >= palmPad[palmPadIndex] ) {
-                self.set('palm', palmPadIndex+1);
+        for (var palmPadIndex = palmPad.length - 1; palmPadIndex >= 0; palmPadIndex--) {
+            if (nbShared >= palmPad[palmPadIndex]) {
+                self.set('palm', palmPadIndex + 1);
                 break;
             }
         }
-        
+
         var difficulties = _.countBy(shared, function(obs) {
             return obs.get('mission').get('difficulty');
         });
         var level = 0;
         //TODO: define rules
-        for ( var i=3; i>=1; i-- ) {
-            if ( difficulties[i] ) {
+        for (var i = 3; i >= 1; i--) {
+            if (difficulties[i]) {
                 self.set('level', i);
                 break;
             }
@@ -104,22 +107,27 @@ var collectionInstance = null;
 
 module.exports = {
     model: {
+        clean: function(instance) {
+            if (modelInstance) {
+                modelInstance.clear();
+            }
+        },
         init: function(instance) {
-            if ( modelInstance ) {
+            if (modelInstance) {
                 console.log('An instance still exists');
                 return false;
             }
             modelInstance = instance || new Model();
         },
         getInstance: function() {
-            if ( !modelInstance )
+            if (!modelInstance)
                 console.log('You must call model.setInstance first');
             return modelInstance;
         }
     },
     collection: {
         getInstance: function() {
-            if ( !collectionInstance )
+            if (!collectionInstance)
                 collectionInstance = new Collection();
             return collectionInstance;
         }

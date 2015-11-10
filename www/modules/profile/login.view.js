@@ -40,7 +40,7 @@ var View = Marionette.LayoutView.extend({
         var self = this;
         var $form = self.$el.find('form');
 
-        if ( $form.hasClass('sending') )
+        if ($form.hasClass('sending'))
             return false;
 
         self.$el.addClass('block-ui');
@@ -50,9 +50,11 @@ var View = Marionette.LayoutView.extend({
         var username = $form.find('input[name="login"]').val();
         var password = $form.find('input[name="password"]').val();
 
-        this.session.login(username, password).then(function() {
-            self.$el.removeClass('block-ui');
-            $form.removeClass('sending');
+        this.session.login(username, password).then(function(account) {
+            $.when(self.session.userExist(account), self.syncUser(account)).then(function() {
+                self.$el.removeClass('block-ui');
+                $form.removeClass('sending');
+            });
         }, function() {
             self.$el.removeClass('block-ui');
             $form.removeClass('sending');
@@ -88,9 +90,31 @@ var View = Marionette.LayoutView.extend({
         });*/
     },
 
+    syncUser: function(response) {
+        var self = this;
+        var dfd = $.Deferred();
+        // sync user
+        User.model.getInstance().set({
+                "lastname": _.get(response.user.field_last_name, 'und[0].value', ''),
+                "firstname": _.get(response.user.field_first_name, 'und[0].value', ''),
+                "email": response.user.mail,
+                "externId": response.user.uid,
+                "newsletter": _.get(response.user.field_newsletter, 'und[0].value', ''),
+            })
+            .save()
+            .then(function() {
+                self.session.set({
+                    'isAuth': true,
+                    'authStatus': 'logged'
+                });
+                dfd.resolve();
+            });
+        return dfd;
+    },
+
     onRegistrationClick: function() {
         //TODO page/popin mode
-        if ( true ) {
+        if (true) {
             this.trigger('click:registration');
         }
     },
@@ -124,7 +148,7 @@ var View = Marionette.LayoutView.extend({
                         success: function(response) {
                             if (response)
                                 dialogItself.close();
-                                self.dialogRequestNewpwSuccess();
+                            self.dialogRequestNewpwSuccess();
                         }
                     });
                 }
@@ -168,14 +192,14 @@ module.exports = {
             model: User.model.getInstance()
         });
         loginView.render();
-        var $message = $('<div><p class="lead">'+data.message+'</p></div>');
+        var $message = $('<div><p class="lead">' + data.message + '</p></div>');
         $message.append(loginView.$el);
 
         var loginDialog = Dialog.show({
             title: i18n.t('header.titles.login'),
             message: $message,
             onhide: function(dialog) {
-                if ( state == 'login' && !session.get('isAuth') ) {
+                if (state == 'login' && !session.get('isAuth')) {
                     session.off('change:isAuth', onAuthChange);
                     dfd.reject();
                 }
@@ -187,10 +211,11 @@ module.exports = {
                     dfd.reject();*/
             }
         });
+
         function onAuthChange() {
             console.log('onAuthChange', session);
             loginDialog.close();
-            if ( session.get('isAuth') )
+            if (session.get('isAuth'))
                 dfd.resolve();
         }
         session.once('change:isAuth', onAuthChange);

@@ -41,6 +41,7 @@ var Layout = Marionette.LayoutView.extend({
         this.observationModel.on("change:photos", this.render, this);
         this.observationModel.on("change:shared", this.render, this);
         this.session = Session.model.getInstance();
+        this.user = User.model.getInstance();
     },
 
     serializeData: function() {
@@ -184,7 +185,7 @@ var Layout = Marionette.LayoutView.extend({
     addPhoto: function(fe, extId) {
         var newValue = {
             'url': fe || '',
-            'externalId': extId || ''
+            'externId': extId || ''
         };
         this.observationModel.get('photos')
             .push(newValue);
@@ -204,6 +205,7 @@ var Layout = Marionette.LayoutView.extend({
 
     saveObs: function() {
         var self = this;
+
         var $form = self.$el.find('form.infos');
         var missionId = $form.find('*[name="missionId"]').val();
         /*var missions = mission.collection.getInstance();
@@ -211,6 +213,7 @@ var Layout = Marionette.LayoutView.extend({
             srcId: missionId
         });*/
         self.observationModel.set({
+            userId: this.user.get('id'),
             missionId: missionId,
             //mission: mission,
             departement: $form.find('*[name="departement"]').val()
@@ -228,13 +231,11 @@ var Layout = Marionette.LayoutView.extend({
         self.$el.addClass('sending');
         Main.getInstance().blockUI();
 
-        //TODO add User in title if exist
-        //var user = User.model.getInstance();
         //clear data photos
         var clearPhoto = function(args) {
             var photos = [];
             args.forEach(function(item, key) {
-                photos[key] = item.externalId;
+                photos[key] = item.externId;
             });
             return photos.join();
         };
@@ -242,7 +243,7 @@ var Layout = Marionette.LayoutView.extend({
         //data expected by the server
         var data = {
             type: 'observation',
-            title: 'mission_' + self.observationModel.get('missionId') + '_' + self.observationModel.get('date'),
+            title: 'mission_' + self.observationModel.get('missionId') + '_' + self.observationModel.get('date') + '_' + self.user.get('externId'),
             field_observation_timestamp: {
                 und: [{
                     value: self.observationModel.get('date')
@@ -278,7 +279,7 @@ var Layout = Marionette.LayoutView.extend({
             },
             success: function(response) {
                 self.observationModel.set({
-                    'externalId': response.nid
+                    'externId': response.nid
                 }).save().done(function() {
                     self.sendPhoto();
                 });
@@ -314,9 +315,21 @@ var Layout = Marionette.LayoutView.extend({
                     button: i18n.t('dialogs.obsShared.button')
                 });
                 self.setFormStatus('shared');
-                var user = User.model.getInstance();
-                user.computeScore();
+                self.user.computeScore();
             });
+        } else {
+            self.$el.removeClass('sending');
+            self.observationModel.set({
+                'shared': 1
+            }).save();
+            Main.getInstance().addDialog({
+                cssClass: 'theme-orange-light has-fireworks title-has-palm',
+                title: i18n.t('dialogs.obsShared.title'),
+                message: i18n.t('dialogs.obsShared.message'),
+                button: i18n.t('dialogs.obsShared.button')
+            });
+            self.setFormStatus('shared');
+            self.user.computeScore();
         }
     },
 
@@ -337,7 +350,7 @@ var Layout = Marionette.LayoutView.extend({
                     fd.append("files[anything1]", imgBlob, file.name);
                     fd.append('field_name', "field_observation_image");
                     var query = {
-                        url: encodeURI(config.apiUrl + "/node/" + self.observationModel.get('externalId') + "/attach_file"),
+                        url: encodeURI(config.apiUrl + "/node/" + self.observationModel.get('externId') + "/attach_file"),
                         type: 'post',
                         contentType: false, // obligatoire pour de l'upload
                         processData: false, // obligatoire pour de l'upload
