@@ -126,7 +126,7 @@ var View = Marionette.LayoutView.extend({
             'date': this.moment().format("X"),
             'photos': [{
                 'url': fe ? fe : '',
-                'externalId': id ? id : ''
+                'externId': id ? id : ''
             }]
         });
         //Save observation in localstorage
