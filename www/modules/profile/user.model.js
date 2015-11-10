@@ -110,6 +110,7 @@ module.exports = {
         clean: function(instance) {
             if (modelInstance) {
                 modelInstance.clear();
+                delete modelInstance.id;
             }
         },
         init: function(instance) {
