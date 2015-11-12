@@ -18,14 +18,6 @@ module.exports = Marionette.LayoutView.extend({
 	onShow: function() {
 		var self = this;
 
-		if ( window.device ) {
-            self.listenTo(document, 'pause', function(e) {
-				self.stopWatchPosition();
-			});
-			self.listenTo(document, 'resume', function(e) {
-				self.getPosition();
-			});
-        }
 		self.getPosition();
 	},
 

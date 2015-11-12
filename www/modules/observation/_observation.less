@@ -1,99 +1,97 @@
 .page.observation {
-	.photo {
-		img {
-			width: 100%;
-		}
-	}
-	.add-photo-browser,
-	.btn-add-photo {
-		display: none;
-	}
-	form {
-		padding: 15px;
-		fieldset {
-			padding: 15px;
-			.form-group {
-				margin-left: 0;
-				margin-bottom: 8px;
-				label {
-					padding: 0;
-					font-size: 19px;
-				}
-				select {
-					border: none;
-					//border-bottom: 1px solid @gray-light;
-				    box-shadow: none;
-				    background: transparent;
-				    padding-left: 0;
-				}
-				.form-control-outer:after {
-					content: "";
-					display: block;
-					height: 1px;
-					background: @gray-light;
-					margin-top: 8px;
-				}
-				.display-value {
-					display: none;
-					padding-left: 8px;
-				}
-				&:last-child {
-					margin-bottom: 0;
-					.form-control-outer:after {
-						display: none;
-					}
-				}
-			}
-		}
-		.actions {
-			margin-top: 15px;
-		}
-	}
-
-	&:not(.form-status-unsaved) {
-		.btn-save {
-			display: none;
-		}
-	}
-
-	&:not(.form-status-shared-0) {
-		.btn-send {
-			display: none;
-		}
-	}
-
-	&:not(.form-status-shared-1) {
-		.btn-share {
-			display: none;
-		}
-	}
-
-	&.form-status-shared-1 {
-		form {
-			select {
-				display: none;
-			}
-			.display-value {
-				display: inline-block;
-			}
-		}
-		form {
-			fieldset {
-				.form-group {
-					select {
-						display: none;
-					}
-					.display-value {
-						display: inline-block;
-					}
-				}
-			}
-		}
-	}
+  .photo {
+    position: relative;
+    img {
+      width: 100%;
+    }
+    .add-photo {
+      .add-photo-browser {
+        display: none;
+      }
+    }
+  }
+  form {
+    padding: 15px;
+    fieldset {
+      padding: 15px;
+      .form-group {
+        margin-left: 0;
+        margin-bottom: 8px;
+        label {
+          padding: 0;
+          font-size: 19px;
+        }
+        select {
+          border: none;
+          //border-bottom: 1px solid @gray-light;
+          box-shadow: none;
+          background: transparent;
+          padding-left: 0;
+        }
+        .form-control-outer:after {
+          content: "";
+          display: block;
+          height: 1px;
+          background: @gray-light;
+          margin-top: 8px;
+        }
+        .display-value {
+          display: none;
+          padding-left: 8px;
+        }
+        &:last-child {
+          margin-bottom: 0;
+          .form-control-outer:after {
+            display: none;
+          }
+        }
+      }
+    }
+    .actions {
+      margin-top: 15px;
+    }
+  }
+  &:not(.form-status-unsaved) {
+    .btn-save {
+      display: none;
+    }
+  }
+  &:not(.form-status-shared-0) {
+    .btn-send {
+      display: none;
+    }
+  }
+  &:not(.form-status-shared-1) {
+    .btn-share {
+      display: none;
+    }
+  }
+  &.form-status-shared-1 {
+    form {
+      select {
+        display: none;
+      }
+      .display-value {
+        display: inline-block;
+      }
+    }
+    form {
+      fieldset {
+        .form-group {
+          select {
+            display: none;
+          }
+          .display-value {
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
 }
 
 .slideshow.slideshow-obs:not(.has-many) {
-	.btn-delete {
-		display: none;
-	}
+  .btn-delete {
+    display: none;
+  }
 }

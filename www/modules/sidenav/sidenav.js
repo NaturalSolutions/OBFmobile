@@ -47,7 +47,6 @@ var View = Marionette.LayoutView.extend({
     },
 
     hide: function() {
-        console.log('ok');
         $('body').removeClass('show-sidenav');
     },
 

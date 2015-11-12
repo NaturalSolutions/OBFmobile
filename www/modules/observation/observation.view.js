@@ -15,7 +15,8 @@ var Backbone = require('backbone'),
     Dialog = require('bootstrap-dialog'),
     Main = require('../main/main.view'),
     i18n = require('i18next-client'),
-    Login = require('../profile/login.view');
+    Login = require('../profile/login.view'),
+    Profile = require('../profile/profile.view');
 
 var Layout = Marionette.LayoutView.extend({
     header: {
@@ -28,11 +29,11 @@ var Layout = Marionette.LayoutView.extend({
     className: 'page observation ns-full-height',
     events: {
         'submit form.infos': 'onFormSubmit',
-        'click .photo': 'onPhotoClick',
-        'focusout .updateDept-js': 'updateField',
+        'click .photo img': 'onPhotoClick',
+        'change .updateDept-js': 'updateField',
         'change .updateMission-js': 'updateField',
         //'submit form#form-picture': 'uploadPhoto',
-        'click .capturePhoto-js': 'capturePhoto',
+        'click .capture-photo-js': 'capturePhoto',
         'click .btn-save': 'onSaveClick'
     },
 
@@ -271,10 +272,21 @@ var Layout = Marionette.LayoutView.extend({
             error: function(error) {
                 self.$el.removeClass('sending');
                 Main.getInstance().unblockUI();
-                Login.openDialog({
-                    message: 'Vous devez être connecté pour transmettre votre observation.'
-                }).then(function() {
-                    Dialog.alert('Vous êtes connecté vous pouvez transmettre votre obs');
+                var dfd;
+                if ( self.user.get('externId') )
+                    dfd = Login.openDialog({
+                        message: i18n.t('pages.observation.dialogs.need_login')
+                    });
+                else {
+                    var message = i18n.t('pages.observation.dialogs.need_registration');
+                    if ( self.user.get('firstname')|| self.user.get('lastname') || self.user.get('email') )
+                        message = i18n.t('pages.observation.dialogs.need_complete_registration');
+                    dfd = Profile.openDialog({
+                        message: message
+                    });
+                }
+                dfd.then(function() {
+                    Dialog.alert(i18n.t('pages.observation.dialogs.need_complete'));
                 });
             },
             success: function(response) {

@@ -124,6 +124,9 @@ module.exports = {
             if (!modelInstance)
                 console.log('You must call model.setInstance first');
             return modelInstance;
+        },
+        getClass: function() {
+            return Model;
         }
     },
     collection: {

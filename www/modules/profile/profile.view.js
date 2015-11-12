@@ -7,7 +7,9 @@ var Backbone = require('backbone'),
     bootstrap = require('bootstrap'),
     Dialog = require('bootstrap-dialog'),
     config = require('../main/config'),
-    Session = require('../main/session.model');
+    Session = require('../main/session.model'),
+    User = require('./user.model'),
+    i18n = require('i18next-client');
 
 var View = Marionette.LayoutView.extend({
     template: require('./profile.tpl.html'),
@@ -38,9 +40,8 @@ var View = Marionette.LayoutView.extend({
             this.signin();
     },
 
-    signin: function(e) {
+    signin: function() {
         var self = this;
-        e.preventDefault();
 
         var $form = self.$el.find('form');
         var $modelFields = $form.find('.registerModel-js');
@@ -248,7 +249,7 @@ var View = Marionette.LayoutView.extend({
 });
 
 var Page = View.extend({
-    className: 'page profile container',
+    className: 'page profile container with-header-gap',
     initialize: function() {
         this.session = Session.model.getInstance();
 
@@ -263,5 +264,33 @@ var Page = View.extend({
 
 module.exports = {
     Page: Page,
-    View: View
+    View: View,
+    openDialog: function(data) {
+        var dfd = $.Deferred();
+        var session = Session.model.getInstance();
+        var view = new View({
+            model: new User.model.getInstance()
+        });
+        view.render();
+        var $message = $('<div><p class="lead">' + data.message + '</p></div>');
+        $message.append(view.$el);
+        var dialog = Dialog.show({
+            title: i18n.t('header.titles.registration'),
+            message: $message,
+            onhide: function(dialog) {
+                session.off('change:isAuth', onAuthChange);
+                if (session.get('isAuth'))
+                    dfd.resolve();
+                else
+                    dfd.reject();
+            }
+        });
+
+        function onAuthChange() {
+            dialog.close();
+        }
+        session.once('change:isAuth', onAuthChange);
+
+        return dfd;
+    }
 };

@@ -1,19 +1,20 @@
 <% if( data.observation.photos.length ) { %>
 <div class="photo hidden-by-keyboard">
-    <div class="inner">
+    <div class="img-outer">
         <img src="<%= data.observation.photos[0].url %>" />
     </div>
+    <% if(data.observation.photos.length < 3){ %>
+    <div class="add-photo">
+        <form class="add-photo-browser" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" />
+            <input type="submit" value="upload file"></input>
+        </form>
+        <button type="button" class="btn bg-blue btn-fab floating floating-top floating-right btn-add-photo capture-photo-js">
+            <span class="icon icomoon">plus</span>
+        </button>
+    </div>
+    <% } %>
 </div>
-<% } %>
-
-<% if(data.observation.photos.length < 3){ %>
-<form class="add-photo-browser" enctype="multipart/form-data">
-    <input type="file" name="image" accept="image/*" />
-    <input type="submit" value="upload file"></input>
-</form>
-<button type="button" class="btn btn-link btn-add-photo capturePhoto-js">
-    <span>Ajouter une photo</span>
-</button>
 <% } %>
 
 <form class="form-horizontal infos">
@@ -28,12 +29,13 @@
                 <select id="missions" name="missionId" class="form-control updateMission-js" placeholder="Mission / Espèce">
                 <% data.missions.forEach(function(m, key){ %>
                     <% var isSelected = ( data.observation.missionId && data.observation.missionId == m.get('srcId') ) %>
+                    <% var num = (m.get('num') < 10 ? '0':'') + m.get('num'); %>
                     <% if ( isSelected ) { %>
                         <% displayValue = m.get('title')+ '<br />' + m.get('taxon').title; %>
-                        <% displayNum = (m.get('num') < 10 ? '0':'') + m.get('num');  %>
+                        <% displayNum = num;  %>
                     <% } %>
                     <option value='<%= m.get('srcId') %>' <%= isSelected ? 'selected="selected"' : '' %>>
-                        <%= displayNum %>. <%= m.get('title') %> / <%= m.get('taxon').title %>
+                        <%= num %>. <%= m.get('title') %> / <%= m.get('taxon').title %>
                     </option>
                 <% }); %>
                 </select>

@@ -141,10 +141,21 @@
                 "save": "Enregistrer",
                 "send": "Transmettre",
                 "share": "Partager"
+            },
+            "dialogs": {
+                "need_login": "Vous devez être connecté pour transmettre votre observation.",
+                "need_registration": "Vous devez être inscrit pour transmettre votre observation.",
+                "need_complete_registration": "Vous devez finaliser votre inscription pour transmettre votre observation.",
+                "need_complete": "Vous êtes connecté vous pouvez transmettre votre observation."
             }
         },
         "settings": {
             "updatepassword": "Modifier le mot de passe"
+        },
+        "profile": {
+            "form": {
+                "submit": "Valider"
+            }
         }
     },
     "sidenav": {

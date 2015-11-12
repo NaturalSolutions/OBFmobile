@@ -182,7 +182,7 @@ var Page = View.extend({
             left: ['back']
         }
     },
-    className: 'page login container'
+    className: 'page login container with-header-gap'
 });
 
 module.exports = {
@@ -190,7 +190,6 @@ module.exports = {
     View: View,
     openDialog: function(data) {
         var dfd = $.Deferred();
-        var state = 'login';
         var session = Session.model.getInstance();
         var loginView = new View({
             model: User.model.getInstance()
@@ -203,33 +202,18 @@ module.exports = {
             title: i18n.t('header.titles.login'),
             message: $message,
             onhide: function(dialog) {
-                if (state == 'login' && !session.get('isAuth')) {
-                    session.off('change:isAuth', onAuthChange);
-                    dfd.reject();
-                }
-                /*if ( session.get('isAuth') )
-                    dfd.resolve();*/
-                /*if ( !_.includes(['logged', 'registration'], session.get('authStatus')) )
+                session.off('change:isAuth', onAuthChange);
+                if (session.get('isAuth'))
                     dfd.resolve();
                 else
-                    dfd.reject();*/
+                    dfd.reject();
             }
         });
 
         function onAuthChange() {
-            console.log('onAuthChange', session);
             loginDialog.close();
-            if (session.get('isAuth'))
-                dfd.resolve();
         }
         session.once('change:isAuth', onAuthChange);
-
-        loginView.once('click:registration', function() {
-            state = 'registration';
-            loginDialog.close();
-
-            //
-        });
 
         return dfd;
     }
