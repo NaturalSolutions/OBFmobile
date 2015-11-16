@@ -44,6 +44,8 @@ var View = Marionette.LayoutView.extend({
     signin: function() {
         var self = this;
 
+        this.$el.addClass('block-ui');
+
         var $form = self.$el.find('form');
         var $modelFields = $form.find('.registerModel-js');
         $modelFields.each(function() {
@@ -98,59 +100,15 @@ var View = Marionette.LayoutView.extend({
                        Router.getInstance().navigate('dashboard', {
                             trigger: true
                         });
-                        //Dialog.alert('Vous êtes inscrit');
+                        self.$el.removeClass('block-ui');
+                        self.model.set('externId', response.uid).save();
                     });
-                //self.login(data.mail, data.pass);
-                //self.model.set('externId', response.uid).save();
             }
         };
         this.session.getCredentials(query).done(function() {
             $.ajax(query);
         });
     },
-
-    /*login: function(mail, pass) {
-        var self = this;
-
-        var query = {
-            url: config.apiUrl + "/user/logintoboggan.json",
-            type: 'post',
-            contentType: "application/json",
-            data: JSON.stringify({
-                username: mail,
-                password: pass,
-            }),
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(errorThrown);
-            },
-            success: function(response) {
-                console.log(response);
-                //UPDATE instance, model User  because if several users the user should be changed at each login
-                self.model.set({
-                    "lastname": response.user.field_last_name.und[0].value,
-                    "firstname": response.user.field_first_name.und[0].value,
-                    "email": response.user.mail,
-                    "externId": response.user.uid,
-                    "newsletter": response.user.field_newsletter.und[0].value
-                }).save().done(function() {
-                    Dialog.show({
-                        title: 'Félicitation !',
-                        message: 'Votre inscription a été prise en compte!',
-                        type: 'type-success',
-                        buttons: [{
-                            label: 'Fermer',
-                            action: function(dialogItself) {
-                                dialogItself.close();
-                            }
-                        }]
-                    });
-                });
-            }
-        };
-        this.session.getCredentials(query).done(function() {
-            $.ajax(query);
-        });
-    },*/
 
     updateFields: function() {
         var self = this;
