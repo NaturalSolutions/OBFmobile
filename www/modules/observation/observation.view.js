@@ -39,8 +39,8 @@ var Layout = Marionette.LayoutView.extend({
 
     initialize: function() {
         this.observationModel = this.model;
-        this.observationModel.on("change:photos", this.render, this);
-        this.observationModel.on("change:shared", this.render, this);
+        this.listenTo(this.observationModel, "change:photos", this.render, this);
+        this.listenTo(this.observationModel, "change:shared", this.render, this);
         this.session = Session.model.getInstance();
         this.user = User.model.getInstance();
     },
