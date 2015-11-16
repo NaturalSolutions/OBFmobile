@@ -90,7 +90,7 @@ var SessionModel = Backbone.Model.extend({
         var self = this;
         var dfd = $.Deferred();
         var query = {
-            url: config.apiUrl + "/user/logintoboggan.json",
+            url: config.apiUrl + "/obfmobile_user/login.json",
             type: 'POST',
             contentType: "application/json",
             data: JSON.stringify({
@@ -103,6 +103,7 @@ var SessionModel = Backbone.Model.extend({
             },
             success: function(response) {
                 dfd.resolve(response);
+                self.set('isAuth', true);
             }
         };
         self.getCredentials(query).done(function() {
