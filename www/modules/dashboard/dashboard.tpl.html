@@ -13,7 +13,7 @@
 			<% if ( data.user.palmName ) { %>
 			<li class="media palm">
 				<div class="media-left thumb">
-					<img class="thumb-icon" src="images/score/palm_<%= data.user.palm %>.png" />
+					<img class="thumb-icon" src="images/score/palm_<%= data.user.palmName %>.png" />
 				</div>
 				<div class="media-body text media-middle">
 					<div class="value"><%= i18n.t('user.score.palm.'+data.user.palmName+'.label') %></div>
@@ -36,7 +36,7 @@
 		<div class="score">
 			<div class="score-icon user-sky user-sky-<%= data.user.timeOnMissionLevel %> user-sky-sun"></div>
 			<% if ( data.user.palmName ) { %>
-			<img class="score-icon" src="images/score/palm_<%= data.user.palm %>.png" />
+			<img class="score-icon" src="images/score/palm_<%= data.user.palmName %>.png" />
 			<% } %>
 			<img class="score-icon" src="images/score/level_<%= data.user.level %>_awake.png" />
 		</div>

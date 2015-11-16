@@ -58,6 +58,8 @@ var Layout = Marionette.LayoutView.extend({
     onRender: function() {
         var self = this;
 
+        self.$el.attr('data-cid', this.cid);
+
         var isSaved = (self.observationModel.get('missionId') && self.observationModel.get('departement'));
         if (!isSaved)
             self.setFormStatus('unsaved');
@@ -316,6 +318,7 @@ var Layout = Marionette.LayoutView.extend({
                 Adfd.push(self.uploadPhotoMob(p.url));
             });
             $.when.apply($, Adfd).done(function(response) {
+                Main.getInstance().unblockUI();
                 self.$el.removeClass('sending');
                 self.observationModel.set({
                     'shared': 1
@@ -330,6 +333,7 @@ var Layout = Marionette.LayoutView.extend({
                 self.user.computeScore();
             });
         } else {
+            Main.getInstance().unblockUI();
             self.$el.removeClass('sending');
             self.observationModel.set({
                 'shared': 1

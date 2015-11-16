@@ -39,23 +39,21 @@ var Layout = Marionette.LayoutView.extend({
         
         var user = User.model.getInstance();
         user.on('change:level', function(model, level) {
-            console.log('user change level', level);
             if ( !level )
                 return false;
             self.addDialog({
-                cssClass: 'theme-orange-light',
+                cssClass: 'theme-orange-light has-fireworks user-score user-level-'+level,
                 title: i18n.t('dialogs.level.title'),
                 message: i18n.t('dialogs.level.message.level_'+level),
                 button: i18n.t('dialogs.level.button')
             });
         });
         user.on('change:palm', function(model, palm) {
-            console.log('user change palm', palm);
             if ( !palm )
                 return false;
             var palmName = user.get('palmName');
             self.addDialog({
-                cssClass: 'theme-orange-light',
+                cssClass: 'theme-orange-light has-fireworks user-score user-palm-'+palmName,
                 title: i18n.t('dialogs.palm.title'),
                 message: i18n.t('dialogs.palm.message.'+palmName),
                 button: i18n.t('dialogs.palm.button')

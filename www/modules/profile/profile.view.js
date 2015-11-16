@@ -97,9 +97,6 @@ var View = Marionette.LayoutView.extend({
             success: function(response) {
                 self.session.login(data.mail, data.pass)
                     .then(function() {
-                       Router.getInstance().navigate('dashboard', {
-                            trigger: true
-                        });
                         self.$el.removeClass('block-ui');
                         self.model.set('externId', response.uid).save();
                     });
@@ -223,7 +220,15 @@ var Page = View.extend({
                 left: ['menu']
             }
         };
+
+        this.listenTo(this.session, 'change:isAuth', function() {
+            if (this.session.get('isAuth'))
+                Router.getInstance().navigate('dashboard', {
+                    trigger: true
+                });
+        });
     },
+
 });
 
 module.exports = {

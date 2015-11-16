@@ -90,7 +90,7 @@ var Model = Backbone.Model.extend({
                 break;
             }
         }*/
-        if ( difficultiesCompleted[1] == 3 )
+        if ( difficultiesCompleted[2] == 1 )
             self.set('level', 2);
 
         self.save();
