@@ -179,7 +179,7 @@ var Page = View.extend({
     header: {
         titleKey: 'login',
         buttons: {
-            left: ['back']
+            left: ['menu']
         }
     },
     className: 'page login container with-header-gap'

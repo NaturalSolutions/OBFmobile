@@ -256,7 +256,7 @@ var Page = View.extend({
         this.header = {
             titleKey: ((this.model.get('externId')) ? 'profile' : 'registration'),
             buttons: {
-                left: ['back']
+                left: ['menu']
             }
         };
     },
