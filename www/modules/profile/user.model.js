@@ -72,7 +72,7 @@ var Model = Backbone.Model.extend({
         var nbShared = shared.length;
 
         //TODO: define rules
-        var palmPad = [2, 10, 15];
+        var palmPad = [1, 3, 15];
         for (var palmPadIndex = palmPad.length - 1; palmPadIndex >= 0; palmPadIndex--) {
             if (nbShared >= palmPad[palmPadIndex]) {
                 self.set('palm', palmPadIndex + 1);
@@ -80,17 +80,18 @@ var Model = Backbone.Model.extend({
             }
         }
 
-        var difficulties = _.countBy(shared, function(obs) {
+        var difficultiesCompleted = _.countBy(shared, function(obs) {
             return obs.get('mission').get('difficulty');
         });
-        var level = 0;
         //TODO: define rules
-        for (var i = 3; i >= 1; i--) {
-            if (difficulties[i]) {
+        /*for (var i = 3; i >= 1; i--) {
+            if (difficultiesCompleted[i]) {
                 self.set('level', i);
                 break;
             }
-        }
+        }*/
+        if ( difficultiesCompleted[1] == 3 )
+            self.set('level', 2);
 
         self.save();
     }

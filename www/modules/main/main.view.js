@@ -38,6 +38,17 @@ var Layout = Marionette.LayoutView.extend({
         this.rgFooter.show(footer.getInstance());
         
         var user = User.model.getInstance();
+        user.on('change:level', function(model, level) {
+            console.log('user change level', level);
+            if ( !level )
+                return false;
+            self.addDialog({
+                cssClass: 'theme-orange-light',
+                title: i18n.t('dialogs.level.title'),
+                message: i18n.t('dialogs.level.message.level_'+level),
+                button: i18n.t('dialogs.level.button')
+            });
+        });
         user.on('change:palm', function(model, palm) {
             console.log('user change palm', palm);
             if ( !palm )
@@ -48,17 +59,6 @@ var Layout = Marionette.LayoutView.extend({
                 title: i18n.t('dialogs.palm.title'),
                 message: i18n.t('dialogs.palm.message.'+palmName),
                 button: i18n.t('dialogs.palm.button')
-            });
-        });
-        user.on('change:level', function(model, level) {
-            console.log('user change level', level);
-            if ( !level )
-                return false;
-            self.addDialog({
-                cssClass: 'theme-orange-light',
-                title: i18n.t('dialogs.level.title'),
-                message: i18n.t('dialogs.level.message.level_'+level),
-                button: i18n.t('dialogs.level.button')
             });
         });
 
