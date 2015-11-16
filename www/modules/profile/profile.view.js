@@ -9,6 +9,7 @@ var Backbone = require('backbone'),
     config = require('../main/config'),
     Session = require('../main/session.model'),
     User = require('./user.model'),
+    Router = require('../routing/router'),
     i18n = require('i18next-client');
 
 var View = Marionette.LayoutView.extend({
@@ -83,7 +84,7 @@ var View = Marionette.LayoutView.extend({
             pass2: passwd2
         };
 
-        $.ajax({
+        var query = {
             url: config.apiUrl + "/obfmobile_user.json",
             type: 'post',
             contentType: "application/json",
@@ -94,12 +95,17 @@ var View = Marionette.LayoutView.extend({
             success: function(response) {
                 self.session.login(data.mail, data.pass)
                     .then(function() {
-
+                       Router.getInstance().navigate('dashboard', {
+                            trigger: true
+                        });
                         //Dialog.alert('Vous êtes inscrit');
                     });
                 //self.login(data.mail, data.pass);
                 //self.model.set('externId', response.uid).save();
             }
+        };
+        this.session.getCredentials(query).done(function() {
+            $.ajax(query);
         });
     },
 
