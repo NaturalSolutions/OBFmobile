@@ -264,6 +264,11 @@ var Layout = Marionette.LayoutView.extend({
             },
             field_cd_nom: {
                 und: self.observationModel.get('mission').get('taxon').cd_nom
+            },
+            field_lat_long: {
+                und: [{
+                    value: '43.289591, 5.360031'
+                }]
             }
         };
         var query = {
