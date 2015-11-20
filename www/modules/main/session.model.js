@@ -113,44 +113,6 @@ var SessionModel = Backbone.Model.extend({
         return dfd;
     },
 
-    userExist: function(response) {
-        var self = this;
-        var dfd = $.Deferred();
-        // test if response.user = instance
-        if (response.user.uid === User.model.getInstance().get('externId')) {
-            dfd.resolve();
-        } else if (User.model.getInstance().get('email')) {
-            // user in base
-            User.model.clean().set(User.model.defaults);
-            User.model.init();
-            dfd.resolve();
-        } else {
-            //Find user in user coll
-            var userCollection = User.collection.getInstance();
-            userCollection.fetch({
-                success: function(users) {
-                    if (users.length > 1) {
-                        var userLogged = users.findWhere({
-                            'externId': response.user.uid
-                        });
-                        if (userLogged) {
-                            // user existe in local
-                            User.model.clean();
-                            User.model.getInstance(userLogged.attributes);
-                            User.model.getInstance().id = userLogged.id;
-                        }
-                    }
-                    dfd.resolve();
-                },
-                error: function(error) {
-                    console.log(error);
-                    dfd.reject();
-                }
-            });
-        }
-        return dfd;
-    },
-
     logout: function() {
         var self = this;
         var query = {
@@ -164,14 +126,87 @@ var SessionModel = Backbone.Model.extend({
                 console.log(response);
                 self.set('isAuth', false);
                 self.set('authStatus', 'unlogged');
-                Router.getInstance().navigate('', {
-                    trigger: true
+                self.becomesAnonymous(User.model.getInstance()).then(function() {
+                    self.set('isAuth', false);
+                    self.set('authStatus', 'unlogged');
+                    Router.getInstance().navigate('', {
+                        trigger: true
+                    });
                 });
+
             }
         };
         this.getCredentials(query).then(function() {
             $.ajax(query);
         });
+    },
+
+    becomesAnonymous: function() {
+        var dfd = $.Deferred();
+        var usersCollection = User.collection.getInstance();
+        this.findUserByMail().then(function(anonymous) {
+            User.model.clean();
+            if (!User.model.getInstance()) {
+                User.model.init();
+            }
+            if (!anonymous) {
+                usersCollection.add(User.model.getInstance()).save();
+            } else {
+                // anonymous exists in local
+                User.model.getInstance().set(anonymous.attributes);
+            }
+            dfd.resolve();
+        });
+        return dfd;
+    },
+
+    findUserByMail: function() {
+        var dfd = $.Deferred();
+        var userCollection = User.collection.getInstance();
+        userCollection.fetch({
+            success: function(users) {
+                var userLogged;
+                if (users.length > 1) {
+                    userLogged = users.findWhere({
+                        'email': ''
+                    });
+                }
+                dfd.resolve(userLogged);
+            },
+            error: function(error) {
+                console.log(error);
+                dfd.reject();
+            }
+        });
+        return dfd;
+    },
+
+    userExistsLocal: function(response) {
+        var self = this;
+        var dfd = $.Deferred();
+        var userCollection = User.collection.getInstance();
+        userCollection.fetch({
+            success: function(users) {
+                if (users.length > 1) {
+                    User.model.clean();
+                    var userExists = users.findWhere({
+                        'externId': response.user.uid
+                    });
+                    if (userExists) {
+                        // user existe in local
+                        User.model.getInstance().set(userExists.attributes);
+                    } else {
+                        User.collection.getInstance().add(User.model.getInstance()).save();
+                    }
+                }
+                dfd.resolve();
+            },
+            error: function(error) {
+                console.log(error);
+                dfd.reject();
+            }
+        });
+        return dfd;
     },
 
 });
