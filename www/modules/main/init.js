@@ -150,32 +150,32 @@ function init() {
         return deferred;
     };
 
-    var getUser = function(id) {
+    var getUser = function(userLogged) {
         var userCollection = User.collection.getInstance();
 
         var deferred = $.Deferred();
-        userCollection.fetch({
-            success: function(data) {
-                if (data.length) {
-                    if (id) {
-                        var currentUser = _.findIndex(userCollection.models, function(item) {
-                            return item.id === id;
-                        });
-                        User.model.init(data.at(currentUser));
+        if (userLogged) {
+            User.model.init();
+            User.model.getInstance().set(userLogged.attributes);
+        } else {
+            userCollection.fetch({
+                success: function(data) {
+                    var session = Session.model.getInstance();
+                    if (data.length) {
+                        session.becomesAnonymous();
+                        deferred.resolve();
                     } else {
-                        User.model.init(data.at(0));
+                        User.model.init();
+                        userCollection.add(User.model.getInstance()).save();
+                        deferred.resolve();
                     }
-                    deferred.resolve();
-                } else {
-                    User.model.init();
-                    userCollection.add(User.model.getInstance()).save();
-                    deferred.resolve();
+                },
+                error: function(error) {
+                    console.log(error);
+                    deferred.reject(error);
                 }
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
+            });
+        }
 
         return deferred;
     };
