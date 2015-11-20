@@ -1,10 +1,11 @@
 'use strict';
 var Backbone = require('backbone'),
-  LocalStorage = require("backbone.localstorage"),
   config = require('../main/config'),
   _ = require('lodash');
 
-var Model = Backbone.Model.extend({
+Backbone.LocalStorage = require("backbone.localstorage");
+
+var UserModel = Backbone.Model.extend({
   defaults: {
     externId: '',
     firstname: '',
@@ -58,7 +59,6 @@ var Model = Backbone.Model.extend({
     if (self[accessorName]) {
       return self[accessorName]();
     }
-
     return Backbone.Model.prototype.get.call(self, attr);
   },
   toJSON: function() {
@@ -119,15 +119,14 @@ var Model = Backbone.Model.extend({
     }*/
     if (difficultiesCompleted[2] == 1)
       self.set('level', 2);
-
     self.save();
   }
 });
 
 var Collection = Backbone.Collection.extend({
-  model: Model,
-  url: config.coreUrl,
-  localStorage: new Backbone.LocalStorage("userCollection")
+    model: UserModel,
+    url: '',
+    localStorage: new Backbone.LocalStorage("userCollection")
 });
 
 var modelInstance = null;
@@ -147,7 +146,7 @@ module.exports = {
         console.log('An instance still exists');
         return false;
       }
-      modelInstance = instance || new Model();
+      modelInstance = instance || new UserModel();
     },
     getInstance: function() {
       if (!modelInstance)
@@ -155,7 +154,7 @@ module.exports = {
       return modelInstance;
     },
     getClass: function() {
-      return Model;
+      return UserModel;
     }
   },
   collection: {
