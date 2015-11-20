@@ -28,11 +28,12 @@ $.fn.nsDonutChart = function(methodOrOptions) {
                 self.settings.value = self.$el.data('donutchart-value');
             self.settings = $.extend(self.settings, options);
             var tpl = '<div class="inner">';
-            tpl += '<div class="circle-clipper circle-clipper-left"><div class="circle"></div></div>';
+            tpl += '<div class="circle-bg border"></div>';
+            tpl += '<div class="circle-clipper circle-clipper-left"><div class="circle border"></div></div>';
             tpl += '<div class="gap-patch"><div class="circle"></div></div>';
-            tpl += '<div class="circle-clipper circle-clipper-right"><div class="circle"></div></div>';
-            tpl += '<div class="cap-outer cap-outer-start"><div></div></div>';
-            tpl += '<div class="cap-outer cap-outer-end"><div></div></div>';
+            tpl += '<div class="circle-clipper circle-clipper-right"><div class="circle border"></div></div>';
+            tpl += '<div class="cap-outer cap-start border"><div class="cap"></div></div>';
+            tpl += '<div class="cap-outer cap-end border"><div class="cap"></div></div>';
             tpl += '</div>';
 
             self.$el.html(tpl);
@@ -42,7 +43,7 @@ $.fn.nsDonutChart = function(methodOrOptions) {
             self.$circleLeft = self.$el.find('.circle-clipper-left .circle');
             self.$circleRight = self.$el.find('.circle-clipper-right .circle');
             /*self.$capEnd = self.$el.find('.cap-end');*/
-            self.$capOuterEnd = self.$el.find('.cap-outer-end');
+            self.$capOuterEnd = self.$el.find('.cap-end');
 
 
             setTimeout(function() {

@@ -26,12 +26,13 @@ var View = Marionette.LayoutView.extend({
 
     serializeData: function() {
         return {
-            user: this.model,
+            user: this.model
         };
     },
 
     onRender: function(options) {
         //this.session.isConnected();
+        this.$el.find('.donutchart').nsDonutChart();
     },
 
     //log a user for 23 days (see cookie)
@@ -41,12 +42,11 @@ var View = Marionette.LayoutView.extend({
         var self = this;
         var $form = self.$el.find('form');
 
-        if ($form.hasClass('sending'))
+        if ($form.hasClass('loading'))
             return false;
 
         self.$el.addClass('block-ui');
-        $form.addClass('sending');
-        $form.removeClass('form-has-error');
+        $form.addClass('loading');
 
         var username = $form.find('input[name="login"]').val();
         var password = $form.find('input[name="password"]').val();
@@ -54,13 +54,15 @@ var View = Marionette.LayoutView.extend({
         this.session.login(username, password).then(function(account) {
             $.when(self.session.userExist(account), self.syncUser(account)).then(function() {
                 self.$el.removeClass('block-ui');
-                $form.removeClass('sending');
+                $form.removeClass('loading');
             });
         }, function() {
             self.$el.removeClass('block-ui');
-            $form.removeClass('sending');
-
-            $form.addClass('form-has-error');
+            $form.removeClass('loading');
+            Dialog.alert({
+                closable: true,
+                message: i18n.t('dialogs.loginError')
+            });
         });
 
         /*var query = {

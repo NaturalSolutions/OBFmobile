@@ -6,11 +6,15 @@
         <input type="password" name="password" class="form-control" placeholder="Entrez un mot de passe">
 <!--         <button class="btn btn-link btn-block forget-passwd-js"><div class="text-right">Mot de passe oublié ?</div></button> -->
     </div>
-    <div class="messages help-block">
+    <!-- <div class="messages help-block">
         <span class="text-info message-sending">Connexion...</span>
         <span class="text-danger message-error">Login ou mot de passe incorrect</span>
-    </div>
-    <button type="submit" class="btn btn-primary btn-block btn-lg">Se connecter</button>
+    </div> -->
+    <button type="submit" class="btn btn-primary btn-block btn-lg btn-submit pos-relative">
+        Se connecter
+        <% var spinnerTpl = require('../spinner/spinner.tpl.html'); %>
+        <%= spinnerTpl({className:'spinner-white icon-right loader'}) %>
+    </button>
 </form>
 <!-- <div class="register">
     <h5>Vous n'avez pas de compte ?</h5>

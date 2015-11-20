@@ -18,6 +18,7 @@ var View = Marionette.LayoutView.extend({
     events: {
         'submit form': 'onFormSubmit'
     },
+    // !!! initialize is overrided in Page
     initialize: function() {
         this.session = Session.model.getInstance();
     },
@@ -29,6 +30,9 @@ var View = Marionette.LayoutView.extend({
     },
 
     onRender: function(options) {
+        this.listenTo(this.model, 'validated:invalid', function(model, errors) {
+            console.log(errors);
+        });
         this.$el.find('.no-paste-js').nsNoPaste();
     },
 
@@ -36,7 +40,7 @@ var View = Marionette.LayoutView.extend({
         e.preventDefault();
 
         if ( this.model.get('externId') )
-            this.updateUser();
+            this.update();
         else
             this.signin();
     },
@@ -107,7 +111,17 @@ var View = Marionette.LayoutView.extend({
         });
     },
 
-    updateFields: function() {
+    updateModel: function() {
+
+        /*this.model.set({
+            firstname: 'V',
+            lastname: '',
+            email: 'aa@aa.aa',
+            email2: 'aa@aa'
+        }, {validate: true});
+
+        console.log(this.model.isValid());*/
+
         var self = this;
         var $form = self.$el.find('form');
         var $modelFields = $form.find('.updateModel-js');
@@ -118,10 +132,10 @@ var View = Marionette.LayoutView.extend({
                 fieldName = $field.attr('name'),
                 previous = self.model.get(fieldName),
                 newValue;
-            if (fieldName !== "newsletter") {
-                newValue = $field.val();
-            } else {
+            if ($field.attr('type') == 'checkbox') {
                 newValue = $field.is(':checked');
+            } else {
+                newValue = $field.val();
             }
             if (previous !== newValue) {
                 self.model.set(fieldName, newValue);
@@ -137,35 +151,34 @@ var View = Marionette.LayoutView.extend({
     },
 
 
-    updateUser: function(e) {
+    update: function(e) {
         var self = this;
-        e.preventDefault();
-        this.saveFieldsFinished = this.updateFields();
-
-        this.saveFieldsFinished.dfd.then(function() {
+        var saveFieldsFinished = this.updateModel();
+        
+        saveFieldsFinished.dfd.then(function() {
             var $form = self.$el.find('form');
-            var passwd = $form.find('input[name="password"]').val();
-            var passwordNew = $form.find('input[name="password-new"]').val();
+            /*var passwd = $form.find('input[name="password"]').val();
+            var passwordNew = $form.find('input[name="password-new"]').val();*/
 
-            var dataUser = self.saveFieldsFinished.attributesChanged;
+            var dataUser = saveFieldsFinished.attributesChanged;
             var data = {
                 field_first_name: {
                     und: [{
-                        value: dataUser.firstname
+                        value: self.model.firstname
                     }]
                 },
                 field_last_name: {
                     und: [{
-                        value: dataUser.lastname
+                        value: self.model.lastname
                     }]
                 },
                 field_newsletter: {
-                    und: ((dataUser.newsletter) ? "[0]{value:" + true + "}" : null)
+                    und: ((self.model.newsletter) ? "[0]{value:" + true + "}" : null)
                 },
                 uid: self.model.get('externId'),
                 mail: self.model.get('email'),
-                current_pass: passwd,
-                pass: passwordNew,
+                /*current_pass: passwd,
+                pass: passwordNew,*/
             };
 
             if (self.model.get('externId') && !(_.isEmpty(dataUser))) {
@@ -177,9 +190,9 @@ var View = Marionette.LayoutView.extend({
                     data: JSON.stringify(data),
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.log(errorThrown);
-                        var previousAttrs = self.saveFieldsFinished.previousattributes;
+                        var previousAttrs = saveFieldsFinished.previousattributes;
                         self.model.set(previousAttrs).save();
-                        self.render();
+                        //self.render();
                     },
                     success: function(response) {
                         self.dialogSuccess();

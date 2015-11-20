@@ -1,6 +1,7 @@
 'use strict';
 
 var Backbone = require('backbone'),
+    BackboneValidation = require('backbone-validation'),
     LocalStorage = require("backbone.localstorage"),
     Marionette = require('backbone.marionette'),
     $ = require('jquery'),
@@ -25,6 +26,8 @@ var Backbone = require('backbone'),
 
 /*var badgesInstanceColl = require('./models/badge').instanceColl;
 var badgesColl = require('./models/badge').BadgeCollection;*/
+
+_.extend(Backbone.Model.prototype, Backbone.Validation.mixin);
 
 function init() {
     //Manage geolocation when the application goes to the background
