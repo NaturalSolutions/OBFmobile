@@ -26,6 +26,11 @@
 				margin-left: 1.6em;
 			}
 	    }
+	    .complete {
+	    	top: 0;
+	    	text-align: center;
+	    	.translate(0, -50%);
+	    }
 	    .accept {
 	    	top: 0;
 	    	text-align: center;
@@ -79,6 +84,20 @@
 	&:not(.is-accept) {
 		.meta {
 			.delta {
+				display: none;
+			}
+		}
+	}
+	&:not(.is-complete) {
+		.header {
+			.complete {
+				display: none;
+			}
+		}
+	}
+	&.is-complete {
+		.header {
+			.accept {
 				display: none;
 			}
 		}

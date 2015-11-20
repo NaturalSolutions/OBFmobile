@@ -21,6 +21,14 @@ var ObservationModel = Backbone.Model.extend({
         type: 'observation'
     },
     url: config.apiUrl + '/node.json',
+    initialize: function() {
+        this.listenTo(this, 'change:shared', this.onSharedChange, this);
+    },
+    onSharedChange: function() {
+        console.log('onSharedChange', this.get('shared'));
+        if ( this.get('shared') == 1 )
+            this.getMission().set('complete', true).save();
+    },
     get: function(attr) {
         var self = this;
         var accessorName = 'get'+ _.capitalize(attr);

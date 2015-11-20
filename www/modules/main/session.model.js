@@ -121,8 +121,9 @@ var SessionModel = Backbone.Model.extend({
             dfd.resolve();
         } else if (User.model.getInstance().get('email')) {
             // user in base
-            User.model.clean();
+            User.model.clean().set(User.model.defaults);
             User.model.init();
+            dfd.resolve();
         } else {
             //Find user in user coll
             var userCollection = User.collection.getInstance();

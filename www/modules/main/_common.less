@@ -33,17 +33,31 @@ body {
     font-size: .63em;
     width: 2em;
     height: 2em;
-    line-height: 2em;
+    line-height: 2.1em;
     vertical-align: top;
     padding: 0;
     background: #FFF;
-    border: 1px solid @gray-dark;
     color: @gray-dark;
     border-radius: 50%;
     display: inline-block;
     text-align: center;
+    position: relative;
+    border-color: @gray-dark;
     &.no-border {
-        border: none;
+        &:after {
+            display: none;
+        }
+    }
+    &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 1px solid;
+        border-color: inherit;
+        border-radius: 50%;
     }
 }
 

@@ -11,7 +11,10 @@ module.exports = Marionette.LayoutView.extend({
     attributes: function() {
         var self = this;
         var classNames = 'page page-mission_sheet page-scrollable no-header';
-        if ( self.model.get('accept') )
+        var isComplete = self.model.get('complete');
+        if ( isComplete )
+            classNames += ' is-complete';
+        else if ( self.model.get('accept') )
             classNames += ' is-accept';
         return {
             'class': classNames

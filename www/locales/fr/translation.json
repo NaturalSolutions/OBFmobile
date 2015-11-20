@@ -35,8 +35,8 @@
         "checkin": "Vous êtes entré en forêt",
         "checkout": "Vous êtes sorti de forêt <span>__duration__</span>",
         "mission_accept": "Vous avez accepté la mission",
-        "mission_unaccept": "Vous avez désaccepté la mission",
-        "mission_complete": "Vous avez réussi la mission"
+        "mission_unaccept": "Vous avez annulé la mission",
+        "mission_complete": "Mission accomplie !"
     },
     "user": {
         "score": {
@@ -87,15 +87,15 @@
     "dialogs": {
         "obsShared": {
             "title": "Mission accomplie !",
-            "message": "Bravo, vous transmis avez votre observation.",
+            "message": "Bravo, vous avez transmis votre observation.",
             "button": "Continuer"
         },
         "palm": {
             "title": "Bravo !",
             "message": {
-                "bronze": "Vous avez palme de bronze",
-                "silver": "Vous avez palme d'argent",
-                "gold": "Vous avez palme d'or"
+                "bronze": "Vous gagné la palme de bronze",
+                "silver": "Vous gagné la palme d'argent",
+                "gold": "Vous gagné la palme d'or"
             },
             "button": "Continuer"
         },
@@ -110,11 +110,11 @@
     },
     "pages": {
         "home": {
-            "title": "Dans le forêt avec Noé",
+            "title": "Dans la forêt avec Noé",
             "btns": {
                 "subscribe": "Inscription",
                 "logged": "Connexion",
-                "soon": "Je ferais ça plus tard"
+                "soon": "Je me connecterai plus tard"
             }
         },
         "dashboard": {

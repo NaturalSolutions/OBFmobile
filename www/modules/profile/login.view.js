@@ -7,6 +7,7 @@ var Backbone = require('backbone'),
     config = require('../main/config'),
     Dialog = require('bootstrap-dialog'),
     Session = require('../main/session.model'),
+    Router = require('../routing/router'),
     i18n = require('i18next-client'),
     User = require('../profile/user.model');
 
@@ -182,7 +183,24 @@ var Page = View.extend({
             left: ['menu']
         }
     },
-    className: 'page login container with-header-gap'
+    className: 'page login container with-header-gap',
+    initialize: function() {
+        this.session = Session.model.getInstance();
+
+        this.header = {
+            titleKey: ((this.model.get('externId')) ? 'profile' : 'registration'),
+            buttons: {
+                left: ['menu']
+            }
+        };
+
+        this.listenTo(this.session, 'change:isAuth', function() {
+            if (this.session.get('isAuth'))
+                Router.getInstance().navigate('dashboard', {
+                    trigger: true
+                });
+        });
+    },
 });
 
 module.exports = {

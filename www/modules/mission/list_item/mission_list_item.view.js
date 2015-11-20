@@ -22,9 +22,12 @@ var View = Marionette.ItemView.extend({
 	onRender: function(options) {
 		var self = this;
 
-		if ( self.model.get('accept') ) {
+		var isComplete = self.model.get('complete');
+
+		if ( isComplete )
+			self.$el.addClass('is-complete');
+		else if ( self.model.get('accept') )
 			self.$el.addClass('is-accept');
-		}
 	}
 });
 
