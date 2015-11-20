@@ -267,7 +267,7 @@ var Layout = Marionette.LayoutView.extend({
             },
             field_lat_long: {
                 und: [{
-                    value: '43.289591, 5.360031'
+                    value: ''
                 }]
             }
         };
