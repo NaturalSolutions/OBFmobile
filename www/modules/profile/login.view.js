@@ -51,8 +51,11 @@ var View = Marionette.LayoutView.extend({
         var username = $form.find('input[name="login"]').val();
         var password = $form.find('input[name="password"]').val();
 
+
+        //TODO test connection
+        //TODO manage the registration when it is not finished server side
         this.session.login(username, password).then(function(account) {
-            $.when(self.session.userExist(account), self.syncUser(account)).then(function() {
+            $.when(self.session.userExistsLocal(account), self.syncUser(account)).then(function() {
                 self.$el.removeClass('block-ui');
                 $form.removeClass('loading');
             });
@@ -64,6 +67,7 @@ var View = Marionette.LayoutView.extend({
                 message: i18n.t('dialogs.loginError')
             });
         });
+
 
         /*var query = {
             url: config.apiUrl + "/user/logintoboggan.json",
