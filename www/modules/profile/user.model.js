@@ -136,7 +136,7 @@ module.exports = {
   model: {
     clean: function(instance) {
       if (modelInstance) {
-        modelInstance.clear();
+        modelInstance.clear().set(modelInstance.defaults);
         delete modelInstance.id;
         return modelInstance;
       }
