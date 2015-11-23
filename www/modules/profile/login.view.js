@@ -9,6 +9,7 @@ var Backbone = require('backbone'),
     Session = require('../main/session.model'),
     Router = require('../routing/router'),
     i18n = require('i18next-client'),
+    Main = require('../main/main.view'),
     User = require('../profile/user.model');
 
 var View = Marionette.LayoutView.extend({
@@ -58,6 +59,8 @@ var View = Marionette.LayoutView.extend({
             $.when(self.session.userExistsLocal(account), self.syncUser(account)).then(function() {
                 self.$el.removeClass('block-ui');
                 $form.removeClass('loading');
+                // Add listeners
+                Main.getInstance().addListeners();
             });
         }, function() {
             self.$el.removeClass('block-ui');

@@ -32,33 +32,11 @@ var Layout = Marionette.LayoutView.extend({
     render: function(options) {
         var self = this;
         Marionette.LayoutView.prototype.render.apply(this, options);
-        
+
         this.rgHeader.show(header.getInstance());
         this.rgSidenav.show(sidenav.getInstance());
         this.rgFooter.show(footer.getInstance());
-        
-        var user = User.model.getInstance();
-        user.on('change:level', function(model, level) {
-            if ( !level )
-                return false;
-            self.addDialog({
-                cssClass: 'theme-orange-light has-fireworks user-score user-level-'+level,
-                title: i18n.t('dialogs.level.title'),
-                message: i18n.t('dialogs.level.message.level_'+level),
-                button: i18n.t('dialogs.level.button')
-            });
-        });
-        user.on('change:palm', function(model, palm) {
-            if ( !palm )
-                return false;
-            var palmName = user.get('palmName');
-            self.addDialog({
-                cssClass: 'theme-orange-light has-fireworks user-score user-palm-'+palmName,
-                title: i18n.t('dialogs.palm.title'),
-                message: i18n.t('dialogs.palm.message.'+palmName),
-                button: i18n.t('dialogs.palm.button')
-            });
-        });
+
 
         // require('../profile/login.view').openDialog({
         //     message: 'Vous devez être connecté pour transmettre votre observation.'
@@ -84,33 +62,59 @@ var Layout = Marionette.LayoutView.extend({
         });*/
     },
 
+    addListeners: function() {
+        var self = this;
+        var user = User.model.getInstance();
+        user.on('change:level', function(model, level) {
+            if (!level)
+                return false;
+            self.addDialog({
+                cssClass: 'theme-orange-light has-fireworks user-score user-level-' + level,
+                title: i18n.t('dialogs.level.title'),
+                message: i18n.t('dialogs.level.message.level_' + level),
+                button: i18n.t('dialogs.level.button')
+            });
+        });
+        user.on('change:palm', function(model, palm) {
+            if (!palm)
+                return false;
+            var palmName = user.get('palmName');
+            self.addDialog({
+                cssClass: 'theme-orange-light has-fireworks user-score user-palm-' + palmName,
+                title: i18n.t('dialogs.palm.title'),
+                message: i18n.t('dialogs.palm.message.' + palmName),
+                button: i18n.t('dialogs.palm.button')
+            });
+        });
+    },
+
     addDialog: function(data) {
         var self = this;
 
-        var message = '<h3>'+data.title+'</h3><p>'+data.message+'</p>';
+        var message = '<h3>' + data.title + '</h3><p>' + data.message + '</p>';
 
         var dialog = new Dialog({
             message: message,
-            cssClass: 'fs-dialog text-center '+data.cssClass,
+            cssClass: 'fs-dialog text-center ' + data.cssClass,
             buttons: [{
                 label: data.button,
                 //cssClass: 'btn-primary',
-                action: function(dialog){
+                action: function(dialog) {
                     dialog.close();
                 }
             }],
-            onhidden: function(dialog){
+            onhidden: function(dialog) {
                 self.dialogs.shift();
                 self.openDialog();
             }
         });
         this.dialogs.push(dialog);
-        if ( this.dialogs.length == 1 )
+        if (this.dialogs.length == 1)
             this.openDialog();
     },
 
     openDialog: function() {
-        if ( !this.dialogs.length )
+        if (!this.dialogs.length)
             return false;
 
         var dialog = this.dialogs[0];
@@ -132,14 +136,14 @@ var instance = null;
 
 module.exports = {
     init: function() {
-        if ( instance ) {
+        if (instance) {
             console.log('An instance still exists');
         } else {
             instance = new Layout();
         }
     },
     getInstance: function() {
-        if ( !instance ) {
+        if (!instance) {
             console.log('You have to call init() first');
             return null;
         }

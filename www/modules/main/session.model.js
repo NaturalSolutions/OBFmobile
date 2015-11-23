@@ -115,17 +115,23 @@ var SessionModel = Backbone.Model.extend({
 
     logout: function() {
         var self = this;
+        var dfd = $.Deferred();
         var query = {
             url: config.apiUrl + "/user/logout.json",
             type: 'post',
             contentType: "application/json",
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(errorThrown);
+            error: function(error) {
+                console.log(error);
+                dfd.reject(error);
             },
             success: function(response) {
                 console.log(response);
                 self.set('isAuth', false);
                 self.set('authStatus', 'unlogged');
+                
+                User.model.getInstance().off('change:level');
+                User.model.getInstance().off('change:palm');
+
                 self.becomesAnonymous(User.model.getInstance()).then(function() {
                     self.set('isAuth', false);
                     self.set('authStatus', 'unlogged');
@@ -133,12 +139,14 @@ var SessionModel = Backbone.Model.extend({
                         trigger: true
                     });
                 });
-
+                dfd.resolve(response);
             }
         };
         this.getCredentials(query).then(function() {
             $.ajax(query);
         });
+
+        return dfd;
     },
 
     becomesAnonymous: function() {
