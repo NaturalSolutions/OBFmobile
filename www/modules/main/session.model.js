@@ -128,7 +128,7 @@ var SessionModel = Backbone.Model.extend({
                 console.log(response);
                 self.set('isAuth', false);
                 self.set('authStatus', 'unlogged');
-                
+
                 User.model.getInstance().off('change:level');
                 User.model.getInstance().off('change:palm');
 
@@ -152,7 +152,7 @@ var SessionModel = Backbone.Model.extend({
     becomesAnonymous: function() {
         var dfd = $.Deferred();
         var usersCollection = User.collection.getInstance();
-        this.findUserByMail().then(function(anonymous) {
+        this.findUserByMailAnonymous().then(function(anonymous) {
             User.model.clean();
             if (!User.model.getInstance()) {
                 User.model.init();
@@ -168,7 +168,7 @@ var SessionModel = Backbone.Model.extend({
         return dfd;
     },
 
-    findUserByMail: function() {
+    findUserByMailAnonymous: function() {
         var dfd = $.Deferred();
         var userCollection = User.collection.getInstance();
         userCollection.fetch({
