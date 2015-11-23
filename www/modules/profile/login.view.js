@@ -27,13 +27,22 @@ var View = Marionette.LayoutView.extend({
 
     serializeData: function() {
         return {
-            user: this.model
+            user: this.model,
         };
     },
 
     onRender: function(options) {
         //this.session.isConnected();
         this.$el.find('.donutchart').nsDonutChart();
+    },
+
+    onShow: function() {
+        var self = this;
+
+        this.$el.find('input.js-autocomplete').autocomplete({
+            source: User.collection.getInstance().pluck("email"),
+            appendTo: self.$el.find('.js-autocomplete-result'),
+        });
     },
 
     //log a user for 23 days (see cookie)

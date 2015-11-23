@@ -1,6 +1,10 @@
 <form>
-    <div class="form-group form-group-lg">
-        <input name="login" type="text" class="form-control" value="<%= data.user.get('email') %>" placeholder="Entrez votre email">
+<!--     <div class="form-group form-group-lg">
+        <input name="login" type="text" class="form-control current-mail" value="<%= data.user.get('email') %>" placeholder="Entrez votre email">
+    </div> -->
+    <div class="form-group">
+        <input name ="login" type="text" class="form-control js-autocomplete" placeholder="<%= data.user.get('email') ? data.user.get('email') : 'Saisir un email' %>" />
+        <div class="js-autocomplete-result autocomplete-result"></div>
     </div>
     <div class="form-group form-group-lg">
         <input type="password" name="password" class="form-control" placeholder="Entrez un mot de passe">
