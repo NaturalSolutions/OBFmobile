@@ -174,7 +174,7 @@ var SessionModel = Backbone.Model.extend({
         userCollection.fetch({
             success: function(users) {
                 var userLogged;
-                if (users.length > 1) {
+                if (users.length > 0) {
                     userLogged = users.findWhere({
                         'email': ''
                     });
