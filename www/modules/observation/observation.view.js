@@ -201,7 +201,7 @@ var Layout = Marionette.LayoutView.extend({
         var self = this;
         e.preventDefault();
         // test online 
-        if (!Session.model.getInstance().get('authStatus')) {
+        if (!Session.model.getInstance().get('network')) {
             //account exists
             var account = this.accountExists();
             if (account)

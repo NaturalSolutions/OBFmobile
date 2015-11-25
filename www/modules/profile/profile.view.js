@@ -348,7 +348,7 @@ module.exports = {
             message: $message,
             onhide: function(dialog) {
                 session.off('change:isAuth', onAuthChange);
-                if (session.get('isAuth') || (!session.get('authStatus')))
+                if (session.get('isAuth') || (!session.get('network')))
                     dfd.resolve();
                 else
                     dfd.reject();

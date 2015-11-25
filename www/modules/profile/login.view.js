@@ -67,8 +67,7 @@ var View = Marionette.LayoutView.extend({
 
 
         //test connection and manage the offline
-        var stateConnection = Utilities.checkConnection();
-        if ((stateConnection === 'No network connection' && navigator.connection) || (!stateConnection)) {
+        if (!Session.model.getInstance().get('network')) {
             Dialog.show({
                 closable: true,
                 message: i18n.t('dialogs.noNetworkConnection.login'),
@@ -83,6 +82,7 @@ var View = Marionette.LayoutView.extend({
                 email: username
             });
             User.model.getInstance().set(selectedUser.attributes);
+            Session.model.getInstance().set('isAuth', true);
 
             return false;
         }
@@ -151,7 +151,6 @@ var View = Marionette.LayoutView.extend({
             .then(function() {
                 self.session.set({
                     'isAuth': true,
-                    'authStatus': 'logged'
                 });
                 dfd.resolve();
             });

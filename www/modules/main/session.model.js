@@ -12,12 +12,20 @@ var SessionModel = Backbone.Model.extend({
     defaults: {
         token: null,
         isAuth: false,
-        authStatus: ''
+        authStatus: '',
+        network: true,
     },
     initialize: function() {
         this.on('change:isAuth', function() {
             $('body').toggleClass('user-logged user-unlogged');
         });
+        this.on('change:network', function() {
+            $('body').toggleClass('network not-network');
+        });
+    },
+
+    noNetwok: function() {
+        console.log('no network!');
     },
 
     getToken: function() {
@@ -114,6 +122,10 @@ var SessionModel = Backbone.Model.extend({
     },
 
     logout: function() {
+        if (!this.get('network')) {
+            this.logoutNoNetwork();
+            return false;
+        }
         var self = this;
         var dfd = $.Deferred();
         var query = {
@@ -127,14 +139,12 @@ var SessionModel = Backbone.Model.extend({
             success: function(response) {
                 console.log(response);
                 self.set('isAuth', false);
-                self.set('authStatus', 'unlogged');
 
                 User.model.getInstance().off('change:level');
                 User.model.getInstance().off('change:palm');
 
                 self.becomesAnonymous(User.model.getInstance()).then(function() {
                     self.set('isAuth', false);
-                    self.set('authStatus', 'unlogged');
                     Router.getInstance().navigate('', {
                         trigger: true
                     });
@@ -147,6 +157,10 @@ var SessionModel = Backbone.Model.extend({
         });
 
         return dfd;
+    },
+
+    logoutNoNetwork: function() {
+
     },
 
     becomesAnonymous: function() {
@@ -193,7 +207,7 @@ var SessionModel = Backbone.Model.extend({
         });
         return dfd;
     },
-//TODO replace userExitsLocal
+    //TODO replace userExitsLocal
     manageAccount: function(model) {
         var dfd = $.Deferred();
         User.model.clean();

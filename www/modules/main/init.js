@@ -48,7 +48,7 @@ function init() {
         window.addEventListener("online", function() {
             console.log("online");
             Session.model.getInstance().set({
-                'authStatus': true
+                'network': true
             });
         }, false);
         window.addEventListener("offline", function() {
@@ -57,17 +57,17 @@ function init() {
                 message: i18n.t('dialogs.noNetworkConnection.default')
             });
                 Session.model.getInstance().set({
-                    'authStatus': false
+                    'network': false
                 });
         }, false);
     } else {
         if (navigator.onLine) {
             Session.model.getInstance().set({
-                'authStatus': true
+                'network': true
             });
         } else {
             Session.model.getInstance().set({
-                'authStatus': false
+                'network': false
             });
         }
     }
@@ -224,7 +224,7 @@ function init() {
 
     var getSessionStatus = function() {
         var deferred = $.Deferred();
-        if (Session.model.getInstance().get('authStatus')) {
+        if (Session.model.getInstance().get('network')) {
             var userCollection = User.collection.getInstance();
 
             //TODO test connection
