@@ -50,7 +50,9 @@
     "node-underscorify": "0.0.14"
   },
   "dependencies": {
+    "aliasify": "^1.8.0",
     "backbone": "^1.2.1",
+    "backbone-forms": "^0.14.0",
     "backbone-validation": "^0.11.5",
     "backbone.localstorage": "^1.1.16",
     "backbone.marionette": "^2.4.3",
@@ -64,6 +66,7 @@
     "jquery-ui": "^1.10.5",
     "lodash": "^3.10.0",
     "moment": "^2.10.6",
-    "swiper": "^3.1.0"
+    "swiper": "^3.1.0",
+    "underscore": "^1.8.3"
   }
 }

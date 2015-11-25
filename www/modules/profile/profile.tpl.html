@@ -1,44 +1,26 @@
-<form>
-    <fieldset class="well user-infos">
-        <div class="form-group form-group-lg required">
-            <input id="lastname" name="lastname" type="text" class="form-control registerModel-js updateModel-js" value="<%= data.user.get('lastname') %>" placeholder="Nom">
-        </div>
-        <div class="form-group form-group-lg required">
-            <input id="firstname" name="firstname" type="text" class="form-control registerModel-js updateModel-js" value="<%= data.user.get('firstname') %>" placeholder="Prénom">
-        </div>
-        <div class="form-group form-group-lg required">
-            <input id="email" name="email" type="text" class="form-control registerModel-js updateModel-js" value="<%= data.user.get('email') %>" placeholder="Email">
-        </div>
-        <% if(!data.user.get('externId')) {%>
-        <div class="form-group form-group-lg required">
-            <input id="email2" name="email2" type="text" class="form-control registerModel-js no-paste-js" placeholder="Confirmer votre email">
-        </div>
-        <% } %>
-        <% if(!data.user.get('externId')) {%>
-        <div class="form-group form-group-lg">
-            <input type="password" name="password" class="form-control" id="password" placeholder="Mot de passe">
-        </div>
-        <div class="form-group form-group-lg">
-            <input type="password" name="password2" class="form-control no-paste-js" id="password2" placeholder="Confirmer le mot de passe">
-        </div>
-        <% } else {%>
-        <div><a class="request-npw-js" >Changer de mot de passe</a></div>
-        <% } %>
+<form novalidate>
+    <fieldset class="well user-infos" data-fields="firstname,lastname,email<% if(!data.user.externId) {%>,email2,password,password2<%}%>"></fieldset>
+    <% if(data.user.externId) {%>
+    <fieldset class="well change-password">
+      <button type="button" class="request-npw-js btn-block btn-link" >Changer de mot de passe</button>
     </fieldset>
-    <fieldset class="well newsletter">
-      <div class="form-group form-group-lg required">
+    <% } %>
+    <fieldset class="well newsletter" data-fields="newsletter">
+      <!-- <div class="form-group form-group-lg required">
           <label>Newsletter</label>
           <div class="checkbox">
             <label>
                 M'abonner à la newsletter
-                <input id="newsletter" name="newsletter" type="checkbox" class="registerModel-js updateModel-js" <% if(data.user.get( 'newsletter')) { %>
-                <%= 'checked' %>
-                    <% } %> >
+                <input name="newsletter" type="checkbox" class="registerModel-js" />
             </label>
           </div>
-      </div>
+      </div> -->
     </fieldset>
     <div class="footer">
-      <button type="submit" class="btn btn-lg submit btn-primary btn-block"><%= i18n.t('pages.profile.form.submit') %></button>
+      <button type="submit" class="btn btn-lg submit btn-primary btn-block pos-relative">
+        <%= i18n.t('pages.profile.form.submit') %>
+        <% var spinnerTpl = require('../spinner/spinner.tpl.html'); %>
+        <%= spinnerTpl({className:'spinner-white icon-right loader'}) %>
+      </button>
     </div>
 </form>

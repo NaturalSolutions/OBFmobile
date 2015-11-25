@@ -38,6 +38,12 @@
         "mission_unaccept": "Vous avez annulé la mission",
         "mission_complete": "Mission accomplie !"
     },
+    "validation": {
+        "errors": {
+            "required": "Ce champs est requis",
+            "email": "Veuillez saisir un email valide"
+        }
+    },
     "user": {
         "score": {
             "level": {
@@ -113,7 +119,8 @@
             "login": "Vous n'avez pas de réseau internet, vous devrez vous reconnecter pour transmettre vos observations.",
             "registration": "Vous n'avez pas de réseau internet, vous devrez finaliser votre inscription pour transmettre vos observations.",
             "observation": "Vous devez avoir accès au réseau internet, pour transmettre vos observations."
-        }
+        },
+        "passwdError": "Mot de passe incorrecte."
     },
     "pages": {
         "home": {

@@ -26,32 +26,6 @@ var UserModel = Backbone.Model.extend({
         }
     },
     url: config.coreUrl,
-    // validation: function() {
-    //   var rules = {
-    //     firstname: {
-    //       required: true
-    //     },
-    //     lastname: {
-    //       required: true
-    //     },
-    //     email: {
-    //       required: true,
-    //       pattern: 'email'
-    //     },
-    //     email2: {
-    //       equalTo: 'email'
-    //     },
-    //   };
-    //   if (!this.get('externId')) {
-    //       rules.password = {
-    //           required: true,
-    //           minLength: 6
-    //       };
-    //       rules.password2 = {
-    //           equalTo: 'password'  //       };
-    //   }
-    //   return rules;
-    // },
     get: function(attr) {
         var self = this;
         var accessorName = 'get' + _.capitalize(attr);

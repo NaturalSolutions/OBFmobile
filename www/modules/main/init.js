@@ -2,6 +2,8 @@
 
 var Backbone = require('backbone'),
     BackboneValidation = require('backbone-validation'),
+    NsBackboneValidation = require('./ns-backbone-validation'),
+    BackboneForms = require('backbone-forms'),
     LocalStorage = require("backbone.localstorage"),
     Marionette = require('backbone.marionette'),
     $ = require('jquery'),
@@ -15,6 +17,7 @@ var Backbone = require('backbone'),
     datetimepicker = require('eonasdan-bootstrap-datetimepicker'),
     _ = require('lodash'),
     _ns = require('lodash-ns'),
+    BackboneFormsApp = require('./app-backbone-form'),
     Observation = require('../observation/observation.model'),
     i18n = require('i18next-client'),
     User = require('../profile/user.model'),
@@ -264,6 +267,8 @@ function init() {
     app.on('start', function() {
         //iOS During initial startup, the first offline event (if applicable) takes at least a second to fire.
         setTimeout(function() {
+            NsBackboneValidation.init();
+            BackboneFormsApp.init();
             Router.getInstance();
             main.init();
             main.getInstance().render();

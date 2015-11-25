@@ -228,7 +228,7 @@ module.exports = Marionette.Object.extend({
     updatePassword: function() {
         var user = User.model.getInstance();
 
-        main.getInstance().rgMain.show(new UpdatePassword({
+        main.getInstance().rgMain.show(new UpdatePassword.Page({
             name: 'updatepassword',
             model: user
         }), {
