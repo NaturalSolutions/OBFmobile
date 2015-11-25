@@ -10,6 +10,7 @@ var Backbone = require('backbone'),
     Router = require('../routing/router'),
     i18n = require('i18next-client'),
     Main = require('../main/main.view'),
+    Utilities = require('../main/utilities'),
     User = require('../profile/user.model');
 
 var View = Marionette.LayoutView.extend({
@@ -38,10 +39,13 @@ var View = Marionette.LayoutView.extend({
 
     onShow: function() {
         var self = this;
-
-        this.$el.find('input.js-autocomplete').autocomplete({
-            source: User.collection.getInstance().pluck("email"),
-            appendTo: self.$el.find('.js-autocomplete-result'),
+        User.collection.getInstance().fetch({
+            success: function() {
+                self.$el.find('input.js-autocomplete').autocomplete({
+                    source: User.collection.getInstance().pluck("email"),
+                    appendTo: self.$el.find('.js-autocomplete-result'),
+                });
+            }
         });
     },
 
@@ -62,8 +66,27 @@ var View = Marionette.LayoutView.extend({
         var password = $form.find('input[name="password"]').val();
 
 
-        //TODO test connection
-        //TODO manage the registration when it is not finished server side
+        //test connection and manage the offline
+        var stateConnection = Utilities.checkConnection();
+        if ((stateConnection === 'No network connection' && navigator.connection) || (!stateConnection)) {
+            Dialog.show({
+                closable: true,
+                message: i18n.t('dialogs.noNetworkConnection.login'),
+                onhide: function(dialog) {
+                    self.$el.removeClass('block-ui');
+                    $form.removeClass('loading');
+                }
+            });
+            // instance = selected user
+            var usersColl = User.collection.getInstance();
+            var selectedUser = usersColl.findWhere({
+                email: username
+            });
+            User.model.getInstance().set(selectedUser.attributes);
+
+            return false;
+        }
+
         this.session.login(username, password).then(function(account) {
             $.when(self.session.userExistsLocal(account), self.syncUser(account)).then(function() {
                 self.$el.removeClass('block-ui');
@@ -115,16 +138,16 @@ var View = Marionette.LayoutView.extend({
         // sync user
         //TODO manage obs etc.
         User.model.getInstance().set({
-                "lastname": _.get(response.user.field_last_name, 'und[0].value', ''),
-                "firstname": _.get(response.user.field_first_name, 'und[0].value', ''),
-                "email": response.user.mail,
-                "externId": response.user.uid,
-                "newsletter": _.get(response.user.field_newsletter, 'und[0].value', ''),
-                // "count_obs": response.count_obs,
-                // "time_forest": response.time_forest,
-                // "obs": response.obs,
-            })
-            .save()
+            "lastname": _.get(response.user.field_last_name, 'und[0].value', ''),
+            "firstname": _.get(response.user.field_first_name, 'und[0].value', ''),
+            "email": response.user.mail,
+            "externId": response.user.uid,
+            "newsletter": _.get(response.user.field_newsletter, 'und[0].value', ''),
+            // "count_obs": response.count_obs,
+            // "time_forest": response.time_forest,
+            // "obs": response.obs,
+        });
+        User.collection.getInstance().add(User.model.getInstance()).save()
             .then(function() {
                 self.session.set({
                     'isAuth': true,

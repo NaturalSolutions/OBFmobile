@@ -107,7 +107,13 @@
             },
             "button": "Continuer"
         },
-        "loginError": "Email ou mot de passe incorrecte."
+        "loginError": "Email ou mot de passe incorrecte.",
+        "noNetworkConnection": {
+            "default": "Vous n'avez pas de réseau internet",
+            "login": "Vous n'avez pas de réseau internet, vous devrez vous reconnecter pour transmettre vos observations.",
+            "registration": "Vous n'avez pas de réseau internet, vous devrez finaliser votre inscription pour transmettre vos observations.",
+            "observation": "Vous devez avoir accès au réseau internet, pour transmettre vos observations."
+        }
     },
     "pages": {
         "home": {
@@ -147,7 +153,8 @@
                 "need_login": "Vous devez être connecté pour transmettre votre observation.",
                 "need_registration": "Vous devez être inscrit pour transmettre votre observation.",
                 "need_complete_registration": "Vous devez finaliser votre inscription pour transmettre votre observation.",
-                "need_complete": "Vous êtes connecté vous pouvez transmettre votre observation."
+                "need_complete": "Vous êtes connecté vous pouvez transmettre votre observation.",
+                "need_login_offline": "Vous devez être connecté pour enregistrer votre observation."
             }
         },
         "settings": {

@@ -16,6 +16,7 @@ var Backbone = require('backbone'),
     Main = require('../main/main.view'),
     i18n = require('i18next-client'),
     Login = require('../profile/login.view'),
+    Utilities = require('../main/utilities'),
     Profile = require('../profile/profile.view');
 
 var Layout = Marionette.LayoutView.extend({
@@ -199,11 +200,32 @@ var Layout = Marionette.LayoutView.extend({
     onFormSubmit: function(e) {
         var self = this;
         e.preventDefault();
+        // test online 
+        if (!Session.model.getInstance().get('authStatus')) {
+            //account exists
+            var account = this.accountExists();
+            if (account)
+                this.saveObs();
+            return false;
+        }
 
         if (self.$el.hasClass('form-status-unsaved'))
             self.saveObs();
         else if (self.$el.hasClass('form-status-shared-0'))
             self.sendObs();
+    },
+
+    accountExists: function() {
+        var account;
+        if (!this.user.get('email')){
+            Login.openDialog({
+                message: i18n.t('pages.observation.dialogs.need_login_offline')
+            });
+        account = false;
+        } else {
+            account = true;
+        }
+        return account;
     },
 
     saveObs: function() {
@@ -280,13 +302,13 @@ var Layout = Marionette.LayoutView.extend({
                 self.$el.removeClass('sending');
                 Main.getInstance().unblockUI();
                 var dfd;
-                if ( self.user.get('externId') )
+                if (self.user.get('externId'))
                     dfd = Login.openDialog({
                         message: i18n.t('pages.observation.dialogs.need_login')
                     });
                 else {
                     var message = i18n.t('pages.observation.dialogs.need_registration');
-                    if ( self.user.get('firstname')|| self.user.get('lastname') || self.user.get('email') )
+                    if (self.user.get('firstname') || self.user.get('lastname') || self.user.get('email'))
                         message = i18n.t('pages.observation.dialogs.need_complete_registration');
                     dfd = Profile.openDialog({
                         message: message

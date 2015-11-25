@@ -10,6 +10,7 @@ var Backbone = require('backbone'),
     Session = require('../main/session.model'),
     User = require('./user.model'),
     Router = require('../routing/router'),
+    Utilities = require('../main/utilities'),
     i18n = require('i18next-client');
 
 var View = Marionette.LayoutView.extend({
@@ -25,21 +26,21 @@ var View = Marionette.LayoutView.extend({
 
     serializeData: function() {
         return {
-            user: this.model
+            user: User.model.getInstance()
         };
     },
 
     onRender: function(options) {
-        this.listenTo(this.model, 'validated:invalid', function(model, errors) {
-            console.log(errors);
-        });
+        // this.listenTo(this.model, 'validated:invalid', function(model, errors) {
+        //     console.log(errors);
+        // });
         this.$el.find('.no-paste-js').nsNoPaste();
     },
 
     onFormSubmit: function(e) {
         e.preventDefault();
 
-        if ( this.model.get('externId') )
+        if (User.model.getInstance().get('externId'))
             this.update();
         else
             this.signin();
@@ -61,10 +62,12 @@ var View = Marionette.LayoutView.extend({
             } else {
                 newValue = $field.is(':checked');
             }
-            self.model.set(fieldName, newValue);
+            User.model.getInstance().set(fieldName, newValue);
         });
 
-        self.model.save();
+        // self.model.save();
+        User.collection.getInstance().add(User.model.getInstance()).save();
+
 
         var passwd = $form.find('input[name="password"]').val();
         var passwd2 = $form.find('input[name="password2"]').val();
@@ -72,43 +75,60 @@ var View = Marionette.LayoutView.extend({
         var data = {
             field_first_name: {
                 und: [{
-                    value: self.model.get('firstname')
+                    value: User.model.getInstance().get('firstname')
                 }]
             },
             field_last_name: {
                 und: [{
-                    value: self.model.get('lastname')
+                    value: User.model.getInstance().get('lastname')
                 }]
             },
             field_newsletter: {
-                und: ((self.model.get('newsletter')) ? "[0]{value:" + true + "}" : null)
+                und: ((User.model.getInstance().get('newsletter')) ? "[0]{value:" + true + "}" : null)
             },
-            mail: self.model.get('email'),
-            conf_mail: self.model.get('email'),
+            mail: User.model.getInstance().get('email'),
+            conf_mail: User.model.getInstance().get('email'),
 
             pass: passwd,
             pass2: passwd2
         };
 
-        var query = {
-            url: config.apiUrl + "/obfmobile_user.json",
-            type: 'post',
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(errorThrown);
-            },
-            success: function(response) {
-                self.session.login(data.mail, data.pass)
-                    .then(function() {
-                        self.$el.removeClass('block-ui');
-                        self.model.set('externId', response.uid).save();
-                    });
-            }
-        };
-        this.session.getCredentials(query).done(function() {
-            $.ajax(query);
-        });
+        var stateConnection = Utilities.checkConnection();
+        if ((stateConnection === 'No network connection' && navigator.connection) || (!stateConnection)) {
+            Dialog.show({
+                closable: true,
+                message: i18n.t('dialogs.noNetworkConnection.registration'),
+                onhide: function(dialog) {
+                    self.$el.removeClass('block-ui');
+                    $form.removeClass('loading');
+                }
+            });
+            // TODO save and fill instance
+            User.collection.getInstance().add(User.model.getInstance());
+            User.model.getInstance().save();
+        } else {
+            var query = {
+                url: config.apiUrl + "/obfmobile_user.json",
+                type: 'post',
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                },
+                success: function(response) {
+                    self.session.login(data.mail, data.pass)
+                        .then(function() {
+                            self.$el.removeClass('block-ui');
+                            User.model.getInstance().set('externId', response.uid);
+                            User.collection.getInstance().add(User.model.getInstance());
+                            User.model.getInstance().save();
+                        });
+                }
+            };
+            this.session.getCredentials(query).done(function() {
+                $.ajax(query);
+            });
+        }
     },
 
     updateModel: function() {
@@ -144,7 +164,7 @@ var View = Marionette.LayoutView.extend({
             }
         });
         return {
-            "dfd": self.model.save(),
+            "dfd": User.collection.getInstance().add(self.model).save(),
             "attributesChanged": attributeChanged,
             "previousattributes": previousAttributes
         };
@@ -154,7 +174,7 @@ var View = Marionette.LayoutView.extend({
     update: function(e) {
         var self = this;
         var saveFieldsFinished = this.updateModel();
-        
+
         saveFieldsFinished.dfd.then(function() {
             var $form = self.$el.find('form');
             /*var passwd = $form.find('input[name="password"]').val();
@@ -261,7 +281,7 @@ module.exports = {
             message: $message,
             onhide: function(dialog) {
                 session.off('change:isAuth', onAuthChange);
-                if (session.get('isAuth'))
+                if (session.get('isAuth') || (!session.get('authStatus')))
                     dfd.resolve();
                 else
                     dfd.reject();

@@ -22,7 +22,10 @@ var Backbone = require('backbone'),
     Departement = require('../main/departement.model'),
     Mission = require('../mission/mission.model'),
     Session = require('../main/session.model'),
+    Utilities = require('../main/utilities'),
+    Dialog = require('bootstrap-dialog'),
     Router = require('../routing/router');
+
 
 /*var badgesInstanceColl = require('./models/badge').instanceColl;
 var badgesColl = require('./models/badge').BadgeCollection;*/
@@ -38,6 +41,34 @@ function init() {
         currentPos.unwatch();
     }, false);
     currentPos.watch();*/
+    if (navigator.connection) {
+        window.addEventListener("online", function() {
+            console.log("online");
+            Session.model.getInstance().set({
+                'authStatus': true
+            });
+        }, false);
+        window.addEventListener("offline", function() {
+            Dialog.alert({
+                closable: true,
+                message: i18n.t('dialogs.noNetworkConnection.default')
+            });
+                Session.model.getInstance().set({
+                    'authStatus': false
+                });
+        }, false);
+    } else {
+        if (navigator.onLine) {
+            Session.model.getInstance().set({
+                'authStatus': true
+            });
+        } else {
+            Session.model.getInstance().set({
+                'authStatus': false
+            });
+        }
+    }
+
 
     window.addEventListener('native.keyboardshow', function() {
         $('body').addClass('keyboardshow');
@@ -151,14 +182,12 @@ function init() {
     };
 
     var getUser = function(userLogged) {
-        var userCollection = User.collection.getInstance();
-
         var deferred = $.Deferred();
         if (userLogged) {
             User.model.init();
             User.model.getInstance().set(userLogged.attributes);
         } else {
-            userCollection.fetch({
+            User.collection.getInstance().fetch({
                 success: function(data) {
                     var session = Session.model.getInstance();
                     if (data.length) {
@@ -166,7 +195,8 @@ function init() {
                         deferred.resolve();
                     } else {
                         User.model.init();
-                        userCollection.add(User.model.getInstance()).save();
+                        // userCollection.add(User.model.getInstance()).save();
+                        User.model.getInstance().save();
                         deferred.resolve();
                     }
                 },
@@ -191,46 +221,55 @@ function init() {
 
     var getSessionStatus = function() {
         var deferred = $.Deferred();
+        if (Session.model.getInstance().get('authStatus')) {
+            var userCollection = User.collection.getInstance();
 
-        var userCollection = User.collection.getInstance();
+            //TODO test connection
+            var session = Session.model.getInstance();
+            var userState = session.isConnected();
 
-        //TODO test connection
-        var session = Session.model.getInstance();
-        var userState = session.isConnected();
-
-        userState.then(function(data) {
-            if (data.user.uid) {
-                userCollection.fetch({
-                    success: function(users) {
-                        var userLogged = users.findWhere({
-                            'externId': data.user.uid
-                        });
-                        getUser(userLogged);
-                        Session.model.getInstance().set({
-                            'isAuth': true
-                        });
+            userState.then(function(data) {
+                if (data.user.uid) {
+                    userCollection.fetch({
+                        success: function(users) {
+                            var userLogged = users.findWhere({
+                                'externId': data.user.uid
+                            });
+                            getUser(userLogged);
+                            Session.model.getInstance().set({
+                                'isAuth': true
+                            });
+                            deferred.resolve();
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+                } else {
+                    getUser().then(function() {
                         deferred.resolve();
-                    },
-                    error: function(error) {
-                        console.log(error);
-                    }
-                });
-            } else {
-                getUser().then(function() {
-                    deferred.resolve();
-                });
-            }
-        });
+                    });
+                }
+            });
+        } else {
+            getUser().then(function() {
+                deferred.resolve();
+            });
+        }
+
         return deferred;
     };
 
     var app = new Marionette.Application();
     app.on('start', function() {
-        Router.getInstance();
-        main.init();
-        main.getInstance().render();
+        //iOS During initial startup, the first offline event (if applicable) takes at least a second to fire.
+        setTimeout(function() {
+            Router.getInstance();
+            main.init();
+            main.getInstance().render();
 
-        Backbone.history.start();
+            Backbone.history.start();
+        }, 1200);
     });
 
     $.when(getI18n(), getMissions(), getDepartements(), getObservations(), getLogs(), getSessionStatus())

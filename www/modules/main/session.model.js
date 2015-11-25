@@ -152,7 +152,9 @@ var SessionModel = Backbone.Model.extend({
     becomesAnonymous: function() {
         var dfd = $.Deferred();
         var usersCollection = User.collection.getInstance();
-        this.findUserByMailAnonymous().then(function(anonymous) {
+        var mail = '';
+        var attribute = 'email';
+        this.findUser(attribute, mail).then(function(anonymous) {
             User.model.clean();
             if (!User.model.getInstance()) {
                 User.model.init();
@@ -168,15 +170,18 @@ var SessionModel = Backbone.Model.extend({
         return dfd;
     },
 
-    findUserByMailAnonymous: function() {
+    findUser: function(attribute, value) {
         var dfd = $.Deferred();
+
         var userCollection = User.collection.getInstance();
         userCollection.fetch({
             success: function(users) {
+                var myattribute = attribute;
+                var myvalue = value;
                 var userLogged;
                 if (users.length > 0) {
-                    userLogged = users.findWhere({
-                        'email': ''
+                    userLogged = _.find(users.models, function(user) {
+                        return user.get(myattribute) === myvalue;
                     });
                 }
                 dfd.resolve(userLogged);
@@ -188,6 +193,21 @@ var SessionModel = Backbone.Model.extend({
         });
         return dfd;
     },
+//TODO replace userExitsLocal
+    manageAccount: function(model) {
+        var dfd = $.Deferred();
+        User.model.clean();
+        User.model.init();
+        if (model) {
+            // user existe in local
+            User.model.getInstance().set(model.attributes);
+            dfd.resolve(User.model.getInstance());
+        } else {
+            User.collection.getInstance().add(User.model.getInstance()).save();
+            dfd.resolve(User.model.getInstance());
+        }
+        return dfd;
+    },
 
     userExistsLocal: function(response) {
         var self = this;
@@ -195,8 +215,9 @@ var SessionModel = Backbone.Model.extend({
         var userCollection = User.collection.getInstance();
         userCollection.fetch({
             success: function(users) {
-                if (users.length > 1) {
+                if (users.length > 0) {
                     User.model.clean();
+                    User.model.init();
                     var userExists = users.findWhere({
                         'externId': response.user.uid
                     });
