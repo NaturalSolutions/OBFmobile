@@ -103,7 +103,7 @@ var View = Marionette.LayoutView.extend({
                     self.$el.removeClass('block-ui');
                     $form.removeClass('loading');
                     console.log(errorThrown);
-                    self.dfd.reject();
+                    $form.find('input[name="cur_password"]').val('');
                     Dialog.alert({
                         closable: true,
                         message: i18n.t('dialogs.passwdError')
@@ -162,7 +162,7 @@ module.exports = {
                 dialog = null;
             }
         });
-        view.dfd.always(function() {
+        view.dfd.then(function() {
             if ( dialog )
                 dialog.close();
         });

@@ -41,7 +41,8 @@
     "validation": {
         "errors": {
             "required": "Ce champs est requis",
-            "email": "Veuillez saisir un email valide"
+            "email": "Veuillez saisir un email valide",
+            "email_exists": "Cet email existe déjà"
         }
     },
     "user": {

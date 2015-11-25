@@ -50,14 +50,15 @@ var View = Marionette.LayoutView.extend({
                 editorAttrs: {
                     placeholder: "Email"
                 },
-                validators: ['required', 'email', function checkUsername(value, formValues) {
+                validators: ['required', 'email']
+                /*validators: ['required', 'email', function checkUsername(value, formValues) {
                     var err = {
                         type: 'email_exists',
                         message: 'Cet email existe déjà'
                     };
                     if ( self.emailExists )
                         return err;
-                }]
+                }]*/
             },
             newsletter: {
                 type: 'Checkboxes',
@@ -65,7 +66,9 @@ var View = Marionette.LayoutView.extend({
             }
         };
 
-        if ( !this.model.get('externId') ) {
+        if ( this.model.get('externId') )
+            _.set(formSchema.email, 'editorAttrs.readonly', 'readonly');
+        else {
             _.assign(formSchema, {
                 email2: {
                     type: 'Text',
@@ -91,6 +94,7 @@ var View = Marionette.LayoutView.extend({
                     }]
                 },
                 password2: {
+                    type: 'Password',
                     editorAttrs: {
                         placeholder: "Confirmer le mot de passe"
                     },
@@ -186,10 +190,17 @@ var View = Marionette.LayoutView.extend({
                 type: 'post',
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log(errorThrown);
+                error: function(error) {
+                    var errors = error.responseJSON;
                     self.$el.removeClass('block-ui');
                     $form.removeClass('loading');
+                    if ( _.includes(errors, 'mail_exists') || _.includes(errors, 'email_exists') ) {
+                        $form.find('input[name="email2"]').val('');
+                        Dialog.alert({
+                            closable: true,
+                            message: i18n.t('validation.errors.email_exists')
+                        });
+                    }
                 },
                 success: function(response) {
                     self.session.login(data.mail, data.pass)
