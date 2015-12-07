@@ -44,34 +44,60 @@ function init() {
         currentPos.unwatch();
     }, false);
     currentPos.watch();*/
-    if (navigator.connection) {
-        window.addEventListener("online", function() {
-            console.log("online");
-            Session.model.getInstance().set({
-                'network': true
-            });
-        }, false);
-        window.addEventListener("offline", function() {
-            Dialog.alert({
-                closable: true,
-                message: i18n.t('dialogs.noNetworkConnection.default')
-            });
-                Session.model.getInstance().set({
-                    'network': false
-                });
-        }, false);
+
+    if (navigator.onLine) {
+        Session.model.getInstance().set({
+            'network': true
+        });
     } else {
-        if (navigator.onLine) {
-            Session.model.getInstance().set({
-                'network': true
-            });
-        } else {
-            Session.model.getInstance().set({
-                'network': false
-            });
-        }
+        Session.model.getInstance().set({
+            'network': false
+        });
     }
 
+    window.addEventListener("online", function() {
+        console.log("online");
+        Session.model.getInstance().set({
+            'network': true
+        }).save();
+        //Manage requests aborted
+        Session.collection.getInstance().fetch();
+        _.forEach(Session.collection.getInstance().models, function(item) {
+            if (item.get('requestLogin'))
+                Session.model.getInstance().findUser('email', item.get('requestLogin')).then(function(user) {
+                    if (user)
+                        Session.model.getInstance().indexUsers(user.get('email')).then(function(response) {
+                            user.set({
+                                'externId': response[0].uid
+                            }).save();
+                            item.set({
+                                'requestLogin': '',
+                                'token': ''
+                            }).save();
+                        });
+                });
+            if (Session.model.getInstance().get('requestLogout'))
+                Session.model.getInstance().logout().then(function() {
+                    //delete request logout
+                    Session.model.getInstance().set({
+                        'requestLogout': '',
+                        'token': ''
+                    }).save();
+                });
+        });
+
+    }, false);
+    window.addEventListener("offline", function() {
+        Dialog.alert({
+            closable: true,
+            message: i18n.t('dialogs.noNetworkConnection.default')
+        });
+        Session.model.getInstance().set({
+            'network': false
+        });
+
+
+    }, false);
 
     window.addEventListener('native.keyboardshow', function() {
         $('body').addClass('keyboardshow');
@@ -265,16 +291,12 @@ function init() {
 
     var app = new Marionette.Application();
     app.on('start', function() {
-        //iOS During initial startup, the first offline event (if applicable) takes at least a second to fire.
-        setTimeout(function() {
-            NsBackboneValidation.init();
-            BackboneFormsApp.init();
-            Router.getInstance();
-            main.init();
-            main.getInstance().render();
+        BackboneFormsApp.init();
+        Router.getInstance();
+        main.init();
+        main.getInstance().render();
 
-            Backbone.history.start();
-        }, 1200);
+        Backbone.history.start();
     });
 
     $.when(getI18n(), getMissions(), getDepartements(), getObservations(), getLogs(), getSessionStatus())
@@ -284,12 +306,14 @@ function init() {
 }
 
 if (window.cordova) {
+    //iOS During initial startup, the first offline event (if applicable) takes at least a second to fire.
     setTimeout(function() {
         $('.splashscreen').remove();
         document.addEventListener("deviceready", init, false);
     }, 3000);
 
 } else {
+
     setTimeout(function() {
         $('.splashscreen').remove();
         $(document).ready(init);

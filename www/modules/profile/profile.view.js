@@ -30,7 +30,7 @@ var View = Marionette.LayoutView.extend({
         var self = this;
 
         var formSchema = {
-           firstname: {
+            firstname: {
                 type: 'Text',
                 editorAttrs: {
                     placeholder: "Prénom"
@@ -51,22 +51,25 @@ var View = Marionette.LayoutView.extend({
                     placeholder: "Email"
                 },
                 validators: ['required', 'email']
-                /*validators: ['required', 'email', function checkUsername(value, formValues) {
-                    var err = {
-                        type: 'email_exists',
-                        message: 'Cet email existe déjà'
-                    };
-                    if ( self.emailExists )
-                        return err;
-                }]*/
+                    /*validators: ['required', 'email', function checkUsername(value, formValues) {
+                        var err = {
+                            type: 'email_exists',
+                            message: 'Cet email existe déjà'
+                        };
+                        if ( self.emailExists )
+                            return err;
+                    }]*/
             },
             newsletter: {
                 type: 'Checkboxes',
-                options: [{val: true, label: "M'abonner à la newsletter"}]
+                options: [{
+                    val: true,
+                    label: "M'abonner à la newsletter"
+                }]
             }
         };
 
-        if ( this.model.get('externId') )
+        if (this.model.get('externId'))
             _.set(formSchema.email, 'editorAttrs.readonly', 'readonly');
         else {
             _.assign(formSchema, {
@@ -108,7 +111,7 @@ var View = Marionette.LayoutView.extend({
         }
 
         var userData = this.model.toJSON();
-        userData.newsletter = userData.newsletter ? [true]: [];
+        userData.newsletter = userData.newsletter ? [true] : [];
 
         this.form = new Backbone.Form({
             template: require('./profile.tpl.html'),
@@ -141,7 +144,7 @@ var View = Marionette.LayoutView.extend({
 
         var errors = this.form.validate();
         console.log(errors);
-        if ( errors )
+        if (errors)
             return false;
 
         var formValues = this.form.getValue();
@@ -159,7 +162,7 @@ var View = Marionette.LayoutView.extend({
             field_newsletter: {
                 und: ((formValues.newsletter.length) ? "[0]{value:" + true + "}" : null)
             },
-            mail:formValues.email,
+            mail: formValues.email,
             conf_mail: formValues.email,
             pass: formValues.password,
             pass2: formValues.password
@@ -230,7 +233,7 @@ var View = Marionette.LayoutView.extend({
 
         var errors = this.form.validate();
         console.log(errors);
-        if ( errors )
+        if (errors)
             return false;
 
         var formValues = this.form.getValue();

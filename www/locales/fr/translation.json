@@ -42,7 +42,8 @@
         "errors": {
             "required": "Ce champs est requis",
             "email": "Veuillez saisir un email valide",
-            "email_exists": "Cet email existe déjà"
+            "email_exists": "Cet email existe déjà",
+            "email_not_exists": "Cet email n'existe pas,. Voulez-vous créer un compte ?"
         }
     },
     "user": {

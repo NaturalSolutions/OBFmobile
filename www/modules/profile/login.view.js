@@ -65,45 +65,36 @@ var View = Marionette.LayoutView.extend({
         var username = $form.find('input[name="login"]').val();
         var password = $form.find('input[name="password"]').val();
 
-
-        //test connection and manage the offline
-        if (!Session.model.getInstance().get('network')) {
-            Dialog.show({
-                closable: true,
-                message: i18n.t('dialogs.noNetworkConnection.login'),
-                onhide: function(dialog) {
+        if (Session.model.getInstance().get('network'))
+            this.session.login(username, password).then(function(account) {
+                $.when(self.session.userExistsLocal(account), self.syncUser(account)).then(function() {
                     self.$el.removeClass('block-ui');
                     $form.removeClass('loading');
-                }
-            });
-            // instance = selected user
-            var usersColl = User.collection.getInstance();
-            var selectedUser = usersColl.findWhere({
-                email: username
-            });
-            User.model.getInstance().set(selectedUser.attributes);
-            Session.model.getInstance().set('isAuth', true);
+                    // Add listeners
+                    Main.getInstance().addListeners();
+                });
 
-            return false;
-        }
-
-        this.session.login(username, password).then(function(account) {
-            $.when(self.session.userExistsLocal(account), self.syncUser(account)).then(function() {
+            }, function(error) {
                 self.$el.removeClass('block-ui');
                 $form.removeClass('loading');
-                // Add listeners
-                Main.getInstance().addListeners();
+                // Dialog.alert({
+                //     closable: true,
+                //     message: i18n.t('dialogs.loginError')
+                // });
             });
-        }, function() {
-            self.$el.removeClass('block-ui');
-            $form.removeClass('loading');
-            Dialog.alert({
-                closable: true,
-                message: i18n.t('dialogs.loginError')
+        else {
+            this.session.loginNoNetwork(username).then(function(account) {
+                var noNetwork = Dialog.show({
+                    closable: true,
+                    message: i18n.t('dialogs.noNetworkConnection.login'),
+                    onhide: function(dialog) {
+                        self.$el.removeClass('block-ui');
+                        $form.removeClass('loading');
+                    }
+                });
             });
-        });
 
-
+        }
         /*var query = {
             url: config.apiUrl + "/user/logintoboggan.json",
             type: 'POST',
