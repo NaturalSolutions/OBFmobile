@@ -194,11 +194,16 @@ var View = Marionette.LayoutView.extend({
                     var errors = error.responseJSON;
                     self.$el.removeClass('block-ui');
                     $form.removeClass('loading');
-                    if ( _.includes(errors, 'mail_exists') || _.includes(errors, 'email_exists') ) {
+                    if (_.includes(errors, 'mail_exists') || _.includes(errors, 'email_exists')) {
                         $form.find('input[name="email2"]').val('');
                         Dialog.alert({
                             closable: true,
                             message: i18n.t('validation.errors.email_exists')
+                        });
+                    } else {
+                        Dialog.alert({
+                            closable: true,
+                            message: error.responseJSON
                         });
                     }
                 },
@@ -263,9 +268,11 @@ var View = Marionette.LayoutView.extend({
                     console.log(errorThrown);
                     self.$el.removeClass('block-ui');
                     $form.removeClass('loading');
-                    /*var previousAttrs = saveFieldsFinished.previousAttributes;
-                    self.model.set(previousAttrs).save();*/
-                    //self.render();
+                    Dialog.alert({
+                        closable: true,
+                        message: errorThrown
+                    });
+
                 },
                 success: function(response) {
                     self.$el.removeClass('block-ui');

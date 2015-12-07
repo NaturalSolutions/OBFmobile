@@ -217,11 +217,11 @@ var Layout = Marionette.LayoutView.extend({
 
     accountExists: function() {
         var account;
-        if (!this.user.get('email')){
+        if (!this.user.get('email')) {
             Login.openDialog({
                 message: i18n.t('pages.observation.dialogs.need_login_offline')
             });
-        account = false;
+            account = false;
         } else {
             account = true;
         }
@@ -307,11 +307,15 @@ var Layout = Marionette.LayoutView.extend({
                         message: i18n.t('pages.observation.dialogs.need_login')
                     });
                 else {
-                    var message = i18n.t('pages.observation.dialogs.need_registration');
-                    if (self.user.get('firstname') || self.user.get('lastname') || self.user.get('email'))
-                        message = i18n.t('pages.observation.dialogs.need_complete_registration');
-                    dfd = Profile.openDialog({
-                        message: message
+                    // var message = i18n.t('pages.observation.dialogs.need_registration');
+                    // if (self.user.get('firstname') || self.user.get('lastname') || self.user.get('email'))
+                    //     message = i18n.t('pages.observation.dialogs.need_complete_registration');
+                    // dfd = Profile.openDialog({
+                    //     message: message
+                    // });
+                    Dialog.alert({
+                        closable: true,
+                        message: error.responseJSON
                     });
                 }
                 dfd.then(function() {
@@ -405,6 +409,10 @@ var Layout = Marionette.LayoutView.extend({
                         },
                         error: function(error) {
                             console.log(error);
+                            Dialog.alert({
+                                closable: true,
+                                message: error.responseJSON
+                            });
                         }
                     };
                     self.session.getCredentials(query).then(function() {

@@ -43,6 +43,10 @@ var SessionModel = Backbone.Model.extend({
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log(errorThrown);
+                Dialog.alert({
+                    closable: true,
+                    message: errorThrown
+                });
                 dfd.reject();
             },
             success: function(response) {
@@ -66,7 +70,10 @@ var SessionModel = Backbone.Model.extend({
             dataType: "json",
             contentType: "application/json",
             error: function(jqXHR, textStatus, errorThrown) {
-                console.log(errorThrown);
+                Dialog.alert({
+                    closable: true,
+                    message: errorThrown
+                });
             },
             success: function(data) {
                 console.log('Hello user #' + data.user.uid);
@@ -105,9 +112,13 @@ var SessionModel = Backbone.Model.extend({
                 username: username,
                 password: password,
             }),
-            error: function(error) {
-                console.log(error);
-                dfd.reject(error);
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+                Dialog.alert({
+                    closable: true,
+                    message: errorThrown
+                });
+                dfd.reject(errorThrown);
             },
             success: function(response) {
                 dfd.resolve(response);
@@ -132,9 +143,13 @@ var SessionModel = Backbone.Model.extend({
             url: config.apiUrl + "/user/logout.json",
             type: 'post',
             contentType: "application/json",
-            error: function(error) {
-                console.log(error);
-                dfd.reject(error);
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+                dfd.reject(errorThrown);
+                Dialog.alert({
+                    closable: true,
+                    message: errorThrown
+                });
             },
             success: function(response) {
                 console.log(response);
