@@ -189,24 +189,34 @@ function init() {
         var departementCollection = new Departement.collection.getInstance();
 
         var deferred = $.Deferred();
-        $.getJSON('./data/departements.json')
-            .then(function(response) {
-                var departementDatas = response;
-                _.forEach(departementDatas, function(departementData) {
-                    var departement = new Departement.Model({
-                        code: departementData.code,
-                        label: departementData.title,
-                        title: departementData.title,
-                        lat: departementData.lat,
-                        lon: departementData.lon
-                    });
-                    departementCollection.add(departement);
-                });
-                deferred.resolve();
-            }, function(error) {
+        departementCollection.fetch({
+            success: function(data) {
+                if (data.length) {
+                    deferred.resolve();
+                } else {
+                    $.getJSON('./data/departements.json')
+                        .then(function(response) {
+                            var departementDatas = response;
+                            _.forEach(departementDatas, function(departementData) {
+                                var departement = new Departement.Model({
+                                    code: departementData.code,
+                                    label: departementData.title,
+                                    title: departementData.title,
+                                    lat: departementData.lat,
+                                    lon: departementData.lon
+                                });
+                                departementCollection.add(departement).save();
+                            });
+                            deferred.resolve();
+                        }, function(error) {
+                            console.log(error);
+                        });
+                }
+            },
+            error: function(error) {
                 console.log(error);
-            });
-
+            }
+        });
         return deferred;
     };
 

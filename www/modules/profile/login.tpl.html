@@ -1,15 +1,18 @@
 <form>
-<!--     <div class="form-group form-group-lg">
-        <input name="login" type="text" class="form-control current-mail" value="<%= data.user.get('email') %>" placeholder="Entrez votre email">
-    </div> -->
-    <div class="form-group">
-        <input name ="login" type="text" class="form-control js-autocomplete" placeholder="<%= data.user.get('email') ? data.user.get('email') : 'Saisir un email' %>" />
-        <div class="js-autocomplete-result autocomplete-result"></div>
+    <div class="well">
+        <fieldset class="email" >
+            <div class="form-group">
+                <input name="login" type="text" class="form-control js-autocomplete" placeholder="" />
+                <div class="js-autocomplete-result autocomplete-result"></div>
+                <p class="help-block"></p>
+            </div>
+        </fieldset>
     </div>
-    <div class="form-group form-group-lg">
-        <input type="password" name="password" class="form-control" placeholder="Entrez un mot de passe">
-<!--         <button class="btn btn-link btn-block forget-passwd-js"><div class="text-right">Mot de passe oublié ?</div></button> -->
-    </div>
+    <!--     <div class="form-group form-group-lg">
+        <input type="password" name="password" class="form-control" placeholder="Entrez un mot de passe"> -->
+    <!--         <button class="btn btn-link btn-block forget-passwd-js"><div class="text-right">Mot de passe oublié ?</div></button> -->
+    <!--     </div>
+ -->
     <!-- <div class="messages help-block">
         <span class="text-info message-sending">Connexion...</span>
         <span class="text-danger message-error">Login ou mot de passe incorrect</span>
@@ -17,13 +20,9 @@
     <button type="submit" class="btn btn-primary btn-block btn-lg btn-submit pos-relative">
         Se connecter
         <% var spinnerTpl = require('../spinner/spinner.tpl.html'); %>
-        <%= spinnerTpl({className:'spinner-white icon-right loader'}) %>
+            <%= spinnerTpl({className:'spinner-white icon-right loader'}) %>
     </button>
 </form>
-<!-- <div class="register">
-    <h5>Vous n'avez pas de compte ?</h5>
-    <a class="btn btn-block bg-blue btn-lg btn-registration" href="#profile">Créer un compte</a>
-</div> -->
 <div>
-    <a class="btn btn-link btn-block" href="#profile"><div class="text-right">Créer un compte</div></a>
+    <button class="btn btn-profile btn-link btn-block text-right">Créer un compte</button>
 </div>

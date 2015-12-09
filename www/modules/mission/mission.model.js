@@ -201,7 +201,10 @@ var Model = Backbone.Model.extend({
 				}
 			}
 		}).save();
-	}
+	},
+	toString: function() {
+        return this.get('num') + '. ' + this.get('title') + ' / ' +this.get('taxon').title;
+    }
 });
 
 var Collection = Backbone.Collection.extend({

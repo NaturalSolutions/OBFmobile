@@ -11,6 +11,7 @@ var Backbone = require('backbone'),
     i18n = require('i18next-client'),
     Main = require('../main/main.view'),
     Utilities = require('../main/utilities'),
+    Profile = require('../profile/profile.view'),
     User = require('../profile/user.model');
 
 var View = Marionette.LayoutView.extend({
@@ -19,7 +20,8 @@ var View = Marionette.LayoutView.extend({
     events: {
         'submit form': 'onFormSubmit',
         'click .request-npw-js': 'requestNewPassword',
-        'click .btn-registration': 'onRegistrationClick'
+        'click .btn-registration': 'onRegistrationClick',
+        'click .btn-profile': 'openProfileDialog'
     },
 
     initialize: function() {
@@ -33,8 +35,43 @@ var View = Marionette.LayoutView.extend({
     },
 
     onRender: function(options) {
-        //this.session.isConnected();
+        this.session.isConnected();
         this.$el.find('.donutchart').nsDonutChart();
+        var formSchema = {
+            // email: {
+            //     type: 'Text',
+            //     dataType: 'email',
+            //     editorAttrs: {
+            //         placeholder: "Email"
+            //     },
+            //     validators: ['required', 'email']
+            // },
+            password: {
+                type: 'Password',
+                editorAttrs: {
+                    placeholder: "Votre mot de passe"
+                },
+                validators: ['required', {
+                    type: 'regexp',
+                    regexp: /.{6,}/,
+                    message: 'Passwords to short'
+                }]
+            }
+        };
+        var userData = this.model.toJSON();
+
+        this.formLogin = new Backbone.Form({
+            template: require('./form_login.tpl.html'),
+            schema: formSchema,
+            data: userData,
+            templateData: {
+                user: userData
+            }
+        });
+        this.formLogin.render();
+
+        // this.$el.append(this.formLogin.$el);
+        this.$el.find('fieldset.email').after(this.formLogin.$el);
     },
 
     onShow: function() {
@@ -49,12 +86,45 @@ var View = Marionette.LayoutView.extend({
         });
     },
 
-    //log a user for 23 days (see cookie)
+    validatorEmail: function(value) {
+        var objError = {};
+        $('fieldset.email').removeClass('has-error');
+        $('fieldset.email .help-block').empty();
+        var msg = "Votre email n'est pas correct.";
+        var regex = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+        var flag = regex.test(value);
+        if (!flag) {
+            objError = {
+                msg: msg
+            };
+            return objError;
+        } else {
+            return false;
+        }
+    },
+
     onFormSubmit: function(e) {
         e.preventDefault();
 
         var self = this;
         var $form = self.$el.find('form');
+
+        var username = $form.find('input[name="login"]').val();
+        var password = $form.find('input[name="password"]').val();
+
+        var stateEmail = this.validatorEmail(username);
+        if (stateEmail) {
+            $('fieldset.email').addClass('has-error');
+            $('fieldset.email .help-block').text(stateEmail.msg);
+            return false;
+        }
+
+        var errors = this.formLogin.validate();
+        console.log(errors);
+        if (errors)
+            return false;
+
+        var formValues = this.formLogin.getValue();
 
         if ($form.hasClass('loading'))
             return false;
@@ -62,11 +132,8 @@ var View = Marionette.LayoutView.extend({
         self.$el.addClass('block-ui');
         $form.addClass('loading');
 
-        var username = $form.find('input[name="login"]').val();
-        var password = $form.find('input[name="password"]').val();
-
         if (Session.model.getInstance().get('network'))
-            this.session.login(username, password).then(function(account) {
+            this.session.login(username, formValues.password).then(function(account) {
                 $.when(self.session.userExistsLocal(account), self.syncUser(account)).then(function() {
                     self.$el.removeClass('block-ui');
                     $form.removeClass('loading');
@@ -77,10 +144,10 @@ var View = Marionette.LayoutView.extend({
             }, function(error) {
                 self.$el.removeClass('block-ui');
                 $form.removeClass('loading');
-                // Dialog.alert({
-                //     closable: true,
-                //     message: i18n.t('dialogs.loginError')
-                // });
+                Dialog.alert({
+                    closable: true,
+                    message: i18n.t('dialogs.loginError')
+                });
             });
         else {
             this.session.loginNoNetwork(username).then(function(account) {
@@ -204,6 +271,26 @@ var View = Marionette.LayoutView.extend({
                 }
             }]
         });
+    },
+    openProfileDialog: function(e) {
+        e.preventDefault();
+        var dia = $('.bootstrap-dialog');
+        if (dia.length) {
+            dia.remove();
+            $('.modal-backdrop').remove();
+            var Profile = require('./profile.view.js');
+            var dfd;
+            dfd = Profile.openDialog({
+                message: i18n.t('pages.observation.dialogs.need_login')
+            });
+            dfd.then(function() {
+                Dialog.alert(i18n.t('pages.observation.dialogs.need_complete'));
+            });
+        } else {
+            Router.getInstance().navigate('#profile', {
+                trigger: true
+            });
+        }
     }
 });
 

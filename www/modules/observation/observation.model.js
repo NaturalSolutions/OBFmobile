@@ -64,8 +64,7 @@ var ObservationModel = Backbone.Model.extend({
         var missions = require('../mission/mission.model').collection.getInstance();
 
         return missions.findWhere({srcId: missionId});
-    }
-
+    },
 });
 
 var ObservationCollection = Backbone.Collection.extend({

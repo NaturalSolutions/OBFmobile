@@ -19,7 +19,8 @@ var View = Marionette.LayoutView.extend({
     className: 'view profile',
     events: {
         'submit form': 'onFormSubmit',
-        'click .request-npw-js': 'onChangePasswdClick'
+        'click .request-npw-js': 'onChangePasswdClick',
+        'click .btn-connection': 'openLoginDialog'
     },
     // !!! initialize is overrided in Page
     initialize: function() {
@@ -316,6 +317,26 @@ var View = Marionette.LayoutView.extend({
     onChangePasswdClick: function() {
         UpdatePasswd.openDialog();
         console.log('onChangePasswdClick');
+    },
+    openLoginDialog: function(e) {
+        e.preventDefault();
+        var dia = $('.bootstrap-dialog');
+        if (dia.length) {
+            var Login = require('./login.view.js');
+            dia.remove();
+            $('.modal-backdrop').remove();
+            var dfd;
+            dfd = Login.openDialog({
+                message: i18n.t('pages.observation.dialogs.need_login')
+            });
+            dfd.then(function() {
+                Dialog.alert(i18n.t('pages.observation.dialogs.need_complete'));
+            });
+        } else {
+            Router.getInstance().navigate('#login', {
+                trigger: true
+            });
+        }
     }
 });
 
@@ -348,7 +369,7 @@ module.exports = {
         var dfd = $.Deferred();
         var session = Session.model.getInstance();
         var view = new View({
-            model: new User.model.getInstance()
+            model: new User.model.getInstance(),
         });
         view.render();
         var $message = $('<div><p class="lead">' + options.message + '</p></div>');

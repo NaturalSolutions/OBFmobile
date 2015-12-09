@@ -6,21 +6,16 @@
     </fieldset>
     <% } %>
     <fieldset class="well newsletter" data-fields="newsletter">
-      <!-- <div class="form-group form-group-lg required">
-          <label>Newsletter</label>
-          <div class="checkbox">
-            <label>
-                M'abonner à la newsletter
-                <input name="newsletter" type="checkbox" class="registerModel-js" />
-            </label>
-          </div>
-      </div> -->
     </fieldset>
+
     <div class="footer">
       <button type="submit" class="btn btn-lg submit btn-primary btn-block pos-relative">
         <%= i18n.t('pages.profile.form.submit') %>
         <% var spinnerTpl = require('../spinner/spinner.tpl.html'); %>
         <%= spinnerTpl({className:'spinner-white icon-right loader'}) %>
       </button>
+    </div>
+    <div>
+      <button class="btn btn-connection btn-link btn-block text-right">Se connecter</button>
     </div>
 </form>

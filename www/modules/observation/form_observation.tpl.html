@@ -1,0 +1,33 @@
+<form class= "infos" >
+    <fieldset class="well obs-infos" >
+        <div class="form-group">
+            <label class="col-xs-1 control-label">
+                <span class="icon icomoon">taxon</span>
+            </label>
+            <div class="col-xs-11 form-control-outer" data-fields="mission"> </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-1 control-label">
+                <span class="icon icomoon">location</span>
+            </label>
+            <div class="col-xs-11 form-control-outer" data-fields="dept"> </div>
+        </div>
+    </fieldset>
+    <div class="actions">
+        <button type="submit" class="btn btn-save btn-lg submit btn-primary btn-block pos-relative">
+            <%= i18n.t('pages.observation.btns.save') %>
+            <% var spinnerTpl = require('../spinner/spinner.tpl.html'); %>
+            <%= spinnerTpl({className:'spinner-white icon-right loader'}) %>
+        </button>
+        <button type="submit" class="btn btn-send btn-lg submit btn-primary btn-block pos-relative">
+            <%= i18n.t('pages.observation.btns.send') %>
+            <% var spinnerTpl = require('../spinner/spinner.tpl.html'); %>
+            <%= spinnerTpl({className:'spinner-white icon-right loader'}) %>
+        </button>
+        <button type="submit" class="btn btn-share btn-lg submit btn-primary btn-block pos-relative">
+            <%= i18n.t('pages.observation.btns.share') %>
+            <% var spinnerTpl = require('../spinner/spinner.tpl.html'); %>
+            <%= spinnerTpl({className:'spinner-white icon-right loader'}) %>
+        </button>
+    </div>
+</form>

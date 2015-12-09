@@ -51,8 +51,8 @@ var Layout = Marionette.LayoutView.extend({
 
         return {
             observation: observation,
-            departement: departement.collection.getInstance(),
-            missions: mission.collection.getInstance()
+            // departement: departement.collection.getInstance(),
+            // missions: mission.collection.getInstance()
         };
     },
 
@@ -70,12 +70,54 @@ var Layout = Marionette.LayoutView.extend({
 
         if (self.observationModel.get('shared') > 0)
             self.$el.addClass('read-only');
+
+        var formSchema = {
+            mission: {
+                type: 'Select',
+                options: mission.collection.getInstance(),
+                editorAttrs: {
+                    placeholder: "Missions"
+                },
+                validators: ['required']
+            },
+            dept: {
+                type: 'Select',
+                options: departement.collection.getInstance(),
+                editorAttrs: {
+                    placeholder: "Départements"
+                },
+                validators: ['required']
+            },
+        };
+        var observation = this.observationModel.toJSON();
+        this.formObs = new Backbone.Form({
+            template: require('./form_observation.tpl.html'),
+            schema: formSchema,
+            data: {
+                mission: mission.collection.getInstance(),
+                dept: departement.collection.getInstance()
+            },
+            templateData: {
+                observation: observation,
+                mission: mission.collection.getInstance(),
+                departement: departement.collection.getInstance()
+            }
+        }).render();
+
+        this.$el.append(this.formObs.$el);
+
     },
 
     onDomRefresh: function(options) {
         var self = this;
 
-        self.$el.find('select').selectPlaceholder();
+        if (this.observationModel.get('mission')) {
+            self.$el.find('select#mission').val(this.observationModel.get('mission').id).attr('selected', true);
+            self.$el.find('select#dept').val(this.observationModel.get('deptId')).attr('selected', true);
+
+        } else {
+            self.$el.find('select').selectPlaceholder();
+        }
     },
 
     onPhotoClick: function() {
@@ -98,11 +140,6 @@ var Layout = Marionette.LayoutView.extend({
 
     updateField: function(e) {
         var self = this;
-        /*var $currentTarget = $(e.target);
-        var fieldName = $currentTarget.attr('name');
-        var newValue = $currentTarget.val();
-        this.observationModel.set(fieldName, newValue).save();*/
-
         self.setFormStatus('unsaved');
     },
 
@@ -200,6 +237,12 @@ var Layout = Marionette.LayoutView.extend({
     onFormSubmit: function(e) {
         var self = this;
         e.preventDefault();
+
+        var errors = this.formObs.validate();
+        console.log(errors);
+        if (errors)
+            return false;
+
         // test online 
         if (!Session.model.getInstance().get('network')) {
             //account exists
@@ -231,19 +274,23 @@ var Layout = Marionette.LayoutView.extend({
     saveObs: function() {
         var self = this;
 
-        var $form = self.$el.find('form.infos');
-        var missionId = $form.find('*[name="missionId"]').val();
-        /*var missions = mission.collection.getInstance();
-        mission = missions.findWhere({
-            srcId: missionId
-        });*/
+        var formValues = this.formObs.getValue();
+
+        var missionCurrent = mission.collection.getInstance().findWhere({
+            id: formValues.mission
+        });
+        var deptCurrent = departement.collection.getInstance().findWhere({
+            id: formValues.dept
+        });
+
+
         self.observationModel.set({
             userId: this.user.get('id'),
-            missionId: missionId,
-            //mission: mission,
-            departement: $form.find('*[name="departement"]').val()
+            missionId: missionCurrent.get('srcId'),
+            cd_nom: missionCurrent.get('taxon').cd_nom,
+            departement: deptCurrent.get('code'),
+            deptId: deptCurrent.get('id')
         }).save();
-
         self.setFormStatus('saved');
     },
 
@@ -285,7 +332,7 @@ var Layout = Marionette.LayoutView.extend({
                 }]
             },
             field_cd_nom: {
-                und: self.observationModel.get('mission').get('taxon').cd_nom
+                und: self.observationModel.get('cd_nom')
             },
             field_lat_long: {
                 und: [{
@@ -302,17 +349,18 @@ var Layout = Marionette.LayoutView.extend({
                 self.$el.removeClass('sending');
                 Main.getInstance().unblockUI();
                 var dfd;
-                if (self.user.get('externId'))
+                if (self.user.get('externId')) {
                     dfd = Login.openDialog({
                         message: i18n.t('pages.observation.dialogs.need_login')
                     });
-                else {
-                    // var message = i18n.t('pages.observation.dialogs.need_registration');
-                    // if (self.user.get('firstname') || self.user.get('lastname') || self.user.get('email'))
-                    //     message = i18n.t('pages.observation.dialogs.need_complete_registration');
-                    // dfd = Profile.openDialog({
-                    //     message: message
-                    // });
+                } else if (!self.user.get('externId') && error.responseJSON[0] === "Access denied for user anonymous") {
+                    var message = i18n.t('pages.observation.dialogs.need_registration');
+                    if (self.user.get('firstname') || self.user.get('lastname') || self.user.get('email'))
+                        message = i18n.t('pages.observation.dialogs.need_complete_registration');
+                    dfd = Profile.openDialog({
+                        message: message
+                    });
+                } else {
                     Dialog.alert({
                         closable: true,
                         message: error.responseJSON
