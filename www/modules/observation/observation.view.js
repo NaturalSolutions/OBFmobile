@@ -301,6 +301,7 @@ var Layout = Marionette.LayoutView.extend({
             return false;
 
         self.$el.addClass('sending');
+        this.$el.find('form').addClass('loading');
         Main.getInstance().blockUI();
 
         //clear data photos
@@ -311,6 +312,8 @@ var Layout = Marionette.LayoutView.extend({
             });
             return photos.join();
         };
+
+
 
         //data expected by the server
         var data = {
@@ -347,6 +350,7 @@ var Layout = Marionette.LayoutView.extend({
             data: JSON.stringify(data),
             error: function(error) {
                 self.$el.removeClass('sending');
+                self.$el.find('form').removeClass('loading');
                 Main.getInstance().unblockUI();
                 var dfd;
                 if (self.user.get('externId')) {
@@ -376,6 +380,7 @@ var Layout = Marionette.LayoutView.extend({
                 }).save().done(function() {
                     self.sendPhoto();
                 });
+                self.$el.find('form').removeClass('loading');
             }
         };
 
