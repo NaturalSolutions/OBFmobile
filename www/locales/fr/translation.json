@@ -156,7 +156,7 @@
             "btns": {
                 "save": "Enregistrer",
                 "send": "Transmettre",
-                "share": "Partager"
+                "share": "Partager sur Facebook"
             },
             "dialogs": {
                 "need_login": "Vous devez être connecté pour transmettre votre observation.",
