@@ -354,15 +354,11 @@ var Layout = Marionette.LayoutView.extend({
                 self.$el.find('form').removeClass('loading');
                 Main.getInstance().unblockUI();
                 var dfd;
-                if (self.user.get('externId')) {
-                    dfd = Login.openDialog({
-                        message: i18n.t('pages.observation.dialogs.need_login')
-                    });
-                } else if (!self.user.get('externId') && error.responseJSON[0] === "Access denied for user anonymous") {
-                    var message = i18n.t('pages.observation.dialogs.need_registration');
+                if (error.responseJSON[0] === "Access denied for user anonymous") {
+                    var message = i18n.t('pages.observation.dialogs.need_login');
                     if (self.user.get('firstname') || self.user.get('lastname') || self.user.get('email'))
                         message = i18n.t('pages.observation.dialogs.need_complete_registration');
-                    dfd = Profile.openDialog({
+                    dfd = Login.openDialog({
                         message: message
                     });
                 } else {
