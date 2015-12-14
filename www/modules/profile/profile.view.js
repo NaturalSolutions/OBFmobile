@@ -83,7 +83,7 @@ var View = Marionette.LayoutView.extend({
                     validators: ['required', {
                         type: 'match',
                         field: 'email',
-                        message: 'Email must match!'
+                        message: i18n.t('validation.errors.email_match')
                     }]
                 },
                 password: {
@@ -94,7 +94,7 @@ var View = Marionette.LayoutView.extend({
                     validators: ['required', {
                         type: 'regexp',
                         regexp: /.{6,}/,
-                        message: 'Passwords to short'
+                        message: i18n.t('validation.errors.password_short')
                     }]
                 },
                 password2: {
@@ -105,7 +105,7 @@ var View = Marionette.LayoutView.extend({
                     validators: ['required', {
                         type: 'match',
                         field: 'password',
-                        message: 'Passwords must match!'
+                        message: i18n.t('validation.errors.password_match')
                     }]
                 }
             });
@@ -125,6 +125,7 @@ var View = Marionette.LayoutView.extend({
 
         this.$el.append(this.form.$el);
         this.$el.find('.no-paste-js').nsNoPaste();
+        Backbone.Form.validators.errMessages.required = i18n.t('validation.errors.required');
     },
 
     onFormSubmit: function(e) {

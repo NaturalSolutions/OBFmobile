@@ -105,6 +105,7 @@ var Layout = Marionette.LayoutView.extend({
         }).render();
 
         this.$el.append(this.formObs.$el);
+        Backbone.Form.validators.errMessages.required = i18n.t('validation.errors.required');
 
     },
 
