@@ -373,11 +373,9 @@ module.exports = {
             model: new User.model.getInstance(),
         });
         view.render();
-        var $message = $('<div><p class="lead">' + options.message + '</p></div>');
-        $message.append(view.$el);
         var dialog = Dialog.show({
-            title: i18n.t('header.titles.registration'),
-            message: $message,
+            title: options.message,
+            message: view.$el,
             onhide: function(dialog) {
                 session.off('change:isAuth', onAuthChange);
                 if (session.get('isAuth') || (!session.get('network')))

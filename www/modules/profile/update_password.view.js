@@ -154,10 +154,10 @@ module.exports = {
         var dfd = $.Deferred();
         var view = new View();
         view.render();
-        var $message = $('<div><p class="lead">Changer de mot de passe</p></div>');
-        $message.append(view.$el);
+
         var dialog = Dialog.show({
-            message: $message,
+            title: "Changer de mot de passe",
+            message: view.$el,
             onhide: function(dialog) {
                 dialog = null;
             }

@@ -331,12 +331,9 @@ module.exports = {
             model: User.model.getInstance()
         });
         loginView.render();
-        var $message = $('<div><p class="lead">' + data.message + '</p></div>');
-        $message.append(loginView.$el);
-
         var loginDialog = Dialog.show({
-            title: i18n.t('header.titles.login'),
-            message: $message,
+            title: data.message,
+            message: loginView.$el,
             onhide: function(dialog) {
                 session.off('change:isAuth', onAuthChange);
                 if (session.get('isAuth'))

@@ -446,16 +446,29 @@ form:not(.loading) {
 }
 
 .bootstrap-dialog {
-    .modal-header {
-        border: none;
-    }
+    // .modal-header {
+    //     border: none;
+    // }
     .modal-footer {
         border: none;
         padding-top: 0;
     }
-    &:not(.has-header) {
-        .modal-header {
-            display: none;
+    // &:not(.has-header) {
+    //     .modal-header {
+    //         display: none;
+    //     }
+    // }
+    .bootstrap-dialog-title{
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 1.4;
+    }
+    .modal-header{
+        .close{
+            font-size: 32px;
+            margin-top: -6px;
+            color: red;
+            opacity: 0.5;
         }
     }
 }
