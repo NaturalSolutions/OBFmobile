@@ -226,24 +226,48 @@ var View = Marionette.LayoutView.extend({
         // e.preventDefault();
         var self = this;
 
+        var formSchema = {
+            email: {
+                type: 'Text',
+                dataType: 'email',
+                editorAttrs: {
+                    placeholder: "Entrez votre email"
+                },
+                validators: ['required', 'email']
+            },
+        };
+        var userData = this.model.toJSON();
+        var $tpl = $('<fieldset class="" data-fields="email"></fieldset>');
+        this.formNPW = new Backbone.Form({
+            template: $tpl.html(),
+            schema: formSchema,
+            data: userData,
+            templateData: {
+                user: userData
+            }
+        });
+        this.formNPW.render();
+
         Dialog.show({
             title: 'Demande de renouvellement de mot de passe',
-            message: 'Voulez-vous renouveler votre mot de passe ?',
+            message: this.formNPW.$el,
             type: 'type-success',
             buttons: [{
-                label: 'Fermer',
+                label: 'Envoyer nouveau mot de passe par email',
+                cssClass: 'btn-block btn-primary',
                 action: function(dialogItself) {
-                    dialogItself.close();
-                }
-            }, {
-                label: 'Renouveler',
-                action: function(dialogItself) {
+                    var errors = self.formNPW.validate();
+                    console.log(errors);
+                    if (errors)
+                        return false;
+
+                    var formValues = self.formNPW.getValue();
                     $.ajax({
                         url: config.apiUrl + "/user/request_new_password.json",
                         method: "POST",
                         contentType: "application/json",
                         data: JSON.stringify({
-                            name: self.model.get('email')
+                            name: formValues.email
                         }),
                         error: function(jqXHR, textStatus, errorThrown) {
                             console.log(errorThrown);
@@ -262,7 +286,7 @@ var View = Marionette.LayoutView.extend({
     dialogRequestNewpwSuccess: function() {
         Dialog.show({
             title: 'Demande de renouvellement de mot de passe',
-            message: 'Un mail vous a été envoyé avec les instructions à suivre pour le renouvellement de votre mot de passe',
+            message: 'Un email vous a été envoyé avec les instructions à suivre pour le renouvellement de votre mot de passe',
             type: 'type-success',
             buttons: [{
                 label: 'Fermer',
