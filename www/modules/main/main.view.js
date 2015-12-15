@@ -129,6 +129,14 @@ var Layout = Marionette.LayoutView.extend({
 
     unblockUI: function() {
         $('body').removeClass('block-ui');
+    },
+
+    showLoader: function() {
+        $('.page-loader').addClass('display');
+    },
+
+    hideLoader: function() {
+        $('.page-loader').removeClass('display');
     }
 });
 
