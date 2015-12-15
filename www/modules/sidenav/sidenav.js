@@ -53,9 +53,9 @@ var View = Marionette.LayoutView.extend({
     onLogoutClick: function() {
         var Main = require('../main/main.view.js');
 
-        Main.getInstance().blockUI();
+        Main.getInstance().showloader();
         Session.model.getInstance().logout().always(function() {
-            Main.getInstance().unblockUI();
+            Main.getInstance().hideLoader();
         });
     },
 
