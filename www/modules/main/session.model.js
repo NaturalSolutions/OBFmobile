@@ -7,6 +7,7 @@ var Backbone = require('backbone'),
     Router = require('../routing/router'),
     Dialog = require('bootstrap-dialog'),
     i18n = require('i18next-client'),
+    Observation = require('../observation/observation.model'),
     User = require('../profile/user.model');
 
 Backbone.LocalStorage = require("backbone.localstorage");
@@ -321,6 +322,7 @@ var SessionModel = Backbone.Model.extend({
                     } else {
                         User.collection.getInstance().add(User.model.getInstance()).save();
                     }
+                    self.addObsAnonymous();
                 }
                 dfd.resolve();
             },
@@ -332,6 +334,27 @@ var SessionModel = Backbone.Model.extend({
         return dfd;
     },
 
+    addObsAnonymous: function() {
+        var dfd = $.Deferred();
+        this.findUser('email', '').then(function(user) {
+            console.log(user);
+            Observation.collection.getInstance().fetch().then(function() {
+                var obsAnonymous = Observation.collection.getInstance().where({
+                    userId: user.get('id')
+                });
+                if (obsAnonymous.length) {
+                    obsAnonymous.forEach(function(item) {
+                        item.set({
+                            userId: User.model.getInstance().get('id')
+                        });
+                    });
+                }
+
+                dfd.resolve(obsAnonymous);
+            });
+        });
+        return dfd;
+    },
 });
 
 var Collection = Backbone.Collection.extend({
