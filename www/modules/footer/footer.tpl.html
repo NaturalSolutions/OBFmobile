@@ -9,9 +9,11 @@
     </button>
     <ul class="dropdown-menu">
         <li>
-            <a class="btn-lg btn-fab bg-primary" href="#">
+            <button class="btn-lg btn-fab bg-primary forest-time-js">
                 <span class="icon icomoon">location_time</span>
-            </a>
+                <% var spinnerTpl = require('../spinner/spinner-forest.tpl.html'); %>
+                <%= spinnerTpl({className:'spinner-forest spinner-green not-display icon-right loader'}) %>
+            </button>
         </li>
         <li>
             <a class="btn-lg btn-fab bg-orange" href="#">

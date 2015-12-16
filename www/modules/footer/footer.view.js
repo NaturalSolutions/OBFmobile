@@ -14,7 +14,8 @@ var View = Marionette.LayoutView.extend({
     className: '',
     events: {
         'click .capture-photo-js': 'capturePhoto',
-        'submit form': 'uploadPhoto'
+        'submit form': 'uploadPhoto',
+        'click .forest-time-js': 'forestTime'
     },
 
     initialize: function() {
@@ -61,7 +62,7 @@ var View = Marionette.LayoutView.extend({
     capturePhoto: function() {
         var self = this;
 
-        if ( !window.cordova )
+        if (!window.cordova)
             self.createObservation();
         else {
             // Take picture using device camera and retrieve image as a local path
@@ -119,7 +120,7 @@ var View = Marionette.LayoutView.extend({
     createObservation: function(fe, id) {
         var self = this;
         var router = require('../routing/router');
-        var observationModel = new (Observation.model.getClass())();
+        var observationModel = new(Observation.model.getClass())();
 
         //set observation model
         observationModel.set({
@@ -141,6 +142,14 @@ var View = Marionette.LayoutView.extend({
             .fail(function(e) {
                 console.log(e);
             });
+    },
+    forestTime: function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var shape = document.getElementsByClassName("spinner-forest")[0];
+        shape.classList.toggle('not-display');
+        $('body').toggleClass('in-forest');
+
     }
 
 });
@@ -149,7 +158,7 @@ var instance = null;
 
 module.exports = {
     getInstance: function() {
-        if ( !instance )
+        if (!instance)
             instance = new View();
         return instance;
     }
