@@ -1,6 +1,7 @@
 'use strict';
 var Marionette = require('backbone.marionette'),
-    Observation = require('../../observation/observation.model');
+    Observation = require('../../observation/observation.model'),
+    User = require('../../profile/user.model.js');
 
 module.exports = Marionette.LayoutView.extend({
     header: 'none',
@@ -9,12 +10,11 @@ module.exports = Marionette.LayoutView.extend({
         'click .btn-accept': 'onAcceptClick'
     },
     attributes: function() {
-        var self = this;
+        var user = User.model.getInstance();
         var classNames = 'page page-mission_sheet page-scrollable no-header';
-        var isComplete = self.model.get('complete');
-        if ( isComplete )
+        if ( user.hasCompletedMission(this.model) )
             classNames += ' is-complete';
-        else if ( self.model.get('accept') )
+        else if ( user.hasAcceptedMission(this.model) )
             classNames += ' is-accept';
         return {
             'class': classNames
@@ -23,9 +23,9 @@ module.exports = Marionette.LayoutView.extend({
 
     initialize: function() {
         var self = this;
-
-        self.listenTo(self.model, 'change', self.onAcceptChange);
-        self.listenTo(Observation.collection.getInstance(), 'add', function(observation) {
+        var user = User.model.getInstance();
+        this.listenTo(user, 'change:acceptedMissions', this.onAcceptChange);
+        this.listenTo(Observation.collection.getInstance(), 'add', function(observation) {
             observation.set('missionId', self.model.get('srcId'));
             observation.save();
         });
@@ -44,18 +44,17 @@ module.exports = Marionette.LayoutView.extend({
     },
 
     onAcceptClick: function(e) {
-        var self = this;
-
-        self.model.toggleAccept();
+        var user = User.model.getInstance();
+        user.toggleAcceptedMission(this.model);
+        user.save();
     },
 
     onAcceptChange: function() {
-        var self = this;
-        console.log(self.model.get('accept'));
-        if ( self.model.get('accept') )
-            self.$el.addClass('is-accept');
+        var user = User.model.getInstance();
+        if ( user.hasAcceptedMission(this.model) )
+            this.$el.addClass('is-accept');
         else
-            self.$el.removeClass('is-accept');
+            this.$el.removeClass('is-accept');
     },
 
     onDestroy: function() {

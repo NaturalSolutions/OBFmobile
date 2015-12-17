@@ -15,8 +15,6 @@ var Model = Backbone.Model.extend({
 		poster: '',
 		difficulty: 0,//0 == unset
 		difficultyName: '',
-		accept: false,
-		complete: false,
 		departements: [],//codes
 		criterias: [],
 		seasons: [],//[{"startAt":"05","endAt":"11"}],
@@ -29,26 +27,8 @@ var Model = Backbone.Model.extend({
 		},
 	},
 	url: config.coreUrl,
-	initialize: function() {
-        this.listenTo(this, 'change:complete', this.onCompleteChange, this);
-    },
-	onCompleteChange: function() {
-		console.log('onCompleteChange', this.get('complete'));
-		if ( this.get('complete') ) {
-			var logs = require('../logs/log.model').collection.getInstance();
-	        logs.add({
-	            type: 'mission_complete',
-	            data: {
-	                mission: {
-	                    id: this.get('srcId'),
-	                    num: this.get('num'),
-	                    title: this.get('title')
-	                }
-	            }
-	        }).save();
-		}
-	},
 	//Usefull to preserve equality between get() and toJSON()
+	//TODO: remove that, it may be confusing
 	getDynAttrs: function() {
 		return ['poster', 'difficultyName', 'seasons'];
 	},
@@ -184,23 +164,6 @@ var Model = Backbone.Model.extend({
 		});
 
 		return result;
-	},
-	toggleAccept: function() {
-		var self = this;
-		self.set('accept', !self.get('accept'));
-		self.save();
-
-		var logs = require('../logs/log.model').collection.getInstance();
-		logs.add({
-			type: ( self.get('accept') ? 'mission_accept' : 'mission_unaccept' ),
-			data: {
-				mission: {
-					id: self.get('srcId'),
-					num: self.get('num'),
-					title: self.get('title')
-				}
-			}
-		}).save();
 	},
 	toString: function() {
         return this.get('num') + '. ' + this.get('title') + ' / ' +this.get('taxon').title;

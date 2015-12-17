@@ -3,7 +3,8 @@ var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     Mission = require('../mission/mission.model'),
     _ = require('lodash'),
-    MissionListItem = require('../mission/list_item/mission_list_item.view');
+    MissionListItem = require('../mission/list_item/mission_list_item.view'),
+    User = require('../profile/user.model');
 
 var CollectionView = Marionette.CollectionView.extend({
 	childView: MissionListItem
@@ -20,30 +21,21 @@ var ClassDef = Marionette.LayoutView.extend({
 	},
 
 	initialize: function() {
-		var self = this;
-		
-		self.missions = Mission.collection.getInstance().toJSON();
-		self.missions = _.filter(self.missions, {accept: true});
-
-		//console.log(self.missions);
+		this.missions = User.model.getInstance().getAcceptedMissions();
 	},
 
 	serializeData: function() {
-		var self = this;
-		
 		return {
-			missions: self.missions
+			missions: this.missions
 		};
 	},
 
 	onRender: function() {
-		var self = this;
-
 		var collectionView = new CollectionView({
-			collection: new Backbone.Collection(self.missions)
+			collection: new Backbone.Collection(this.missions)
 		});
 
-		self.showChildView('list', collectionView);
+		this.showChildView('list', collectionView);
 	}
 });
 

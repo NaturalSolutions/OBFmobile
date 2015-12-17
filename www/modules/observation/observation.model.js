@@ -2,7 +2,8 @@
 
 var Backbone = require('backbone'),
     _ = require('lodash'),
-config = require('../main/config');
+    config = require('../main/config'),
+    User = require('../profile/user.model.js');
 
 Backbone.LocalStorage = require("backbone.localstorage");
 
@@ -25,9 +26,12 @@ var ObservationModel = Backbone.Model.extend({
         this.listenTo(this, 'change:shared', this.onSharedChange, this);
     },
     onSharedChange: function() {
+        var user = User.model.getInstance();
         console.log('onSharedChange', this.get('shared'));
-        if ( this.get('shared') == 1 )
-            this.getMission().set('complete', true).save();
+        if ( this.get('shared') == 1 ) {
+            user.addCompletedMission(this.getMission());
+            user.save();
+        }
     },
     get: function(attr) {
         var self = this;

@@ -23,11 +23,33 @@ var UserModel = Backbone.Model.extend({
         position: {
             lat: null,
             lon: null
-        }
+        },
+        acceptedMissionIds: [],
+        completedMissionIds: []
     },
     url: config.coreUrl,
+    /*initialize: function() {
+        this.listenTo(this, 'change:completedMissions', this.onCompleteMissionsChange, this);
+    },
+    onCompleteChange: function() {
+        console.log('onCompleteChange', this.get('complete'));
+        if ( this.get('complete') ) {
+            var logs = require('../logs/log.model').collection.getInstance();
+            logs.add({
+                type: 'mission_complete',
+                data: {
+                    mission: {
+                        id: this.get('srcId'),
+                        num: this.get('num'),
+                        title: this.get('title')
+                    }
+                }
+            }).save();
+        }
+    },*/
     get: function(attr) {
         var self = this;
+
         var accessorName = 'get' + _.capitalize(attr);
         if (self[accessorName]) {
             return self[accessorName]();
@@ -60,6 +82,96 @@ var UserModel = Backbone.Model.extend({
         //TODO
         return 1;
     },
+    
+    getAcceptedMissions: function() {
+        return this.getMissions('accepted');
+    },
+    toggleAcceptedMission: function(mission) {
+        if ( !this.hasCompletedMission(mission) ) {
+            var result = this.toggleMission(mission, 'accepted');
+            var logs = require('../logs/log.model').collection.getInstance();
+            logs.add({
+                type: ( result ? 'mission_accept' : 'mission_unaccept' ),
+                data: {
+                    mission: {
+                        id: mission.get('srcId'),
+                        num: mission.get('num'),
+                        title: mission.get('title')
+                    }
+                }
+            }).save();
+        }
+    },
+    hasAcceptedMission: function(mission) {
+        return this.hasMission(mission, 'accepted');
+    },
+
+    getCompletedMissions: function() {
+        return this.getMissions('completed');
+    },
+    addCompletedMission: function(mission) {
+        var result = this.addMission(mission, 'completed');
+        if ( result ) {
+            var logs = require('../logs/log.model').collection.getInstance();
+            logs.add({
+                type: 'mission_complete',
+                data: {
+                    mission: {
+                        id: mission.get('srcId'),
+                        num: mission.get('num'),
+                        title: mission.get('title')
+                    }
+                }
+            }).save();
+        }
+    },
+    hasCompletedMission: function(mission) {
+        return this.hasMission(mission, 'completed');
+    },
+
+
+    getMissions: function(listName) {
+        var missionIds = this.get(listName+'MissionIds');
+        var missions = require('../mission/mission.model').collection.getInstance();
+        return missions.filter(function(mission) {
+            return missionIds.indexOf(mission.get('srcId')) > -1;
+        });
+    },
+    addMission: function(mission, listName) {
+        if ( this.hasMission(mission, listName) )
+            return false;
+
+        var missionIds = this.get(listName+'MissionIds');
+        missionIds.push(mission.get('srcId'));
+        this.trigger('change:'+listName+'Missions', this);
+
+        return true;
+    },
+    removeMission: function(mission, listName) {
+        if ( !this.hasMission(mission, listName) )
+            return false;
+        
+        var missionIds = this.get(listName+'MissionIds');
+        _.pull(missionIds, mission.get('srcId'));
+        this.trigger('change:'+listName+'Missions', this);
+
+        return true;
+    },
+    toggleMission: function(mission, listName) {
+        if ( this.hasMission(mission, listName) ) {
+            this.removeMission(mission, listName);
+            return false;
+        }
+
+        this.addMission(mission, listName);
+        return true;
+    },
+    hasMission: function(mission, listName) {
+        var missions = this.get(listName+'MissionIds');
+
+        return missions.indexOf(mission.get('srcId')) > -1;
+    },
+
     computeScore: function() {
         var self = this;
         var observations = require('../observation/observation.model').collection.getInstance();

@@ -51,11 +51,7 @@ var View = Marionette.LayoutView.extend({
                 editorAttrs: {
                     placeholder: "Votre mot de passe"
                 },
-                validators: ['required', {
-                    type: 'regexp',
-                    regexp: /.{6,}/,
-                    message: 'Passwords to short'
-                }]
+                validators: ['required']
             }
         };
         var userData = this.model.toJSON();

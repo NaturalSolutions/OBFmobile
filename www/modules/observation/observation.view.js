@@ -30,7 +30,7 @@ var Layout = Marionette.LayoutView.extend({
     className: 'page observation ns-full-height',
     events: {
         'submit form.infos': 'onFormSubmit',
-        'click .photo img': 'onPhotoClick',
+        'click .photo .img': 'onPhotoClick',
         'change .updateDept-js': 'updateField',
         'change .updateMission-js': 'updateField',
         //'submit form#form-picture': 'uploadPhoto',
