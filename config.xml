@@ -38,6 +38,6 @@
         <variable name="URL_SCHEME" value="obfmobile" />
     </plugin>
     <feature name="StatusBar">
-        <param name="ios-package" value="CDVStatusBar" onload="true" />
+        <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
 </widget>
