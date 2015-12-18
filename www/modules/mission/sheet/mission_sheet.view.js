@@ -26,7 +26,10 @@ module.exports = Marionette.LayoutView.extend({
         var user = User.model.getInstance();
         this.listenTo(user, 'change:acceptedMissions', this.onAcceptChange);
         this.listenTo(Observation.collection.getInstance(), 'add', function(observation) {
-            observation.set('missionId', self.model.get('srcId'));
+            observation.set({
+                'missionId': self.model.get('srcId'),
+                'departement': User.model.getInstance().get('departements')[0]
+            });
             observation.save();
         });
     },

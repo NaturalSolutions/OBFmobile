@@ -35,8 +35,8 @@ var ObservationModel = Backbone.Model.extend({
     },
     get: function(attr) {
         var self = this;
-        var accessorName = 'get'+ _.capitalize(attr);
-        if ( self[accessorName] ) {
+        var accessorName = 'get' + _.capitalize(attr);
+        if (self[accessorName]) {
             return self[accessorName]();
         }
 
@@ -45,11 +45,12 @@ var ObservationModel = Backbone.Model.extend({
     toJSON: function() {
         var self = this;
         var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
-        _.forEach(['missionId', 'mission'], function(attr) {
-            result[attr] = self['get'+ _.capitalize(attr)]();
+
+        _.forEach(['missionId', 'mission', 'deptId'], function(attr) {
+            result[attr] = self['get' + _.capitalize(attr)]();
         }, this);
 
-        if ( result.mission )
+        if (result.mission)
             result.mission = result.mission.toJSON();
 
         return result;
@@ -62,13 +63,29 @@ var ObservationModel = Backbone.Model.extend({
     getMission: function() {
         var self = this;
         var missionId = self.get('missionId');
-        if ( !missionId )
+        if (!missionId)
             return null;
 
         var missions = require('../mission/mission.model').collection.getInstance();
 
-        return missions.findWhere({srcId: missionId});
+        return missions.findWhere({
+            srcId: missionId
+        });
     },
+    getDeptId: function() {
+        var self = this;
+        var dept = self.get('departement');
+        if (!dept)
+            return null;
+
+        var depts = require('../main/departement.model').collection.getInstance();
+
+        var currentDept = depts.findWhere({
+            code: dept
+        });
+
+        return _.get(currentDept, 'id');
+    }
 });
 
 var ObservationCollection = Backbone.Collection.extend({
@@ -76,17 +93,17 @@ var ObservationCollection = Backbone.Collection.extend({
     url: '',
     localStorage: new Backbone.LocalStorage("ObservationCollection"),
     initialize: function() {
-        // Assign the Deferred issued by fetch() as a property
-        this.deferred = this.fetch();
-    }
-    /*toJSON: function() {
-        var self = this;
-        var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
+            // Assign the Deferred issued by fetch() as a property
+            this.deferred = this.fetch();
+        }
+        /*toJSON: function() {
+            var self = this;
+            var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
 
-        result.mission = result.mission.toJSON();
+            result.mission = result.mission.toJSON();
 
-        return result;
-    }*/
+            return result;
+        }*/
 });
 
 var collectionInstance = null;

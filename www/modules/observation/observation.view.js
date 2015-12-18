@@ -37,11 +37,11 @@ var Layout = Marionette.LayoutView.extend({
         'click .capture-photo-js': 'capturePhoto',
         'click .btn-save': 'onSaveClick'
     },
-
     initialize: function() {
         this.observationModel = this.model;
         this.listenTo(this.observationModel, "change:photos", this.render, this);
         this.listenTo(this.observationModel, "change:shared", this.render, this);
+
         this.session = Session.model.getInstance();
         this.user = User.model.getInstance();
     },
@@ -112,10 +112,19 @@ var Layout = Marionette.LayoutView.extend({
     onDomRefresh: function(options) {
         var self = this;
 
+        if (User.model.getInstance().get('departements').length)
+            this.model.set({
+                departement: User.model.getInstance().get('departements')[0]
+            }).save();
+
         if (this.observationModel.get('mission')) {
             self.$el.find('select#mission').val(this.observationModel.get('mission').id).attr('selected', true);
-            self.$el.find('select#dept').val(this.observationModel.get('deptId')).attr('selected', true);
+        } else {
+            self.$el.find('select').selectPlaceholder();
+        }
 
+        if (this.observationModel.get('departement')) {
+            self.$el.find('select#dept').val(this.observationModel.get('deptId')).attr('selected', true);
         } else {
             self.$el.find('select').selectPlaceholder();
         }

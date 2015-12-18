@@ -62,11 +62,10 @@ module.exports = Marionette.LayoutView.extend({
 
 		self.rgStates.show(viewState);
 	},
-
 	getLocalizeView: function() {
 		var self = this;
 
-		var view = new (require('./missions_aroundme_localize.view'))();
+		var view = new (require('../../profile/user_localize.view'))();
 		self.listenTo(view, 'success', function() {
 			self.stopListening(view);
 			console.log('onLocalizeSuccess');
