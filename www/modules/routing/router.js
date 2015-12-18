@@ -4,32 +4,33 @@ var Backbone = require('backbone'),
     Marionette = require('backbone.marionette');
 
 var Router = Marionette.AppRouter.extend({
-    appRoutes: {
-        '': 'home',
-        'observation/:id': 'observationId',
-        'dashboard(/:tab)': 'dashboard',
-        'mission/:id': 'missionSheet',
-        'missions/aroundme': 'missionsAroundMe',
-        'missions/aroundme/manually': 'missionsAroundMeManually',
-        //'missions/aroundme/tab-:tab': 'missionsAroundMeTab',
-        'missions/all': 'missionsAll',
-        'missions/all/filter': 'missionsAllFilter',
-        'profile(/:id)': 'profile',
-        'updatepassword': 'updatePassword',
-        'login': 'login',
-        'settings': 'settings'
-    },
+  appRoutes: {
+    '': 'home',
+    'observation/:id': 'observationId',
+    'dashboard(/:tab)': 'dashboard',
+    'mission/:id': 'missionSheet',
+    'missions/aroundme': 'missionsAroundMe',
+    'missions/aroundme/manually': 'missionsAroundMeManually',
+    //'missions/aroundme/tab-:tab': 'missionsAroundMeTab',
+    'missions/all': 'missionsAll',
+    'missions/all/filter': 'missionsAllFilter',
+    'missions/training': 'missionsTraining',
+    'profile(/:id)': 'profile',
+    'updatepassword': 'updatePassword',
+    'login': 'login',
+    'settings': 'settings'
+  },
 });
 
 var instance = null;
 
 module.exports = {
-    getInstance: function() {
-        //console.log(Controller);
-        if (!instance)
+  getInstance: function() {
+    //console.log(Controller);
+    if (!instance)
             instance = new Router({
-                controller: new(require('./router_controller'))()
+              controller: new(require('./router_controller'))()
             });
-        return instance;
-    }
+    return instance;
+  }
 };

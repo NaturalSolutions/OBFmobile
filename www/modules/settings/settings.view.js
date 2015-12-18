@@ -7,22 +7,22 @@ var Backbone = require('backbone'),
     Marionette = require('backbone.marionette');
 
 var Layout = Marionette.LayoutView.extend({
-    header: {
-        titleKey: 'settings',
-        buttons: {
-            left: ['back']
-        }
-    },
-    template: require('./settings.tpl.html'),
-    className: 'page settings ns-full-height',
-    events: {},
+  header: {
+    titleKey: 'settings',
+    buttons: {
+      left: ['back']
+    }
+  },
+  template: require('./settings.tpl.html'),
+  className: 'page settings ns-full-height',
+  events: {},
 
-    initialize: function() {},
-    serializeData: function() {},
+  initialize: function() {},
+  serializeData: function() {},
 
-    onRender: function(options) {},
+  onRender: function(options) {},
 
-    onShow: function() {},
+  onShow: function() {},
 
 });
 

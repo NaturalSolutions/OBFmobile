@@ -7,36 +7,36 @@ var Backbone = require('backbone'),
     User = require('../profile/user.model');
 
 var CollectionView = Marionette.CollectionView.extend({
-	childView: MissionListItem
+  childView: MissionListItem
 });
 
 var ClassDef = Marionette.LayoutView.extend({
-	template: require('./dashboard_missions.tpl.html'),
-	className: 'inner missions',
-	events: {
-	},
+  template: require('./dashboard_missions.tpl.html'),
+  className: 'inner missions',
+  events: {
+  },
 
-	regions: {
-		list: '.list-outer'
-	},
+  regions: {
+    list: '.list-outer'
+  },
 
-	initialize: function() {
-		this.missions = User.model.getInstance().getAcceptedMissions();
-	},
+  initialize: function() {
+    this.missions = User.model.getInstance().getAcceptedMissions();
+  },
 
-	serializeData: function() {
-		return {
-			missions: this.missions
-		};
-	},
+  serializeData: function() {
+    return {
+      missions: this.missions
+    };
+  },
 
-	onRender: function() {
-		var collectionView = new CollectionView({
-			collection: new Backbone.Collection(this.missions)
-		});
+  onRender: function() {
+    var collectionView = new CollectionView({
+      collection: new Backbone.Collection(this.missions)
+    });
 
-		this.showChildView('list', collectionView);
-	}
+    this.showChildView('list', collectionView);
+  }
 });
 
 module.exports = ClassDef;

@@ -11,162 +11,162 @@ var Backbone = require('backbone'),
     i18n = require('i18next-client');
 
 var View = Marionette.LayoutView.extend({
-    template: _.template(''),
-    className: 'updatepassword view',
-    events: {
-        'submit form': 'updatePassword',
-    },
+  template: _.template(''),
+  className: 'updatepassword view',
+  events: {
+    'submit form': 'updatePassword',
+  },
 
-    initialize: function() {
-        this.session = Session.model.getInstance();
-        this.dfd = $.Deferred();
-    },
+  initialize: function() {
+    this.session = Session.model.getInstance();
+    this.dfd = $.Deferred();
+  },
 
-    onRender: function() {
-        this.form = new Backbone.Form({
-            template: require('./update_password.tpl.html'),
-            schema: {
-               cur_password: {
-                    type: 'Password',
-                    editorAttrs: {
-                        placeholder: "Votre mot de passe actuel"
-                    },
-                    validators: ['required']
-                },
-                password: {
-                    type: 'Password',
-                    editorAttrs: {
-                        placeholder: "Votre nouveau mot de passe"
-                    },
-                    validators: ['required', {
-                        type: 'regexp',
-                        regexp: /.{6,}/,
-                        message: 'Passwords to short'
-                    }]
-                },
-                password2: {
-                    type: 'Password',
-                    editorAttrs: {
-                        placeholder: "Confirmer le nouveau mot de passe"
-                    },
-                    validators: ['required', {
-                        type: 'match',
-                        field: 'password',
-                        message: 'Passwords must match!'
-                    }, ]
-                },
-            }
-        }).render();
+  onRender: function() {
+    this.form = new Backbone.Form({
+      template: require('./update_password.tpl.html'),
+      schema: {
+        cur_password: {
+          type: 'Password',
+          editorAttrs: {
+            placeholder: 'Votre mot de passe actuel'
+          },
+          validators: ['required']
+        },
+        password: {
+          type: 'Password',
+          editorAttrs: {
+            placeholder: 'Votre nouveau mot de passe'
+          },
+          validators: ['required', {
+            type: 'regexp',
+            regexp: /.{6,}/,
+            message: 'Passwords to short'
+          }]
+        },
+        password2: {
+          type: 'Password',
+          editorAttrs: {
+            placeholder: 'Confirmer le nouveau mot de passe'
+          },
+          validators: ['required', {
+            type: 'match',
+            field: 'password',
+            message: 'Passwords must match!'
+          },]
+        },
+      }
+    }).render();
 
-        this.$el.append(this.form.$el);
-    },
+    this.$el.append(this.form.$el);
+  },
 
-    updatePassword: function(e) {
-        e.preventDefault();
+  updatePassword: function(e) {
+    e.preventDefault();
 
-        var self = this;
-        var $form = this.$el.find('form');
+    var self = this;
+    var $form = this.$el.find('form');
 
-        if ($form.hasClass('loading'))
-            return false;
+    if ($form.hasClass('loading'))
+        return false;
 
-        var errors = this.form.validate();
-        console.log(errors);
-        if ( errors )
-            return false;
+    var errors = this.form.validate();
+    console.log(errors);
+    if (errors)
+        return false;
 
-        console.log(formValues);
+    console.log(formValues);
 
-        var formValues = this.form.getValue();
-        var curPassword = formValues.cur_password;
-        var password = formValues.password;
+    var formValues = this.form.getValue();
+    var curPassword = formValues.cur_password;
+    var password = formValues.password;
 
-        var user = User.model.getInstance();
+    var user = User.model.getInstance();
 
-        var data = {
-            uid: user.get('externId'),
-            mail: user.get('email'),
-            current_pass: curPassword,
-            pass: password,
-        };
+    var data = {
+      uid: user.get('externId'),
+      mail: user.get('email'),
+      current_pass: curPassword,
+      pass: password,
+    };
 
-        if (user.get('externId')) {
-            //update serveur
-            this.$el.addClass('block-ui');
-            $form.addClass('loading');
-            var query = {
-                url: config.apiUrl + "/user/" + user.get('externId') + ".json",
-                type: 'put',
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                error: function(jqXHR, textStatus, errorThrown) {
-                    self.$el.removeClass('block-ui');
-                    $form.removeClass('loading');
-                    console.log(errorThrown);
-                    $form.find('input[name="cur_password"]').val('');
-                    Dialog.alert({
-                        closable: true,
-                        message: i18n.t('dialogs.passwdError')
-                    });
-                },
-                success: function(response) {
-                    self.$el.removeClass('block-ui');
-                    $form.removeClass('loading');
-                    self.dfd.resolve();
-                    self.dialogRequestNewpassword();
-                }
-            };
-            this.session.getCredentials(query).done(function() {
-                $.ajax(query);
-            });
+    if (user.get('externId')) {
+      //update serveur
+      this.$el.addClass('block-ui');
+      $form.addClass('loading');
+      var query = {
+        url: config.apiUrl + '/user/' + user.get('externId') + '.json',
+        type: 'put',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        error: function(jqXHR, textStatus, errorThrown) {
+          self.$el.removeClass('block-ui');
+          $form.removeClass('loading');
+          console.log(errorThrown);
+          $form.find('input[name="cur_password"]').val('');
+          Dialog.alert({
+            closable: true,
+            message: i18n.t('dialogs.passwdError')
+          });
+        },
+        success: function(response) {
+          self.$el.removeClass('block-ui');
+          $form.removeClass('loading');
+          self.dfd.resolve();
+          self.dialogRequestNewpassword();
         }
-    },
-
-    dialogRequestNewpassword: function() {
-        Dialog.show({
-            title: 'Modification de votre mot de passe',
-            message: 'Votre mot de passe a été modifié !',
-            type: 'type-success',
-            buttons: [{
-                label: 'Fermer',
-                action: function(dialogItself) {
-                    dialogItself.close();
-                }
-            }]
-        });
+      };
+      this.session.getCredentials(query).done(function() {
+        $.ajax(query);
+      });
     }
+  },
+
+  dialogRequestNewpassword: function() {
+    Dialog.show({
+      title: 'Modification de votre mot de passe',
+      message: 'Votre mot de passe a été modifié !',
+      type: 'type-success',
+      buttons: [{
+        label: 'Fermer',
+        action: function(dialogItself) {
+          dialogItself.close();
+        }
+      }]
+    });
+  }
 });
 
 var Page = View.extend({
-    header: {
-        titleKey: 'updatepassword',
-        buttons: {
-            left: ['back']
-        }
-    },
-    className: 'page updatepassword ns-full-height'
+  header: {
+    titleKey: 'updatepassword',
+    buttons: {
+      left: ['back']
+    }
+  },
+  className: 'page updatepassword ns-full-height'
 });
 
 module.exports = {
-    View: View,
-    Page: Page,
-    openDialog: function(options) {
-        var dfd = $.Deferred();
-        var view = new View();
-        view.render();
+  View: View,
+  Page: Page,
+  openDialog: function(options) {
+    var dfd = $.Deferred();
+    var view = new View();
+    view.render();
 
-        var dialog = Dialog.show({
-            title: "Changer de mot de passe",
-            message: view.$el,
-            onhide: function(dialog) {
-                dialog = null;
-            }
-        });
-        view.dfd.then(function() {
-            if ( dialog )
-                dialog.close();
-        });
+    var dialog = Dialog.show({
+      title: 'Changer de mot de passe',
+      message: view.$el,
+      onhide: function(dialog) {
+        dialog = null;
+      }
+    });
+    view.dfd.then(function() {
+      if (dialog)
+          dialog.close();
+    });
 
-        return dfd;
-    }
+    return dfd;
+  }
 };

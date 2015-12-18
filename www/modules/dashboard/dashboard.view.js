@@ -6,93 +6,93 @@ var Backbone = require('backbone'),
     User = require('../profile/user.model');
 
 var ClassDef = Marionette.LayoutView.extend({
-	header: {
-		titleKey: 'dashboard',
-		buttons: {
-			left: ['menu']
-		}
-	},
-	template: require('./dashboard.tpl.html'),
-	className: 'page dashboard ns-full-height',
-	events: {
-		'click .header': 'onHeaderClick'
-	},
+  header: {
+    titleKey: 'dashboard',
+    buttons: {
+      left: ['menu']
+    }
+  },
+  template: require('./dashboard.tpl.html'),
+  className: 'page dashboard ns-full-height',
+  events: {
+    'click .header': 'onHeaderClick'
+  },
 
-	curTab: null,
-	tabs: {
-		missions: {
-			ClassDef: require('./dashboard_missions.view')
-		},
-		logs: {
-			ClassDef: require('./dashboard_logs.view')
-		},
-		observations: {
-			ClassDef: require('./dashboard_observations.view')
-		},
-	},
+  curTab: null,
+  tabs: {
+    missions: {
+      ClassDef: require('./dashboard_missions.view')
+    },
+    logs: {
+      ClassDef: require('./dashboard_logs.view')
+    },
+    observations: {
+      ClassDef: require('./dashboard_observations.view')
+    },
+  },
 
-	regions: {
-		tabContent: '.tab-content'
-	},
+  regions: {
+    tabContent: '.tab-content'
+  },
 
-	initialize: function(options) {
-		var self = this;
+  initialize: function(options) {
+    var self = this;
 
-		self.defaultTab = _.keys(self.tabs)[0];
-		self.curTab = options.tab || self.defaultTab;
+    self.defaultTab = _.keys(self.tabs)[0];
+    self.curTab = options.tab || self.defaultTab;
 
-		console.log('dashboard initialize');
-	},
+    console.log('dashboard initialize');
+  },
 
-	serializeData: function() {
-		var self = this;
+  serializeData: function() {
+    var self = this;
 
-		console.log(User.model.getInstance().toJSON());
+    console.log(User.model.getInstance().toJSON());
 
-		return {
-			user: User.model.getInstance().toJSON(),
-			tabs: self.tabs
-		};
-	},
+    return {
+      user: User.model.getInstance().toJSON(),
+      tabs: self.tabs
+    };
+  },
 
-	onRender: function(options) {
-		var self = this;
+  onRender: function(options) {
+    var self = this;
 
-		console.log('dashboard onRender');
-		
-		self.displayTab();
-	},
+    console.log('dashboard onRender');
 
-	onHeaderClick: function() {
-		var self = this;
+    self.displayTab();
+  },
 
-		self.$el.find('.header').toggleClass('show-score-explode');
-	},
+  onHeaderClick: function() {
+    var self = this;
 
-	setTab: function(tab) {
-		var self = this;
+    self.$el.find('.header').toggleClass('show-score-explode');
+  },
 
-		console.log('dashboard setTab');
+  setTab: function(tab) {
+    var self = this;
 
-		tab = tab || self.defaultTab;
-		if ( tab == self.curTab )
-			return false;
+    console.log('dashboard setTab');
 
-		self.curTab = tab;
-		self.displayTab();
-	},
+    tab = tab || self.defaultTab;
+    if (tab == self.curTab)
+    return false;
 
-	displayTab: function() {
-		var self = this;
+    self.curTab = tab;
+    self.displayTab();
+  },
 
-		var tab = self.tabs[self.curTab];
-		var tabView = new tab.ClassDef();
-		self.showChildView('tabContent', tabView);
+  displayTab: function() {
+    var self = this;
 
-		var $tabs = self.$el.find('.nav-tabs .tab');
-		$tabs.removeClass('active');
-		$tabs.filter('.tab-'+self.curTab).addClass('active');
-	}
+    var tab = self.tabs[self.curTab];
+    var tabView = new tab.ClassDef();
+    self.showChildView('tabContent', tabView);
+
+    var $tabs = self.$el.find('.nav-tabs .tab');
+    $tabs.removeClass('active');
+    $tabs.filter('.tab-' + self.curTab).addClass('active');
+  }
 });
 
 module.exports = ClassDef;
