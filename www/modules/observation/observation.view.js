@@ -388,7 +388,6 @@ var Layout = Marionette.LayoutView.extend({
                 }).save().done(function() {
                     self.sendPhoto();
                 });
-                self.$el.find('form').removeClass('loading');
             }
         };
 
@@ -405,13 +404,13 @@ var Layout = Marionette.LayoutView.extend({
             var nbPhoto = (this.observationModel.get('photos').length) - 1;
             var Adfd = [];
             this.observationModel.get('photos').forEach(function(p, key) {
-                console.log(p.url);
-
                 Adfd.push(self.uploadPhotoMob(p.url));
             });
             $.when.apply($, Adfd).done(function(response) {
                 Main.getInstance().unblockUI();
                 self.$el.removeClass('sending');
+                self.$el.find('form').removeClass('loading');
+
                 self.observationModel.set({
                     'shared': 1
                 }).save();
@@ -427,6 +426,7 @@ var Layout = Marionette.LayoutView.extend({
         } else {
             Main.getInstance().unblockUI();
             self.$el.removeClass('sending');
+            self.$el.find('form').removeClass('loading');
             self.observationModel.set({
                 'shared': 1
             }).save();
