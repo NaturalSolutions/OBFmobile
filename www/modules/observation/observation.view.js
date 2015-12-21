@@ -294,7 +294,6 @@ var Layout = Marionette.LayoutView.extend({
     });
 
     self.observationModel.set({
-      userId: user.get('id'),
       missionId: missionCurrent.get('srcId'),
       cd_nom: missionCurrent.get('taxon').cd_nom,
       departement: deptCurrent.get('code'),

@@ -4,6 +4,7 @@ var Backbone = require('backbone'),
   Marionette = require('backbone.marionette'),
   $ = require('jquery'),
   _ = require('lodash'),
+  User = require('../profile/user.model'),
   Observation = require('../observation/observation.model'),
   config = require('../main/config');
 //i18n = require('i18n');
@@ -123,6 +124,7 @@ var View = Marionette.LayoutView.extend({
 
     //set observation model
     observationModel.set({
+      'userId': User.model.getInstance().get('id'),
       'date': this.moment().format('X'),
       'photos': [{
         'url': fe ? fe : '',
