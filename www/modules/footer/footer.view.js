@@ -1,11 +1,11 @@
 'use strict';
 
 var Backbone = require('backbone'),
-    Marionette = require('backbone.marionette'),
-    $ = require('jquery'),
-    _ = require('lodash'),
-    Observation = require('../observation/observation.model'),
-    config = require('../main/config');
+  Marionette = require('backbone.marionette'),
+  $ = require('jquery'),
+  _ = require('lodash'),
+  Observation = require('../observation/observation.model'),
+  config = require('../main/config');
 //i18n = require('i18n');
 
 var View = Marionette.LayoutView.extend({
@@ -62,20 +62,20 @@ var View = Marionette.LayoutView.extend({
     var self = this;
 
     if (!window.cordova)
-        self.createObservation();
+      self.createObservation();
     else {
       // Take picture using device camera and retrieve image as a local path
       navigator.camera.getPicture(
-          _.bind(self.onSuccess, self),
-                _.bind(self.onFail, self), {
-                  /* jshint ignore:start */
-                  quality: 75,
-                  destinationType: Camera.DestinationType.FILE_URI,
-                  correctOrientation: true,
-                  sourceType: Camera.PictureSourceType.CAMERA,
-                  /* jshint ignore:end */
-                }
-            );
+        _.bind(self.onSuccess, self),
+        _.bind(self.onFail, self), {
+          /* jshint ignore:start */
+          quality: 75,
+          destinationType: Camera.DestinationType.FILE_URI,
+          correctOrientation: true,
+          sourceType: Camera.PictureSourceType.CAMERA,
+          /* jshint ignore:end */
+        }
+      );
     }
   },
 
@@ -131,16 +131,16 @@ var View = Marionette.LayoutView.extend({
     });
     //Save observation in localstorage
     Observation.collection.getInstance().add(observationModel)
-        .save()
-            .done(function(data) {
-              //navigate
-              router.getInstance().navigate('observation/' + data.id, {
-                trigger: true
-              });
-            })
-            .fail(function(e) {
-              console.log(e);
-            });
+      .save()
+      .done(function(data) {
+        //navigate
+        router.getInstance().navigate('observation/' + data.id, {
+          trigger: true
+        });
+      })
+      .fail(function(e) {
+        console.log(e);
+      });
   },
   forestTime: function(e) {
     e.preventDefault();
@@ -158,7 +158,7 @@ var instance = null;
 module.exports = {
   getInstance: function() {
     if (!instance)
-        instance = new View();
+      instance = new View();
     return instance;
   }
 };
