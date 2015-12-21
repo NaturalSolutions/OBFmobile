@@ -5,7 +5,7 @@ var Backbone = require('backbone'),
   config = require('../main/config'),
   User = require('../profile/user.model.js');
 
-Backbone.LocalStorage = require("backbone.localstorage");
+Backbone.LocalStorage = require('backbone.localstorage');
 
 var ObservationModel = Backbone.Model.extend({
   // Expected attributes : {
@@ -125,3 +125,4 @@ module.exports = {
     }
   }
 };
+

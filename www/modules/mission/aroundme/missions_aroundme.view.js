@@ -85,6 +85,7 @@ module.exports = Marionette.LayoutView.extend({
 
   getManuallyView: function() {
     var self = this;
+
     var view = new(require('./missions_aroundme_manually.view'))();
 
     return view;
@@ -102,3 +103,4 @@ module.exports = Marionette.LayoutView.extend({
     var self = this;
   }
 });
+

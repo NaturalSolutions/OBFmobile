@@ -28,6 +28,7 @@ var UserModel = Backbone.Model.extend({
     completedMissionIds: []
   },
   url: config.coreUrl,
+
   get: function(attr) {
     var self = this;
 
@@ -58,7 +59,6 @@ var UserModel = Backbone.Model.extend({
     return names[palm - 1] || '';
   },
   getTimeOnMissionLevel: function() {
-    //TODO
     return 1;
   },
 
@@ -180,8 +180,6 @@ var UserModel = Backbone.Model.extend({
             break;
         }
     }
-    /*if (difficultiesCompleted[2] == 1)
-        self.set('level', 2);*/
     self.save();
   }
 });

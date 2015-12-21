@@ -105,7 +105,7 @@ var Model = Backbone.Model.extend({
   },
   inSeason: function(startAt, endAt) {
     var self = this;
-
+    
     var seasons = self.get('seasons');
     var today = new Date();
     if (endAt && !startAt) {
@@ -159,82 +159,6 @@ var Model = Backbone.Model.extend({
 
       if (result.isMatch)
         return false;
-    });
-
-    return result;
-  },
-  _old_inSeason: function(startAt, endAt) {
-    var self = this;
-    var seasons = self.get('seasons');
-    var today = new Date();
-    if (endAt && !startAt) {
-      startAt = today;
-    }
-    var year = startAt.getFullYear();
-    var isMatch = false;
-    var momentStart = moment(startAt);
-    var momentEnd = moment(endAt ? endAt : startAt);
-
-    var result = null;
-    _.forEach(seasons, function(season, index) {
-      /*var seasonStart = new Date(year+'-'+season.startAt);
-      			var seasonEnd = new Date(year+'-'+season.endAt);
-      			if ( seasonEnd < seasonStart )
-      				seasonEnd.setFullYear(year+1);*/
-      var seasonStart = season.startAt;
-      var seasonEnd = season.endAt;
-      var isMatch = false;
-      var duration = {
-        days: moment(seasonEnd).diff(seasonStart, 'days')
-      };
-      var startDelta = momentStart.diff(seasonStart, 'days');
-      var endDelta = Math.abs(momentEnd.diff(seasonEnd, 'days'));
-
-      if (!endAt) {
-        isMatch = startAt >= seasonStart && startAt <= seasonEnd;
-        if (self.get('num') == '1')
-          console.log(startAt, seasonStart, seasonEnd);
-        result = {
-          isMatch: isMatch,
-          duration: duration,
-          start: {
-            src: seasonStart,
-            input: startAt,
-            delta: startDelta,
-            ratio: (startDelta / duration.days)
-          },
-          end: {
-            src: seasonEnd,
-            input: startAt,
-            delta: endDelta,
-            ratio: (endDelta / duration.days)
-          }
-        };
-      } else if (endAt) {
-        isMatch = !(startAt < seasonStart && endAt < seasonStart) && !(startAt > seasonEnd && endAt > seasonEnd);
-
-        result = {
-          isMatch: isMatch,
-          duration: duration,
-          start: {
-            src: seasonStart,
-            input: startAt,
-            delta: startDelta,
-            ratio: (startDelta / duration.days)
-          },
-          end: {
-            src: seasonEnd,
-            input: endAt,
-            delta: endDelta,
-            ratio: (endDelta / duration.days)
-          }
-        };
-        if (self.get('num') == '1')
-          console.log(result);
-      }
-
-      if (result.isMatch)
-      return false;
     });
 
     return result;

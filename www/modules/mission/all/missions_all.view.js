@@ -11,14 +11,6 @@ module.exports = Marionette.CompositeView.extend({
   childViewContainer: '.items',
   events: {},
 
-  /*serializeData: function() {
-      var self = this;
-
-      return {
-          missions: self.collection.toJSON()
-      };
-  },*/
-
   initialize: function(options) {
     if ( !options.filterable ) {
       this.header = {

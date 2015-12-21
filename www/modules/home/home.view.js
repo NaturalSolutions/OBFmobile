@@ -22,6 +22,7 @@ var Layout = Marionette.LayoutView.extend({
     var self = this;
 
     var view = new(require('../profile/user_localize.view'))();
+    view.getPosition();
     this.listenTo(view, 'success', function() {
       self.stopListening(view);
       view.destroy();
@@ -30,7 +31,6 @@ var Layout = Marionette.LayoutView.extend({
       self.stopListening(view);
       view.destroy();
     });
-    view.getPosition();
   },
 
   onShow: function() {

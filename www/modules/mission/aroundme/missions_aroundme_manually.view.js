@@ -1,11 +1,17 @@
 'use strict';
 
-var Marionette = require('backbone.marionette');
+var Marionette = require('backbone.marionette'),
+    $ = require('jquery'),
+    _ = require('lodash'),
+    User = require('../../profile/user.model'),
+    departement = require('../../main/departement.model');
 
 module.exports = Marionette.LayoutView.extend({
   template: require('./missions_aroundme_manually.tpl.html'),
   className: 'state state-manually',
-  events: {},
+  events: {
+    'submit form': 'onFormSubmit',
+  },
 
   initialize: function() {
     var self = this;
@@ -14,7 +20,29 @@ module.exports = Marionette.LayoutView.extend({
   onShow: function() {
     var self = this;
 
-    //TODO autocomplete
+    departement.collection.getInstance().fetch({
+      success: function() {
+        self.$el.find('input.js-autocomplete').autocomplete({
+          source: departement.collection.getInstance().pluck('title'),
+          appendTo: self.$el.find('.js-autocomplete-result'),
+        });
+      }
+    });
+  },
+
+  onFormSubmit: function(e) {
+    e.preventDefault();
+    var self = this;
+
+    var dept = self.$el.find('input[name="departement"]').val();
+
+    var selectedDepartements = departement.collection.getInstance().findWhere({
+      title: dept
+    });
+
+    var user = User.model.getInstance();
+    user.set('departements', selectedDepartements.pluck('code'));
+    user.save();
   },
 
   onDestroy: function() {
