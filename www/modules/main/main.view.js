@@ -9,7 +9,8 @@ var Backbone = require('backbone'),
     User = require('../profile/user.model'),
     $ = require('jquery'),
     Dialog = require('bootstrap-dialog'),
-    i18n = require('i18next-client');
+    i18n = require('i18next-client'),
+    Session = require('./session.model');
 
 var Layout = Marionette.LayoutView.extend({
   el: 'body',
@@ -18,6 +19,8 @@ var Layout = Marionette.LayoutView.extend({
 
   initialize: function() {
     this.dialogs = [];
+    this.addListeners();
+    this.listenTo(Session.model.getInstance(), 'change:isAuth', this.onSessionAuthChange);
   },
 
   regions: {
@@ -59,6 +62,11 @@ var Layout = Marionette.LayoutView.extend({
         message: i18n.t('dialogs.level.message.level_2'),
         button: i18n.t('dialogs.level.button')
     });*/
+  },
+
+  onSessionAuthChange: function(model) {
+    if ( model.get('isAuth') )
+      this.addListeners();
   },
 
   addListeners: function() {

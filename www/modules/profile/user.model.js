@@ -157,7 +157,7 @@ var UserModel = Backbone.Model.extend({
       'userId': this.id
     });
     var shared = obsByUid.filter(function(obs) {
-      return (obs.get('shared') > 0 && obs.get('difficulty') > 0);
+      return (obs.get('shared') > 0 && obs.get('mission').get('difficulty') > 0);
     });
     var nbShared = shared.length;
 

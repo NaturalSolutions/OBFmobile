@@ -35,8 +35,6 @@ module.exports = Marionette.LayoutView.extend({
         trigger: true
       });
     });
-
-    console.log(options);
     self.initState = options.state;
   },
 

@@ -27,7 +27,6 @@ var ObservationModel = Backbone.Model.extend({
   },
   onSharedChange: function() {
     var user = User.model.getInstance();
-    console.log('onSharedChange', this.get('shared'));
     if (this.get('shared') == 1) {
       user.addCompletedMission(this.getMission());
       user.save();

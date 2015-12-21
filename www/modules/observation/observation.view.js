@@ -34,8 +34,7 @@ var Layout = Marionette.LayoutView.extend({
     'change .updateDept-js': 'updateField',
     'change .updateMission-js': 'updateField',
     //'submit form#form-picture': 'uploadPhoto',
-    'click .capture-photo-js': 'capturePhoto',
-    'click .btn-save': 'onSaveClick'
+    'click .capture-photo-js': 'capturePhoto'
   },
   initialize: function() {
     this.observationModel = this.model;
@@ -43,7 +42,6 @@ var Layout = Marionette.LayoutView.extend({
     this.listenTo(this.observationModel, 'change:shared', this.render, this);
 
     this.session = Session.model.getInstance();
-    this.user = User.model.getInstance();
   },
 
   serializeData: function() {
@@ -218,7 +216,6 @@ var Layout = Marionette.LayoutView.extend({
 
       };
       var gotFileEntry = function(fileEntry) {
-        console.log('got image file entry: ' + fileEntry.nativeURL);
         var gotFileSystem = function(fileSystem) {
           fileSystem.root.getDirectory(tagprojet, {
             create: true,
@@ -272,7 +269,8 @@ var Layout = Marionette.LayoutView.extend({
 
   accountExists: function() {
     var account;
-    if (!this.user.get('email')) {
+    var user = User.model.getInstance();
+    if (!user.get('email')) {
       Login.openDialog({
         message: i18n.t('pages.observation.dialogs.need_login_offline')
       });
@@ -285,7 +283,7 @@ var Layout = Marionette.LayoutView.extend({
 
   saveObs: function() {
     var self = this;
-
+    var user = User.model.getInstance();
     var formValues = this.formObs.getValue();
 
     var missionCurrent = mission.collection.getInstance().findWhere({
@@ -296,7 +294,7 @@ var Layout = Marionette.LayoutView.extend({
     });
 
     self.observationModel.set({
-      userId: this.user.get('id'),
+      userId: user.get('id'),
       missionId: missionCurrent.get('srcId'),
       cd_nom: missionCurrent.get('taxon').cd_nom,
       departement: deptCurrent.get('code'),
@@ -323,11 +321,11 @@ var Layout = Marionette.LayoutView.extend({
       });
       return photos.join();
     };
-
+    var user = User.model.getInstance();
     //data expected by the server
     var data = {
       type: 'observation',
-      title: 'mission_' + self.observationModel.get('missionId') + '_' + self.observationModel.get('date') + '_' + self.user.get('externId'),
+      title: 'mission_' + self.observationModel.get('missionId') + '_' + self.observationModel.get('date') + '_' + user.get('externId'),
       field_observation_timestamp: {
         und: [{
           value: self.observationModel.get('date')
@@ -364,7 +362,7 @@ var Layout = Marionette.LayoutView.extend({
         var dfd;
         if (error.responseJSON[0] === 'Access denied for user anonymous') {
           var message = i18n.t('pages.observation.dialogs.need_login');
-          if (self.user.get('firstname') || self.user.get('lastname') || self.user.get('email'))
+          if (user.get('firstname') || user.get('lastname') || user.get('email'))
               message = i18n.t('pages.observation.dialogs.need_complete_registration');
           dfd = Login.openDialog({
             message: message
@@ -396,6 +394,7 @@ var Layout = Marionette.LayoutView.extend({
   //TODO if fields are not update departement and mission don't exist
   sendPhoto: function() {
     var self = this;
+    var user = User.model.getInstance();
 
     if (window.cordova) {
       var nbPhoto = (this.observationModel.get('photos').length) - 1;
@@ -418,7 +417,7 @@ var Layout = Marionette.LayoutView.extend({
           button: i18n.t('dialogs.obsShared.button')
         });
         self.setFormStatus('shared');
-        self.user.computeScore();
+        user.computeScore();
       });
     } else {
       Main.getInstance().unblockUI();
@@ -434,7 +433,7 @@ var Layout = Marionette.LayoutView.extend({
         button: i18n.t('dialogs.obsShared.button')
       });
       self.setFormStatus('shared');
-      self.user.computeScore();
+      user.computeScore();
     }
   },
 
@@ -462,7 +461,6 @@ var Layout = Marionette.LayoutView.extend({
             dataType: 'json',
             data: fd,
             success: function(response) {
-              console.log(response);
               dfd.resolve();
             },
             error: function(error) {

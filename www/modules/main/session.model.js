@@ -204,7 +204,6 @@ var SessionModel = Backbone.Model.extend({
         });
       },
       success: function(response) {
-        console.log(response);
         self.set('isAuth', false);
 
         User.model.getInstance().off('change:level');
@@ -337,7 +336,6 @@ var SessionModel = Backbone.Model.extend({
   addObsAnonymous: function() {
     var dfd = $.Deferred();
     this.findUser('email', '').then(function(user) {
-      console.log(user);
       Observation.collection.getInstance().fetch().then(function() {
         var obsAnonymous = Observation.collection.getInstance().where({
           userId: user.get('id')

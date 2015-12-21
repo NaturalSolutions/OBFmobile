@@ -133,8 +133,6 @@ var View = Marionette.LayoutView.extend({
               $.when(self.session.userExistsLocal(account), self.syncUser(account)).then(function() {
                 self.$el.removeClass('block-ui');
                 $form.removeClass('loading');
-                // Add listeners
-                Main.getInstance().addListeners();
               });
 
             }, function(error) {

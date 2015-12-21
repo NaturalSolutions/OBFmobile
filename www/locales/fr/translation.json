@@ -113,6 +113,7 @@
         "level": {
             "title": "Bravo !",
             "message": {
+                "level_1": "Vous êtes maintenant écureuil",
                 "level_2": "Vous êtes maintenant chouette",
                 "level_3": "Vous êtes maintenant loup"
             },
