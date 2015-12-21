@@ -54,7 +54,7 @@ module.exports = Marionette.LayoutView.extend({
     self.clearWatchPosition();
     console.log('onPositionError', error);
 
-    if (confirm('Erreur: Passer en manuelle ?')) {
+    if (confirm('Erreur de géolocalisation : Entrer votre département en manuellement ?')) {
       self.triggerMethod('abort');
     }
   },

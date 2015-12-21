@@ -3,6 +3,7 @@
 var Marionette = require('backbone.marionette'),
     $ = require('jquery'),
     _ = require('lodash'),
+    Router = require('../../routing/router'),
     User = require('../../profile/user.model'),
     departement = require('../../main/departement.model');
 
@@ -41,8 +42,9 @@ module.exports = Marionette.LayoutView.extend({
     });
 
     var user = User.model.getInstance();
-    user.set('departements', selectedDepartements.pluck('code'));
+    user.set('departements',[selectedDepartements.get('code')]);
     user.save();
+    Router.getInstance().navigate('#missions/aroundme', {trigger: true});
   },
 
   onDestroy: function() {
