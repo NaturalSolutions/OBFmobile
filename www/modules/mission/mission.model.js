@@ -31,7 +31,7 @@ var Model = Backbone.Model.extend({
   //Usefull to preserve equality between get() and toJSON()
   //TODO: remove that, it may be confusing
   getDynAttrs: function() {
-    return ['poster', 'difficultyName', 'seasons'];
+    return ['map','poster', 'difficultyName', 'seasons'];
   },
   get: function(attr) {
     var self = this;
@@ -57,6 +57,12 @@ var Model = Backbone.Model.extend({
     });
 
     return result;
+  },
+  getMap: function() {
+    var self = this;
+    var id = self.get('srcId');
+
+    return (id < 10 ? '0' : '') + id + '.png';
   },
   getPoster: function() {
     var self = this;
