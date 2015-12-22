@@ -53,6 +53,10 @@
     "user": {
         "score": {
             "level": {
+                "0": {
+                    "label": "Apprenti",
+                    "description": ""
+                },
                 "1": {
                     "label": "Ecureuil",
                     "description": "Au moins une mission de niveau débutant"
