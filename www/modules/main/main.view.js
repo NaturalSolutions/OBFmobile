@@ -40,6 +40,24 @@ var Layout = Marionette.LayoutView.extend({
     this.rgSidenav.show(sidenav.getInstance());
     this.rgFooter.show(footer.getInstance());
 
+    /*self.addDialog({
+      cssClass: 'theme-primary with-bg-forest user-score user-palm-bronze',
+      badgeClassNames: 'badge-circle bg-wood border-brown text-white',
+      badge: '5<div class="text-xs text-bottom">'+i18n.t('mission.label', {count: 1})+'</div>',
+      title: i18n.t('dialogs.palm.title'),
+      message: i18n.t('dialogs.palm.message.bronze'),
+      button: i18n.t('dialogs.palm.button')
+    });*/
+
+    /*self.addDialog({
+      cssClass: 'theme-primary with-bg-forest user-score user-level-1',
+      badgeClassNames: 'badge-circle bg-wood border-brown text-white',
+      //badge: '5<div class="text-xs text-bottom">missions</div>',
+      title: i18n.t('dialogs.level.title'),
+      message: i18n.t('dialogs.level.message.level_1'),
+      button: i18n.t('dialogs.level.button')
+    });*/
+
     // require('../profile/login.view').openDialog({
     //     message: 'Vous devez être connecté pour transmettre votre observation.'
     // });
@@ -76,7 +94,8 @@ var Layout = Marionette.LayoutView.extend({
       if (!level)
           return false;
       self.addDialog({
-        cssClass: 'theme-orange-light has-fireworks user-score user-level-' + level,
+        cssClass: 'theme-primary with-bg-forest user-score user-level-' + level,
+        badgeClassNames: 'badge-circle bg-wood border-brown text-white',
         title: i18n.t('dialogs.level.title'),
         message: i18n.t('dialogs.level.message.level_' + level),
         button: i18n.t('dialogs.level.button')
@@ -86,8 +105,11 @@ var Layout = Marionette.LayoutView.extend({
       if (!palm)
           return false;
       var palmName = user.get('palmName');
+      var nbCompleted = user.get('completedMissions').length;
       self.addDialog({
-        cssClass: 'theme-orange-light has-fireworks user-score user-palm-' + palmName,
+        cssClass: 'theme-primary with-bg-forest user-score user-palm-' + palmName,
+        badgeClassNames: 'badge-circle bg-wood border-brown text-white',
+        badge: nbCompleted+'<div class="text-xs text-bottom">'+i18n.t('mission.label', {count: nbCompleted})+'</div>',
         title: i18n.t('dialogs.palm.title'),
         message: i18n.t('dialogs.palm.message.' + palmName),
         button: i18n.t('dialogs.palm.button')
@@ -97,8 +119,8 @@ var Layout = Marionette.LayoutView.extend({
 
   addDialog: function(data) {
     var self = this;
-
-    var message = '<h3>' + data.title + '</h3><p>' + data.message + '</p>';
+    var message = (!data.badge && !data.badgeClassNames) ? '' : '<div class="badge '+(data.badgeClassNames||'')+'">'+(data.badge|| '')+'<div class="butterfly"></div></div>';
+    message += '<div class="floating floating-bottom full-w"><h3>' + data.title + '</h3><p>' + data.message + '</p></div>';
 
     var dialog = new Dialog({
       message: message,

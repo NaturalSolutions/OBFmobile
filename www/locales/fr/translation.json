@@ -25,6 +25,8 @@
         }
     },
     "mission": {
+        "label": "Mission",
+        "label_plural": "Missions",
         "deltaLong": "plus que __count__ jour",
         "deltaLong_plural": "plus que __count__ jours",
         "difficulty_0": "Apprentissage",

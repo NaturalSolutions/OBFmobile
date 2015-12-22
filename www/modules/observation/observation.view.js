@@ -409,8 +409,11 @@ var Layout = Marionette.LayoutView.extend({
         self.observationModel.set({
           'shared': 1
         }).save();
+        var nbCompleted = user.get('completedMissions').length;
         Main.getInstance().addDialog({
-          cssClass: 'theme-orange-light has-fireworks title-has-palm',
+          cssClass: 'theme-primary with-bg-forest user-score',
+          badgeClassNames: 'badge-circle bg-wood border-brown text-white',
+          badge: nbCompleted+'<div class="text-xs text-bottom">'+i18n.t('mission.label', {count: nbCompleted})+'</div>',
           title: i18n.t('dialogs.obsShared.title'),
           message: i18n.t('dialogs.obsShared.message'),
           button: i18n.t('dialogs.obsShared.button')
@@ -425,8 +428,11 @@ var Layout = Marionette.LayoutView.extend({
       self.observationModel.set({
         'shared': 1
       }).save();
+      var nbCompleted = user.get('completedMissions').length;
       Main.getInstance().addDialog({
-        cssClass: 'theme-orange-light has-fireworks title-has-palm',
+        cssClass: 'theme-primary with-bg-forest user-score',
+        badgeClassNames: 'badge-circle bg-wood border-brown text-white',
+        badge: nbCompleted+'<div class="text-xs text-bottom">'+i18n.t('mission.label', {count: nbCompleted})+'</div>',
         title: i18n.t('dialogs.obsShared.title'),
         message: i18n.t('dialogs.obsShared.message'),
         button: i18n.t('dialogs.obsShared.button')
