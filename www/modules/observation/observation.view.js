@@ -195,8 +195,8 @@ var Layout = Marionette.LayoutView.extend({
             _.bind(this.onFail, this), {
               /* jshint ignore:start */
               quality: 75,
-              targetWidth: 2000,
-              targetHeigh: 2000,
+              targetWidth: 1000,
+              targetHeight: 1000,
               destinationType: Camera.DestinationType.FILE_URI,
               correctOrientation: true,
               sourceType: Camera.PictureSourceType.CAMERA,
