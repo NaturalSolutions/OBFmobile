@@ -1,9 +1,10 @@
 'use strict';
 
 var Backbone = require('backbone'),
-    Marionette = require('backbone.marionette'),
-    _ = require('lodash'),
-    User = require('../profile/user.model');
+  Marionette = require('backbone.marionette'),
+  _ = require('lodash'),
+  User = require('../profile/user.model'),
+  Observation = require('../observation/observation.model');
 
 var ClassDef = Marionette.LayoutView.extend({
   header: {
@@ -21,13 +22,18 @@ var ClassDef = Marionette.LayoutView.extend({
   curTab: null,
   tabs: {
     missions: {
-      ClassDef: require('./dashboard_missions.view')
+      getView: function() {
+        return new(require('./dashboard_missions.view'))();
+      }
     },
     logs: {
-      ClassDef: require('./dashboard_logs.view')
+      getView: function() {
+          return new(require('./dashboard_logs.view'))();
+        }
+        //ClassDef: require('./dashboard_logs.view')
     },
     observations: {
-      ClassDef: require('./dashboard_observations.view')
+      getView: 'getObservationView'
     },
   },
 
@@ -68,22 +74,32 @@ var ClassDef = Marionette.LayoutView.extend({
 
     tab = tab || self.defaultTab;
     if (tab == self.curTab)
-    return false;
+      return false;
 
     self.curTab = tab;
     self.displayTab();
   },
 
   displayTab: function() {
-    var self = this;
+    var tab = this.tabs[this.curTab];
+    //var tabView = tab.ClassDef ? new tab.ClassDef() : this[tab.getView]();
+    this.showChildView('tabContent', _.isString(tab.getView) ? this[tab.getView]() : tab.getView());
 
-    var tab = self.tabs[self.curTab];
-    var tabView = new tab.ClassDef();
-    self.showChildView('tabContent', tabView);
-
-    var $tabs = self.$el.find('.nav-tabs .tab');
+    var $tabs = this.$el.find('.nav-tabs .tab');
     $tabs.removeClass('active');
-    $tabs.filter('.tab-' + self.curTab).addClass('active');
+    $tabs.filter('.tab-' + this.curTab).addClass('active');
+  },
+
+  getObservationView: function() {
+    var user = User.model.getInstance();
+    var observations = Observation.collection.getInstance();
+    observations = observations.where({
+      userId: user.get('id')
+    });
+    var ObservationsView = require('../observation/observation_list.view');
+    return new ObservationsView({
+      collection: new Backbone.Collection(observations)
+    });
   }
 });
 

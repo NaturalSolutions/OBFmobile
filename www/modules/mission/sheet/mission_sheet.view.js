@@ -1,5 +1,6 @@
 'use strict';
-var Marionette = require('backbone.marionette'),
+var Backbone = require('backbone'),
+  Marionette = require('backbone.marionette'),
   Observation = require('../../observation/observation.model'),
   User = require('../../profile/user.model.js');
 
@@ -21,6 +22,10 @@ module.exports = Marionette.LayoutView.extend({
     };
   },
 
+  regions: {
+    observations: '.observations'
+  },
+
   initialize: function() {
     var self = this;
     var user = User.model.getInstance();
@@ -35,15 +40,23 @@ module.exports = Marionette.LayoutView.extend({
     });
   },
 
-  serializeData: function() {
-    var self = this;
-    return {
-      mission: self.model.toJSON()
-    };
+  onRender: function() {
+    var user = User.model.getInstance();
+    var observations = Observation.collection.getInstance();
+    observations = observations.where({
+      userId: user.get('id'),
+      missionId: this.model.get('srcId')
+    });
+    var ObservationsView = require('../../observation/observation_list.view');
+    this.showChildView('observations', new ObservationsView({
+      collection: new Backbone.Collection(observations)
+    }));
   },
 
-  onShow: function() {
-    var self = this;
+  serializeData: function() {
+    return {
+      mission: this.model.toJSON()
+    };
   },
 
   onAcceptClick: function(e) {
