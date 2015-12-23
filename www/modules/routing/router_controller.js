@@ -19,12 +19,9 @@ var Backbone = require('backbone'),
 
 module.exports = Marionette.Object.extend({
   initialize: function(options) {
-    var self = this;
   },
 
   home: function() {
-    var self = this;
-
     var session = Session.model.getInstance();
     var user = User.model.getInstance();
 
@@ -43,7 +40,6 @@ module.exports = Marionette.Object.extend({
   },
 
   observationId: function(id) {
-    var self = this;
     var Observation = require('../observation/observation.model');
     var currentObservation = Observation.collection.getInstance().get(id);
     main.getInstance().rgMain.show(new ObservationView({
@@ -55,7 +51,6 @@ module.exports = Marionette.Object.extend({
   },
 
   dashboard: function(tab) {
-    var self = this;
     var rgMain = main.getInstance().rgMain;
     var currentIsDashboard = (rgMain.currentView && rgMain.currentView.getOption('name') == 'dashboard');
 
@@ -71,7 +66,6 @@ module.exports = Marionette.Object.extend({
   },
 
   missionSheet: function(id) {
-    var self = this;
     id = _.parseInt(id);
     var MissionModel = require('../mission/mission.model');
     var mission = MissionModel.collection.getInstance().findWhere({
@@ -87,8 +81,6 @@ module.exports = Marionette.Object.extend({
   },
 
   missionsAll: function() {
-    var self = this;
-
     var Mission = require('../mission/mission.model');
     var MissionsAllFilter = require('../mission/all/missions_all_filter.view');
 
@@ -123,8 +115,6 @@ module.exports = Marionette.Object.extend({
   },
 
   missionsAllFilter: function() {
-    var self = this;
-
     var View = (require('../mission/all/missions_all_filter.view')).getClass();
     main.getInstance().rgMain.show(new View(), {
       preventDestroy: true
@@ -144,7 +134,6 @@ module.exports = Marionette.Object.extend({
   },
 
   _missionsAroundMe: function(options) {
-    var self = this;
     var rgMain = main.getInstance().rgMain;
     var state = options.state || {};
 
@@ -172,9 +161,7 @@ module.exports = Marionette.Object.extend({
   },
 
   missionsAroundMe: function() {
-    var self = this;
-
-    self._missionsAroundMe({
+    this._missionsAroundMe({
       state: {
         name: 'list'
       }
@@ -182,9 +169,7 @@ module.exports = Marionette.Object.extend({
   },
 
   missionsAroundMeManually: function() {
-    var self = this;
-
-    self._missionsAroundMe({
+    this._missionsAroundMe({
       state: {
         name: 'manually'
       }
@@ -192,9 +177,7 @@ module.exports = Marionette.Object.extend({
   },
 
   missionsAroundMeTab: function(tabSlug) {
-    var self = this;
-
-    self._missionsAroundMe({
+    this._missionsAroundMe({
       state: {
         name: 'list',
         args: {
