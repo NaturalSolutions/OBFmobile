@@ -4,14 +4,18 @@
         <div class="title">
             <a href="javascript:window.history.back();" class="icon icomoon">arrow_left</a> <span class="text"><%= data.mission.title %></span>
         </div>
-        <div class="accept floating floating-right">
+        <div class="status accept floating floating-right">
             <button type="button" class="btn btn-accept btn-fab btn-default btn-lg">
                 <span class="icon icomoon">check</span>
             </button>
-            <span class="text"><%= i18n.t('pages.missionSheet.acceptBtnLabel') %></span>
+            <span class="text text-default"><%= i18n.t('pages.missionSheet.acceptBtnLabel') %></span>
+            <span class="text text-is-accept"><%= i18n.t('pages.missionSheet.acceptedBtnLabel') %></span>
         </div>
-        <div class="complete floating floating-right btn btn-fab btn-lg bg-orange-light">
-            <span class="icon icomoon">palms</span>
+        <div class="status complete floating floating-right">
+            <div class="btn btn-fab btn-lg bg-orange-light">
+                <span class="icon icomoon">palms</span>
+            </div>
+            <span class="text"><%= i18n.t('pages.missionSheet.completedBtnLabel') %></span>
         </div>
     </div>
     <div class="meta">

@@ -37,7 +37,6 @@ module.exports = Marionette.LayoutView.extend({
 
   serializeData: function() {
     var self = this;
-
     return {
       mission: self.model.toJSON()
     };

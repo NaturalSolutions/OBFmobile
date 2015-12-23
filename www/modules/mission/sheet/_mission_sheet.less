@@ -30,12 +30,7 @@
 				margin-left: 1.6em;
 			}
 	    }
-	    .complete {
-	    	top: 0;
-	    	text-align: center;
-	    	.translate(0, -50%);
-	    }
-	    .accept {
+	    .status {
 	    	top: 0;
 	    	text-align: center;
 	    	.translate(0, -40%);
@@ -76,6 +71,9 @@
 	}
 
 	&.is-accept {
+		.header .accept .text-default {
+			display: none;
+		}
 		.btn-accept {
 			.bg-blue();
 		}
@@ -86,6 +84,9 @@
 		}
 	}
 	&:not(.is-accept) {
+		.header .accept .text-is-accept {
+			display: none;
+		}
 		.meta {
 			.delta {
 				display: none;

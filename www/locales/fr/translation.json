@@ -162,7 +162,9 @@
             }
         },
         "missionSheet": {
-            "acceptBtnLabel": "accepter"
+            "acceptBtnLabel": "accepter",
+            "acceptedBtnLabel": "accepté",
+            "completedBtnLabel": "accomplie"
         },
         "observation": {
             "btns": {
