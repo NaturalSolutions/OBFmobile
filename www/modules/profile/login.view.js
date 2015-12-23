@@ -324,7 +324,7 @@ var Page = View.extend({
     this.session = Session.model.getInstance();
 
     this.header = {
-      titleKey: ((this.model.get('externId')) ? 'profile' : 'registration'),
+      titleKey: 'login',//((this.model.get('externId')) ? 'profile' : 'registration'),
       buttons: {
         left: ['menu']
       }
