@@ -7,6 +7,7 @@ var Backbone = require('backbone'),
     main = require('../main/main.view'),
     User = require('../profile/user.model'),
     Home = require('../home/home.view'),
+    Clue = require('../clue/clue.view'),
     ObservationView = require('../observation/observation.view'),
     Dashboard = require('../dashboard/dashboard.view'),
     MissionsAroundMe = require('../mission/aroundme/missions_aroundme.view'),
@@ -37,6 +38,14 @@ module.exports = Marionette.Object.extend({
         trigger: true
       });
     }
+  },
+
+  clue: function() {
+    main.getInstance().rgMain.show(new Clue({
+      name: 'clue'
+    }), {
+      preventDestroy: true
+    });
   },
 
   observationId: function(id) {

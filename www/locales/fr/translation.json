@@ -13,6 +13,7 @@
     "header": {
         "titles": {
             "dashboard": "Tableau de bord",
+            "clue": "Indices",
             "missions": "Missions",
             "missionsAroundme": "Missions autour de moi",
             "observation": "Observation",

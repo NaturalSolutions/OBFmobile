@@ -8,6 +8,7 @@ var Router = Marionette.AppRouter.extend({
     '': 'home',
     'observation/:id': 'observationId',
     'dashboard(/:tab)': 'dashboard',
+    'clue': 'clue',
     'mission/:id': 'missionSheet',
     'missions/aroundme': 'missionsAroundMe',
     'missions/aroundme/manually': 'missionsAroundMeManually',
