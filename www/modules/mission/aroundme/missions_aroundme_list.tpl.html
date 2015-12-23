@@ -19,7 +19,7 @@
 					<a href="#mission/<%= mission.srcId %>" class="inner">
 						<div class="delta text-nowrap text-primary"><%= i18n.t('pages.missionsAroundme.list.delta', {nb: mission.inSeason.end.delta}) %></div>
 						<div class="thumb">
-							<div class="img" style="background-image:url('./images/taxon/<%= mission.poster %>');"></div>
+							<div class="img" style="background-image:url('./images/taxon/thumb/<%= mission.thumb %>');"></div>
 							<div class="donutchart donutchart-primary" data-donutchart-value="<%= _.round((365-mission.inSeason.end.delta)/365, 2) %>"></div>
 						</div>
 						<div class="title">
