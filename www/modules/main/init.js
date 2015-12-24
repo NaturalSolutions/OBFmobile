@@ -129,90 +129,71 @@ function init() {
 
     //TODO manage updates
     var deferred = $.Deferred();
-    missionCollection.fetch({
-      success: function(data) {
-        if (data.length) {
-          deferred.resolve();
-        } else {
-          $.getJSON('./data/missions.json')
-            .then(function(missionDatas) {
-              //var missionDatas = JSON.parse(response);
-              _.forEach(missionDatas, function(missionData) {
-                _.forEach(missionData.seasons, function(season) {
-                  season.startAt = moment(season.startAt, 'MM');
-                  season.endAt = moment(season.endAt, 'MM');
-                  if (season.startAt > season.endAt) {
-                    season.endAt.add(1, 'y');
-                  }
-                  season.endAt.endOf('month');
-                  season.startAt = season.startAt.toDate();
-                  season.endAt = season.endAt.toDate();
-                });
-                var mission = new Mission.Model({
-                  srcId: missionData.id,
-                  num: missionData.num,
-                  title: missionData.title,
-                  seasons: missionData.seasons,
-                  departements: missionData.departements,
-                  difficulty: missionData.difficulty,
-                  taxon: {
-                    title: missionData.taxon.title,
-                    scientific_name: missionData.taxon.scientific_name,
-                    cd_nom: missionData.taxon.cd_nom,
-                    family: missionData.taxon.family,
-                    description: missionData.taxon.description,
-                    url: missionData.taxon.url,
-                    characteristic: missionData.taxon.characteristic
-                  }
-                });
-                missionCollection.add(mission).save();
-              });
-              deferred.resolve();
-            }, function(error) {
-              console.log(error);
-            });
-        }
-      },
-      error: function(error) {
+    $.getJSON('./data/missions.json')
+      .then(function(missionDatas) {
+        //var missionDatas = JSON.parse(response);
+        _.forEach(missionDatas, function(missionData) {
+          _.forEach(missionData.seasons, function(season) {
+            season.startAt = moment(season.startAt, 'MM');
+            season.endAt = moment(season.endAt, 'MM');
+            if (season.startAt > season.endAt) {
+              season.endAt.add(1, 'y');
+            }
+            season.endAt.endOf('month');
+            season.startAt = season.startAt.toDate();
+            season.endAt = season.endAt.toDate();
+          });
+          var mission = new Mission.Model({
+            id: missionData.id,
+            srcId: missionData.id,
+            num: missionData.num,
+            title: missionData.title,
+            seasons: missionData.seasons,
+            departements: missionData.departements,
+            difficulty: missionData.difficulty,
+            taxon: {
+              title: missionData.taxon.title,
+              scientific_name: missionData.taxon.scientific_name,
+              cd_nom: missionData.taxon.cd_nom,
+              family: missionData.taxon.family,
+              description: missionData.taxon.description,
+              url: missionData.taxon.url,
+              characteristic: missionData.taxon.characteristic
+            }
+          });
+          missionCollection.add(mission);
+        });
+        deferred.resolve();
+      }, function(error) {
         console.log(error);
-      }
-    });
+      });
 
     return deferred;
   };
 
   var getDepartements = function() {
+    var deferred = $.Deferred();
     var departementCollection = new Departement.collection.getInstance();
 
-    var deferred = $.Deferred();
-    departementCollection.fetch({
-      success: function(data) {
-        if (data.length) {
-          deferred.resolve();
-        } else {
-          $.getJSON('./data/departements.json')
-            .then(function(response) {
-              var departementDatas = response;
-              _.forEach(departementDatas, function(departementData) {
-                var departement = new Departement.Model({
-                  code: departementData.code,
-                  label: departementData.title,
-                  title: departementData.title,
-                  lat: departementData.lat,
-                  lon: departementData.lon
-                });
-                departementCollection.add(departement).save();
-              });
-              deferred.resolve();
-            }, function(error) {
-              console.log(error);
-            });
-        }
-      },
-      error: function(error) {
+    $.getJSON('./data/departements.json')
+      .then(function(response) {
+        var departementDatas = response;
+        _.forEach(departementDatas, function(departementData) {
+          var departement = new Departement.Model({
+            id: departementData.code,
+            code: departementData.code,
+            label: departementData.title,
+            title: departementData.title,
+            lat: departementData.lat,
+            lon: departementData.lon
+          });
+          departementCollection.add(departement);
+        });
+        deferred.resolve();
+      }, function(error) {
         console.log(error);
-      }
-    });
+      });
+
     return deferred;
   };
 

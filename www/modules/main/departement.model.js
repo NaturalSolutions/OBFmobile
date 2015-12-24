@@ -1,6 +1,5 @@
 'use strict';
 var Backbone = require('backbone'),
-    LocalStorage = require('backbone.localstorage'),
     config = require('../main/config');
 
 var Model = Backbone.Model.extend({
@@ -16,9 +15,7 @@ var Model = Backbone.Model.extend({
 });
 
 var Collection = Backbone.Collection.extend({
-  model: Model,
-  url: config.coreUrl,
-  localStorage: new Backbone.LocalStorage('deptCollection')
+  model: Model
 });
 
 var collectionInstance = null;

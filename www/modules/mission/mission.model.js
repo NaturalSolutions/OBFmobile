@@ -1,6 +1,5 @@
 'use strict';
 var Backbone = require('backbone'),
-	LocalStorage = require('backbone.localstorage'),
 	_ = require('lodash'),
 	config = require('../main/config'),
 	moment = require('moment'),
@@ -27,7 +26,6 @@ var Model = Backbone.Model.extend({
       characteristic: ''
     },
   },
-  url: config.coreUrl,
   //Usefull to preserve equality between get() and toJSON()
   //TODO: remove that, it may be confusing
   getDynAttrs: function() {
@@ -181,9 +179,7 @@ var Model = Backbone.Model.extend({
 });
 
 var Collection = Backbone.Collection.extend({
-  model: Model,
-  url: config.coreUrl,
-  localStorage: new Backbone.LocalStorage('missionCollection')
+  model: Model
 });
 
 var collectionInstance = null;
