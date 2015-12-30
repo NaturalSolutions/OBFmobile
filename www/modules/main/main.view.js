@@ -13,7 +13,7 @@ var Backbone = require('backbone'),
     Session = require('./session.model');
 
 var Layout = Marionette.LayoutView.extend({
-  el: 'body',
+  el: '.app',
   template: require('./main.tpl.html'),
   className: 'ns-full-height',
 
