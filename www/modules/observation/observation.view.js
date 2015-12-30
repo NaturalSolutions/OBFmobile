@@ -17,7 +17,8 @@ var Backbone = require('backbone'),
     i18n = require('i18next-client'),
     Login = require('../profile/login.view'),
     Utilities = require('../main/utilities'),
-    Profile = require('../profile/profile.view');
+    Profile = require('../profile/profile.view'),
+    openFB = require('../main/openfb');
 
 var Layout = Marionette.LayoutView.extend({
   header: {
@@ -213,7 +214,6 @@ var Layout = Marionette.LayoutView.extend({
       var tagprojet = 'noe-obf';
       var copiedFile = function(fileEntry) {
         self.addPhoto(fileEntry.nativeURL);
-
       };
       var gotFileEntry = function(fileEntry) {
         var gotFileSystem = function(fileSystem) {
@@ -232,10 +232,10 @@ var Layout = Marionette.LayoutView.extend({
     }
   },
 
-  addPhoto: function(fe, extId) {
+  addPhoto: function(fe) {
     var newValue = {
       'url': fe || '',
-      'externId': extId || ''
+      'externUrl': ''
     };
     this.observationModel.get('photos')
         .push(newValue);
@@ -244,7 +244,6 @@ var Layout = Marionette.LayoutView.extend({
   },
 
   onFormSubmit: function(e) {
-    var self = this;
     e.preventDefault();
 
     var errors = this.formObs.validate();
@@ -261,10 +260,12 @@ var Layout = Marionette.LayoutView.extend({
       return false;
     }
 
-    if (self.$el.hasClass('form-status-unsaved'))
-        self.saveObs();
-    else if (self.$el.hasClass('form-status-shared-0'))
-        self.sendObs();
+    if (this.$el.hasClass('form-status-unsaved'))
+        this.saveObs();
+    else if (this.$el.hasClass('form-status-shared-0'))
+        this.sendObs();
+    else if (this.$el.hasClass('form-status-shared-1'))
+        this.shareObs();
   },
 
   accountExists: function() {
@@ -285,14 +286,12 @@ var Layout = Marionette.LayoutView.extend({
     var self = this;
     var user = User.model.getInstance();
     var formValues = this.formObs.getValue();
-
     var missionCurrent = mission.collection.getInstance().findWhere({
-      id: formValues.mission
+      id: _.parseInt(formValues.mission)
     });
     var deptCurrent = departement.collection.getInstance().findWhere({
       id: formValues.dept
     });
-
     self.observationModel.set({
       missionId: missionCurrent.get('srcId'),
       cd_nom: missionCurrent.get('taxon').cd_nom,
@@ -466,6 +465,7 @@ var Layout = Marionette.LayoutView.extend({
             dataType: 'json',
             data: fd,
             success: function(response) {
+              console.log(response);
               dfd.resolve();
             },
             error: function(error) {
@@ -486,6 +486,60 @@ var Layout = Marionette.LayoutView.extend({
     }, self.onFail);
     /* jshint ignore:end */
     return dfd;
+  },
+
+  shareObs: function() {
+    var self = this;
+    var mission = self.model.get('mission');
+    this.$el.find('form').addClass('loading');
+    openFB.init({appId: '545622275606103', tokenStore: window.localStorage});
+    openFB.api({
+      method: 'POST',
+      path: '/me/feed',
+      params: {
+        message: "J'ai accomplie une mission !",
+        link: mission.get('taxon').url,
+        name: mission.get('title'),
+        picture: _.get(self.model.get('photos'), '[0].externUrl', ''),
+        caption: 'En Forêt avec Noé',
+        description: mission.get('taxon').characteristic
+      },
+      success: function() {
+        self.$el.find('form').removeClass('loading');
+        Dialog.alert('Partage réussi');
+      },
+      error: function(error) {
+        if ( error.code == 190 ) {
+          Dialog.show({
+            title: 'Connexion',
+            message: 'Vous devez être connecter à Facebook pour partager votre obs',
+            buttons: [{
+              label: 'Annuler',
+              action: function(dialog) {
+                dialog.close();
+                self.$el.find('form').removeClass('loading');
+              }
+            }, {
+              label: 'Me connecter',
+              action: function(dialog) {
+                dialog.close();
+                openFB.login(function(response) {
+                  if(response.status === 'connected') {
+                      self.shareObs();
+                  } else {
+                      alert('Facebook login failed: ' + response.error);
+                      self.$el.find('form').removeClass('loading');
+                  }
+                }, {
+                  scope: 'publish_actions'
+                }
+              );
+              }
+            }]
+          });
+        }
+      }
+    });
   }
 });
 
