@@ -22,10 +22,10 @@ var Backbone = require('backbone'),
 
 var Layout = Marionette.LayoutView.extend({
   header: {
-    titleKey: 'observation'
-    /*buttons: {
+    titleKey: 'observation',
+    buttons: {
         left: ['back']
-    }*/
+    }
   },
   template: require('./observation.tpl.html'),
   className: 'page observation ns-full-height',

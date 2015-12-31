@@ -4,7 +4,7 @@
   height: 100%;
   left: 0;
   top: 0;
-  z-index: 20;
+  z-index: 1001;
   -webkit-transition: -webkit-transform .3s ease-out;
   transition: transform .3s ease-out;
   -webkit-transform: translateX(-100%);
@@ -20,27 +20,50 @@
     background: rgba(47, 28, 12, 0.9);
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1);
   }
+  ul {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
   .nav {
     ul {
       border-top: 1px solid grey;
-      &:not(:first-child) {
-        padding-top: 10px;
-      }
+      padding-top: 10px;
       &:first-child {
-        border-top: 0px;
+        border-top: 0;
+        padding-top: 5px;
       }
     }
     li {
       margin: 0;
-      > a, button {
-        color: #FFF;
-        > .icon {
-          margin-right: 10px;
-          font-size: 2.5em;
-        }
-        > span {
-          vertical-align: middle;
-        }
+      
+    }
+  }
+  a, button {
+    color: #FFF;
+    > .icon {
+      margin-right: 10px;
+      font-size: 2.5em;
+    }
+    > span {
+      vertical-align: middle;
+    }
+  }
+  .profile {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    .btn-connexion {
+      background: @brand-primary;
+      width: 100%;
+      text-transform: uppercase;
+    }
+    .btn-profile {
+      text-align: left;
+      background: #5d452e;
+      .badge {
+        font-size: 1em;
+        text-transform: uppercase;
       }
     }
   }
@@ -52,27 +75,13 @@ body.show-sidenav .sidenav {
 }
 
 body.user-logged .sidenav {
-  .link-connexion {
+  .btn-connexion {
     display: none;
   }
 }
 
 body.user-unlogged .sidenav {
-  .btn-logout {
+  .btn-profile {
     display: none;
-  }
-  .link-profile {
-    display: none;
-  }
-  .btn-connexion {
-    background: @brand-primary;
-    width: 100%;
-    text-align: left;
-    > span {
-      &:nth-child(2) {
-        font-size: 2rem;
-        font-variant: small-caps;
-      }
-    }
   }
 }

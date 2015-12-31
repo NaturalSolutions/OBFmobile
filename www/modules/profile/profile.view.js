@@ -20,7 +20,7 @@ var View = Marionette.LayoutView.extend({
   events: {
     'submit form': 'onFormSubmit',
     'click .request-npw-js': 'onChangePasswdClick',
-    'click .btn-connection': 'openLoginDialog'
+    'click .btn-logout': 'onLogoutClick'
   },
   // !!! initialize is overrided in Page
   initialize: function() {
@@ -319,37 +319,30 @@ var View = Marionette.LayoutView.extend({
     UpdatePasswd.openDialog();
     console.log('onChangePasswdClick');
   },
-  openLoginDialog: function(e) {
-    e.preventDefault();
-    var dia = $('.bootstrap-dialog');
-    if (dia.length) {
-      var Login = require('./login.view.js');
-      dia.remove();
-      $('.modal-backdrop').remove();
-      var dfd;
-      dfd = Login.openDialog({
-        message: i18n.t('pages.observation.dialogs.need_login')
-      });
-      dfd.then(function() {
-        Dialog.alert(i18n.t('pages.observation.dialogs.need_complete'));
-      });
-    } else {
-      Router.getInstance().navigate('#login', {
-        trigger: true
-      });
-    }
-  }
+  onLogoutClick: function() {
+    var Main = require('../main/main.view.js');
+    var session = Session.model.getInstance();
+    Main.getInstance().showLoader();
+    session.logout().always(function() {
+      Main.getInstance().hideLoader();
+      Dialog.alert('Vous êtes déconnecté');
+      if ( !session.get('isAuth') )
+        Router.getInstance().navigate('dashboard', {
+          trigger: true
+        });
+    });
+  },
 });
 
 var Page = View.extend({
-  className: 'page profile container with-header-gap',
+  className: 'view page profile container with-header-gap',
   initialize: function() {
     this.session = Session.model.getInstance();
 
     this.header = {
       titleKey: ((this.model.get('externId')) ? 'profile' : 'registration'),
       buttons: {
-        left: ['menu']
+        left: ['back']
       }
     };
 
@@ -360,6 +353,7 @@ var Page = View.extend({
                 });
     });
   },
+
 
 });
 

@@ -316,7 +316,7 @@ var Page = View.extend({
   header: {
     titleKey: 'login',
     buttons: {
-      left: ['menu']
+      left: ['back']
     }
   },
   className: 'page login container with-header-gap',
@@ -326,7 +326,7 @@ var Page = View.extend({
     this.header = {
       titleKey: 'login',//((this.model.get('externId')) ? 'profile' : 'registration'),
       buttons: {
-        left: ['menu']
+        left: ['back']
       }
     };
 

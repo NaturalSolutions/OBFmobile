@@ -13,29 +13,29 @@ var View = Marionette.LayoutView.extend({
   className: 'sidenav',
   events: {
     'click': 'hide',
-    'click .btn-logout': 'onLogoutClick',
     'click .btn-profile': 'navigateToProfile',
     'click .btn-connexion': 'navigateToConnexion'
   },
 
   initialize: function() {
-    var self = this;
-
-    self.listenTo(header.getInstance(), 'btn:menu:click', self.toggleShow);
+    this.listenTo(header.getInstance(), 'btn:menu:click', this.toggleShow);
+    this.listenTo(Session.model.getInstance(), 'change:isAuth', this.onAuthChange);
   },
 
   serializeData: function() {
     var user = User.model.getInstance();
 
     return {
-      linkregister: (user.get('externId') ? '#profile/' + user.get('externId') : '#profile')
+      user: user.toJSON()
     };
   },
 
   onRender: function(options) {
-    var self = this;
+    
+  },
 
-    //self.$el.i18n();
+  onAuthChange: function() {
+    this.render();
   },
 
   toggleShow: function() {
@@ -48,15 +48,6 @@ var View = Marionette.LayoutView.extend({
 
   hide: function() {
     $('body').removeClass('show-sidenav');
-  },
-
-  onLogoutClick: function() {
-    var Main = require('../main/main.view.js');
-
-    Main.getInstance().showLoader();
-    Session.model.getInstance().logout().always(function() {
-      Main.getInstance().hideLoader();
-    });
   },
 
   navigateToProfile: function() {

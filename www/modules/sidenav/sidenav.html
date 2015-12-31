@@ -1,22 +1,9 @@
 <div class="inner">
     <nav class="nav">
         <ul class="list-unstyled">
-            <!-- <li>
-                <a href="#"><span class="icon icomoon">person</span> Mon profil</a>
-            </li> -->
-            <li class="link-profile">
-                <button type="button" class="btn btn-link btn-profile">
-                    <span class="icon icomoon">profile</span> <span> <%= i18n.t('sidenav.btns.profile') %> </span>
-                </button>
-            </li>
-            <li class="link-connexion">
-                <button type="button" class="btn btn-link btn-connexion">
-                    <span class="icon icomoon">profile</span> <span> <%= i18n.t('sidenav.btns.login') %> </span>
-                </button>
-            </li>
             <li>
                 <a class="btn btn-link" href="#dashboard">
-                    <span class="icon icomoon">dashboard</span> <span> <%= i18n.t('sidenav.btns.dashboard') %> </span>
+                    <span class="icon icomoon">profile</span> <span> <%= i18n.t('sidenav.btns.dashboard') %> </span>
                 </a>
             </li>
         </ul>
@@ -27,22 +14,17 @@
                 </a>
             </li>
             <li>
+                <a class="btn btn-link" href="#missions/aroundme">
+                    <span class="icon icomoon">dashboard</span> <span> <%= i18n.t('sidenav.btns.missionsAroundme') %> </span>
+                </a>
+            </li>
+            <li>
                 <a class="btn btn-link" href="#missions/training">
                     <span class="icon icomoon">missions_apprentissage</span> <span> <%= i18n.t('sidenav.btns.missionsTraining') %> </span>
                 </a>
             </li>
-            <li>
-                <a class="btn btn-link" href="#clue">
-                    <span class="icon icomoon">indices</span> <span> <%= i18n.t('sidenav.btns.indices') %> </span>
-                </a>
-            </li>
         </ul>
         <ul class="list-unstyled">
-            <li>
-                <a class="btn btn-link">
-                    <span class="icon icomoon">settings</span> <span> <%= i18n.t('sidenav.btns.settings') %> </span>
-                </a>
-            </li>
             <li>
                 <a class="btn btn-link">
                     <span class="icon icomoon">info</span> <span> <%= i18n.t('sidenav.btns.about') %> </span>
@@ -54,12 +36,15 @@
                 </a>
             </li>
         </ul>
-        <ul class="list-unstyled">
-            <li>
-                <button type="button" class="btn btn-link btn-logout">
-                    <span><%= i18n.t('sidenav.btns.logout') %> </span>
-                </button>
-            </li>
-        </ul>
     </nav>
+    <div class="profile">
+        <button type="button" class="btn btn-lg btn-block btn-profile">
+            <% var firstname = data.user.firstname %>
+            <% var lastname = data.user.lastname %>
+            <span class="badge badge-circle bg-primary"><%= firstname.charAt(0)+lastname.charAt(0) %></span> <%= firstname+' '+lastname %>
+        </button>
+        <button type="button" class="btn btn-lg btn-block btn-connexion">
+            <%= i18n.t('sidenav.btns.login') %>
+        </button>
+    </div>
 </div>
