@@ -1,16 +1,16 @@
 'use strict';
 
 var Backbone = require('backbone'),
-    Marionette = require('backbone.marionette'),
-    MainRegion = require('./main.region'),
-    footer = require('../footer/footer.view'),
-    header = require('../header/header'),
-    sidenav = require('../sidenav/sidenav'),
-    User = require('../profile/user.model'),
-    $ = require('jquery'),
-    Dialog = require('bootstrap-dialog'),
-    i18n = require('i18next-client'),
-    Session = require('./session.model');
+  Marionette = require('backbone.marionette'),
+  MainRegion = require('./main.region'),
+  footer = require('../footer/footer.view'),
+  header = require('../header/header'),
+  sidenav = require('../sidenav/sidenav'),
+  User = require('../profile/user.model'),
+  $ = require('jquery'),
+  Dialog = require('bootstrap-dialog'),
+  i18n = require('i18next-client'),
+  Session = require('./session.model');
 
 var Layout = Marionette.LayoutView.extend({
   el: '.app',
@@ -21,6 +21,8 @@ var Layout = Marionette.LayoutView.extend({
     this.dialogs = [];
     this.addListeners();
     this.listenTo(Session.model.getInstance(), 'change:isAuth', this.onSessionAuthChange);
+
+    this.getPosition();
   },
 
   regions: {
@@ -83,7 +85,7 @@ var Layout = Marionette.LayoutView.extend({
   },
 
   onSessionAuthChange: function(model) {
-    if ( model.get('isAuth') )
+    if (model.get('isAuth'))
       this.addListeners();
   },
 
@@ -92,7 +94,7 @@ var Layout = Marionette.LayoutView.extend({
     var user = User.model.getInstance();
     user.on('change:level', function(model, level) {
       if (!level)
-          return false;
+        return false;
       self.addDialog({
         cssClass: 'theme-primary with-bg-forest user-score user-level-' + level,
         badgeClassNames: 'badge-circle bg-wood border-brown text-white',
@@ -103,13 +105,15 @@ var Layout = Marionette.LayoutView.extend({
     });
     user.on('change:palm', function(model, palm) {
       if (!palm)
-          return false;
+        return false;
       var palmName = user.get('palmName');
       var nbCompleted = user.get('completedMissions').length;
       self.addDialog({
         cssClass: 'theme-primary with-bg-forest user-score user-palm-' + palmName,
         badgeClassNames: 'badge-circle bg-wood border-brown text-white',
-        badge: nbCompleted+'<div class="text-xs text-bottom">'+i18n.t('mission.label', {count: nbCompleted})+'</div>',
+        badge: nbCompleted + '<div class="text-xs text-bottom">' + i18n.t('mission.label', {
+          count: nbCompleted
+        }) + '</div>',
         title: i18n.t('dialogs.palm.title'),
         message: i18n.t('dialogs.palm.message.' + palmName),
         button: i18n.t('dialogs.palm.button')
@@ -119,7 +123,7 @@ var Layout = Marionette.LayoutView.extend({
 
   addDialog: function(data) {
     var self = this;
-    var message = (!data.badge && !data.badgeClassNames) ? '' : '<div class="badge '+(data.badgeClassNames||'')+'">'+(data.badge|| '')+'<div class="butterfly"></div></div>';
+    var message = (!data.badge && !data.badgeClassNames) ? '' : '<div class="badge ' + (data.badgeClassNames || '') + '">' + (data.badge || '') + '<div class="butterfly"></div></div>';
     message += '<div class="floating floating-bottom full-w"><h3>' + data.title + '</h3><p>' + data.message + '</p></div>';
 
     var dialog = new Dialog({
@@ -139,12 +143,12 @@ var Layout = Marionette.LayoutView.extend({
     });
     this.dialogs.push(dialog);
     if (this.dialogs.length == 1)
-        this.openDialog();
+      this.openDialog();
   },
 
   openDialog: function() {
     if (!this.dialogs.length)
-        return false;
+      return false;
 
     var dialog = this.dialogs[0];
     dialog.realize();
@@ -166,7 +170,22 @@ var Layout = Marionette.LayoutView.extend({
 
   hideLoader: function() {
     $('.page-loader').removeClass('display');
-  }
+  },
+
+  getPosition: function() {
+    var self = this;
+
+    var view = new(require('../profile/user_localize.view'))();
+    view.getPosition();
+    this.listenTo(view, 'success', function() {
+      self.stopListening(view);
+      view.destroy();
+    });
+    this.listenTo(view, 'abort', function() {
+      self.stopListening(view);
+      view.destroy();
+    });
+  },
 });
 
 var instance = null;
