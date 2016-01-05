@@ -544,6 +544,14 @@ ul.form-control {
 		    .transition-delay(0s);
 		}
     }
+    &:not(.open) {
+        .dropdown-menu {
+            .btn-fab,
+            .btn-fab * {
+                .animation(none);
+            }
+        }
+    }
 }
 
 form:not(.loading) {
