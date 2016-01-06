@@ -18,6 +18,7 @@ var Model = Backbone.Model.extend({
     departements: [],//codes
     criterias: [],
     seasons: [],//[{"startAt":"05","endAt":"11"}],
+    environments: [],
     taxon: {
       title: '',
       family: '',
@@ -187,6 +188,9 @@ var collectionInstance = null;
 module.exports = {
   Model: Model,
   collection: {
+    getClass: function() {
+      return Collection;
+    },
     getInstance: function() {
       if (!collectionInstance)
           collectionInstance = new Collection();

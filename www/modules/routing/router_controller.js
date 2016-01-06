@@ -40,9 +40,15 @@ module.exports = Marionette.Object.extend({
     }
   },
 
-  clue: function() {
+  clue: function(queryString) {
+    var params = _.parseQueryString(queryString);
+    if ( params.missionIds ) {
+      params.missionIds = params.missionIds.split(',');
+      params.missionIds = _.map(params.missionIds, _.parseInt);
+    }
     main.getInstance().rgMain.show(new Clue({
-      name: 'clue'
+      name: 'clue',
+      missionIds: params.missionIds
     }), {
       preventDestroy: true
     });

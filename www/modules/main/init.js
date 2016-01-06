@@ -132,14 +132,18 @@ function init() {
     $.getJSON('./data/missions.json')
       .then(function(missionDatas) {
         //var missionDatas = JSON.parse(response);
+        var now = moment();
         _.forEach(missionDatas, function(missionData) {
           _.forEach(missionData.seasons, function(season) {
             season.startAt = moment(season.startAt, 'MM');
             season.endAt = moment(season.endAt, 'MM');
-            if (season.startAt > season.endAt) {
-              season.endAt.add(1, 'y');
-            }
             season.endAt.endOf('month');
+            if (season.startAt > season.endAt) {
+              if ( now > season.endAt )
+                season.endAt.add(1, 'y');
+              else
+                season.startAt.subtract(1, 'y');
+            }
             season.startAt = season.startAt.toDate();
             season.endAt = season.endAt.toDate();
           });
@@ -151,6 +155,7 @@ function init() {
             seasons: missionData.seasons,
             departements: missionData.departements,
             difficulty: missionData.difficulty,
+            environments: missionData.environments,
             taxon: {
               title: missionData.taxon.title,
               scientific_name: missionData.taxon.scientific_name,

@@ -1,3 +1,11 @@
 <div class="inner pull-left">
   <img class="map" src="./images/missions_map.png" />
+  <div class="environments">
+  <% _.forEach(data.environments, function(environment, environmentName) {%>
+    <% var isCluster = (environment.missions.length > 1); %>
+    <div name="<%= environmentName %>" class="badge-circle marker <%= isCluster ? 'is-cluster' : '' %>" style="left:<%= environment.x*100 %>%;top:<%= environment.y*100 %>%">
+     <%= isCluster ? '' : environment.missions[0].num %>
+    </div>
+  <%}) %>
+  </div>
 </div>
