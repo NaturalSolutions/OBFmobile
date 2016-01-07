@@ -38,14 +38,14 @@ var View = Marionette.LayoutView.extend({
     this.session.isConnected();
     this.$el.find('.donutchart').nsDonutChart();
     var formSchema = {
-      // email: {
-      //     type: 'Text',
-      //     dataType: 'email',
-      //     editorAttrs: {
-      //         placeholder: "Email"
-      //     },
-      //     validators: ['required', 'email']
-      // },
+      email: {
+          type: 'Text',
+          dataType: 'email',
+          editorAttrs: {
+              placeholder: "Email"
+          },
+          validators: ['required', 'email']
+      },
       password: {
         type: 'Password',
         editorAttrs: {
@@ -65,22 +65,17 @@ var View = Marionette.LayoutView.extend({
       }
     });
     this.formLogin.render();
-
-    // this.$el.append(this.formLogin.$el);
-    this.$el.find('fieldset.email').after(this.formLogin.$el);
+    this.$el.find('form > .well').prepend(this.formLogin.$el);
   },
 
-  onShow: function() {
+  /*onShow: function() {
     var self = this;
     User.collection.getInstance().fetch({
       success: function() {
-        self.$el.find('input.js-autocomplete').autocomplete({
-          source: User.collection.getInstance().pluck('email'),
-          appendTo: self.$el.find('.js-autocomplete-result'),
-        });
+        
       }
     });
-  },
+  },*/
 
   validatorEmail: function(value) {
     var objError = {};
@@ -108,12 +103,12 @@ var View = Marionette.LayoutView.extend({
     var username = $form.find('input[name="login"]').val();
     var password = $form.find('input[name="password"]').val();
 
-    var stateEmail = this.validatorEmail(username);
+    /*var stateEmail = this.validatorEmail(username);
     if (stateEmail) {
       $('fieldset.email').addClass('has-error');
       $('fieldset.email .help-block').text(stateEmail.msg);
       return false;
-    }
+    }*/
 
     var errors = this.formLogin.validate();
     console.log(errors);
