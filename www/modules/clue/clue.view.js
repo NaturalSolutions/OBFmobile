@@ -6,7 +6,8 @@ var Backbone = require('backbone'),
   Mission = require('../mission/mission.model'),
   MissionListItem = require('../mission/list_item/mission_list_item.view'),
   _ = require('lodash'),
-  config = require('../main/config');
+  config = require('../main/config'),
+  i18n = require('i18next-client');
 
 var Layout = Marionette.LayoutView.extend({
   header: {
@@ -23,7 +24,6 @@ var Layout = Marionette.LayoutView.extend({
 
   initialize: function(options) {
     var missionCollection = Mission.collection.getInstance();
-    console.log(options.missionIds);  
     var missions = _.filter(missionCollection.toJSON(), function(mission) {
       return mission.difficulty > 0 && ( !options.missionIds || _.includes(options.missionIds, mission.id));
     });
@@ -83,6 +83,7 @@ var Layout = Marionette.LayoutView.extend({
     var Dialog = require('bootstrap-dialog');
     var dialog = Dialog.show({
       closable: true,
+      title: i18n.t('clue.'+name),
       message: this.missionListView.$el
     });
     dialog.getModalBody().click(function() {

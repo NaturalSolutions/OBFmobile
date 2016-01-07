@@ -35,6 +35,15 @@
         "difficulty_2": "Confirmé",
         "difficulty_3": "Expert"
     },
+    "clue": {
+        "sous_bois": "Sous bois",
+        "feuillus": "Feuillus",
+        "coniferes": "Conifères",
+        "prairie": "Prairie",
+        "milieu_humide": "Milieu humide",
+        "lisiere": "Lisière",
+        "clairiere": "Clairière"
+    },
     "logs": {
         "checkin": "Vous êtes entré en forêt",
         "checkout": "Vous êtes sorti de forêt <span>__duration__</span>",

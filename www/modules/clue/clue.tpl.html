@@ -3,8 +3,10 @@
   <div class="environments">
   <% _.forEach(data.environments, function(environment, environmentName) {%>
     <% var isCluster = (environment.missions.length > 1); %>
-    <div name="<%= environmentName %>" class="badge-circle marker <%= isCluster ? 'is-cluster' : '' %>" style="left:<%= environment.x*100 %>%;top:<%= environment.y*100 %>%">
-     <%= isCluster ? '' : environment.missions[0].num %>
+    <div name="<%= environmentName %>" class="marker <%= isCluster ? 'is-cluster' : '' %>" style="left:<%= environment.x*100 %>%;top:<%= environment.y*100 %>%">
+      <div class="badge-circle">
+       <%= isCluster ? '' : environment.missions[0].num %>
+       </div>
     </div>
   <%}) %>
   </div>

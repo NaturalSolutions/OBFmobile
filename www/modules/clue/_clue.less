@@ -17,8 +17,25 @@
     height: 100%;
     > .marker {
       position: absolute;
-      margin-top: -1em;
-      margin-left: -1em;
+      width: 40px;
+      height: 40px;
+      margin-top: -20px;
+      margin-left: -20px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      .badge-circle {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-top: -1em;
+        margin-left: -1em;
+      }
+      &.is-cluster {
+        .scale(1.2);
+        .badge-circle {
+          border-color: transparent;
+        }
+      }
     }
   }
 }
