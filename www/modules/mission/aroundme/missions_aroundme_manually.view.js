@@ -20,14 +20,9 @@ module.exports = Marionette.LayoutView.extend({
 
   onShow: function() {
     var self = this;
-
-    departement.collection.getInstance().fetch({
-      success: function() {
-        self.$el.find('input.js-autocomplete').autocomplete({
-          source: departement.collection.getInstance().pluck('title'),
-          appendTo: self.$el.find('.js-autocomplete-result'),
-        });
-      }
+    this.$el.find('input.js-autocomplete').autocomplete({
+      source: departement.collection.getInstance().pluck('title'),
+      appendTo: this.$el.find('.js-autocomplete-result'),
     });
   },
 
