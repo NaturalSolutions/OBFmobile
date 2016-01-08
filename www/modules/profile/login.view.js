@@ -249,7 +249,7 @@ var View = Marionette.LayoutView.extend({
       buttons: [{
         label: 'Envoyer nouveau mot de passe par email',
         cssClass: 'btn-block btn-primary',
-        action: function(dialogItself) {
+        action: _.debounce(function(dialogItself) {
           var errors = self.formNPW.validate();
           console.log(errors);
           if (errors)
@@ -272,7 +272,7 @@ var View = Marionette.LayoutView.extend({
               self.dialogRequestNewpwSuccess();
             }
           });
-        }
+        },2000)
       }]
     });
   },
