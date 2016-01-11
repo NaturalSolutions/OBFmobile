@@ -197,8 +197,11 @@ var Collection = Backbone.Collection.extend({
       email: ''
     });
     //Create an anonymous if necessary
-    if (!anonymous)
+    if (!anonymous){
       anonymous = this.add(new UserModel());
+      anonymous.save();
+    }
+
     //Return the anonymous
     return anonymous;
   },
