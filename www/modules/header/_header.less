@@ -1,29 +1,30 @@
 #header,
 .header-app {
-	position: fixed;
-    top: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.95);
+  .box-shadow(0 0 6px rgba(0, 0, 0, 0.2));
+  .btn {
+    border: none;
+  }
+  .title {
+    position: absolute;
+    left: 0;
     width: 100%;
-    z-index: 2;
-	background: rgba(255, 255, 255, 0.95);
-	.box-shadow(0 0 6px rgba(0, 0, 0, 0.2));
-	.btn {
-		border: none;
-	}
-	.title {
-		position: absolute;
-	    left: 0;
-	    width: 100%;
-	    &:extend(.btn-lg);
-	    text-shadow: 0 2px 9px rgba(0, 0, 0, 0.3);
-	}
-	.col-side {
-		position: relative;
-		z-index: 1;
-	}
+    &:extend(.btn-lg);
+    text-shadow: 0 2px 9px rgba(0, 0, 0, 0.3);
+  }
+  .col-side {
+    position: relative;
+    z-index: 1;
+  }
 }
+
 body.in-forest #header,
-body.in-forest .header-app{
-	background: #32934e;
-	color: white;
-	-webkit-transition: background-color 500ms linear;
+body.in-forest .header-app {
+  background: #32934e;
+  color: white;
+  -webkit-transition: background-color 500ms linear;
 }

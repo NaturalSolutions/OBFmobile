@@ -4,6 +4,7 @@
   "description": "TODO",
   "private": true,
   "browser": {
+    "css_browser_selector": "./www/vendor/css_browser_selector.js",
     "jquery-ns": "./www/vendor/ns/jquery-ns.js",
     "lodash-ns": "./www/vendor/ns/lodash-ns.js",
     "bootstrap": "./node_modules/bootstrap/dist/js/bootstrap.js",

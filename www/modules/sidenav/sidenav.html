@@ -38,13 +38,13 @@
         </ul>
     </nav>
     <div class="profile">
-        <button type="button" class="btn btn-lg btn-block btn-profile">
+        <a href="#profile" class="btn btn-lg btn-block btn-profile">
             <% var firstname = data.user.firstname %>
             <% var lastname = data.user.lastname %>
             <span class="badge badge-circle bg-primary"><%= firstname.charAt(0)+lastname.charAt(0) %></span> <%= firstname+' '+lastname %>
-        </button>
-        <button type="button" class="btn btn-lg btn-block btn-connexion">
+        </a>
+        <a href="#user-selector" class="btn btn-lg btn-block btn-connexion">
             <%= i18n.t('sidenav.btns.login') %>
-        </button>
+        </a>
     </div>
 </div>

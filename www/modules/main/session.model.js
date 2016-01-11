@@ -20,6 +20,8 @@ var SessionModel = Backbone.Model.extend({
     network: true,
   },
   initialize: function() {
+    var self = this;
+
     this.on('change:isAuth', function() {
       $('body').toggleClass('user-logged user-unlogged');
     });
@@ -62,7 +64,7 @@ var SessionModel = Backbone.Model.extend({
   isConnected: function() {
     var self = this;
     var dfd = $.Deferred();
-    if (!this.get('network')) {
+    if (!navigator.onLine) {
       return false;
     }
     // Call system connect with session token.
@@ -157,6 +159,10 @@ var SessionModel = Backbone.Model.extend({
       success: function(response) {
         dfd.resolve(response);
         self.set('isAuth', true);
+        if ( self.afterLoginAction && self[self.afterLoginAction.name] ) {
+          self[self.afterLoginAction.name](self.afterLoginAction.options);
+        }
+        self.afterLoginAction = null;
       }
     };
     self.getCredentials(query).done(function() {
@@ -164,6 +170,11 @@ var SessionModel = Backbone.Model.extend({
     });
 
     return dfd;
+  },
+
+  showObsAndTransmit: function(options) {
+    Observation.idToTransmit = options.id;
+    Router.getInstance().navigate('#observation/'+options.id, {trigger:true});
   },
 
   loginNoNetwork: function(username) {
@@ -209,7 +220,7 @@ var SessionModel = Backbone.Model.extend({
         User.model.getInstance().off('change:level');
         User.model.getInstance().off('change:palm');
 
-        self.becomesAnonymous(User.model.getInstance()).then(function() {
+        self.addAnonymousUserIfNecessary(User.model.getInstance()).then(function() {
           self.set('isAuth', false);
           Router.getInstance().navigate('', {
             trigger: true
@@ -230,7 +241,7 @@ var SessionModel = Backbone.Model.extend({
     modelInstance.set({
       'requestLogout': User.model.getInstance().get('externId')
     }).save();
-    this.becomesAnonymous(User.model.getInstance()).then(function() {
+    this.addAnonymousUserIfNecessary(User.model.getInstance()).then(function() {
       self.set('isAuth', false);
       Router.getInstance().navigate('', {
         trigger: true
@@ -238,7 +249,7 @@ var SessionModel = Backbone.Model.extend({
     });
   },
 
-  becomesAnonymous: function() {
+  addAnonymousUserIfNecessary: function() {
     var dfd = $.Deferred();
     var usersCollection = User.collection.getInstance();
     var mail = '';

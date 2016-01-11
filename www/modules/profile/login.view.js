@@ -24,19 +24,18 @@ var View = Marionette.LayoutView.extend({
     'click .btn-profile': 'openProfileDialog'
   },
 
-  initialize: function() {
+  initialize: function(options) {
     this.session = Session.model.getInstance();
   },
 
   serializeData: function() {
     return {
-      user: this.model,
+      user: this.model ? this.model.toJSON() : null
     };
   },
 
   onRender: function(options) {
     this.session.isConnected();
-    this.$el.find('.donutchart').nsDonutChart();
     var formSchema = {
       email: {
           type: 'Text',
@@ -54,18 +53,26 @@ var View = Marionette.LayoutView.extend({
         validators: ['required']
       }
     };
-    var userData = this.model.toJSON();
-
-    this.formLogin = new Backbone.Form({
+    var formOptions = {
       template: require('./form_login.tpl.html'),
       schema: formSchema,
-      data: userData,
-      templateData: {
-        user: userData
+      data: {
+        email: '',
+        password: ''
       }
-    });
+    };
+    if ( this.model ) {
+      var userData = this.model.toJSON();
+      _.merge(formOptions, {
+        data: userData,
+        templateData: {
+          user: userData
+        }
+      });
+    }
+    this.formLogin = new Backbone.Form(formOptions);
     this.formLogin.render();
-    this.$el.find('form > .well').prepend(this.formLogin.$el);
+    this.$el.find('form > .well').append(this.formLogin.$el);
   },
 
   /*onShow: function() {
@@ -225,16 +232,21 @@ var View = Marionette.LayoutView.extend({
         validators: ['required', 'email']
       },
     };
-    var userData = this.model.toJSON();
     var $tpl = $('<fieldset class="" data-fields="email"></fieldset>');
-    this.formNPW = new Backbone.Form({
+    var formOptions = {
       template: $tpl.html(),
       schema: formSchema,
-      data: userData,
-      templateData: {
-        user: userData
-      }
-    });
+    };
+    if ( this.model ) {
+      var userData = this.model.toJSON();
+      _.merge(formOptions, {
+        data: userData,
+        templateData: {
+          user: userData
+        }
+      });
+    }
+    this.formNPW = new Backbone.Form(formOptions);
     this.formNPW.render();
 
     Dialog.show({

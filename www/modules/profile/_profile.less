@@ -1,3 +1,38 @@
+.login {
+    form {
+        margin-bottom: 20px;
+        .user-row-info {
+            margin: -19px;
+            margin-bottom: 0;
+            padding: 19px;
+        }
+        &.has-user {
+            .form-group.field-email {
+                display: none;
+            }
+        }
+    }
+    .register {
+        display: none;
+    }
+    &.page {
+        .register {
+            display: block;
+        }
+    }
+    button.btn-link {
+        text-align: left;
+    }
+}
+
+.user-row-info {
+    .clearfix();
+    .badge-circle {
+        font-size: 20px;
+        margin-right: 10px;
+    }
+}
+
 .not-network.user-logged {
     .profile {
         .submit,

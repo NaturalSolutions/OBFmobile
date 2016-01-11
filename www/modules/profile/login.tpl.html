@@ -1,16 +1,22 @@
-<form novalidate>
+<form novalidate class="<%= data.user ? 'has-user' : '' %>">
     <div class="well">
+        <% if ( data.user ) {%>
+        <div class="user-row-info bg-white">
+            <% var firstname = data.user.firstname %>
+            <% var lastname = data.user.lastname %>
+            <span class="badge-circle no-border bg-primary pull-left"><%= firstname.charAt(0)+lastname.charAt(0) %></span>
+            <div class="pull-left">
+                <%= firstname+' '+lastname %>
+                <div class="text-gray-light"><%= data.user.email %></div>
+            </div>
+        </div>
+        <% } %>
         <!-- <fieldset class="email" >
             <div class="form-group">
                 <input name="login" type="text" class="form-control" placeholder="Entrez votre email" />
                 <p class="help-block"></p>
             </div>
         </fieldset> -->
-        <div class="actions text-right">
-            <button type="button" class="btn btn-link btn-sm request-npw-js">
-                Mot de passe oublié ?
-            </button>
-        </div>
     </div>
 
     <!-- <div class="messages help-block">
@@ -24,5 +30,5 @@
     </button>
 </form>
 <div>
-    <button class="btn btn-profile btn-link btn-block text-right">Créer un compte</button>
+    <button class="btn btn-profile btn-link">Créer un compte</button>
 </div>

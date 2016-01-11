@@ -13,8 +13,7 @@ var View = Marionette.LayoutView.extend({
   className: 'sidenav',
   events: {
     'click': 'hide',
-    'click .btn-profile': 'navigateToProfile',
-    'click .btn-connexion': 'navigateToConnexion'
+    'click .btn-profile': 'navigateToProfile'
   },
 
   initialize: function() {
@@ -55,12 +54,6 @@ var View = Marionette.LayoutView.extend({
       trigger: true
     });
   },
-
-  navigateToConnexion: function() {
-    Router.getInstance().navigate('#login', {
-      trigger: true
-    });
-  }
 
 });
 

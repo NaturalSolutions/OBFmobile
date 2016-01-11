@@ -16,6 +16,7 @@ var Backbone = require('backbone'),
     UpdatePassword = require('../profile/update_password.view'),
     Session = require('../main/session.model'),
     Login = require('../profile/login.view'),
+    UserSelector = require('../profile/user_selector.view'),
     Settings = require('../settings/settings.view');
 
 module.exports = Marionette.Object.extend({
@@ -57,7 +58,7 @@ module.exports = Marionette.Object.extend({
   observationId: function(id) {
     var Observation = require('../observation/observation.model');
     var currentObservation = Observation.collection.getInstance().get(id);
-    main.getInstance().rgMain.show(new ObservationView({
+    main.getInstance().rgMain.show(new ObservationView.Page({
       name: 'observation',
       model: currentObservation
     }), {
@@ -226,9 +227,18 @@ module.exports = Marionette.Object.extend({
         });
     }*/
   },
-  login: function() {
-    var user = User.model.getInstance();
-
+  userSelector: function() {
+    main.getInstance().rgMain.show(new UserSelector.Page({
+      name: 'user_selector'
+    }), {
+      preventDestroy: true
+    });
+  },
+  login: function(id) {
+    var user = null;
+    if ( id )
+      user = User.collection.getInstance().get(id);
+    console.log(User.collection.getInstance());
     main.getInstance().rgMain.show(new Login.Page({
       name: 'login',
       model: user

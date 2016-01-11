@@ -187,7 +187,16 @@ var UserModel = Backbone.Model.extend({
 var Collection = Backbone.Collection.extend({
   model: UserModel,
   url: '',
-  localStorage: new Backbone.LocalStorage('userCollection')
+  localStorage: new Backbone.LocalStorage('userCollection'),
+  initialize: function() {
+    this.deferred = this.fetch();
+  },
+  getAnonymous: function() {
+    this.findWhere({email:''});
+    //Create an anonymous if necessary
+    //Return the anonymous
+    return ;
+  }
 });
 
 var modelInstance = null;
@@ -207,6 +216,9 @@ module.exports = {
       }
       collectionInstance = new Collection();
       modelInstance = instance || collectionInstance.add(new UserModel());
+    },
+    setInstance: function(model) {
+      modelInstance = model;
     },
     getInstance: function() {
       if (!modelInstance)

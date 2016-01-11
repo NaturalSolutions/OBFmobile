@@ -18,7 +18,10 @@ var Backbone = require('backbone'),
     Login = require('../profile/login.view'),
     Utilities = require('../main/utilities'),
     Profile = require('../profile/profile.view'),
-    openFB = require('../main/openfb');
+    openFB = require('../main/openfb'),
+    Router = require('../routing/router');
+
+var idToTransmit = null;
 
 var Layout = Marionette.LayoutView.extend({
   header: {
@@ -106,6 +109,10 @@ var Layout = Marionette.LayoutView.extend({
     this.$el.append(this.formObs.$el);
     Backbone.Form.validators.errMessages.required = i18n.t('validation.errors.required');
 
+    if ( idToTransmit == self.observationModel.get('id') ) {
+      Dialog.alert(i18n.t('pages.observation.dialogs.login_complete'));
+      idToTransmit = null;
+    }
   },
 
   onDomRefresh: function(options) {
@@ -359,21 +366,36 @@ var Layout = Marionette.LayoutView.extend({
         Main.getInstance().unblockUI();
         var dfd;
         if (error.responseJSON[0] === 'Access denied for user anonymous') {
-          var message = i18n.t('pages.observation.dialogs.need_login');
+          self.session.afterLoginAction = {
+            name: 'showObsAndTransmit',
+            options: {
+              id: self.observationModel.get('id')
+            }
+          };
+          Dialog.confirm({
+            message: i18n.t('pages.observation.dialogs.need_login'),
+            callback: function(result) {
+              if (result) {
+                Router.getInstance().navigate('#login', {trigger:true});
+              }
+            }
+          });
+          //session.redirectAfterLogin = '#observation/'+self.observationModel.get('id')+'?action=transmit';
+          /*var message = i18n.t('pages.observation.dialogs.need_login');
           if (user.get('firstname') || user.get('lastname') || user.get('email'))
               message = i18n.t('pages.observation.dialogs.need_complete_registration');
           dfd = Login.openDialog({
             message: message
-          });
+          });*/
         } else {
           Dialog.alert({
             closable: true,
             message: error.responseJSON
           });
         }
-        dfd.then(function() {
+        /*dfd.then(function() {
           Dialog.alert(i18n.t('pages.observation.dialogs.need_complete'));
-        });
+        });*/
       },
       success: function(response) {
         self.observationModel.set({
@@ -543,4 +565,7 @@ var Layout = Marionette.LayoutView.extend({
   }
 });
 
-module.exports = Layout;
+module.exports = {
+  idToTransmit: idToTransmit,
+  Page: Layout
+};

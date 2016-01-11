@@ -18,7 +18,8 @@ var Router = Marionette.AppRouter.extend({
     'missions/training': 'missionsTraining',
     'profile(/:id)': 'profile',
     'updatepassword': 'updatePassword',
-    'login': 'login',
+    'user-selector': 'userSelector',
+    'login(/:id)': 'login',
     'settings': 'settings'
   },
 });

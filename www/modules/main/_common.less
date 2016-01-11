@@ -123,6 +123,7 @@ ul.form-control {
 .generate-theme(primary; @brand-primary; #FFF);
 .generate-theme(blue; @blue; #FFF);
 .generate-theme(white; #FFF; @gray-dark);
+.generate-theme(gray-light; @gray-light; @gray-dark);
 
 .bg-wood {
     background-image: url("images/wood.jpg");
@@ -456,6 +457,10 @@ ul.form-control {
 }
 
 .btn {
+    .icon {
+        font-size: 1em;
+        .scale(1.2);
+    }
     .icon-right {
         position: absolute;
         right: 1rem;

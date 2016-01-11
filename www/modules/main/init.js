@@ -27,7 +27,8 @@ var Backbone = require('backbone'),
   Session = require('../main/session.model'),
   Utilities = require('../main/utilities'),
   Dialog = require('bootstrap-dialog'),
-  Router = require('../routing/router');
+  Router = require('../routing/router'),
+  css_browser_selector = require('css_browser_selector');
 
 /*var badgesInstanceColl = require('./models/badge').instanceColl;
 var badgesColl = require('./models/badge').BadgeCollection;*/
@@ -44,7 +45,7 @@ function init() {
   }, false);
   currentPos.watch();*/
 
-  if (navigator.onLine) {
+  /*if (navigator.onLine) {
     Session.model.getInstance().set({
       'network': true
     });
@@ -95,7 +96,7 @@ function init() {
       'network': false
     });
 
-  }, false);
+  }, false);*/
 
   window.addEventListener('native.keyboardshow', function() {
     $('body').addClass('keyboardshow');
@@ -202,35 +203,6 @@ function init() {
     return deferred;
   };
 
-  var getUser = function(userLogged) {
-    var deferred = $.Deferred();
-    if (userLogged) {
-      User.model.init();
-      User.model.getInstance().set(userLogged.attributes);
-    } else {
-      User.collection.getInstance().fetch({
-        success: function(data) {
-          var session = Session.model.getInstance();
-          if (data.length) {
-            session.becomesAnonymous();
-            deferred.resolve();
-          } else {
-            User.model.init();
-            // userCollection.add(User.model.getInstance()).save();
-            User.model.getInstance().save();
-            deferred.resolve();
-          }
-        },
-        error: function(error) {
-          console.log(error);
-          deferred.reject(error);
-        }
-      });
-    }
-
-    return deferred;
-  };
-
   var getLogs = function() {
     return Log.collection.getInstance().fetch();
   };
@@ -239,7 +211,7 @@ function init() {
     return Observation.collection.getInstance().fetch();
   };
 
-  var getSessionStatus = function() {
+  /*var getSessionStatus = function() {
     var deferred = $.Deferred();
     if (Session.model.getInstance().get('network')) {
       var userCollection = User.collection.getInstance();
@@ -278,6 +250,28 @@ function init() {
     }
 
     return deferred;
+  };*/
+
+  var getUser = function(userLogged) {
+    var deferred = $.Deferred();
+    var collection = User.collection.getInstance();
+    collection.getInstance().fetch({
+      success: function(data) {
+        var anonymous = collection.getAnonymous();
+        var current = collection.findWhere({isCurrent:true});
+        if ( !current )
+          current = anonymous;
+        User.model.setInstance(current);
+
+        deferred.resolve(current);
+      },
+      error: function(error) {
+        console.log(error);
+        deferred.reject(error);
+      }
+    });
+
+    return deferred;
   };
 
   var app = new Marionette.Application();
@@ -286,11 +280,10 @@ function init() {
     Router.getInstance();
     main.init();
     main.getInstance().render();
-
     Backbone.history.start();
   });
 
-  $.when(getI18n(), getMissions(), getDepartements(), getObservations(), getLogs(), getSessionStatus())
+  $.when(getI18n(), getMissions(), getDepartements(), getObservations(), getLogs(), getUser())
     .done(function() {
       app.start();
     });
