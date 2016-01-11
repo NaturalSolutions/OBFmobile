@@ -19,7 +19,7 @@ var Layout = Marionette.LayoutView.extend({
 
   initialize: function() {
     this.dialogs = [];
-    this.addListeners();
+    // this.addListeners();
     this.listenTo(User.collection.getInstance(), 'change:current', this.onCurrentUserChange);
 
     this.getPosition();
