@@ -221,27 +221,6 @@ var SessionModel = Backbone.Model.extend({
     });
   },
 
-  addAnonymousUserIfNecessary: function() {
-    var dfd = $.Deferred();
-    var usersCollection = User.collection.getInstance();
-    var mail = '';
-    var attribute = 'email';
-    this.findUser(attribute, mail).then(function(anonymous) {
-      User.model.clean();
-      if (!User.model.getInstance()) {
-        User.model.init();
-      }
-      if (!anonymous) {
-        usersCollection.add(User.model.getInstance()).save();
-      } else {
-        // anonymous exists in local
-        User.model.getInstance().set(anonymous.attributes);
-      }
-      dfd.resolve();
-    });
-    return dfd;
-  },
-
   findUser: function(attribute, value) {
     var dfd = $.Deferred();
 
