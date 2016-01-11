@@ -190,6 +190,15 @@ var SessionModel = Backbone.Model.extend({
       },
       success: function(response) {
         self.set('isAuth', false);
+
+        User.model.getInstance().off('change:level');
+        User.model.getInstance().off('change:palm');
+
+        User.collection.getInstance().getAnonymous();
+        self.set('isAuth', false);
+        Router.getInstance().navigate('', {
+          trigger: true
+        });
         dfd.resolve(response);
       }
     };
@@ -197,6 +206,134 @@ var SessionModel = Backbone.Model.extend({
       $.ajax(query);
     });
 
+    return dfd;
+  },
+
+  logoutNoNetwork: function() {
+    var self = this;
+    modelInstance.set({
+      'requestLogout': User.model.getInstance().get('externId')
+    }).save();
+    User.collection.getInstance().getAnonymous();
+    this.set('isAuth', false);
+    Router.getInstance().navigate('', {
+      trigger: true
+    });
+  },
+
+  addAnonymousUserIfNecessary: function() {
+    var dfd = $.Deferred();
+    var usersCollection = User.collection.getInstance();
+    var mail = '';
+    var attribute = 'email';
+    this.findUser(attribute, mail).then(function(anonymous) {
+      User.model.clean();
+      if (!User.model.getInstance()) {
+        User.model.init();
+      }
+      if (!anonymous) {
+        usersCollection.add(User.model.getInstance()).save();
+      } else {
+        // anonymous exists in local
+        User.model.getInstance().set(anonymous.attributes);
+      }
+      dfd.resolve();
+    });
+    return dfd;
+  },
+
+  findUser: function(attribute, value) {
+    var dfd = $.Deferred();
+
+    var userCollection = User.collection.getInstance();
+    userCollection.fetch({
+      success: function(users) {
+        var myattribute = attribute;
+        var myvalue = value;
+        var userLogged;
+        if (users.length > 0) {
+          userLogged = _.find(users.models, function(user) {
+            return user.get(myattribute) === myvalue;
+          });
+        }
+        dfd.resolve(userLogged);
+      },
+      error: function(error) {
+        console.log(error);
+        dfd.reject();
+      }
+    });
+    return dfd;
+  },
+
+  manageAccount: function(model, email) {
+    var dfd = $.Deferred();
+    User.model.clean();
+    User.model.init();
+    if (model) {
+      // user existe in local
+      User.model.getInstance().set(model.attributes);
+      dfd.resolve(User.model.getInstance());
+    } else if (!model && !email) {
+      User.collection.getInstance().add(User.model.getInstance()).save();
+      dfd.resolve(User.model.getInstance());
+    } else if (email) {
+      User.collection.getInstance().add(User.model.getInstance().set({
+        'email': email
+      })).save();
+      dfd.resolve(User.model.getInstance());
+    }
+    return dfd;
+  },
+
+  userExistsLocal: function(response) {
+    var self = this;
+    var dfd = $.Deferred();
+    var userCollection = User.collection.getInstance();
+    userCollection.fetch({
+      success: function(users) {
+        if (users.length > 0) {
+          User.model.clean();
+          User.model.init();
+          var userExists = users.findWhere({
+            'externId': response.user.uid
+          });
+          if (userExists) {
+            // user existe in local
+            User.model.getInstance().set(userExists.attributes);
+          } else {
+            User.collection.getInstance().add(User.model.getInstance()).save();
+          }
+          self.addObsAnonymous();
+        }
+        dfd.resolve();
+      },
+      error: function(error) {
+        console.log(error);
+        dfd.reject();
+      }
+    });
+    return dfd;
+  },
+
+  addObsAnonymous: function() {
+    var dfd = $.Deferred();
+    this.findUser('email', '').then(function(user) {
+      Observation.collection.getInstance().fetch().then(function() {
+        var obsAnonymous = Observation.collection.getInstance().where({
+          userId: user.get('id')
+        });
+        if (obsAnonymous.length) {
+          obsAnonymous.forEach(function(item) {
+            item.set({
+              userId: User.model.getInstance().get('id')
+            });
+          });
+        }
+
+        dfd.resolve(obsAnonymous);
+      });
+    });
     return dfd;
   },
 });
