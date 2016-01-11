@@ -255,7 +255,7 @@ function init() {
   var getUser = function(userLogged) {
     var deferred = $.Deferred();
     var collection = User.collection.getInstance();
-    collection.getInstance().fetch({
+    collection.fetch({
       success: function(data) {
         var anonymous = collection.getAnonymous();
         var current = collection.findWhere({isCurrent:true});

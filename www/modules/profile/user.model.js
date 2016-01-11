@@ -1,7 +1,7 @@
 'use strict';
 var Backbone = require('backbone'),
-    config = require('../main/config'),
-    _ = require('lodash');
+  config = require('../main/config'),
+  _ = require('lodash');
 
 Backbone.LocalStorage = require('backbone.localstorage');
 
@@ -46,7 +46,7 @@ var UserModel = Backbone.Model.extend({
     }, this);
 
     if (result.mission)
-        result.mission = result.mission.toJSON();
+      result.mission = result.mission.toJSON();
 
     return result;
   },
@@ -117,7 +117,7 @@ var UserModel = Backbone.Model.extend({
   },
   addMission: function(mission, listName) {
     if (this.hasMission(mission, listName))
-        return false;
+      return false;
 
     var missionIds = this.get(listName + 'MissionIds');
     missionIds.push(mission.get('srcId'));
@@ -127,7 +127,7 @@ var UserModel = Backbone.Model.extend({
   },
   removeMission: function(mission, listName) {
     if (!this.hasMission(mission, listName))
-        return false;
+      return false;
 
     var missionIds = this.get(listName + 'MissionIds');
     _.pull(missionIds, mission.get('srcId'));
@@ -175,10 +175,10 @@ var UserModel = Backbone.Model.extend({
     });
     //TODO: define rules
     for (var i = 3; i >= 1; i--) {
-        if (difficultiesCompleted[i]) {
-            self.set('level', i);
-            break;
-        }
+      if (difficultiesCompleted[i]) {
+        self.set('level', i);
+        break;
+      }
     }
     self.save();
   }
@@ -192,10 +192,14 @@ var Collection = Backbone.Collection.extend({
     this.deferred = this.fetch();
   },
   getAnonymous: function() {
-    this.findWhere({email:''});
+    var anonymous = this.findWhere({
+      email: ''
+    });
     //Create an anonymous if necessary
+    if (!anonymous)
+      anonymous = this.add(new UserModel());
     //Return the anonymous
-    return ;
+    return anonymous;
   }
 });
 
@@ -222,7 +226,7 @@ module.exports = {
     },
     getInstance: function() {
       if (!modelInstance)
-          console.log('You must call model.setInstance first');
+        console.log('You must call model.setInstance first');
       return modelInstance;
     },
     getClass: function() {
@@ -232,7 +236,7 @@ module.exports = {
   collection: {
     getInstance: function() {
       if (!collectionInstance)
-          collectionInstance = new Collection();
+        collectionInstance = new Collection();
       return collectionInstance;
     }
   }
