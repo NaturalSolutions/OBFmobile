@@ -18,7 +18,7 @@ module.exports = Marionette.LayoutView.extend({
   initialize: function() {
     var self = this;
 
-    var departementCodes = User.model.getInstance().get('departements');
+    var departementCodes = User.getCurrent().get('departements');
     self.collection = Mission.collection.getInstance().filter(function(mission) {
       var isInDepartement = mission.isInDepartement(departementCodes);//_.intersection(departementCodes, mission.get('departements')).length;
       var inSeason = mission.inSeason(new Date());

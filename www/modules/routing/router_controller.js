@@ -25,7 +25,7 @@ module.exports = Marionette.Object.extend({
 
   home: function() {
     var session = Session.model.getInstance();
-    var user = User.model.getInstance();
+    var user = User.getCurrent();
 
     if (!session.get('isAuth')) {
       main.getInstance().rgMain.show(new Home({
@@ -158,7 +158,7 @@ module.exports = Marionette.Object.extend({
       return false;
     }
 
-    var user = User.model.getInstance();
+    var user = User.getCurrent();
 
     if (state.name != 'manually') {
       if (!user.get('departements').length || user.get('positionEnabled'))
@@ -203,7 +203,7 @@ module.exports = Marionette.Object.extend({
     });
   },
   profile: function(id) {
-    var user = User.model.getInstance();
+    var user = User.getCurrent();
 
     main.getInstance().rgMain.show(new Profile.Page({
       model: user
@@ -247,7 +247,7 @@ module.exports = Marionette.Object.extend({
     });
   },
   updatePassword: function() {
-    var user = User.model.getInstance();
+    var user = User.getCurrent();
 
     main.getInstance().rgMain.show(new UpdatePassword.Page({
       name: 'updatepassword',

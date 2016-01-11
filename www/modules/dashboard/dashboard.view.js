@@ -42,42 +42,33 @@ var ClassDef = Marionette.LayoutView.extend({
   },
 
   initialize: function(options) {
-    var self = this;
-
-    self.defaultTab = _.keys(self.tabs)[0];
-    self.curTab = options.tab || self.defaultTab;
+    this.defaultTab = _.keys(this.tabs)[0];
+    this.curTab = options.tab || this.defaultTab;
+    this.currentUser = User.getCurrent();
   },
 
   serializeData: function() {
-    var self = this;
-
     return {
-      user: User.model.getInstance().toJSON(),
-      tabs: self.tabs
+      user: this.currentUser.toJSON(),
+      tabs: this.tabs
     };
   },
 
   onRender: function(options) {
-    var self = this;
-
-    self.displayTab();
+    this.displayTab();
   },
 
   onHeaderClick: function() {
-    var self = this;
-
-    self.$el.find('.header').toggleClass('show-score-explode');
+    this.$el.find('.header').toggleClass('show-score-explode');
   },
 
   setTab: function(tab) {
-    var self = this;
-
-    tab = tab || self.defaultTab;
-    if (tab == self.curTab)
+    tab = tab || this.defaultTab;
+    if (tab == this.curTab)
       return false;
 
-    self.curTab = tab;
-    self.displayTab();
+    this.curTab = tab;
+    this.displayTab();
   },
 
   displayTab: function() {
@@ -91,10 +82,9 @@ var ClassDef = Marionette.LayoutView.extend({
   },
 
   getObservationView: function() {
-    var user = User.model.getInstance();
     var observations = Observation.collection.getInstance();
     observations = observations.where({
-      userId: user.get('id')
+      userId: this.currentUser.get('id')
     });
     var ObservationsView = require('../observation/observation_list.view');
     return new ObservationsView({

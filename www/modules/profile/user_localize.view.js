@@ -86,7 +86,7 @@ module.exports = Marionette.LayoutView.extend({
       }
     }
 
-    var user = User.model.getInstance();
+    var user = User.getCurrent();
 
     user.set('departements', selectedDepartements.pluck('code'));
     user.set('position', {

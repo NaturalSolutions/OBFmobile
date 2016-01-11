@@ -189,9 +189,10 @@ var View = Marionette.LayoutView.extend({
   syncUser: function(response) {
     var self = this;
     var dfd = $.Deferred();
+    var user = User.getCurrent();
     // sync user
     //TODO manage obs etc.
-    User.model.getInstance().set({
+    user.set({
       'lastname': _.get(response.user.field_last_name, 'und[0].value', ''),
       'firstname': _.get(response.user.field_first_name, 'und[0].value', ''),
       'email': response.user.mail,
@@ -201,13 +202,13 @@ var View = Marionette.LayoutView.extend({
       // "time_forest": response.time_forest,
       // "obs": response.obs,
     });
-    User.collection.getInstance().add(User.model.getInstance()).save()
+    /*User.collection.getInstance().add(user).save()
             .then(function() {
               self.session.set({
                 'isAuth': true,
               });
               dfd.resolve();
-            });
+            });*/
     return dfd;
   },
 
@@ -353,7 +354,7 @@ module.exports = {
     var dfd = $.Deferred();
     var session = Session.model.getInstance();
     var loginView = new View({
-      model: User.model.getInstance()
+      model: User.getCurrent()
     });
     loginView.render();
     var loginDialog = Dialog.show({

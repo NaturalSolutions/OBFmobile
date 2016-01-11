@@ -12,6 +12,7 @@ var UserModel = Backbone.Model.extend({
     lastname: '',
     nickname: '',
     email: '',
+    isCurrent: false,
     language: 'fr',
     totalTimeOnMission: 0,
     newsletter: false,
@@ -200,6 +201,17 @@ var Collection = Backbone.Collection.extend({
       anonymous = this.add(new UserModel());
     //Return the anonymous
     return anonymous;
+  },
+  setCurrent: function(model) {
+    var prev = this.getCurrent();
+    if ( prev )
+      prev.set('isCurrent', false);
+    model.set('isCurrent', true);
+    this.current = model;
+    this.trigger('change:current', model, prev);
+  },
+  getCurrent: function() {
+    return this.current;
   }
 });
 
@@ -207,6 +219,9 @@ var modelInstance = null;
 var collectionInstance = null;
 
 module.exports = {
+  getCurrent: function() {
+    return collectionInstance.getCurrent();
+  },
   model: {
     clean: function() {
       if (modelInstance) {

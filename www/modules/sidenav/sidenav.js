@@ -22,7 +22,7 @@ var View = Marionette.LayoutView.extend({
   },
 
   serializeData: function() {
-    var user = User.model.getInstance();
+    var user = User.getCurrent();
 
     return {
       user: user.toJSON()

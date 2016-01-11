@@ -20,7 +20,7 @@ var Layout = Marionette.LayoutView.extend({
   initialize: function() {
     this.dialogs = [];
     this.addListeners();
-    this.listenTo(Session.model.getInstance(), 'change:isAuth', this.onSessionAuthChange);
+    this.listenTo(User.collection.getInstance(), 'change:current', this.onCurrentUserChange);
 
     this.getPosition();
   },
@@ -41,58 +41,13 @@ var Layout = Marionette.LayoutView.extend({
     this.rgHeader.show(header.getInstance());
     this.rgSidenav.show(sidenav.getInstance());
     this.rgFooter.show(footer.getInstance());
-
-    /*self.addDialog({
-      cssClass: 'theme-primary with-bg-forest user-score user-palm-bronze',
-      badgeClassNames: 'badge-circle bg-wood border-brown text-white',
-      badge: '5<div class="text-xs text-bottom">'+i18n.t('mission.label', {count: 1})+'</div>',
-      title: i18n.t('dialogs.palm.title'),
-      message: i18n.t('dialogs.palm.message.bronze'),
-      button: i18n.t('dialogs.palm.button')
-    });*/
-
-    /*self.addDialog({
-      cssClass: 'theme-primary with-bg-forest user-score user-level-1',
-      badgeClassNames: 'badge-circle bg-wood border-brown text-white',
-      //badge: '5<div class="text-xs text-bottom">missions</div>',
-      title: i18n.t('dialogs.level.title'),
-      message: i18n.t('dialogs.level.message.level_1'),
-      button: i18n.t('dialogs.level.button')
-    });*/
-
-    // require('../profile/login.view').openDialog({
-    //     message: 'Vous devez être connecté pour transmettre votre observation.'
-    // });
-
-    /*self.addDialog({
-        cssClass: 'theme-orange-light has-fireworks title-has-palm user-score user-level-1',
-        title: i18n.t('dialogs.obsShared.title'),
-        message: i18n.t('dialogs.obsShared.message'),
-        button: i18n.t('dialogs.obsShared.button')
-    });
-    self.addDialog({
-        cssClass: 'theme-orange-light has-fireworks user-score user-palm-bronze',
-        title: i18n.t('dialogs.palm.title'),
-        message: i18n.t('dialogs.palm.message.bronze'),
-        button: i18n.t('dialogs.palm.button')
-    });
-    self.addDialog({
-        cssClass: 'theme-orange-light has-fireworks user-score user-level-2',
-        title: i18n.t('dialogs.level.title'),
-        message: i18n.t('dialogs.level.message.level_2'),
-        button: i18n.t('dialogs.level.button')
-    });*/
   },
 
-  onSessionAuthChange: function(model) {
-    if (model.get('isAuth'))
-      this.addListeners();
-  },
-
-  addListeners: function() {
+  onCurrentUserChange: function(currentUser, prev) {
     var self = this;
-    var user = User.model.getInstance();
-    user.on('change:level', function(model, level) {
+    if (prev)
+      this.stopListening(prev);
+    this.listenTo(currentUser, 'change:level', function(model, level) {
       if (!level)
         return false;
       self.addDialog({
@@ -103,11 +58,11 @@ var Layout = Marionette.LayoutView.extend({
         button: i18n.t('dialogs.level.button')
       });
     });
-    user.on('change:palm', function(model, palm) {
+    this.listenTo(currentUser, 'change:palm', function(model, palm) {
       if (!palm)
         return false;
-      var palmName = user.get('palmName');
-      var nbCompleted = user.get('completedMissions').length;
+      var palmName = currentUser.get('palmName');
+      var nbCompleted = currentUser.get('completedMissions').length;
       self.addDialog({
         cssClass: 'theme-primary with-bg-forest user-score user-palm-' + palmName,
         badgeClassNames: 'badge-circle bg-wood border-brown text-white',

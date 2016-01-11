@@ -21,7 +21,7 @@ var ClassDef = Marionette.LayoutView.extend({
   },
 
   initialize: function() {
-    this.missions = User.model.getInstance().getAcceptedMissions();
+    this.missions = User.getCurrent().getAcceptedMissions();
   },
 
   serializeData: function() {

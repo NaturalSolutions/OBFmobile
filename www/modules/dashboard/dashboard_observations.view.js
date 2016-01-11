@@ -12,7 +12,7 @@ var ClassDef = Marionette.LayoutView.extend({
   initialize: function() {
     var self = this;
 
-    var user = User.model.getInstance();
+    var user = User.getCurrent();
     var userId = user.get('id');
 
     var obsByUser = Observation.collection.getInstance().where({

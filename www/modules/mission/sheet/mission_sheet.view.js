@@ -11,7 +11,7 @@ module.exports = Marionette.LayoutView.extend({
     'click .btn-accept': 'onAcceptClick'
   },
   attributes: function() {
-    var user = User.model.getInstance();
+    var user = User.getCurrent();
     var classNames = 'page page-mission_sheet page-scrollable no-header';
     if (user.hasCompletedMission(this.model))
       classNames += ' is-complete';
@@ -28,12 +28,12 @@ module.exports = Marionette.LayoutView.extend({
 
   initialize: function() {
     var self = this;
-    var user = User.model.getInstance();
+    var user = User.getCurrent();
     this.listenTo(user, 'change:acceptedMissions', this.onAcceptChange);
     this.listenTo(Observation.collection.getInstance(), 'add', function(observation) {
       observation.set({
         'missionId': self.model.get('srcId'),
-        'departement': User.model.getInstance().get('departements')[0],
+        'departement': User.getCurrent().get('departements')[0],
         'cd_nom': self.model.get('taxon').cd_nom
       });
       observation.save();
@@ -41,7 +41,7 @@ module.exports = Marionette.LayoutView.extend({
   },
 
   onRender: function() {
-    var user = User.model.getInstance();
+    var user = User.getCurrent();
     var observations = Observation.collection.getInstance();
     observations = observations.where({
       userId: user.get('id'),
@@ -60,13 +60,13 @@ module.exports = Marionette.LayoutView.extend({
   },
 
   onAcceptClick: function(e) {
-    var user = User.model.getInstance();
+    var user = User.getCurrent();
     user.toggleAcceptedMission(this.model);
     user.save();
   },
 
   onAcceptChange: function() {
-    var user = User.model.getInstance();
+    var user = User.getCurrent();
     if (user.hasAcceptedMission(this.model))
       this.$el.addClass('is-accept');
     else

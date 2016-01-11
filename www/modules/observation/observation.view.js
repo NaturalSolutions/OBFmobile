@@ -117,10 +117,10 @@ var Layout = Marionette.LayoutView.extend({
 
   onDomRefresh: function(options) {
     var self = this;
-
-    if (User.model.getInstance().get('departements').length)
+    var user = User.getCurrent();
+    if (user.get('departements').length)
             this.model.set({
-              departement: User.model.getInstance().get('departements')[0]
+              departement: user.get('departements')[0]
             }).save();
 
     if (this.observationModel.get('mission')) {
@@ -277,7 +277,7 @@ var Layout = Marionette.LayoutView.extend({
 
   accountExists: function() {
     var account;
-    var user = User.model.getInstance();
+    var user = User.getCurrent();
     if (!user.get('email')) {
       Login.openDialog({
         message: i18n.t('pages.observation.dialogs.need_login_offline')
@@ -291,7 +291,7 @@ var Layout = Marionette.LayoutView.extend({
 
   saveObs: function() {
     var self = this;
-    var user = User.model.getInstance();
+    var user = User.getCurrent();
     var formValues = this.formObs.getValue();
     var missionCurrent = mission.collection.getInstance().findWhere({
       id: _.parseInt(formValues.mission)
@@ -326,7 +326,7 @@ var Layout = Marionette.LayoutView.extend({
       });
       return photos.join();
     };
-    var user = User.model.getInstance();
+    var user = User.getCurrent();
     //data expected by the server
     var data = {
       type: 'observation',
@@ -366,7 +366,7 @@ var Layout = Marionette.LayoutView.extend({
         Main.getInstance().unblockUI();
         var dfd;
         if (error.responseJSON[0] === 'Access denied for user anonymous') {
-          self.session.afterLoginAction = {
+          self.session.afterLoggedAction = {
             name: 'showObsAndTransmit',
             options: {
               id: self.observationModel.get('id')
@@ -414,7 +414,7 @@ var Layout = Marionette.LayoutView.extend({
   //TODO if fields are not update departement and mission don't exist
   sendPhoto: function() {
     var self = this;
-    var user = User.model.getInstance();
+    var user = User.getCurrent();
 
     if (window.cordova) {
       var nbPhoto = (this.observationModel.get('photos').length) - 1;

@@ -18,7 +18,7 @@ var View = Marionette.ItemView.extend({
   },
 
   onRender: function(options) {
-    var user = User.model.getInstance();
+    var user = User.getCurrent();
     var isComplete = this.model.get('complete');
 
     if (user.hasCompletedMission(this.model))

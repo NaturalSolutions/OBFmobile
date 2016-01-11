@@ -252,7 +252,7 @@ function init() {
     return deferred;
   };*/
 
-  var getUser = function(userLogged) {
+  var getUser = function() {
     var deferred = $.Deferred();
     var collection = User.collection.getInstance();
     collection.fetch({
@@ -261,7 +261,7 @@ function init() {
         var current = collection.findWhere({isCurrent:true});
         if ( !current )
           current = anonymous;
-        User.model.setInstance(current);
+        collection.setCurrent(current);
 
         deferred.resolve(current);
       },

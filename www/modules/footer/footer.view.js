@@ -124,7 +124,7 @@ var View = Marionette.LayoutView.extend({
 
     //set observation model
     observationModel.set({
-      'userId': User.model.getInstance().get('id'),
+      'userId': User.getCurrent().get('id'),
       'date': this.moment().format('X'),
       'photos': [{
         'url': fe ? fe : '',

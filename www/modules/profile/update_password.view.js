@@ -81,7 +81,7 @@ var View = Marionette.LayoutView.extend({
     var curPassword = formValues.cur_password;
     var password = formValues.password;
 
-    var user = User.model.getInstance();
+    var user = User.getCurrent();
 
     var data = {
       uid: user.get('externId'),
