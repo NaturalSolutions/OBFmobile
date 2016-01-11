@@ -107,7 +107,7 @@ var View = Marionette.LayoutView.extend({
     var self = this;
     var $form = self.$el.find('form');
 
-    var username = $form.find('input[name="login"]').val();
+    var username = $form.find('input[name="email"]').val();
     var password = $form.find('input[name="password"]').val();
 
     /*var stateEmail = this.validatorEmail(username);
