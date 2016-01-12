@@ -75,11 +75,11 @@ var View = Marionette.LayoutView.extend({
     if (errors)
         return false;
 
-    console.log(formValues);
-
     var formValues = this.form.getValue();
     var curPassword = formValues.cur_password;
     var password = formValues.password;
+
+    console.log(formValues);
 
     var user = User.getCurrent();
 
@@ -102,6 +102,7 @@ var View = Marionette.LayoutView.extend({
         error: function(jqXHR, textStatus, errorThrown) {
           self.$el.removeClass('block-ui');
           $form.removeClass('loading');
+          //TODO: Manage error type
           console.log(errorThrown);
           $form.find('input[name="cur_password"]').val('');
           Dialog.alert({
@@ -151,7 +152,6 @@ module.exports = {
   View: View,
   Page: Page,
   openDialog: function(options) {
-    var dfd = $.Deferred();
     var view = new View();
     view.render();
 
@@ -166,7 +166,5 @@ module.exports = {
       if (dialog)
           dialog.close();
     });
-
-    return dfd;
   }
 };

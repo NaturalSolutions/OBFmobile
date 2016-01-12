@@ -376,7 +376,7 @@ var Layout = Marionette.LayoutView.extend({
             message: i18n.t('pages.observation.dialogs.need_login'),
             callback: function(result) {
               if (result) {
-                Router.getInstance().navigate('#login', {trigger:true});
+                Router.getInstance().navigate('login', {trigger:true});
               }
             }
           });

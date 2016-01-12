@@ -33,7 +33,6 @@ var View = Marionette.LayoutView.extend({
   },
 
   onRender: function(options) {
-    this.session.isConnected();
     var formSchema = {
       email: {
           type: 'Text',
@@ -79,24 +78,41 @@ var View = Marionette.LayoutView.extend({
     var self = this;
     var $form = self.$el.find('form');
 
-    var username = $form.find('input[name="email"]').val();
-    var password = $form.find('input[name="password"]').val();
+    if ($form.hasClass('loading'))
+      return false;
 
     var errors = this.formLogin.validate();
     console.log(errors);
     if (errors)
-        return false;
+      return false;
 
     var formValues = this.formLogin.getValue();
-
-    if ($form.hasClass('loading'))
-        return false;
-
+    console.log(formValues);
+    
     self.$el.addClass('block-ui');
     $form.addClass('loading');
 
-    if (Session.model.getInstance().get('network'))
-            this.session.login(username, formValues.password).then(function(account) {
+    
+    this.session.login(formValues.email, formValues.password).then(function(user) {
+      self.$el.removeClass('block-ui');
+      $form.removeClass('loading');
+
+      if ( !self.isDestroyed )
+        Router.getInstance().navigate('dashboard', {
+          trigger: true
+        });
+
+    }, function(error) {
+      self.$el.removeClass('block-ui');
+      $form.removeClass('loading');
+      Dialog.alert({
+        closable: true,
+        message: i18n.t('dialogs.loginError')
+      });
+    });
+
+    /*if (Session.model.getInstance().get('network'))
+            this.session.login(formValues.email, formValues.password).then(function(account) {
               $.when(self.session.userExistsLocal(account), self.syncUser(account)).then(function() {
                 self.$el.removeClass('block-ui');
                 $form.removeClass('loading');
@@ -114,7 +130,7 @@ var View = Marionette.LayoutView.extend({
               });
             });
     else {
-      this.session.loginNoNetwork(username).then(function(account) {
+      this.session.loginNoNetwork(formValues.email).then(function(account) {
         var noNetwork = Dialog.show({
           closable: true,
           message: i18n.t('dialogs.noNetworkConnection.login'),
@@ -125,7 +141,7 @@ var View = Marionette.LayoutView.extend({
         });
       });
 
-    }
+    }*/
   },
 
   syncUser: function(response) {
@@ -237,7 +253,7 @@ var View = Marionette.LayoutView.extend({
 
 var Page = View.extend({
   className: 'page login container with-header-gap',
-  this.header = {
+  header: {
     titleKey: 'login',
     buttons: {
       left: ['back']

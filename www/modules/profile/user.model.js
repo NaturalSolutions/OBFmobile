@@ -207,14 +207,22 @@ var Collection = Backbone.Collection.extend({
   },
   setCurrent: function(model) {
     var prev = this.getCurrent();
-    if ( prev )
+    if ( prev == model )
+      return false;
+    if ( prev ) {
       prev.set('isCurrent', false);
+      prev.save();
+    }
     model.set('isCurrent', true);
+    model.save();
     this.current = model;
     this.trigger('change:current', model, prev);
   },
   getCurrent: function() {
     return this.current;
+  },
+  becomeAnonymous: function() {
+    this.setCurrent(this.getAnonymous());
   }
 });
 

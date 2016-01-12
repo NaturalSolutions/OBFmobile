@@ -27,7 +27,7 @@ var Page = Marionette.LayoutView.extend({
     this.session = Session.model.getInstance();
 
     this.header = {
-      titleKey: ((this.model.get('externId')) ? 'profile' : 'registration'),
+      titleKey: (this.model.isNew ? 'registration': 'profile'),
       buttons: {
         left: ['back']
       }
@@ -77,7 +77,7 @@ var Page = Marionette.LayoutView.extend({
       }
     };
 
-    if (this.model.get('externId'))
+    if (!this.model.isNew)
         _.set(formSchema.email, 'editorAttrs.readonly', 'readonly');
     else {
       _.assign(formSchema, {
@@ -141,23 +141,16 @@ var Page = Marionette.LayoutView.extend({
     if ($form.hasClass('loading'))
         return false;
 
-    if (this.model.get('externId'))
-        this.update();
-    else
-        this.signin();
-  },
-
-  signin: function() {
-    var self = this;
-    var $form = this.$el.find('form');
-
     var errors = this.form.validate();
     console.log(errors);
     if (errors)
         return false;
 
+    this.$el.addClass('block-ui');
+    $form.addClass('loading');
+
     var formValues = this.form.getValue();
-    var data = {
+    var queryData = {
       field_first_name: {
         und: [{
           value: formValues.firstname
@@ -171,160 +164,142 @@ var Page = Marionette.LayoutView.extend({
       field_newsletter: {
         und: ((formValues.newsletter.length) ? '[0]{value:' + true + '}' : null)
       },
-      mail: formValues.email,
+      mail: formValues.email
+    };
+    
+    //If it's not register on sever
+    if ( !this.model.get('externId') )
+      this.registerOnServer(queryData);
+    else
+      this.updateOnServer(queryData);
+  },
+
+  registerOnServer: function(queryData) {
+    var self = this;
+    var $form = this.$el.find('form');
+    var formValues = this.form.getValue();
+
+    _.merge(queryData, {
       conf_mail: formValues.email,
       pass: formValues.password,
       pass2: formValues.password
+    });
+
+    var query = {
+      url: config.apiUrl + '/obfmobile_user.json',
+      type: 'post',
+      contentType: 'application/json',
+      data: JSON.stringify(queryData),
+      error: function(error) {
+        var errors = error.responseJSON;
+        self.$el.removeClass('block-ui');
+        $form.removeClass('loading');
+        if (_.includes(errors, 'email_exists')) {
+          $form.find('input[name="email2"]').val('');
+          Dialog.confirm({
+            closable: true,
+            message: i18n.t('validation.errors.email_exists'),
+            callback: function(result) {
+              if (result) {
+                Router.getInstance().navigate('login', {trigger:true});
+              }
+            }
+          });
+        } else {
+          Dialog.alert({
+            closable: true,
+            message: error.responseJSON
+          });
+          //There is an error but no conflict so we can continue !
+          self.registerOnLocal();
+        }
+      },
+      success: function(response) {
+        self.model.set('externId', response.uid);
+        self.registerOnLocal();
+        self.login(queryData.mail, queryData.pass);
+      }
     };
-
-    this.updateModel(formValues);
-    User.collection.getInstance().add(this.model).save();
-
-    var stateConnection = Utilities.checkConnection();
-    if ((stateConnection === 'No network connection' && navigator.connection) || (!stateConnection)) {
-      Dialog.show({
-        closable: true,
-        message: i18n.t('dialogs.noNetworkConnection.registration'),
-        onhide: function(dialog) {
-          self.$el.removeClass('block-ui');
-          $form.removeClass('loading');
-        }
-      });
-      // TODO save and fill instance
-      /*User.collection.getInstance().add(User.model.getInstance());
-      User.model.getInstance().save();*/
-    } else {
-      this.$el.addClass('block-ui');
-      $form.addClass('loading');
-
-      var query = {
-        url: config.apiUrl + '/obfmobile_user.json',
-        type: 'post',
-        contentType: 'application/json',
-        data: JSON.stringify(data),
-        error: function(error) {
-          var errors = error.responseJSON;
-          self.$el.removeClass('block-ui');
-          $form.removeClass('loading');
-          if (_.includes(errors, 'email_exists')) {
-            $form.find('input[name="email2"]').val('');
-            Dialog.alert({
-              closable: true,
-              message: i18n.t('validation.errors.email_exists')
-            });
-          } else {
-            Dialog.alert({
-              closable: true,
-              message: error.responseJSON
-            });
-          }
-        },
-        success: function(response) {
-          self.session.login(data.mail, data.pass)
-                        .then(function() {
-                          self.$el.removeClass('block-ui');
-                          $form.removeClass('loading');
-                          self.model.set('externId', response.uid);
-                          /*User.collection.getInstance().add(User.model.getInstance());
-                          User.model.getInstance().save();*/
-                          Router.getInstance().navigate('dashboard', {
-                            trigger: true
-                          });
-                        });
-        }
-      };
-      this.session.getCredentials(query).done(function() {
-        $.ajax(query);
-      });
-    }
+    this.session.getCredentials(query).done(function() {
+      $.ajax(query);
+    });
   },
 
-  update: function(e) {
+  registerOnLocal: function() {
+    var users = User.collection.getInstance();
+    this.updateModel();
+    users.setCurrent(this.model);
+    if ( this.model.isNew )
+      users.add(this.model);
+    this.model.save();
+  },
+
+  updateOnServer: function(queryData) {
+    var self = this;
+    var $form = this.$el.find('form');
+    
+    var query = {
+      url: config.apiUrl + '/user/' + this.model.get('externId') + '.json',
+      type: 'put',
+      contentType: 'application/json',
+      data: JSON.stringify(queryData),
+      error: function(jqXHR, textStatus, errorThrown) {
+        //TODO
+        console.log(errorThrown);
+        Dialog.alert({
+          closable: true,
+          message: errorThrown
+        });
+      },
+      success: function(response) {
+        self.updateModel();
+        self.model.save();
+        Dialog.show({
+          title: 'Super !',
+          message: 'Votre profil a été modifié !',
+          type: 'type-success',
+          buttons: [{
+            label: 'Fermer',
+            action: function(dialogItself) {
+              dialogItself.close();
+            }
+          }]
+        });
+      },
+      complete: function() {
+        self.$el.removeClass('block-ui');
+        $form.removeClass('loading');
+      }
+    };
+    this.session.getCredentials(query).done(function() {
+      $.ajax(query);
+    });
+  },
+
+  updateModel: function() {
+    var formValues = this.form.getValue();
+    this.model.set({
+      firstname: formValues.firstname,
+      lastname: formValues.lastname,
+      email: formValues.email,
+      newsletter: formValues.newsletter.length ? true : false
+    });
+  },
+
+  login: function(email, password) {
     var self = this;
     var $form = this.$el.find('form');
 
-    var errors = this.form.validate();
-    console.log(errors);
-    if (errors)
-        return false;
-
-    var formValues = this.form.getValue();
-    var data = {
-      field_first_name: {
-        und: [{
-          value: formValues.firstname
-        }]
-      },
-      field_last_name: {
-        und: [{
-          value: formValues.lastname
-        }]
-      },
-      field_newsletter: {
-        und: ((formValues.newsletter.length) ? '[0]{value:' + true + '}' : null)
-      },
-      uid: this.model.get('externId'),
-      mail: formValues.email
-    };
-
-    console.log(formValues);
-
-    if (this.model.get('externId')) {
-      console.log(data);
-      this.$el.addClass('block-ui');
-      $form.addClass('loading');
-      //update serveur
-      var query = {
-        url: config.apiUrl + '/user/' + this.model.get('externId') + '.json',
-        type: 'put',
-        contentType: 'application/json',
-        data: JSON.stringify(data),
-        error: function(jqXHR, textStatus, errorThrown) {
-          console.log(errorThrown);
-          self.$el.removeClass('block-ui');
-          $form.removeClass('loading');
-          Dialog.alert({
-            closable: true,
-            message: errorThrown
-          });
-
-        },
-        success: function(response) {
-          self.$el.removeClass('block-ui');
-          $form.removeClass('loading');
-          self.updateModel(formValues);
-          self.dialogSuccess();
-          //self.render();
-        }
-      };
-      this.session.getCredentials(query).done(function() {
-        $.ajax(query);
-      });
-    }
+    this.session.login(email, password)
+                  .always(function() {
+                    self.$el.removeClass('block-ui');
+                    $form.removeClass('loading');
+                    Router.getInstance().navigate('dashboard', {
+                      trigger: true
+                    });
+                  });
   },
 
-  updateModel: function(data) {
-    this.model.set({
-      firstname: data.firstname,
-      lastname: data.lastname,
-      email: data.email,
-      newsletter: data.newsletter.length ? true : false,
-    }).save();
-  },
-
-  dialogSuccess: function() {
-    Dialog.show({
-      title: 'Super !',
-      message: 'Votre profil a été modifié !',
-      type: 'type-success',
-      buttons: [{
-        label: 'Fermer',
-        action: function(dialogItself) {
-          dialogItself.close();
-        }
-      }]
-    });
-  },
   onChangePasswdClick: function() {
     UpdatePasswd.openDialog();
     console.log('onChangePasswdClick');
@@ -336,10 +311,14 @@ var Page = Marionette.LayoutView.extend({
     session.logout().always(function() {
       Main.getInstance().hideLoader();
       Dialog.alert('Vous êtes déconnecté');
-      if ( !session.get('isAuth') )
+      User.collection.getInstance().becomeAnonymous();
+      Router.getInstance().navigate('', {
+        trigger: true
+      });
+      /*if ( !session.get('isAuth') )
         Router.getInstance().navigate('dashboard', {
           trigger: true
-        });
+        });*/
     });
   },
 });

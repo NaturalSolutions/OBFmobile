@@ -105,77 +105,79 @@ var SessionModel = Backbone.Model.extend({
     return dfd;
   },
 
-  indexUsers: function(parameters) {
-    var self = this;
-    var dfd = $.Deferred();
-
-    // Call system connect with session token.
-    $.ajax({
-      url: config.apiUrl + '/user?fields=uid,name,mail&parameters[mail]=' + parameters,
-      type: 'get',
-      dataType: 'json',
-      contentType: 'application/json',
-      xhrFields: {
-        withCredentials: true
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.log(errorThrown);
-        Dialog.alert({
-          closable: true,
-          message: errorThrown
-        });
-        dfd.reject();
-      },
-      success: function(response) {
-        dfd.resolve(response);
-      }
-    });
-    return dfd;
-  },
-
   login: function(username, password) {
     var self = this;
     var dfd = $.Deferred();
-    var query = {
-      url: config.apiUrl + '/obfmobile_user/login.json',
-      type: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR, textStatus, errorThrown);
-        Dialog.alert({
-          closable: true,
-          message: errorThrown
-        });
-        dfd.reject(errorThrown);
-      },
-      success: function(response) {
-        self.set('isAuth', true);
-        dfd.resolve(response);
-        if ( self.afterLoggedAction && self[self.afterLoggedAction.name] ) {
-          self[self.afterLoggedAction.name](self.afterLoggedAction.options);
+
+    this.logout().then(function(logoutSuccess) {
+      var query = {
+        url: config.apiUrl + '/obfmobile_user/login.json',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log(jqXHR, textStatus, errorThrown);
+          Dialog.alert({
+            closable: true,
+            message: errorThrown
+          });
+          dfd.reject(errorThrown);
+        },
+        success: function(response) {
+          self.set('isAuth', true);
+
+          var users = User.collection.getInstance();
+          var user = users.findWhere({email: response.user.mail});
+          if ( !user )
+            user = users.findWhere({externId: response.user.uid});
+          if ( !user )
+            user = users.getAnonymous();
+          user.set({
+            'lastname': _.get(response.user.field_last_name, 'und[0].value', ''),
+            'firstname': _.get(response.user.field_first_name, 'und[0].value', ''),
+            'email': response.user.mail,
+            'externId': response.user.uid,
+            'newsletter': _.get(response.user.field_newsletter, 'und[0].value', '')
+          });
+
+          User.collection.getInstance().setCurrent(user);
+
+          if ( self.afterLoggedAction && self[self.afterLoggedAction.name] ) {
+            self[self.afterLoggedAction.name](self.afterLoggedAction.options);
+          }
+          self.afterLoggedAction = null;
+
+          dfd.resolve(user);
         }
-        self.afterLoggedAction = null;
-      }
-    };
-    self.getCredentials(query).done(function() {
-      $.ajax(query);
+      };
+      self.getCredentials(query).done(function() {
+        $.ajax(query);
+      });
+    }, function(logoutError) {
+      //TODO ?
     });
 
     return dfd;
   },
 
   showObsAndTransmit: function(options) {
-    Observation.idToTransmit = options.id;
-    Router.getInstance().navigate('#observation/'+options.id, {trigger:true});
+    var obs = Observation.collection.getInstance().findWhere({id: options.id});
+    if ( obs && obs.get('userId') == User.getCurrent().get('id') ) {
+      Observation.idToTransmit = options.id;
+      Router.getInstance().navigate('observation/'+options.id, {trigger:true});
+    }
   },
 
   logout: function() {
     var self = this;
     var dfd = $.Deferred();
+
+    if ( !this.get('isAuth') )
+      dfd.resolve();
+
     var query = {
       url: config.apiUrl + '/user/logout.json',
       type: 'post',
@@ -190,15 +192,6 @@ var SessionModel = Backbone.Model.extend({
       },
       success: function(response) {
         self.set('isAuth', false);
-
-        User.model.getInstance().off('change:level');
-        User.model.getInstance().off('change:palm');
-
-        User.collection.getInstance().getAnonymous();
-        self.set('isAuth', false);
-        Router.getInstance().navigate('', {
-          trigger: true
-        });
         dfd.resolve(response);
       }
     };
@@ -209,93 +202,7 @@ var SessionModel = Backbone.Model.extend({
     return dfd;
   },
 
-  logoutNoNetwork: function() {
-    var self = this;
-    modelInstance.set({
-      'requestLogout': User.model.getInstance().get('externId')
-    }).save();
-    User.collection.getInstance().getAnonymous();
-    this.set('isAuth', false);
-    Router.getInstance().navigate('', {
-      trigger: true
-    });
-  },
-
-  findUser: function(attribute, value) {
-    var dfd = $.Deferred();
-
-    var userCollection = User.collection.getInstance();
-    userCollection.fetch({
-      success: function(users) {
-        var myattribute = attribute;
-        var myvalue = value;
-        var userLogged;
-        if (users.length > 0) {
-          userLogged = _.find(users.models, function(user) {
-            return user.get(myattribute) === myvalue;
-          });
-        }
-        dfd.resolve(userLogged);
-      },
-      error: function(error) {
-        console.log(error);
-        dfd.reject();
-      }
-    });
-    return dfd;
-  },
-
-  manageAccount: function(model, email) {
-    var dfd = $.Deferred();
-    User.model.clean();
-    User.model.init();
-    if (model) {
-      // user existe in local
-      User.model.getInstance().set(model.attributes);
-      dfd.resolve(User.model.getInstance());
-    } else if (!model && !email) {
-      User.collection.getInstance().add(User.model.getInstance()).save();
-      dfd.resolve(User.model.getInstance());
-    } else if (email) {
-      User.collection.getInstance().add(User.model.getInstance().set({
-        'email': email
-      })).save();
-      dfd.resolve(User.model.getInstance());
-    }
-    return dfd;
-  },
-
-  userExistsLocal: function(response) {
-    var self = this;
-    var dfd = $.Deferred();
-    var userCollection = User.collection.getInstance();
-    userCollection.fetch({
-      success: function(users) {
-        if (users.length > 0) {
-          User.model.clean();
-          User.model.init();
-          var userExists = users.findWhere({
-            'externId': response.user.uid
-          });
-          if (userExists) {
-            // user existe in local
-            User.model.getInstance().set(userExists.attributes);
-          } else {
-            User.collection.getInstance().add(User.model.getInstance()).save();
-          }
-          self.addObsAnonymous();
-        }
-        dfd.resolve();
-      },
-      error: function(error) {
-        console.log(error);
-        dfd.reject();
-      }
-    });
-    return dfd;
-  },
-
-  addObsAnonymous: function() {
+  /*addObsAnonymous: function() {
     var dfd = $.Deferred();
     this.findUser('email', '').then(function(user) {
       Observation.collection.getInstance().fetch().then(function() {
@@ -314,7 +221,7 @@ var SessionModel = Backbone.Model.extend({
       });
     });
     return dfd;
-  },
+  },*/
 });
 
 var Collection = Backbone.Collection.extend({
