@@ -14,17 +14,24 @@ var Backbone = require('backbone'),
     Utilities = require('../main/utilities'),
     i18n = require('i18next-client');
 
-var View = Marionette.LayoutView.extend({
+var Page = Marionette.LayoutView.extend({
   template: _.template(''),
-  className: 'view profile',
+  className: 'view page profile container with-header-gap',
   events: {
     'submit form': 'onFormSubmit',
     'click .request-npw-js': 'onChangePasswdClick',
     'click .btn-logout': 'onLogoutClick'
   },
-  // !!! initialize is overrided in Page
+  
   initialize: function() {
     this.session = Session.model.getInstance();
+
+    this.header = {
+      titleKey: ((this.model.get('externId')) ? 'profile' : 'registration'),
+      buttons: {
+        left: ['back']
+      }
+    };
   },
 
   onRender: function() {
@@ -220,6 +227,9 @@ var View = Marionette.LayoutView.extend({
                           self.model.set('externId', response.uid);
                           /*User.collection.getInstance().add(User.model.getInstance());
                           User.model.getInstance().save();*/
+                          Router.getInstance().navigate('dashboard', {
+                            trigger: true
+                          });
                         });
         }
       };
@@ -334,56 +344,6 @@ var View = Marionette.LayoutView.extend({
   },
 });
 
-var Page = View.extend({
-  className: 'view page profile container with-header-gap',
-  initialize: function() {
-    this.session = Session.model.getInstance();
-
-    this.header = {
-      titleKey: ((this.model.get('externId')) ? 'profile' : 'registration'),
-      buttons: {
-        left: ['back']
-      }
-    };
-
-    this.listenTo(this.session, 'change:isAuth', function() {
-      if (this.session.get('isAuth'))
-                Router.getInstance().navigate('dashboard', {
-                  trigger: true
-                });
-    });
-  },
-
-
-});
-
 module.exports = {
   Page: Page,
-  View: View,
-  openDialog: function(options) {
-    var dfd = $.Deferred();
-    var session = Session.model.getInstance();
-    var view = new View({
-      model: new User.model.getInstance(),
-    });
-    view.render();
-    var dialog = Dialog.show({
-      title: options.message,
-      message: view.$el,
-      onhide: function(dialog) {
-        session.off('change:isAuth', onAuthChange);
-        if (session.get('isAuth') || (!session.get('network')))
-            dfd.resolve();
-        else
-            dfd.reject();
-      }
-    });
-
-    function onAuthChange() {
-      dialog.close();
-    }
-    session.once('change:isAuth', onAuthChange);
-
-    return dfd;
-  }
 };
