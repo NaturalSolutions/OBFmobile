@@ -27,7 +27,7 @@ var View = Marionette.LayoutView.extend({
     this.session = Session.model.getInstance();
   },
 
-  onRender: function(options) {
+  onRender: function() {
     var self = this;
 
     var formSchema = {
@@ -134,7 +134,7 @@ var View = Marionette.LayoutView.extend({
     if ($form.hasClass('loading'))
         return false;
 
-    if (User.model.getInstance().get('externId'))
+    if (this.model.get('externId'))
         this.update();
     else
         this.signin();
@@ -171,7 +171,7 @@ var View = Marionette.LayoutView.extend({
     };
 
     this.updateModel(formValues);
-    User.collection.getInstance().add(User.model.getInstance()).save();
+    User.collection.getInstance().add(this.model).save();
 
     var stateConnection = Utilities.checkConnection();
     if ((stateConnection === 'No network connection' && navigator.connection) || (!stateConnection)) {
@@ -184,8 +184,8 @@ var View = Marionette.LayoutView.extend({
         }
       });
       // TODO save and fill instance
-      User.collection.getInstance().add(User.model.getInstance());
-      User.model.getInstance().save();
+      /*User.collection.getInstance().add(User.model.getInstance());
+      User.model.getInstance().save();*/
     } else {
       this.$el.addClass('block-ui');
       $form.addClass('loading');
@@ -217,9 +217,9 @@ var View = Marionette.LayoutView.extend({
                         .then(function() {
                           self.$el.removeClass('block-ui');
                           $form.removeClass('loading');
-                          User.model.getInstance().set('externId', response.uid);
-                          User.collection.getInstance().add(User.model.getInstance());
-                          User.model.getInstance().save();
+                          self.model.set('externId', response.uid);
+                          /*User.collection.getInstance().add(User.model.getInstance());
+                          User.model.getInstance().save();*/
                         });
         }
       };

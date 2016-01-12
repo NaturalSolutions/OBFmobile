@@ -202,7 +202,7 @@ module.exports = Marionette.Object.extend({
       }
     });
   },
-  profile: function(id) {
+  profile: function() {
     var user = User.getCurrent();
 
     main.getInstance().rgMain.show(new Profile.Page({
@@ -210,22 +210,15 @@ module.exports = Marionette.Object.extend({
     }), {
       preventDestroy: true
     });
+  },
+  registration: function() {
+    var user = new (User.model.getClass())();
 
-    /*if (!id) {
-        main.getInstance().rgMain.show(new Profile.page({
-            name: 'registration',
-            model: user
-        }), {
-            preventDestroy: true
-        });
-    } else {
-        main.getInstance().rgMain.show(new Profile.page({
-            name: 'profile',
-            model: user
-        }), {
-            preventDestroy: true
-        });
-    }*/
+    main.getInstance().rgMain.show(new Profile.Page({
+      model: user
+    }), {
+      preventDestroy: true
+    });
   },
   userSelector: function() {
     main.getInstance().rgMain.show(new UserSelector.Page({
