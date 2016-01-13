@@ -2,15 +2,13 @@
 <% _.forEach(data.users, function(user) { %>
     <% if ( user.email ) { %>
     <li class="well user-row-info" data-user-id="<%= user.id %>">
-        <a href="#login/<%= user.id %>">
-            <% var firstname = user.firstname %>
-            <% var lastname = user.lastname %>
-            <span class="badge-circle no-border bg-primary pull-left"><%= firstname.charAt(0)+lastname.charAt(0) %></span>
-            <div class="pull-left">
-                <%= firstname+' '+lastname %>
-                <div class="text-gray-light"><%= user.email %></div>
-            </div>
-        </a>
+        <% var firstname = user.firstname %>
+        <% var lastname = user.lastname %>
+        <span class="badge-circle no-border bg-primary pull-left"><%= firstname.charAt(0)+lastname.charAt(0) %></span>
+        <div class="pull-left">
+            <%= firstname+' '+lastname %>
+            <div class="text-gray-light"><%= user.email %></div>
+        </div>
     </li>
     <% } %>
 <% }); %>

@@ -1,7 +1,8 @@
 'use strict';
 var Backbone = require('backbone'),
   config = require('../main/config'),
-  _ = require('lodash');
+  _ = require('lodash'),
+  $ = require('jquery');
 
 Backbone.LocalStorage = require('backbone.localstorage');
 
@@ -206,6 +207,11 @@ var Collection = Backbone.Collection.extend({
     return anonymous;
   },
   setCurrent: function(model) {
+    if ( model.get('email') )
+      $('body').alterClass('*-anonymous', 'not-anonymous');
+    else
+      $('body').alterClass('*-anonymous', 'is-anonymous');
+
     var prev = this.getCurrent();
     if ( prev == model )
       return false;

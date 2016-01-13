@@ -64,33 +64,37 @@ var SessionModel = Backbone.Model.extend({
   isConnected: function() {
     var self = this;
     var dfd = $.Deferred();
+
     if (!navigator.onLine) {
-      return false;
+      dfd.reject();
+    } else {
+        // Call system connect with session token.
+      var query = {
+        url: config.apiUrl + '/system/connect.json',
+        type: 'post',
+        dataType: 'json',
+        contentType: 'application/json',
+        error: function(jqXHR, textStatus, errorThrown) {
+          Dialog.alert({
+            closable: true,
+            message: errorThrown
+          });
+          dfd.reject();
+        },
+        success: function(data) {
+          console.log('Hello user #' + data.user.uid);
+          dfd.resolve(data);
+        }
+      };
+      self.getCredentials(query).then(function() {
+        $.ajax(query);
+      });
     }
-    // Call system connect with session token.
-    var query = {
-      url: config.apiUrl + '/system/connect.json',
-      type: 'post',
-      dataType: 'json',
-      contentType: 'application/json',
-      error: function(jqXHR, textStatus, errorThrown) {
-        Dialog.alert({
-          closable: true,
-          message: errorThrown
-        });
-      },
-      success: function(data) {
-        console.log('Hello user #' + data.user.uid);
-        dfd.resolve(data);
-      }
-    };
-    self.getCredentials(query).then(function() {
-      $.ajax(query);
-    });
+
     return dfd;
   },
 
-  getCredentials: function(query) {
+  getCredentials: function(query, checkUser) {
     var self = this;
     var dfd = $.Deferred();
 
@@ -99,7 +103,26 @@ var SessionModel = Backbone.Model.extend({
     self.getToken().then(function() {
       query.headers = query.headers || {};
       query.headers['X-CSRF-Token'] = self.get('token');
-      dfd.resolve();
+
+      if ( !checkUser )
+        dfd.resolve();
+      else {
+        self.isConnected().then(function(data) {
+          if ( data.user.uid == User.getCurrent().get('externId') )
+            dfd.resolve();
+          else {
+            self.logout().then(function(success) {
+              dfd.resolve();
+            }, function(error) {
+              dfd.reject();
+            });
+          }
+        }, function(error) {
+          dfd.resolve();
+        });
+      }
+    }, function(error) {
+      dfd.reject();
     });
 
     return dfd;
@@ -109,7 +132,7 @@ var SessionModel = Backbone.Model.extend({
     var self = this;
     var dfd = $.Deferred();
 
-    this.logout().then(function(logoutSuccess) {
+    this.logout().always(function() {
       var query = {
         url: config.apiUrl + '/obfmobile_user/login.json',
         type: 'POST',
@@ -141,7 +164,7 @@ var SessionModel = Backbone.Model.extend({
             'email': response.user.mail,
             'externId': response.user.uid,
             'newsletter': _.get(response.user.field_newsletter, 'und[0].value', '')
-          });
+          }).save();
 
           User.collection.getInstance().setCurrent(user);
 
@@ -156,8 +179,6 @@ var SessionModel = Backbone.Model.extend({
       self.getCredentials(query).done(function() {
         $.ajax(query);
       });
-    }, function(logoutError) {
-      //TODO ?
     });
 
     return dfd;
@@ -175,8 +196,8 @@ var SessionModel = Backbone.Model.extend({
     var self = this;
     var dfd = $.Deferred();
 
-    if ( !this.get('isAuth') )
-      dfd.resolve();
+    /*if ( !this.get('isAuth') )
+      dfd.resolve();*/
 
     var query = {
       url: config.apiUrl + '/user/logout.json',

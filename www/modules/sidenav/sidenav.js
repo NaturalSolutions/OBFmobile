@@ -18,7 +18,7 @@ var View = Marionette.LayoutView.extend({
 
   initialize: function() {
     this.listenTo(header.getInstance(), 'btn:menu:click', this.toggleShow);
-    this.listenTo(Session.model.getInstance(), 'change:isAuth', this.onAuthChange);
+    this.listenTo(User.collection.getInstance(), 'change:current', this.onCurrentUserChange);
   },
 
   serializeData: function() {
@@ -33,7 +33,7 @@ var View = Marionette.LayoutView.extend({
     
   },
 
-  onAuthChange: function() {
+  onCurrentUserChange: function() {
     this.render();
   },
 

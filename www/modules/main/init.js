@@ -262,7 +262,6 @@ function init() {
         if ( !current )
           current = anonymous;
         collection.setCurrent(current);
-
         deferred.resolve(current);
       },
       error: function(error) {

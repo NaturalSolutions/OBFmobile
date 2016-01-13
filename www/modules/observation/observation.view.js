@@ -406,7 +406,7 @@ var Layout = Marionette.LayoutView.extend({
       }
     };
 
-    self.session.getCredentials(query).then(function() {
+    self.session.getCredentials(query, true).then(function() {
       $.ajax(query);
     });
   },
@@ -427,9 +427,9 @@ var Layout = Marionette.LayoutView.extend({
         self.$el.removeClass('sending');
         self.$el.find('form').removeClass('loading');
 
-        self.observationModel.set({
+        /*self.observationModel.set({
           'shared': 1
-        }).save();
+        }).save();*/
         var nbCompleted = user.get('completedMissions').length;
         Main.getInstance().addDialog({
           cssClass: 'theme-primary with-bg-forest user-score',
@@ -446,9 +446,9 @@ var Layout = Marionette.LayoutView.extend({
       Main.getInstance().unblockUI();
       self.$el.removeClass('sending');
       self.$el.find('form').removeClass('loading');
-      self.observationModel.set({
+      /*self.observationModel.set({
         'shared': 1
-      }).save();
+      }).save();*/
       var nbCompleted = user.get('completedMissions').length;
       Main.getInstance().addDialog({
         cssClass: 'theme-primary with-bg-forest user-score',

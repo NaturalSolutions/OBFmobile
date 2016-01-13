@@ -220,8 +220,10 @@ var Page = Marionette.LayoutView.extend({
         self.login(queryData.mail, queryData.pass);
       }
     };
-    this.session.getCredentials(query).done(function() {
-      $.ajax(query);
+    this.session.logout().always(function() {
+      this.session.getCredentials(query).done(function() {
+        $.ajax(query);
+      });
     });
   },
 
