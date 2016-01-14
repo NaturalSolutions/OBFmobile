@@ -1,4 +1,4 @@
-@header-height: 43px;
+@header-height: 51px;
 
 @yellow: #ffcd06;
 @brown: #97511A;
@@ -116,7 +116,7 @@ ul.form-control {
     list-style: none;
 }
 
-.generate-theme(yellow; @yellow; #000);
+.generate-theme(yellow; @yellow; #333);
 .generate-theme(brown; @brown; #FFF);
 .generate-theme(orange; @orange; #FFF);
 .generate-theme(orange-light; @orange-light; #FFF);
@@ -409,7 +409,7 @@ ul.form-control {
     height: 100%;
     top: 0;
     padding-top: @header-height;
-    padding-bottom: 90px;
+    padding-bottom: 180px;
     overflow: auto;
     &.animate-close {
         opacity: 0;
@@ -450,7 +450,7 @@ ul.form-control {
     left: 2rem;
 }
 .floating-right {
-    right: 2rem;
+    right: 1.8rem;
 }
 .floating-right-full {
     right: 0;
@@ -472,9 +472,9 @@ ul.form-control {
     border-radius: 50%;
     border: none;
     display: inline-block;
-    width: 3em;
-    height: 3em;
-    line-height: 3em !important;
+    width: 4em;
+    height: 4em;
+    line-height: 4em !important;
     text-align: center;
     .box-shadow(0px 2px 5px 0px rgba(0, 0, 0, 0.3));
     /*&.btn-lg {
@@ -486,9 +486,9 @@ ul.form-control {
 		    left: 1px;
 		}
     }*/
-    > span {
+    > .icon {
         vertical-align: middle;
-        font-size: 1.9em;
+        font-size: 2.8em;
         &.icon-open {
             display: none;
         }

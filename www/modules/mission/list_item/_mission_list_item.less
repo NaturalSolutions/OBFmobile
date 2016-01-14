@@ -10,7 +10,7 @@
 			.box-shadow(0 3px 3px rgba(0, 0, 0, 0.3));
 		}
 	}
-	.text {
+	.media-body {
 		position: relative;
 		vertical-align: middle;
 		border-bottom: 1px solid @gray-lighter;
@@ -20,10 +20,16 @@
 		}
 		.title {
 			padding-right: 3em;
-		}
-		.num {
-			font-size: .63em;
-			vertical-align: top;
+			position: relative;
+			.num {
+				top: -1px;
+				font-size: .63em;
+				position: absolute;
+			}
+			.text {
+				padding-left: 23px;
+    		line-height: normal;
+			}
 		}
 		.meta {
 			font-size: 12px;

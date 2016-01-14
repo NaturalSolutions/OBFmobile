@@ -14,8 +14,8 @@
         "titles": {
             "dashboard": "Tableau de bord",
             "clue": "Indices",
-            "missions": "Missions",
             "missionsAroundme": "Missions autour de moi",
+            "missions": "Toutes les missions",
             "observation": "Observation",
             "profile": "mon profil",
             "registration": "Inscription",
@@ -206,8 +206,8 @@
             "settings": "Paramètres",
             "about": "A propos",
             "help": "Aide",
-            "missions": "Missions",
             "missionsAroundme": "Missions autour de moi",
+            "missions": "Toutes les missions",
             "missionsTraining": "Missions d'apprentissage",
             "dashboard": "Tableau de bord",
             "indices": "Indices"

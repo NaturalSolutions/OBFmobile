@@ -1,12 +1,16 @@
-@page_missions_aroundme_item_width: 120px;
+@page_missions_aroundme_item_width: 130px;
 .page-missions-aroundme {
 	.state-list {
 		.missions {
+			padding-top: 20px;
 			li {
 				width: 50%;
 				padding: 10px;
+				padding-left: 15px;
+				padding-bottom: 5px;
 				&:nth-child(odd) {
 					text-align: right;
+					padding-right: 15px;
 				}
 				> .inner {
 					text-align: left;
@@ -25,9 +29,9 @@
 					.img {
 						position: absolute;
 						top: 14px;
-					    left: 14px;
-					    bottom: 14px;
-					    right: 14px;
+				    left: 14px;
+				    bottom: 14px;
+				    right: 14px;
 						background: no-repeat center;
 						background-size: cover;
 						border-radius: 50%;
@@ -46,8 +50,10 @@
 				.title {
 					width: ceil((@page_missions_aroundme_item_width+10));
 					position: relative;
-					padding-top: 3px;
-					padding-left: 30px;
+					margin-top: 5px;
+					padding-left: 22px;
+					line-height: normal;
+					letter-spacing: -0.1px;
 					.badge {
 						position: absolute;
 						left: 0;

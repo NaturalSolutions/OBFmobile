@@ -5,20 +5,33 @@
   width: 100%;
   z-index: 2;
   background: rgba(255, 255, 255, 0.95);
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
   .box-shadow(0 0 6px rgba(0, 0, 0, 0.2));
   .btn {
     border: none;
+    font-size: 19px;
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
   .title {
     position: absolute;
     left: 0;
     width: 100%;
     &:extend(.btn-lg);
+    font-size: 19px;
+    padding-top: 12px;
+    padding-bottom: 12px;
     text-shadow: 0 2px 9px rgba(0, 0, 0, 0.3);
   }
   .col-side {
     position: relative;
     z-index: 1;
+    &.col-right {
+      .btn {
+        color: @brand-primary;
+      }
+    }
   }
 }
 

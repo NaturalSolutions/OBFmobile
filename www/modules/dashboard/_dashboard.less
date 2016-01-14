@@ -1,6 +1,7 @@
 .page.dashboard {
 	.header {
 		position: relative;
+		background: rgba(255, 255, 255, .7);
 		.score-implode,
 		.score-explode {
 			.transition(opacity 0.1s linear);
@@ -81,14 +82,17 @@
 		}
 	}
 	.page-nav-tabs {
-		.box-shadow(0 0 6px rgba(0, 0, 0, 0.2));
+		border-top: 1px solid #EEE;
+		.box-shadow(0 3px 3px rgba(0, 0, 0, 0.1));
 	}
 	.tab-content {
 		padding-top: 20px;
 		> .inner {
 			&.missions {
 				.list-outer {
-					margin-bottom: 20px;
+					.media {
+						margin-bottom: 20px;
+					}
 				}
 			}
 			&.observations {

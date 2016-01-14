@@ -30,8 +30,10 @@
       border-top: 1px solid grey;
       padding-top: 10px;
       &:first-child {
-        border-top: 0;
-        padding-top: 5px;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+        border-color: transparent;
       }
     }
     li {
@@ -42,7 +44,7 @@
   a, button {
     color: #FFF;
     > .icon {
-      margin-right: 10px;
+      margin-right: 5px;
       font-size: 2.5em;
     }
     > span {
@@ -61,9 +63,14 @@
     .btn-profile {
       text-align: left;
       background: #5d452e;
+      padding-top: 9px;
+      padding-bottom: 8px;
+      overflow: hidden;
+      text-overflow: ellipsis;
       .badge {
-        font-size: 1em;
+        font-size: 1.2em;
         text-transform: uppercase;
+        margin-right: 5px;
       }
     }
   }
