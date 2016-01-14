@@ -16,7 +16,9 @@ var View = Marionette.LayoutView.extend({
   events: {
     'click .capture-photo-js': 'capturePhoto',
     'submit form': 'uploadPhoto',
-    'click .forest-time-js': 'forestTime'
+    'click .forest-time-js': 'forestTime',
+    /*'show.bs.dropdown .fab-dial': 'onFabDialShow',
+    'hide.bs.dropdown .fab-dial': 'onFabDialHide',*/
   },
 
   initialize: function() {
@@ -29,7 +31,18 @@ var View = Marionette.LayoutView.extend({
 
   onRender: function(options) {
     //this.$el.i18n();
+    this.$el.find('.fab-dial').nsFabDial();
   },
+  /*onFabDialShow: function(e) {
+    var $me = $(e.currentTarget);
+    setTimeout(function() {
+      $me.addClass('open-animate');
+    });
+  },
+  onFabDialHide: function(e) {
+    var $me = $(e.currentTarget);
+    $me.removeClass('open-animate');
+  },*/
   //TODO Change WS services instead of restful
   // uploadPhoto: function(e) {
   //     var self = this;

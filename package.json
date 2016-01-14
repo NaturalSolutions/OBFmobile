@@ -9,6 +9,7 @@
     "lodash-ns": "./www/vendor/ns/lodash-ns.js",
     "bootstrap": "./node_modules/bootstrap/dist/js/bootstrap.js",
     "bootstrap-dialog": "./www/vendor/bootstrap-dialog/js/bootstrap-dialog.js",
+    "jquery-ns-fab_dial": "./www/vendor/ns/fab_dial/jquery-ns-fab_dial.js",
     "swiper": "./node_modules/swiper/dist/js/swiper.min.js"
   },
   "browserify": {
@@ -33,6 +34,11 @@
       ]
     },
     "bootstrap-dialog": {
+      "depends": [
+        "jquery:jQuery"
+      ]
+    },
+    "jquery-ns-fab_dial": {
       "depends": [
         "jquery:jQuery"
       ]
