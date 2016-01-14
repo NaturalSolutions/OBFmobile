@@ -110,64 +110,6 @@ var View = Marionette.LayoutView.extend({
         message: i18n.t('dialogs.loginError')
       });
     });
-
-    /*if (Session.model.getInstance().get('network'))
-            this.session.login(formValues.email, formValues.password).then(function(account) {
-              $.when(self.session.userExistsLocal(account), self.syncUser(account)).then(function() {
-                self.$el.removeClass('block-ui');
-                $form.removeClass('loading');
-                Router.getInstance().navigate('dashboard', {
-                  trigger: true
-                });
-              });
-
-            }, function(error) {
-              self.$el.removeClass('block-ui');
-              $form.removeClass('loading');
-              Dialog.alert({
-                closable: true,
-                message: i18n.t('dialogs.loginError')
-              });
-            });
-    else {
-      this.session.loginNoNetwork(formValues.email).then(function(account) {
-        var noNetwork = Dialog.show({
-          closable: true,
-          message: i18n.t('dialogs.noNetworkConnection.login'),
-          onhide: function(dialog) {
-            self.$el.removeClass('block-ui');
-            $form.removeClass('loading');
-          }
-        });
-      });
-
-    }*/
-  },
-
-  syncUser: function(response) {
-    var self = this;
-    var dfd = $.Deferred();
-    var user = User.getCurrent();
-    // sync user
-    //TODO manage obs etc.
-    user.set({
-      'lastname': _.get(response.user.field_last_name, 'und[0].value', ''),
-      'firstname': _.get(response.user.field_first_name, 'und[0].value', ''),
-      'email': response.user.mail,
-      'externId': response.user.uid,
-      'newsletter': _.get(response.user.field_newsletter, 'und[0].value', ''),
-      // "count_obs": response.count_obs,
-      // "time_forest": response.time_forest,
-      // "obs": response.obs,
-    });
-    /*User.collection.getInstance().add(user).save()
-            .then(function() {
-              self.session.set({
-                'isAuth': true,
-              });
-              dfd.resolve();
-            });*/
-    return dfd;
   },
 
   requestNewPassword: function() {

@@ -30,9 +30,6 @@ var Backbone = require('backbone'),
   Router = require('../routing/router'),
   css_browser_selector = require('css_browser_selector');
 
-/*var badgesInstanceColl = require('./models/badge').instanceColl;
-var badgesColl = require('./models/badge').BadgeCollection;*/
-
 _.extend(Backbone.Model.prototype, Backbone.Validation.mixin);
 
 function init() {
@@ -180,47 +177,6 @@ function init() {
   var getObservations = function() {
     return Observation.collection.getInstance().fetch();
   };
-
-  /*var getSessionStatus = function() {
-    var deferred = $.Deferred();
-    if (Session.model.getInstance().get('network')) {
-      var userCollection = User.collection.getInstance();
-
-      //TODO test connection
-      var session = Session.model.getInstance();
-      var userState = session.isConnected();
-
-      userState.then(function(data) {
-        if (data.user.uid) {
-          userCollection.fetch({
-            success: function(users) {
-              var userLogged = users.findWhere({
-                'externId': data.user.uid
-              });
-              getUser(userLogged);
-              Session.model.getInstance().set({
-                'isAuth': true
-              });
-              deferred.resolve();
-            },
-            error: function(error) {
-              console.log(error);
-            }
-          });
-        } else {
-          getUser().then(function() {
-            deferred.resolve();
-          });
-        }
-      });
-    } else {
-      getUser().then(function() {
-        deferred.resolve();
-      });
-    }
-
-    return deferred;
-  };*/
 
   var getUser = function() {
     var deferred = $.Deferred();
