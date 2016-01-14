@@ -45,7 +45,7 @@ function init() {
   }, false);
   currentPos.watch();*/
 
-  /*if (navigator.onLine) {
+  if (navigator.onLine) {
     Session.model.getInstance().set({
       'network': true
     });
@@ -59,44 +59,14 @@ function init() {
     console.log('online');
     Session.model.getInstance().set({
       'network': true
-    }).save();
-    //Manage requests aborted
-    Session.collection.getInstance().fetch();
-    _.forEach(Session.collection.getInstance().models, function(item) {
-      if (item.get('requestLogin'))
-        Session.model.getInstance().findUser('email', item.get('requestLogin')).then(function(user) {
-          if (user)
-            Session.model.getInstance().indexUsers(user.get('email')).then(function(response) {
-              user.set({
-                'externId': response[0].uid
-              }).save();
-              item.set({
-                'requestLogin': '',
-                'token': ''
-              }).save();
-            });
-        });
-      if (Session.model.getInstance().get('requestLogout'))
-        Session.model.getInstance().logout().then(function() {
-          //delete request logout
-          Session.model.getInstance().set({
-            'requestLogout': '',
-            'token': ''
-          }).save();
-        });
     });
-
   }, false);
+
   window.addEventListener('offline', function() {
-    Dialog.alert({
-      closable: true,
-      message: i18n.t('dialogs.noNetworkConnection.default')
-    });
     Session.model.getInstance().set({
       'network': false
     });
-
-  }, false);*/
+  }, false);
 
   window.addEventListener('native.keyboardshow', function() {
     $('body').addClass('keyboardshow');

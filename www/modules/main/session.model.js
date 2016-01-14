@@ -17,16 +17,16 @@ var SessionModel = Backbone.Model.extend({
     token: null,
     isAuth: false,
     authStatus: '',
-    network: true,
+    network: false,
   },
   initialize: function() {
     var self = this;
 
-    this.on('change:isAuth', function() {
-      $('body').toggleClass('user-logged user-unlogged');
-    });
     this.on('change:network', function() {
-      $('body').toggleClass('network not-network');
+      if (this.get('network'))
+        $('body').alterClass('*-network', 'is-network');
+      else
+        $('body').alterClass('*-network', 'not-network');
     });
   },
 
@@ -165,6 +165,7 @@ var SessionModel = Backbone.Model.extend({
             'externId': response.user.uid,
             'newsletter': _.get(response.user.field_newsletter, 'und[0].value', '')
           }).save();
+          self.syncObs(response.obs);
 
           User.collection.getInstance().setCurrent(user);
 
@@ -190,6 +191,10 @@ var SessionModel = Backbone.Model.extend({
       Observation.idToTransmit = options.id;
       Router.getInstance().navigate('observation/'+options.id, {trigger:true});
     }
+  },
+
+  syncObs: function(obs){
+
   },
 
   logout: function() {
