@@ -1,10 +1,19 @@
 <% if( data.observation.photos.length ) { %>
+    <% if( data.observation.photos[0].url ) { %>
+        <% var photoLink = data.observation.photos[0].url %>
+    <% }else{ %>
+        <% var photoLink = data.observation.photos[0].externUrl %>
+    <% } %>
 <div class="photo hidden-by-keyboard">
-    <div class="img" style="background-image: url('<%= data.observation.photos[0].url %>');">
+    <div class="img" style="background-image: url('<%= photoLink %>');">
         <% if(data.observation.photos.length > 1){ %>
         <ul class="others clearfix">
         <% for (var i=1; i<data.observation.photos.length; i++) {%>
-            <li class="pull-left" style="background-image: url('<%= data.observation.photos[i].url %>');"></li>
+            <% if( data.observation.photos[i].url ) { %>
+                <li class="pull-left" style="background-image: url('<%= data.observation.photos[i].url %>');"></li>
+            <% }else{ %>
+                <li class="pull-left" style="background-image: url('<%= data.observation.photos[i].externUrl %>');"></li>
+            <% } %>
         <%} %>
         </ul>            
         <% } %>

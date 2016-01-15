@@ -4,7 +4,11 @@
 <div class="swiper">
     <ul class="swiper-wrapper list-unstyled">
     <% _.forEach(data.photos, function(photo, index) { %>
-        <li class="swiper-slide" style="background-image:url('<%= photo.url %>');"></li>
+        <% if( photo.url ) { %>
+          <li class="swiper-slide" style="background-image:url('<%= photo.url %>');"></li>
+        <% }else{ %>
+          <li class="swiper-slide" style="background-image:url('<%= photo.externUrl %>');"></li>
+        <% } %>
     <% }); %>
     </ul>
 </div>

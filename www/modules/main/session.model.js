@@ -1,14 +1,14 @@
 'use strict';
 
 var Backbone = require('backbone'),
-    $ = require('jquery'),
-    config = require('../main/config'),
-    _ = require('lodash'),
-    Router = require('../routing/router'),
-    Dialog = require('bootstrap-dialog'),
-    i18n = require('i18next-client'),
-    Observation = require('../observation/observation.model'),
-    User = require('../profile/user.model');
+  $ = require('jquery'),
+  config = require('../main/config'),
+  _ = require('lodash'),
+  Router = require('../routing/router'),
+  Dialog = require('bootstrap-dialog'),
+  i18n = require('i18next-client'),
+  Observation = require('../observation/observation.model'),
+  User = require('../profile/user.model');
 
 Backbone.LocalStorage = require('backbone.localstorage');
 
@@ -68,7 +68,7 @@ var SessionModel = Backbone.Model.extend({
     if (!navigator.onLine) {
       dfd.reject();
     } else {
-        // Call system connect with session token.
+      // Call system connect with session token.
       var query = {
         url: config.apiUrl + '/system/connect.json',
         type: 'post',
@@ -104,11 +104,11 @@ var SessionModel = Backbone.Model.extend({
       query.headers = query.headers || {};
       query.headers['X-CSRF-Token'] = self.get('token');
 
-      if ( !checkUser )
+      if (!checkUser)
         dfd.resolve();
       else {
         self.isConnected().then(function(data) {
-          if ( data.user.uid == User.getCurrent().get('externId') )
+          if (data.user.uid == User.getCurrent().get('externId'))
             dfd.resolve();
           else {
             self.logout().then(function(success) {
@@ -153,10 +153,14 @@ var SessionModel = Backbone.Model.extend({
           self.set('isAuth', true);
 
           var users = User.collection.getInstance();
-          var user = users.findWhere({email: response.user.mail});
-          if ( !user )
-            user = users.findWhere({externId: response.user.uid});
-          if ( !user )
+          var user = users.findWhere({
+            email: response.user.mail
+          });
+          if (!user)
+            user = users.findWhere({
+              externId: response.user.uid
+            });
+          if (!user)
             user = users.getAnonymous();
           user.set({
             'lastname': _.get(response.user.field_last_name, 'und[0].value', ''),
@@ -165,11 +169,12 @@ var SessionModel = Backbone.Model.extend({
             'externId': response.user.uid,
             'newsletter': _.get(response.user.field_newsletter, 'und[0].value', '')
           }).save();
-          self.syncObs(response.obs);
 
           User.collection.getInstance().setCurrent(user);
 
-          if ( self.afterLoggedAction && self[self.afterLoggedAction.name] ) {
+          self.syncObs(response.obs);
+
+          if (self.afterLoggedAction && self[self.afterLoggedAction.name]) {
             self[self.afterLoggedAction.name](self.afterLoggedAction.options);
           }
           self.afterLoggedAction = null;
@@ -186,15 +191,55 @@ var SessionModel = Backbone.Model.extend({
   },
 
   showObsAndTransmit: function(options) {
-    var obs = Observation.collection.getInstance().findWhere({id: options.id});
-    if ( obs && obs.get('userId') == User.getCurrent().get('id') ) {
+    var obs = Observation.collection.getInstance().findWhere({
+      id: options.id
+    });
+    if (obs && obs.get('userId') == User.getCurrent().get('id')) {
       Observation.idToTransmit = options.id;
-      Router.getInstance().navigate('observation/'+options.id, {trigger:true});
+      Router.getInstance().navigate('observation/' + options.id, {
+        trigger: true
+      });
     }
   },
 
-  syncObs: function(obs){
+  syncObs: function(obs) {
+    Observation.collection.getInstance().fetch().then(function() {
+      var obsUserCurrent = Observation.collection.getInstance().where({
+        userId: User.getCurrent().get('id')
+      });
+      for (var item in obs) {
+        var observationModel = new(Observation.model.getClass())();
 
+        var obsLocal = Observation.collection.getInstance().findWhere({
+          externId: item
+        });
+        if (!obsLocal) {
+          //set observation model
+          observationModel.set({
+            'userId': User.getCurrent().get('id'),
+            'date': obs[item].timestamp,
+            'missionId': obs[item].mission,
+            'externId': obs[item].entity_id,
+            "departement": obs[item].dept,
+            "shared": 1
+          });
+
+          var arrayPhoto = [];
+          for (var photo in obs[item].photos) {
+            var newValue = {
+              'url': '',
+              'externUrl': obs[item].photos[photo] || ''
+            };
+            arrayPhoto.push(newValue);
+          }
+          observationModel.set({
+            'photos': arrayPhoto
+          });
+          //Save observation in localstorage
+          Observation.collection.getInstance().add(observationModel).save();
+        }
+      }
+    });
   },
 
   logout: function() {
@@ -276,7 +321,7 @@ module.exports = {
   collection: {
     getInstance: function() {
       if (!collectionInstance)
-          collectionInstance = new Collection();
+        collectionInstance = new Collection();
       return collectionInstance;
     }
   }
