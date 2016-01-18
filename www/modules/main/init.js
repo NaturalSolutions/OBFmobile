@@ -220,6 +220,7 @@ if (window.cordova) {
   setTimeout(function() {
     $('.splashscreen').remove();
     document.addEventListener('deviceready', init, false);
+    window.open = window.cordova.InAppBrowser.open;
   }, 3000);
 
 } else {

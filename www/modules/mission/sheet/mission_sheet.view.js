@@ -8,7 +8,8 @@ module.exports = Marionette.LayoutView.extend({
   header: 'none',
   template: require('./mission_sheet.tpl.html'),
   events: {
-    'click .btn-accept': 'onAcceptClick'
+    'click .btn-accept': 'onAcceptClick',
+    'click .btn-sheet': 'openWindow'
   },
   attributes: function() {
     var user = User.getCurrent();
@@ -38,6 +39,10 @@ module.exports = Marionette.LayoutView.extend({
       });
       observation.save();
     });
+  },
+
+  openWindow: function(){
+    window.open(this.model.get('taxon').url, '_blank');
   },
 
   onRender: function() {
