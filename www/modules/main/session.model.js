@@ -114,7 +114,10 @@ var SessionModel = Backbone.Model.extend({
             self.logout().then(function(success) {
               dfd.resolve();
             }, function(error) {
-              dfd.reject();
+              if ( error.status == 406 )
+                dfd.resolve();
+              else
+                dfd.reject(error);
             });
           }
         }, function(error) {
@@ -147,7 +150,7 @@ var SessionModel = Backbone.Model.extend({
             closable: true,
             message: errorThrown
           });
-          dfd.reject(errorThrown);
+          dfd.reject(jqXHR);
         },
         success: function(response) {
           self.set('isAuth', true);
@@ -255,7 +258,7 @@ var SessionModel = Backbone.Model.extend({
       contentType: 'application/json',
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(jqXHR, textStatus, errorThrown);
-        dfd.reject(errorThrown);
+        dfd.reject(jqXHR);
         Dialog.alert({
           closable: true,
           message: errorThrown

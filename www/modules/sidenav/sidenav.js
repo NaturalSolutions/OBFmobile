@@ -13,7 +13,7 @@ var View = Marionette.LayoutView.extend({
   className: 'sidenav',
   events: {
     'click': 'hide',
-    'click .btn-profile': 'navigateToProfile'
+    'click .keep-sidenav-open': 'onKeepSidenavOpenClick'
   },
 
   initialize: function() {
@@ -45,15 +45,18 @@ var View = Marionette.LayoutView.extend({
     $('body').addClass('show-sidenav');
   },
 
-  hide: function() {
-    $('body').removeClass('show-sidenav');
+  hide: function(e) {
+    console.log('hide');
+    console.log(e);
+    if ( !e.isDefaultPrevented() )
+      $('body').removeClass('show-sidenav');
   },
 
-  navigateToProfile: function() {
-    Router.getInstance().navigate('#profile', {
-      trigger: true
-    });
-  },
+  onKeepSidenavOpenClick: function(e) {
+    console.log('onKeepSidenavOpenClick');
+    console.log(e);
+    e.preventDefault();
+  }
 
 });
 

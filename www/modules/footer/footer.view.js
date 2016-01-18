@@ -31,7 +31,14 @@ var View = Marionette.LayoutView.extend({
 
   onRender: function(options) {
     //this.$el.i18n();
-    this.$el.find('.fab-dial').nsFabDial();
+    var $fabDial = this.$el.find('.fab-dial');
+    $fabDial.nsFabDial();
+    $fabDial.on('show.bs.dropdown', function(e) {
+      $('body').addClass('show-footer-overlay');
+    });
+    $fabDial.on('hide.bs.dropdown', function(e) {
+      $('body').removeClass('show-footer-overlay');
+    });
   },
   /*onFabDialShow: function(e) {
     var $me = $(e.currentTarget);

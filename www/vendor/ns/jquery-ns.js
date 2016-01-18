@@ -39,11 +39,11 @@
     self.each(function() {
       var $me = $(this);
       $me.click(function() {
-        methodOrOptions = methodOrOptions || {};
+        var _methodOrOptions = methodOrOptions || {};
         if (device && device != 'browser') {
-          var url = (methodOrOptions.url || $me.data('link-url')) || $me.attr('href');
-          var target = (methodOrOptions.target || $me.data('link-target')) || $me.attr('target');
-          var options = (methodOrOptions.options || $me.data('link-options')) || undefined;
+          var url = (_methodOrOptions.url || $me.data('link-url')) || $me.attr('href');
+          var target = (_methodOrOptions.target || $me.data('link-target')) || $me.attr('target');
+          var options = (_methodOrOptions.options || $me.data('link-options')) || undefined;
           window.open(url, target, options);
           return false;
         };

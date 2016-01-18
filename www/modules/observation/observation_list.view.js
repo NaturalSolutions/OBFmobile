@@ -5,7 +5,7 @@ var Marionette = require('backbone.marionette'),
 
 var emptyView = Marionette.LayoutView.extend({
   tagName: 'li',
-  template: _.template('<b>Pas d\'obs</b>')
+  template: _.template('<div class="btn-lg text-center text-muted">Vos observations s\'affichent ici.</div>')
 });
 
 module.exports = Marionette.CollectionView.extend({

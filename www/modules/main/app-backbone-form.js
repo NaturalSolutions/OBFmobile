@@ -19,7 +19,7 @@ var extendForm = function() {
       '<div class="help-block"><%= help %></div>' +
     '</div>');
 
-  Form.editors.Base.prototype.className = 'form-control';
+  Form.editors.Base.prototype.className = 'form-control input-lg';
   Form.Field.errorClassName = 'has-error';
 
   /*if (Form.editors.List) {

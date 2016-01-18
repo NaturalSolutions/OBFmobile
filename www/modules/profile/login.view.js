@@ -38,14 +38,14 @@ var View = Marionette.LayoutView.extend({
           type: 'Text',
           dataType: 'email',
           editorAttrs: {
-              placeholder: "Email"
+              placeholder: "E-mail"
           },
           validators: ['required', 'email']
       },
       password: {
         type: 'Password',
         editorAttrs: {
-          placeholder: 'Votre mot de passe'
+          placeholder: 'Mot de passe'
         },
         validators: ['required']
       }
@@ -149,7 +149,7 @@ var View = Marionette.LayoutView.extend({
       type: 'type-success',
       buttons: [{
         label: 'Envoyer nouveau mot de passe par email',
-        cssClass: 'btn-block btn-primary',
+        cssClass: 'btn-block btn-default btn-lg',
         action: _.debounce(function(dialogItself) {
           var errors = self.formNPW.validate();
           console.log(errors);

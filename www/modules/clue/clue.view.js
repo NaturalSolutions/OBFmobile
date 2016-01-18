@@ -17,7 +17,7 @@ var Layout = Marionette.LayoutView.extend({
     }
   },
   template: require('./clue.tpl.html'),
-  className: 'page page-scrollable clue no-footer-padding clearfix',
+  className: 'page page-scrollable clue no-footer-padding clearfix no-header',
   events: {
     'click .marker': 'onMarkerClick'
   },

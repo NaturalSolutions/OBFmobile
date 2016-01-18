@@ -60,17 +60,37 @@
       width: 100%;
       text-transform: uppercase;
     }
-    .btn-profile {
-      text-align: left;
-      background: #5d452e;
-      padding-top: 9px;
-      padding-bottom: 8px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      .badge {
-        font-size: 1.2em;
-        text-transform: uppercase;
-        margin-right: 5px;
+    .panel-profile {
+      background: transparent;
+      margin-bottom: 0;
+      font-size: 14px;
+      border: none;
+      box-shadow: none;
+      > .panel-heading {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        background: #5d452e;
+        .badge-circle {
+          font-size: 1.2em;
+          text-transform: uppercase;
+          margin-right: 5px;
+          vertical-align: middle;
+        }
+      }
+      .panel-body {
+        padding: 0;
+        padding-bottom: 10px;
+        .btn {
+          text-align: left;
+        }
+        .btn-change-profile {
+          .icon {
+            font-size: 2em;
+            margin-left: 4px;
+            margin-right: 6px;
+          }
+        }
       }
     }
   }

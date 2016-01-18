@@ -1,10 +1,11 @@
 <form novalidate>
-    <fieldset class="well user-infos" data-fields="firstname,lastname,email<% if(!data.user.externId) {%>,email2,password,password2<%}%>"></fieldset>
-    <% if(data.user.externId) {%>
-    <fieldset class="well change-password">
-      <button type="button" class="request-npw-js btn-block btn-link" >Changer de mot de passe</button>
-    </fieldset>
-    <% } %>
+    <div class="well">
+      <fieldset class="user-infos" data-fields="firstname,lastname,email<% if(!data.user.externId) {%>,email2,password,password2<%}%>">
+      </fieldset>
+      <% if(data.user.externId) {%>
+      <button type="button" class="request-npw-js btn-block btn btn-default" ><%= i18n.t('pages.profile.form.change_password') %></button>
+      <% } %>
+    </div>
     <fieldset class="well newsletter" data-fields="newsletter">
     </fieldset>
 
@@ -16,6 +17,6 @@
       </button>
     </div>
 </form>
-<div class="text-right">
-  <button type="button" class="btn btn-sm btn-link btn-logout">Se déconnecter <span class="icon icomoon">close</span></button>
+<div class="text-center">
+  <button type="button" class="btn btn-sm btn-link btn-logout"><%= i18n.t('pages.profile.form.logout') %></button>
 </div>

@@ -27,7 +27,7 @@ var Page = Marionette.LayoutView.extend({
     this.session = Session.model.getInstance();
 
     this.header = {
-      titleKey: (this.model.isNew ? 'registration': 'profile'),
+      titleKey: (this.model.isNew() ? 'registration': 'profile'),
       buttons: {
         left: ['back']
       }
@@ -56,7 +56,7 @@ var Page = Marionette.LayoutView.extend({
         type: 'Text',
         dataType: 'email',
         editorAttrs: {
-          placeholder: 'Email'
+          placeholder: 'E-mail'
         },
         validators: ['required', 'email']
         /*validators: ['required', 'email', function checkUsername(value, formValues) {
@@ -85,7 +85,7 @@ var Page = Marionette.LayoutView.extend({
           type: 'Text',
           dataType: 'email',
           editorAttrs: {
-            placeholder: 'Confirmer l\'email'
+            placeholder: 'Confirmer l\'e-mail'
           },
           validators: ['required', {
             type: 'match',
@@ -96,7 +96,7 @@ var Page = Marionette.LayoutView.extend({
         password: {
           type: 'Password',
           editorAttrs: {
-            placeholder: 'Votre mot de passe'
+            placeholder: 'Mot de passe'
           },
           validators: ['required', {
             type: 'regexp',

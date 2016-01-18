@@ -13,7 +13,7 @@
     "header": {
         "titles": {
             "dashboard": "Tableau de bord",
-            "clue": "Indices",
+            "clue": "Carte des milieux",
             "missionsAroundme": "Missions autour de moi",
             "missions": "Toutes les missions",
             "observation": "Observation",
@@ -194,7 +194,9 @@
         },
         "profile": {
             "form": {
-                "submit": "Valider"
+                "submit": "Valider",
+                "change_password": "Changer de mot de passe",
+                "logout": "Déconnexion"
             }
         }
     },
@@ -211,6 +213,16 @@
             "missionsTraining": "Missions d'apprentissage",
             "dashboard": "Tableau de bord",
             "indices": "Indices"
+        }
+    },
+    "footer": {
+        "btns": {
+            "observation": "Observation",
+            "help_on": "Désactiver l'aide",
+            "help_off": "Activer l'aide",
+            "forest_time_on": "Je suis en forêt",
+            "forest_time_off": "Je suis en forêt",
+            "clue": "Milieux"
         }
     }
 }
