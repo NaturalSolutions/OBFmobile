@@ -52,12 +52,14 @@ var ObservationModel = Backbone.Model.extend({
     if (result.mission)
       result.mission = result.mission.toJSON();
 
+    result.shared = _.parseInt(result.shared);
+
     return result;
   },
   getMissionId: function() {
     var self = this;
 
-    return parseInt(self.attributes.missionId);
+    return _.parseInt(self.attributes.missionId);
   },
   getMission: function() {
     var self = this;

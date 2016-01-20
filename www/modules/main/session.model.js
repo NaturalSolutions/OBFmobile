@@ -2,6 +2,7 @@
 
 var Backbone = require('backbone'),
   $ = require('jquery'),
+  bootstrap = require('bootstrap'),
   config = require('../main/config'),
   _ = require('lodash'),
   Router = require('../routing/router'),
@@ -18,6 +19,7 @@ var SessionModel = Backbone.Model.extend({
     isAuth: false,
     authStatus: '',
     network: false,
+    needLogin: false
   },
   initialize: function() {
     var self = this;
@@ -172,15 +174,16 @@ var SessionModel = Backbone.Model.extend({
             'externId': response.user.uid,
             'newsletter': _.get(response.user.field_newsletter, 'und[0].value', '')
           }).save();
-
-          User.collection.getInstance().setCurrent(user);
+          users.setCurrent(user);
 
           self.syncObs(response.obs);
 
+          console.log(self.afterLoggedAction);
           if (self.afterLoggedAction && self[self.afterLoggedAction.name]) {
             self[self.afterLoggedAction.name](self.afterLoggedAction.options);
           }
           self.afterLoggedAction = null;
+          self.set('needLogin', false);
 
           dfd.resolve(user);
         }
@@ -197,7 +200,9 @@ var SessionModel = Backbone.Model.extend({
     var obs = Observation.collection.getInstance().findWhere({
       id: options.id
     });
-    if (obs && obs.get('userId') == User.getCurrent().get('id')) {
+
+    if (obs) {
+      obs.set('userId', User.getCurrent().get('id'));
       Observation.idToTransmit = options.id;
       Router.getInstance().navigate('observation/' + options.id, {
         trigger: true

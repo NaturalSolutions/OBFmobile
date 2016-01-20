@@ -12,6 +12,7 @@ var Region = Marionette.Region.extend({
 
     if (self.$el.children('div').length && self.currentView) {
       var last = self.currentView;
+      last.willBeDestroyed = true;
       var $last = last.$el;
       $last.on('transitionend, webkitTransitionEnd', function(e) {
         if ($last.hasClass('animate-close')) {

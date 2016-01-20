@@ -52,6 +52,9 @@ var UserModel = Backbone.Model.extend({
 
     return result;
   },
+  isAnonymous: function() {
+    return !this.get('email');
+  },
   getPalmName: function() {
     var self = this;
 

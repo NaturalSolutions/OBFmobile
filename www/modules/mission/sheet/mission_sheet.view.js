@@ -2,6 +2,7 @@
 var Backbone = require('backbone'),
   Marionette = require('backbone.marionette'),
   Observation = require('../../observation/observation.model'),
+  Router = require('../../routing/router'),
   User = require('../../profile/user.model.js');
 
 module.exports = Marionette.LayoutView.extend({
@@ -9,7 +10,8 @@ module.exports = Marionette.LayoutView.extend({
   template: require('./mission_sheet.tpl.html'),
   events: {
     'click .btn-accept': 'onAcceptClick',
-    'click .btn-sheet': 'openWindow'
+    'click .btn-sheet': 'openWindow',
+    'click .btn-back': 'onBackClick'
   },
   attributes: function() {
     var user = User.getCurrent();
@@ -76,6 +78,10 @@ module.exports = Marionette.LayoutView.extend({
       this.$el.addClass('is-accept');
     else
       this.$el.removeClass('is-accept');
+  },
+
+  onBackClick: function() {
+    Router.getInstance().back();
   },
 
   onDestroy: function() {

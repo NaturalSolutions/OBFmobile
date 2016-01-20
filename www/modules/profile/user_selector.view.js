@@ -27,14 +27,18 @@ var Page = Marionette.LayoutView.extend({
   },
 
   onUserClick: function(e) {
-    Session.model.getInstance().logout().always(function() {
-      var $target = $(e.currentTarget);
-      var userId = $target.data('user-id');
-      var collection = User.collection.getInstance();
-      var user = collection.get(userId);
-      collection.setCurrent(user);
-      Router.getInstance().navigate('dashboard', {trigger:true});
-    });
+    var $target = $(e.currentTarget);
+    var userId = $target.data('user-id');
+    var session = Session.model.getInstance();
+    if ( session.get('needLogin') )
+      Router.getInstance().navigate('login/'+userId, {trigger:true});
+    else
+      session.logout().always(function() {
+        var collection = User.collection.getInstance();
+        var user = collection.get(userId);
+        collection.setCurrent(user);
+        Router.getInstance().navigate('dashboard', {trigger:true});
+      });
   }
 });
 

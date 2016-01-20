@@ -91,13 +91,13 @@ var View = Marionette.LayoutView.extend({
     
     self.$el.addClass('block-ui');
     $form.addClass('loading');
-
     
     this.session.login(formValues.email, formValues.password).then(function(user) {
       self.$el.removeClass('block-ui');
       $form.removeClass('loading');
 
-      if ( !self.isDestroyed )
+      console.log('self.willBeDestroyed', self.willBeDestroyed);
+      if ( !self.willBeDestroyed )
         Router.getInstance().navigate('dashboard', {
           trigger: true
         });

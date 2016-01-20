@@ -366,17 +366,22 @@ var Layout = Marionette.LayoutView.extend({
         Main.getInstance().unblockUI();
         var dfd;
         if (error.responseJSON[0] === 'Access denied for user anonymous') {
-          self.session.afterLoggedAction = {
-            name: 'showObsAndTransmit',
-            options: {
-              id: self.observationModel.get('id')
-            }
-          };
           Dialog.confirm({
             message: i18n.t('pages.observation.dialogs.need_login'),
             callback: function(result) {
               if (result) {
-                Router.getInstance().navigate('user-selector', {trigger:true});
+                self.session.afterLoggedAction = {
+                  name: 'showObsAndTransmit',
+                  options: {
+                    id: self.observationModel.get('id')
+                  }
+                };
+                self.session.set('needLogin', true);
+                Router.getInstance().startOutOfHistory();
+                if ( user.isAnonymous() )
+                  Router.getInstance().navigate('user-selector', {trigger:true});
+                else
+                  Router.getInstance().navigate('login/'+user.get('id'), {trigger:true});
               }
             }
           });
