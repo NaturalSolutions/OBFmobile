@@ -1,6 +1,6 @@
 # OBFmobile
 
-Environnement de développement
+##Environnement de développement
 
 Les dépendances JavaScript (bibliothèques, ...) sont satisfaites par npm.
 
@@ -18,7 +18,7 @@ Note : la tâche dev ouvre l'appli dans votre navigateur avec watch + livereload
 
 Merci de documenter brièvement ici les outils que vous ajouterez au fur et à mesure du développement.
 
-Installer l'environnement de développement
+##Installer l'environnement de développement
 
 Créer une copie locale de la base de code :
 
@@ -31,7 +31,7 @@ cordova plugin restore --experimental
 Enfin, activer la plateforme de test qui vous convient (android ou ios) :
 
 cordova platform add android
-Gestion des plugins Cordova
+###Gestion des plugins Cordova
 
 Merci d'ajouter les plugins au config.xml pour qu'ils puissent être installé par les autres développeurs de manière facile et cohérente.
 
@@ -46,7 +46,7 @@ Référence: http://stackoverflow.com/a/25105731
 
 Note : pour éviter les mauvaises surprises, il est important de fixer les versions des plugins. On n'installe pas le plugin foobar, jamais. On peut en revanche installer le plugin foobar@x.y.z, pas de problème.
 
-Gestion des dépendances Javascript
+###Gestion des dépendances Javascript
 
 Utiliser npm pour inclure dans le projet des dépendances Javascript. Merci de différencier les dépendances de développement et globales :
 
