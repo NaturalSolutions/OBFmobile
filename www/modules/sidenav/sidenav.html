@@ -38,7 +38,7 @@
             <% var lastname = data.user.lastname %>
             <span class="badge badge-circle bg-primary"><%= firstname.charAt(0)+lastname.charAt(0) %></span> <%= firstname+' '+lastname %>
         </a> -->
-        <div class="panel panel-profile">
+        <div class="panel panel-profile visible-not-anonymous">
             <div class="panel-heading keep-sidenav-open" data-toggle="collapse" data-target=".panel-collapse-profile">
                 <% var firstname = data.user.firstname %>
                 <% var lastname = data.user.lastname %>
@@ -51,7 +51,7 @@
                 </div>
             </div>
         </div>
-        <a href="#user-selector" class="btn btn-lg btn-block btn-connexion">
+        <a href="#user-selector" class="btn btn-lg btn-block btn-connexion hidden-not-anonymous">
             <%= i18n.t('sidenav.btns.login') %>
         </a>
     </div>

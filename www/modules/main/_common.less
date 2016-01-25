@@ -44,6 +44,28 @@ body {
     padding: 0;
 }
 
+body.in-forest {
+    .hidden-in-forest {
+        display: none;
+    }
+}
+body:not(.in-forest) {
+    .visible-in-forest {
+        display: none;
+    }
+}
+
+body.not-anonymous {
+    .hidden-not-anonymous {
+        display: none;
+    }
+}
+body:not(.not-anonymous) {
+    .visible-not-anonymous {
+        display: none;
+    }
+}
+
 .badge-circle {
     font-size: .63em;
     width: 2em;
