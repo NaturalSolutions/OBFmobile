@@ -94,8 +94,21 @@ var ObservationCollection = Backbone.Collection.extend({
   url: '',
   localStorage: new Backbone.LocalStorage("ObservationCollection"),
   initialize: function() {
+      var self = this;
       // Assign the Deferred issued by fetch() as a property
       this.deferred = this.fetch();
+
+      User.collection.getInstance().on('change:current', function(newUser, prevUser) {
+        if ( !prevUser.isAnonymous() )
+          return false;
+        var obs = self.where({
+          userId: prevUser.get('id')
+        });
+        _.forEach(obs, function(model) {
+          model.set('userId', newUser.get('id'));
+          model.save();
+        });
+      });
     }
     /*toJSON: function() {
         var self = this;

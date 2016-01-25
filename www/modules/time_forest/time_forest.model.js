@@ -81,6 +81,28 @@ var TFcollection = Backbone.Collection.extend({
   initialize: function() {
     // Assign the Deferred issued by fetch() as a property
     this.deferred = this.fetch();
+
+    var User = require('../profile/user.model');
+    User.collection.getInstance().on('change:current', function(newUser, prevUser) {
+      var prevTimeForest = prevUser.getTimeForest();
+      if ( prevUser.isAnonymous() ) {
+        var newTimeForest = newUser.getTimeForest();
+        newTimeForest.set({
+          totalDuration: prevTimeForest.get('totalDuration')+newTimeForest.get('totalDuration')
+        });
+        if ( prevTimeForest.get('isStart') ) {
+          newTimeForest.set({
+            startTime: prevTimeForest.get('startTime'),
+            intervalDuration: prevTimeForest.get('intervalDuration')
+          });
+          newTimeForest.start();
+        }
+        newTimeForest.save();
+        prevTimeForest.set('totalDuration', 0);
+        prevTimeForest.save();
+      }
+      prevTimeForest.stop();
+    });
   }
 });
 
