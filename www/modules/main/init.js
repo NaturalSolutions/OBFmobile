@@ -23,6 +23,7 @@ var Backbone = require('backbone'),
   Observation = require('../observation/observation.model'),
   i18n = require('i18next-client'),
   User = require('../profile/user.model'),
+  TimeForest = require('../time_forest/time_forest.model'),
   Log = require('../logs/log.model'),
   Departement = require('../main/departement.model'),
   Mission = require('../mission/mission.model'),
@@ -182,7 +183,6 @@ function init() {
 
   var getUser = function() {
     var deferred = $.Deferred();
-    var self = this;
     var collection = User.collection.getInstance();
     collection.fetch({
       success: function(data) {
@@ -204,6 +204,22 @@ function init() {
     return deferred;
   };
 
+  var getTimeForest = function() {
+    var deferred = $.Deferred();
+    var collection = TimeForest.collection.getInstance();
+    collection.fetch({
+      success: function(data) {
+        deferred.resolve();
+      },
+      error: function(error) {
+        console.log(error);
+        deferred.reject(error);
+      }
+    });
+
+    return deferred;
+  };
+
   var app = new Marionette.Application();
   app.on('start', function() {
     BackboneFormsApp.init();
@@ -213,7 +229,7 @@ function init() {
     Backbone.history.start();
   });
 
-  $.when(getI18n(), getMissions(), getDepartements(), getObservations(), getLogs(), getUser())
+  $.when(getI18n(), getMissions(), getDepartements(), getObservations(), getLogs(), getUser(), getTimeForest())
     .done(function() {
       app.start();
     });

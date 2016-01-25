@@ -28,8 +28,7 @@ var UserModel = Backbone.Model.extend({
       lon: null
     },
     acceptedMissionIds: [],
-    completedMissionIds: [],
-    timeForest:0
+    completedMissionIds: []
   },
   url: config.coreUrl,
 
@@ -44,8 +43,19 @@ var UserModel = Backbone.Model.extend({
   },
 
   getTimeForest: function(){
-    var currentTimeForest = time_forest.collection.getInstance().getCurrentUserTimeForest();
-    return currentTimeForest;
+    //var currentTimeForest = time_forest.collection.getInstance().getCurrentUserTimeForest();
+    var collection = time_forest.collection.getInstance();
+    var timeForest = collection.findWhere({
+      uid: this.get('id')
+    });
+    if (!timeForest) {
+      timeForest = new (time_forest.model.getClass())();
+      timeForest.set('uid', this.get('id'));
+      collection.add(timeForest)
+        .save();
+    }
+
+    return timeForest;
   },
 
   toJSON: function() {

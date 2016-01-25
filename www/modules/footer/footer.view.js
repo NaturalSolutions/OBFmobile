@@ -17,81 +17,41 @@ var View = Marionette.LayoutView.extend({
   events: {
     'click .capture-photo-js': 'capturePhoto',
     'submit form': 'uploadPhoto',
-    'click .forest-time-js': 'forestTime',
-    /*'show.bs.dropdown .fab-dial': 'onFabDialShow',
-    'hide.bs.dropdown .fab-dial': 'onFabDialHide',*/
+    'click .forest-time-js': 'forestTime'
   },
 
   initialize: function() {
     this.moment = require('moment');
+    this.listenTo(User.collection.getInstance(), 'change:current', this.onCurrentUserChange);
+    this.listenTo(User.getCurrent().getTimeForest(), 'change:intervalDuration', this.displayTimeForest);
   },
 
-  serializeData: function() {
-    var timeForestModel = TimeForest.collection.getInstance().findWhere({
-      uid: User.getCurrent().get('id')
-    });
-    var duration;
-    if (timeForestModel) {
-      duration = this.moment.duration(timeForestModel.get('duration'), 'seconds');
-    } else {
-      duration = this.moment.duration(0, 'seconds');
-    }
-    return {
-      duration: duration.format('h[h] mm[min] ss[s]'),
-    };
+  onCurrentUserChange: function(newUser, prevUser) {
+    this.stopListening(prevUser.getTimeForest());
+    this.listenTo(newUser.getTimeForest(), 'change:intervalDuration', this.displayTimeForest);
+    this.render();
   },
+
+  serializeData: function() {},
 
   onRender: function(options) {
-    //this.$el.i18n();
-    var self = this;
-    var $fabDial = this.$el.find('.fab-dial');
-    $fabDial.nsFabDial();
-    $fabDial.on('show.bs.dropdown', function(e) {
+    this.$fabDial = this.$el.find('.fab-dial');
+    this.$fabDial.nsFabDial();
+    this.$fabDial.on('show.bs.dropdown', function(e) {
       $('body').addClass('show-footer-overlay');
-      self.isTimeForest();
     });
-    $fabDial.on('hide.bs.dropdown', function(e) {
+    this.$fabDial.on('hide.bs.dropdown', function(e) {
       $('body').removeClass('show-footer-overlay');
     });
+
+    this.displayTimeForest();
   },
-  /*onFabDialShow: function(e) {
-    var $me = $(e.currentTarget);
-    setTimeout(function() {
-      $me.addClass('open-animate');
-    });
+
+  displayTimeForest: function() {
+    var duration = User.getCurrent().getTimeForest().get('currentDuration');
+    var display = this.moment.duration(duration, 'seconds').format('h[h] mm[min] ss[s]');
+    this.$el.find('.time-forest-display-js').text(display);
   },
-  onFabDialHide: function(e) {
-    var $me = $(e.currentTarget);
-    $me.removeClass('open-animate');
-  },*/
-  //TODO Change WS services instead of restful
-  // uploadPhoto: function(e) {
-  //     var self = this;
-  //     e.preventDefault();
-
-  //     self.$el.removeClass('show-form');
-
-  //     var $form = $(e.currentTarget);
-  //     var formdata = (window.FormData) ? new FormData($form[0]) : null;
-  //     var data = (formdata !== null) ? formdata : $form.serialize();
-
-  //     $.ajax({
-  //         url: config.apiUrl +"/file-upload",
-  //         type: "POST",
-  //         contentType: false,
-  //         processData: false,
-  //         dataType: 'json',
-  //         data: data,
-  //         success: function(response) {
-  //             console.log(response);
-  //             var urlServer = config.coreUrl +'/sites/default/files/';
-  //             self.createObservation(urlServer + response.data[0].label, response.data[0].id);
-  //         },
-  //         error: function(response) {
-  //             console.log(response);
-  //         }
-  //     });
-  // },
 
   capturePhoto: function() {
     var self = this;
@@ -182,59 +142,9 @@ var View = Marionette.LayoutView.extend({
   forestTime: function(e) {
     e.preventDefault();
     e.stopPropagation();
-    var self = this;
 
-    var now_time_forest = this.moment().unix(this.moment().toNow());
+    User.getCurrent().getTimeForest().toggleStart();
 
-    TimeForest.collection.getInstance().fetch({
-      success: function() {
-        var timeForestModel = TimeForest.collection.getInstance().findWhere({
-          uid: User.getCurrent().get('id')
-        });
-        if (!timeForestModel) {
-          timeForestModel = TimeForest.model.getInstance();
-          TimeForest.collection.getInstance().add(timeForestModel)
-            .save();
-        }
-        if (timeForestModel.get('start')) {
-          timeForestModel.set({
-            stop: now_time_forest
-          }).save();
-          TimeForest.collection.getInstance().stopTimer(timeForestModel);
-        } else {
-          timeForestModel.set({
-            start: now_time_forest,
-            uid: User.getCurrent().get('id')
-          }).save();
-          TimeForest.collection.getInstance().runTimer(timeForestModel);
-        }
-      },
-      error: function(error) {
-        console.log(error);
-      }
-    });
-
-  },
-
-  isTimeForest: function() {
-    var now_time_forest = this.moment().unix(this.moment().toNow());
-
-    TimeForest.collection.getInstance().fetch({
-      success: function() {
-        var timeForestModel = TimeForest.collection.getInstance().findWhere({
-          uid: User.getCurrent().get('id')
-        });
-        if (timeForestModel && (timeForestModel.get('start') && !timeForestModel.get('stop') && timeForestModel)) {
-          timeForestModel.set({
-            stop: now_time_forest
-          }).save();
-          TimeForest.collection.getInstance().runTimer(timeForestModel);
-        }
-      },
-      error: function(error) {
-        console.log(error);
-      }
-    });
   }
 
 });

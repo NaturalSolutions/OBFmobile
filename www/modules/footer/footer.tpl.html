@@ -19,11 +19,14 @@
         </li>
         <li>
             <button type="button" class="btn btn-link no-padding forest-time-js">
-                <span class="label text-gray">Temps en forêt activé<div class="text-primary"><%= data.duration %></div></span>
+                <span class="label text-gray">
+                    Temps en forêt <span class="visible-in-forest">activé</span><span class="hidden-in-forest">désactivé</span>
+                    <div class="text-primary time-forest-display-js"></div>
+                </span>
                 <div class="btn-lg btn-fab bg-primary">
                     <span class="icon icomoon">location_time</span>
                     <% var spinnerTpl = require('../spinner/spinner-forest.tpl.html'); %>
-                    <%= spinnerTpl({className:'spinner-forest spinner-green not-display icon-right loader'}) %>
+                    <%= spinnerTpl({className:'spinner-forest spinner-green icon-right loader visible-in-forest'}) %>
                 </div>
             </button>
         </li>
