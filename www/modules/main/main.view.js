@@ -10,6 +10,8 @@ var Backbone = require('backbone'),
   $ = require('jquery'),
   Dialog = require('bootstrap-dialog'),
   i18n = require('i18next-client'),
+  moment = require('moment'),
+  TimeForest = require('../time_forest/time_forest.model'),
   Session = require('./session.model');
 
 var Layout = Marionette.LayoutView.extend({
@@ -141,6 +143,7 @@ var Layout = Marionette.LayoutView.extend({
       view.destroy();
     });
   },
+
 });
 
 var instance = null;

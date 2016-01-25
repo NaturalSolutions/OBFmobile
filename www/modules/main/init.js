@@ -15,6 +15,7 @@ var Backbone = require('backbone'),
   //currentPos = require('./current-position'),
   moment = require('moment'),
   momentFr = require('moment/locale/fr'),
+  momentDurationFormat = require('moment-duration-format'),
   datetimepicker = require('eonasdan-bootstrap-datetimepicker'),
   _ = require('lodash'),
   _ns = require('lodash-ns'),
@@ -108,7 +109,7 @@ function init() {
             season.endAt = moment(season.endAt, 'MM');
             season.endAt.endOf('month');
             if (season.startAt > season.endAt) {
-              if ( now > season.endAt )
+              if (now > season.endAt)
                 season.endAt.add(1, 'y');
               else
                 season.startAt.subtract(1, 'y');
@@ -181,12 +182,15 @@ function init() {
 
   var getUser = function() {
     var deferred = $.Deferred();
+    var self = this;
     var collection = User.collection.getInstance();
     collection.fetch({
       success: function(data) {
         var anonymous = collection.getAnonymous();
-        var current = collection.findWhere({isCurrent:true});
-        if ( !current )
+        var current = collection.findWhere({
+          isCurrent: true
+        });
+        if (!current)
           current = anonymous;
         collection.setCurrent(current);
         deferred.resolve(current);

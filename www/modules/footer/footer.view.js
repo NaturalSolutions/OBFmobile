@@ -6,6 +6,7 @@ var Backbone = require('backbone'),
   _ = require('lodash'),
   User = require('../profile/user.model'),
   Observation = require('../observation/observation.model'),
+  TimeForest = require('../time_forest/time_forest.model'),
   config = require('../main/config');
 //i18n = require('i18n');
 
@@ -26,15 +27,28 @@ var View = Marionette.LayoutView.extend({
   },
 
   serializeData: function() {
-
+    var timeForestModel = TimeForest.collection.getInstance().findWhere({
+      uid: User.getCurrent().get('id')
+    });
+    var duration;
+    if (timeForestModel) {
+      duration = this.moment.duration(timeForestModel.get('duration'), 'seconds');
+    } else {
+      duration = this.moment.duration(0, 'seconds');
+    }
+    return {
+      duration: duration.format('h[h] mm[min] ss[s]'),
+    };
   },
 
   onRender: function(options) {
     //this.$el.i18n();
+    var self = this;
     var $fabDial = this.$el.find('.fab-dial');
     $fabDial.nsFabDial();
     $fabDial.on('show.bs.dropdown', function(e) {
       $('body').addClass('show-footer-overlay');
+      self.isTimeForest();
     });
     $fabDial.on('hide.bs.dropdown', function(e) {
       $('body').removeClass('show-footer-overlay');
@@ -164,13 +178,63 @@ var View = Marionette.LayoutView.extend({
         console.log(e);
       });
   },
+
   forestTime: function(e) {
     e.preventDefault();
     e.stopPropagation();
-    var shape = document.getElementsByClassName('spinner-forest')[0];
-    shape.classList.toggle('not-display');
-    $('body').toggleClass('in-forest');
+    var self = this;
 
+    var now_time_forest = this.moment().unix(this.moment().toNow());
+
+    TimeForest.collection.getInstance().fetch({
+      success: function() {
+        var timeForestModel = TimeForest.collection.getInstance().findWhere({
+          uid: User.getCurrent().get('id')
+        });
+        if (!timeForestModel) {
+          timeForestModel = TimeForest.model.getInstance();
+          TimeForest.collection.getInstance().add(timeForestModel)
+            .save();
+        }
+        if (timeForestModel.get('start')) {
+          timeForestModel.set({
+            stop: now_time_forest
+          }).save();
+          TimeForest.collection.getInstance().stopTimer(timeForestModel);
+        } else {
+          timeForestModel.set({
+            start: now_time_forest,
+            uid: User.getCurrent().get('id')
+          }).save();
+          TimeForest.collection.getInstance().runTimer(timeForestModel);
+        }
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+
+  },
+
+  isTimeForest: function() {
+    var now_time_forest = this.moment().unix(this.moment().toNow());
+
+    TimeForest.collection.getInstance().fetch({
+      success: function() {
+        var timeForestModel = TimeForest.collection.getInstance().findWhere({
+          uid: User.getCurrent().get('id')
+        });
+        if (timeForestModel && (timeForestModel.get('start') && !timeForestModel.get('stop') && timeForestModel)) {
+          timeForestModel.set({
+            stop: now_time_forest
+          }).save();
+          TimeForest.collection.getInstance().runTimer(timeForestModel);
+        }
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
   }
 
 });

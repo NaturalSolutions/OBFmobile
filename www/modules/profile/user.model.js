@@ -2,6 +2,7 @@
 var Backbone = require('backbone'),
   config = require('../main/config'),
   _ = require('lodash'),
+  time_forest = require('../time_forest/time_forest.model'),
   $ = require('jquery');
 
 Backbone.LocalStorage = require('backbone.localstorage');
@@ -27,7 +28,8 @@ var UserModel = Backbone.Model.extend({
       lon: null
     },
     acceptedMissionIds: [],
-    completedMissionIds: []
+    completedMissionIds: [],
+    timeForest:0
   },
   url: config.coreUrl,
 
@@ -40,6 +42,12 @@ var UserModel = Backbone.Model.extend({
     }
     return Backbone.Model.prototype.get.call(self, attr);
   },
+
+  getTimeForest: function(){
+    var currentTimeForest = time_forest.collection.getInstance().getCurrentUserTimeForest();
+    return currentTimeForest;
+  },
+
   toJSON: function() {
     var self = this;
     var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
