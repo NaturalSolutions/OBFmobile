@@ -6,13 +6,15 @@ var Backbone = require('backbone'),
   footer = require('../footer/footer.view'),
   header = require('../header/header'),
   sidenav = require('../sidenav/sidenav'),
-  User = require('../profile/user.model'),
   $ = require('jquery'),
   Dialog = require('bootstrap-dialog'),
   i18n = require('i18next-client'),
   moment = require('moment'),
   TimeForest = require('../time_forest/time_forest.model'),
-  Session = require('./session.model');
+  Session = require('./session.model'),
+  User = require('../profile/user.model'),
+  Departement = require('./departement.model'),
+  CurrentPos = require('../localize/current_position.model');
 
 var Layout = Marionette.LayoutView.extend({
   el: '.app',
@@ -23,8 +25,41 @@ var Layout = Marionette.LayoutView.extend({
     this.dialogs = [];
     // this.addListeners();
     this.listenTo(User.collection.getInstance(), 'change:current', this.onCurrentUserChange);
+    var currentPos = CurrentPos.model.getInstance();
+    currentPos.on('change', function() {
+      var lat = currentPos.get('latitude');
+      var lon = currentPos.get('longitude');
+      var user = User.getCurrent();
+      user.set('coords', currentPos.get('coords'));
 
-    this.getPosition();
+      if ( !user.get('forceDepartement') ) {
+        var selectedDepartements = Departement.collection.getInstance().clone();
+        selectedDepartements.forEach(function(departement) {
+          var distFromUser = _.getDistanceFromLatLonInKm(lat, lon, departement.get('lat'), departement.get('lon'));
+          departement.set('distFromUser', distFromUser);
+        });
+        selectedDepartements.comparator = 'distFromUser';
+        selectedDepartements.sort();
+
+        var i = 1;
+        while (selectedDepartements.at(i)) {
+          var departement = selectedDepartements.at(i);
+          if (departement.get('distFromUser') <= 150)
+              i++;
+          else {
+            selectedDepartements.remove(departement);
+          }
+        }
+        user.set('departements', selectedDepartements.pluck('code'));
+      }
+      user.save();
+    });
+    currentPos.on('unwatch', function() {
+      var user = User.getCurrent();
+      user.set('coords', {});
+      user.set('departements', []);
+    });
+    currentPos.watch();
   },
 
   regions: {

@@ -25,6 +25,7 @@ var Backbone = require('backbone'),
   User = require('../profile/user.model'),
   TimeForest = require('../time_forest/time_forest.model'),
   Log = require('../logs/log.model'),
+  City = require('../localize/city'),
   Departement = require('../main/departement.model'),
   Mission = require('../mission/mission.model'),
   Session = require('../main/session.model'),
@@ -147,6 +148,34 @@ function init() {
     return deferred;
   };
 
+  var getCities = function() {
+    var deferred = $.Deferred();
+    $.get('./data/cities.csv')
+      .then(function(response) {
+        var rows = response.split('\n');
+        _.forEach(rows, function(row, index) {
+            row = row.split(',');
+            var code = row[2];
+            /*if (code.length < 5)
+                code = '0' + code;
+            code = 'INSEEC' + code;*/
+
+            rows[index] = {
+                dpt: row[0],
+                label: row[1],
+                code: code
+                //codeInsee: row[2]
+            };
+        });
+        City.rows = _.sortBy(rows, 'label');
+        deferred.resolve();
+      }, function(error) {
+        console.log(error);
+      });
+
+    return deferred;
+  };
+
   var getDepartements = function() {
     var deferred = $.Deferred();
     var departementCollection = new Departement.collection.getInstance();
@@ -229,7 +258,7 @@ function init() {
     Backbone.history.start();
   });
 
-  $.when(getI18n(), getMissions(), getDepartements(), getUser(), getObservations(), getLogs(), getTimeForest())
+  $.when(getI18n(), getMissions(), getCities(), getDepartements(), getUser(), getObservations(), getLogs(), getTimeForest())
     .done(function() {
       app.start();
     });

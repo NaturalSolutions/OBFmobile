@@ -291,7 +291,14 @@ var Layout = Marionette.LayoutView.extend({
 
   saveObs: function() {
     var self = this;
+
     var user = User.getCurrent();
+    if ( !user.get('hasCoords') && !user.get('city') ) {
+      
+      //la commune
+
+      return false;
+    }
     var formValues = this.formObs.getValue();
     var missionCurrent = mission.collection.getInstance().findWhere({
       id: _.parseInt(formValues.mission)

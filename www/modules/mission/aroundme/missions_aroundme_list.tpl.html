@@ -13,6 +13,7 @@
 	<div class="tab-content">
 	<% _.forEach(data.missionTabs, function(missionTab, index) { %>
 		<div role="tabpanel" class="tab-pane <% if ( index == 0 ) { %>active<% } %>" id="tab-difficulty-<%= index %>">
+			<p><b>Département : <%= data.departement.title %></b><a href="#missions/aroundme/manually?forceDepartement=true">Changer</a></p>
 			<ul class="list-unstyled missions clearfix">
 			<% _.forEach(missionTab.missions, function(mission) { %>
 				<li class="pull-left">

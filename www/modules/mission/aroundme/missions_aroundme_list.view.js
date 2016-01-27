@@ -52,6 +52,7 @@ module.exports = Marionette.LayoutView.extend({
       });
     }
     return {
+      departement: User.getCurrent().getDepartementData(),
       missionTabs: missionTabs
     };
   },
@@ -72,6 +73,6 @@ module.exports = Marionette.LayoutView.extend({
   },
 
   onDestroy: function() {
-    	var self = this;
+    var self = this;
   }
 });

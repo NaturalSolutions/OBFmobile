@@ -14,15 +14,15 @@ module.exports = Marionette.LayoutView.extend({
     'submit form': 'onFormSubmit',
   },
 
-  initialize: function() {
-    var self = this;
+  initialize: function(options) {
+    this.options = options;
   },
 
   onShow: function() {
     var self = this;
     this.$el.find('input.js-autocomplete').autocomplete({
       source: departement.collection.getInstance().pluck('title'),
-      appendTo: this.$el.find('.js-autocomplete-result'),
+      appendTo: this.$el.find('.js-autocomplete-result')
     });
   },
 
@@ -32,12 +32,14 @@ module.exports = Marionette.LayoutView.extend({
 
     var dept = self.$el.find('input[name="departement"]').val();
 
-    var selectedDepartements = departement.collection.getInstance().findWhere({
+    var selectedDepartement = departement.collection.getInstance().findWhere({
       title: dept
     });
 
     var user = User.getCurrent();
-    user.set('departements',[selectedDepartements.get('code')]);
+    user.set('departements',[selectedDepartement.get('code')]);
+    if ( this.options.forceDepartement )
+      user.set('forceDepartement', true);
     user.save();
     Router.getInstance().navigate('#missions/aroundme', {trigger: true});
   },

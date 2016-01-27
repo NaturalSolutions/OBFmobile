@@ -73,6 +73,9 @@ var UserModel = Backbone.Model.extend({
   isAnonymous: function() {
     return !this.get('email');
   },
+  getHasCoords: function() {
+    return this.get('coords') && this.get('coords').lat;
+  },
   getPalmName: function() {
     var self = this;
 
@@ -171,6 +174,15 @@ var UserModel = Backbone.Model.extend({
     var missions = this.get(listName + 'MissionIds');
 
     return missions.indexOf(mission.get('srcId')) > -1;
+  },
+  getDepartementData: function() {
+    if ( !this.get('departements') || !this.get('departements')[0] )
+      return {};
+    var Departement = require('../main/departement.model');
+    var code = this.get('departements')[0];
+    return Departement.collection.getInstance().findWhere({
+      code: code
+    });
   },
 
   computeScore: function() {
