@@ -17,18 +17,18 @@
         <%} %>
         </ul>            
         <% } %>
-        <% if(data.observation.photos.length < 3){ %>
         <div class="add-photo floating floating-top floating-right">
             <form class="add-photo-browser" enctype="multipart/form-data">
                 <input type="file" name="image" accept="image/*" />
                 <input type="submit" value="upload file"></input>
             </form>
-            <button type="button" class="btn bg-brown btn-fab btn-add-photo capture-photo-js">
-                <span class="icon icomoon">add_images</span>
-            </button>
         </div>
-        <% } %>
     </div>
+    <% if(data.observation.photos.length < 3){ %>
+        <button type="button" class="btn bg-brown btn-fab btn-add-photo capture-photo-js">
+            <span class="icon icomoon">add_images</span>
+        </button>
+    <% } %>
 </div>
 <% } %>
 
