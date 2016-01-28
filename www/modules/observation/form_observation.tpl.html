@@ -14,7 +14,7 @@
         </div>
     </fieldset>
     <div class="actions">
-        <button type="submit" class="btn btn-save btn-lg submit btn-primary btn-block pos-relative">
+        <button type="submit" class="btn btn-save btn-lg submit btn-default btn-block pos-relative">
             <%= i18n.t('pages.observation.btns.save') %>
             <% var spinnerTpl = require('../spinner/spinner.tpl.html'); %>
             <%= spinnerTpl({className:'spinner-white icon-right loader'}) %>
@@ -24,7 +24,7 @@
             <% var spinnerTpl = require('../spinner/spinner.tpl.html'); %>
             <%= spinnerTpl({className:'spinner-white icon-right loader'}) %>
         </button>
-        <button type="submit" class="btn btn-share btn-lg submit btn-primary btn-block pos-relative">
+        <button type="submit" class="btn btn-share btn-lg submit btn-warning btn-block pos-relative">
             <%= i18n.t('pages.observation.btns.share') %>
             <% var spinnerTpl = require('../spinner/spinner.tpl.html'); %>
             <%= spinnerTpl({className:'spinner-white icon-right loader'}) %>
