@@ -264,10 +264,10 @@ var SessionModel = Backbone.Model.extend({
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(jqXHR, textStatus, errorThrown);
         dfd.reject(jqXHR);
-        Dialog.alert({
-          closable: true,
-          message: errorThrown
-        });
+        // Dialog.alert({
+        //   closable: true,
+        //   message: errorThrown
+        // });
       },
       success: function(response) {
         self.set('isAuth', false);
