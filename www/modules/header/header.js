@@ -46,6 +46,7 @@ var View = Marionette.LayoutView.extend({
     var data = self.data || {};
     data = _.defaultsDeep(data, {
       titleKey: '',
+      titleArgs: {},
       buttons: {
         left: ['menu'],
         right: [],

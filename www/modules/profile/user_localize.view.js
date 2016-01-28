@@ -10,6 +10,9 @@ module.exports = Marionette.LayoutView.extend({
 
   initialize: function() {
     this.currentPos = CurrentPos.model.getInstance();
+  },
+
+  onShow: function() {
     this.watchCurrentPos();
   },
 
@@ -25,8 +28,7 @@ module.exports = Marionette.LayoutView.extend({
   },
 
   onPositionError: function(error) {
-    console.log('onPositionError', error);
-
+    console.log('onPositionError');
     if (confirm('Erreur de géolocalisation : Réessayer ?')) {
       this.watchCurrentPos();
     } else {
@@ -35,6 +37,7 @@ module.exports = Marionette.LayoutView.extend({
   },
 
   onPositionSucess: function() {
+    console.log('onPositionSucess');
     this.triggerMethod('success');
   },
 

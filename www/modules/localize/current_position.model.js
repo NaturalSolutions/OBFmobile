@@ -30,6 +30,7 @@ var GeoModel = Backbone.Model.extend({
     },
     _success: function(position) {
         this.set(position.coords);
+        console.log(position);
         if (this.watchTimeout)
           clearTimeout(this.watchTimeout);
     },
@@ -56,8 +57,20 @@ var GeoModel = Backbone.Model.extend({
     },
     watch: function(options) {
         var self = this;
-        if (this._id)
-          return this._dfd.promise();
+        console.log('watch');
+        if ( this._dfd ) {
+            console.log('watch _dfd');
+            var state = this._dfd.state();
+            if ( state == 'pending' )
+                return this._dfd;
+            console.log('watch _dfd', state);
+            var dfd = $.Deferred();
+            if ( state == 'resolved' )
+                dfd.resolve();
+            else
+                dfd.reject();
+            return dfd.promise();
+        }
         this._dfd = $.Deferred();
         // "Resolve" this model after a first position has been found
         this.once('change', this.onChange);
@@ -67,7 +80,7 @@ var GeoModel = Backbone.Model.extend({
                 code: 3,
                 message: "Fallback timeout"
             });
-        }, this.options + 1);
+        }, this.options.timeout + 1);
         this._id = navigator.geolocation.watchPosition(this._success, this._error, this.options);
 
         return this._dfd.promise();

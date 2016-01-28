@@ -2,6 +2,27 @@
 var console = console || {log: function() {}};
 
 _.mixin({
+  binarySearchIndex: function(values, target, start, end, comparatorCallback) {
+    if ( start > end )
+      return -1;//does not exist
+
+    var middle = Math.floor((start + end) / 2);
+    var value = values[middle];
+    var comparator;
+    if ( comparatorCallback )
+      comparator = comparatorCallback(value, target);
+    else
+      comparator = value > target ? 1 : -1;
+
+    if ( comparator > 0 )
+      return _.binarySearchIndex(values, target, start, middle-1, comparatorCallback);
+    if ( comparator < 0 )
+      return _.binarySearchIndex(values, target, middle+1, end, comparatorCallback);
+    return middle; //found!
+  }
+});
+
+_.mixin({
   getDistanceFromLatLon: function(lat1, lon1, lat2, lon2) {
     var R = 6371; // Radius of the earth in km
     var dLat = _.deg2rad(lat2 - lat1); // deg2rad below

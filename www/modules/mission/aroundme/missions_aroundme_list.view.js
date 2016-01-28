@@ -7,7 +7,8 @@ var Backbone = require('backbone'),
 	bootstrap = require('bootstrap'),
 	User = require('../../profile/user.model'),
 	Mission = require('../../mission/mission.model'),
-	Router = require('../../routing/router');
+	Router = require('../../routing/router'),
+  Header = require('../../header/header');
 
 module.exports = Marionette.LayoutView.extend({
   template: require('./missions_aroundme_list.tpl.html'),
@@ -17,6 +18,16 @@ module.exports = Marionette.LayoutView.extend({
 
   initialize: function() {
     var self = this;
+
+    Header.getInstance().set({
+      titleKey: 'missionsAroundme',
+      titleArgs: {
+        dptLink: ' <small><a href="#missions/aroundme/manually?forceDepartement=true" class="text-primary">(13)</a></small>'
+      },
+      buttons: {
+        right: ['plus']
+      }
+    });
 
     var departementCodes = User.getCurrent().get('departements');
     self.collection = Mission.collection.getInstance().filter(function(mission) {
@@ -52,7 +63,7 @@ module.exports = Marionette.LayoutView.extend({
       });
     }
     return {
-      departement: User.getCurrent().getDepartementData(),
+      departement: User.getCurrent().getDepartementModel().toJSON(),
       missionTabs: missionTabs
     };
   },

@@ -19,7 +19,8 @@ var Backbone = require('backbone'),
     Utilities = require('../main/utilities'),
     Profile = require('../profile/profile.view'),
     openFB = require('../main/openfb'),
-    Router = require('../routing/router');
+    Router = require('../routing/router'),
+    AutompleteCity = require('../localize/city_autocomplete.view');
 
 var idToTransmit = null;
 
@@ -295,7 +296,17 @@ var Layout = Marionette.LayoutView.extend({
     var user = User.getCurrent();
     if ( !user.get('hasCoords') && !user.get('city') ) {
       
-      //la commune
+      var automplete = new AutompleteCity();
+      automplete.render();
+
+      var dialog = Dialog.show({
+        message: automplete.$el
+      });
+
+      user.once('change:city', function() {
+        dialog.close();
+        Dialog.alert('Vous pouvez enregistrer');
+      });
 
       return false;
     }

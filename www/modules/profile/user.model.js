@@ -175,7 +175,7 @@ var UserModel = Backbone.Model.extend({
 
     return missions.indexOf(mission.get('srcId')) > -1;
   },
-  getDepartementData: function() {
+  getDepartementModel: function() {
     if ( !this.get('departements') || !this.get('departements')[0] )
       return {};
     var Departement = require('../main/departement.model');
