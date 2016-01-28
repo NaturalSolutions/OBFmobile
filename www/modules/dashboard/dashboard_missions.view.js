@@ -17,16 +17,19 @@ var ClassDef = Marionette.LayoutView.extend({
   },
 
   regions: {
-    list: '.list-outer'
+    list: '.list-outer',
+    listSucceed: '.list-succeed'
   },
 
   initialize: function() {
     this.missions = User.getCurrent().getAcceptedMissions();
+    this.missionsSucceed = User.getCurrent().getCompletedMissions();
   },
 
   serializeData: function() {
     return {
-      missions: this.missions
+      missions: this.missions,
+      missionsSucceed : this.missionsSucceed
     };
   },
 
@@ -34,8 +37,13 @@ var ClassDef = Marionette.LayoutView.extend({
     var collectionView = new CollectionView({
       collection: new Backbone.Collection(this.missions)
     });
+    var missionSucceedCollectionView = new CollectionView({
+      collection: new Backbone.Collection(this.missionsSucceed)
+    });
 
     this.showChildView('list', collectionView);
+    this.showChildView('listSucceed', missionSucceedCollectionView);
+
   }
 });
 
