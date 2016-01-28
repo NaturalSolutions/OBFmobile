@@ -422,7 +422,8 @@ var Layout = Marionette.LayoutView.extend({
       },
       success: function(response) {
         self.observationModel.set({
-          'externId': response.nid
+          'externId': response.nid,
+          'shared': 1
         }).save().done(function() {
           self.sendPhoto();
         });
