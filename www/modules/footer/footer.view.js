@@ -65,6 +65,8 @@ var View = Marionette.LayoutView.extend({
         _.bind(self.onFail, self), {
           /* jshint ignore:start */
           quality: 75,
+          targetWidth: 1000,
+          targetHeight: 1000,
           destinationType: Camera.DestinationType.FILE_URI,
           correctOrientation: true,
           sourceType: Camera.PictureSourceType.CAMERA,
@@ -108,7 +110,7 @@ var View = Marionette.LayoutView.extend({
   },
 
   onFail: function(message) {
-    alert(message);
+    console.log(message);
   },
 
   createObservation: function(fe, id) {
