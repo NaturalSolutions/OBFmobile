@@ -139,7 +139,7 @@ var View = Marionette.LayoutView.extend({
         router.getInstance().navigate('observation/' + data.id, {
           trigger: true
         });
-          this.Main.getInstance().hideLoader();
+          self.Main.getInstance().hideLoader();
       })
       .fail(function(e) {
         console.log(e);
