@@ -22,6 +22,8 @@ var View = Marionette.LayoutView.extend({
 
   initialize: function() {
     this.moment = require('moment');
+    this.Main = require('../main/main.view.js');
+
     this.listenTo(User.collection.getInstance(), 'change:current', this.onCurrentUserChange);
     this.listenTo(User.getCurrent().getTimeForest(), 'change:intervalDuration', this.displayTimeForest);
   },
@@ -56,6 +58,7 @@ var View = Marionette.LayoutView.extend({
   capturePhoto: function() {
     var self = this;
 
+    this.Main.getInstance().showLoader();
     if (!window.cordova)
       self.createObservation();
     else {
@@ -111,6 +114,7 @@ var View = Marionette.LayoutView.extend({
 
   onFail: function(message) {
     console.log(message);
+    this.Main.getInstance().hideLoader();
   },
 
   createObservation: function(fe, id) {
@@ -135,6 +139,7 @@ var View = Marionette.LayoutView.extend({
         router.getInstance().navigate('observation/' + data.id, {
           trigger: true
         });
+          this.Main.getInstance().hideLoader();
       })
       .fail(function(e) {
         console.log(e);
