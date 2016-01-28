@@ -221,7 +221,7 @@ var Page = Marionette.LayoutView.extend({
       }
     };
     this.session.logout().always(function() {
-      this.session.getCredentials(query).done(function() {
+      self.session.getCredentials(query).done(function() {
         $.ajax(query);
       });
     });
