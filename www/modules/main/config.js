@@ -8,8 +8,8 @@ module.exports = {
 
   //serveur local
   //test mobile
-  /*coreUrl: 'http://192.168.0.17/DRUPAL/OBF_BACK/www',
-  	apiUrl: 'http://192.168.0.17/DRUPAL/OBF_BACK/www/api',*/
+  // coreUrl: 'http://192.168.0.16/DRUPAL/OBF_BACK/www',
+  // 	apiUrl: 'http://192.168.0.16/DRUPAL/OBF_BACK/www/obfmobileapi',
 
   /*coreUrl: 'http://192.168.1.67/DRUPAL/OBF_BACK/www',
   	apiUrl: 'http://192.168.1.67/DRUPAL/OBF_BACK/www/obfmobileapi',*/
