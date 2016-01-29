@@ -31,7 +31,10 @@ var Layout = Marionette.LayoutView.extend({
       var lat = currentPos.get('latitude');
       var lon = currentPos.get('longitude');
       var user = User.getCurrent();
-      user.set('coords', currentPos.get('coords'));
+      user.set('coords', {
+        lat: lat,
+        lon: lon
+      });
 
       if ( !user.get('forceDepartement') ) {
         var selectedDepartements = Departement.collection.getInstance().clone();

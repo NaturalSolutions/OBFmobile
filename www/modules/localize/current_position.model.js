@@ -7,7 +7,7 @@ var GeoModel = Backbone.Model.extend({
     _dfd: null,
     defaultOptions: {
         enableHighAccuracy: true,
-        maximumAge: 10000,
+        maximumAge: 1000*60*10,
         timeout: 10000
     },
     initialize: function(options) {
