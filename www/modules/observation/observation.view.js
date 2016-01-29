@@ -1,26 +1,26 @@
 'use strict';
 
 var Backbone = require('backbone'),
-    Marionette = require('backbone.marionette'),
-    $ = require('jquery'),
-    _ = require('lodash'),
-    ObsModel = require('../observation/observation.model'),
-    User = require('../profile/user.model'),
-    departement = require('../main/departement.model'),
-    mission = require('../mission/mission.model'),
-    Session = require('../main/session.model'),
-    config = require('../main/config'),
-    Slideshow = require('./observation_slideshow.view.js'),
-    bootstrap = require('bootstrap'),
-    Dialog = require('bootstrap-dialog'),
-    Main = require('../main/main.view'),
-    i18n = require('i18next-client'),
-    Login = require('../profile/login.view'),
-    Utilities = require('../main/utilities'),
-    Profile = require('../profile/profile.view'),
-    openFB = require('../main/openfb'),
-    Router = require('../routing/router'),
-    AutompleteCity = require('../localize/city_autocomplete.view');
+  Marionette = require('backbone.marionette'),
+  $ = require('jquery'),
+  _ = require('lodash'),
+  ObsModel = require('../observation/observation.model'),
+  User = require('../profile/user.model'),
+  departement = require('../main/departement.model'),
+  mission = require('../mission/mission.model'),
+  Session = require('../main/session.model'),
+  config = require('../main/config'),
+  Slideshow = require('./observation_slideshow.view.js'),
+  bootstrap = require('bootstrap'),
+  Dialog = require('bootstrap-dialog'),
+  Main = require('../main/main.view'),
+  i18n = require('i18next-client'),
+  Login = require('../profile/login.view'),
+  Utilities = require('../main/utilities'),
+  Profile = require('../profile/profile.view'),
+  openFB = require('../main/openfb'),
+  Router = require('../routing/router'),
+  AutompleteCity = require('../localize/city_autocomplete.view');
 
 var idToTransmit = null;
 
@@ -28,7 +28,7 @@ var Layout = Marionette.LayoutView.extend({
   header: {
     titleKey: 'observation',
     buttons: {
-        left: ['back']
+      left: ['back']
     }
   },
   template: require('./observation.tpl.html'),
@@ -66,13 +66,10 @@ var Layout = Marionette.LayoutView.extend({
 
     var isSaved = (self.observationModel.get('missionId') && self.observationModel.get('departement'));
     if (!isSaved)
-        self.setFormStatus('unsaved');
+      self.setFormStatus('unsaved');
     else {
       self.setFormStatus('saved');
     }
-
-    if (self.observationModel.get('shared') > 0)
-        self.$el.addClass('read-only');
 
     var formSchema = {
       mission: {
@@ -110,19 +107,25 @@ var Layout = Marionette.LayoutView.extend({
     this.$el.append(this.formObs.$el);
     Backbone.Form.validators.errMessages.required = i18n.t('validation.errors.required');
 
-    if ( idToTransmit == self.observationModel.get('id') ) {
+    if (idToTransmit == self.observationModel.get('id')) {
       Dialog.alert(i18n.t('pages.observation.dialogs.login_complete'));
       idToTransmit = null;
     }
+
+    if (self.observationModel.get('shared') > 0) {
+      self.$el.addClass('read-only');
+      self.$el.find(':input:not(:submit)').prop('disabled', true);
+    }
+
   },
 
   onDomRefresh: function(options) {
     var self = this;
     var user = User.getCurrent();
     if (user.get('departements').length)
-            this.model.set({
-              departement: user.get('departements')[0]
-            }).save();
+      this.model.set({
+        departement: user.get('departements')[0]
+      }).save();
 
     if (this.observationModel.get('mission')) {
       self.$el.find('select#mission').val(this.observationModel.get('mission').id).attr('selected', true);
@@ -164,7 +167,7 @@ var Layout = Marionette.LayoutView.extend({
     var self = this;
 
     if (status == 'unsaved')
-        self.$el.alterClass('form-status-*', 'form-status-unsaved');
+      self.$el.alterClass('form-status-*', 'form-status-unsaved');
     else {
       var shared = self.observationModel.get('shared') || 0;
       self.$el.alterClass('form-status-*', 'form-status-shared-' + shared);
@@ -200,18 +203,18 @@ var Layout = Marionette.LayoutView.extend({
   capturePhoto: function() {
     // Take picture using device camera and retrieve image as a local path
     navigator.camera.getPicture(
-        _.bind(this.onCapturePhotoSuccess, this),
-            _.bind(this.onFail, this), {
-              /* jshint ignore:start */
-              quality: 75,
-              targetWidth: 1000,
-              targetHeight: 1000,
-              destinationType: Camera.DestinationType.FILE_URI,
-              correctOrientation: true,
-              sourceType: Camera.PictureSourceType.CAMERA,
-              /* jshint ignore:end */
-            }
-        );
+      _.bind(this.onCapturePhotoSuccess, this),
+      _.bind(this.onFail, this), {
+        /* jshint ignore:start */
+        quality: 75,
+        targetWidth: 1000,
+        targetHeight: 1000,
+        destinationType: Camera.DestinationType.FILE_URI,
+        correctOrientation: true,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        /* jshint ignore:end */
+      }
+    );
   },
 
   onCapturePhotoSuccess: function(imageURI) {
@@ -246,7 +249,7 @@ var Layout = Marionette.LayoutView.extend({
       'externUrl': ''
     };
     this.observationModel.get('photos')
-        .push(newValue);
+      .push(newValue);
     this.observationModel.save();
     this.observationModel.trigger('change:photos', this.observationModel);
   },
@@ -257,23 +260,23 @@ var Layout = Marionette.LayoutView.extend({
     var errors = this.formObs.validate();
     console.log(errors);
     if (errors)
-        return false;
+      return false;
 
     // test online
     if (!Session.model.getInstance().get('network')) {
       //account exists
       var account = this.accountExists();
       if (account)
-          this.saveObs();
+        this.saveObs();
       return false;
     }
 
     if (this.$el.hasClass('form-status-unsaved'))
-        this.saveObs();
+      this.saveObs();
     else if (this.$el.hasClass('form-status-shared-0'))
-        this.sendObs();
+      this.sendObs();
     else if (this.$el.hasClass('form-status-shared-1'))
-        this.shareObs();
+      this.shareObs();
   },
 
   accountExists: function() {
@@ -294,8 +297,8 @@ var Layout = Marionette.LayoutView.extend({
     var self = this;
 
     var user = User.getCurrent();
-    if ( !user.get('hasCoords') && !user.get('city') ) {
-      
+    if (!user.get('hasCoords') && !user.get('city')) {
+
       var automplete = new AutompleteCity();
       automplete.render();
 
@@ -330,7 +333,7 @@ var Layout = Marionette.LayoutView.extend({
     var self = this;
 
     if (self.$el.hasClass('sending') || self.observationModel.get('shared') == 1)
-        return false;
+      return false;
 
     self.$el.addClass('sending');
     this.$el.find('form').addClass('loading');
@@ -396,10 +399,14 @@ var Layout = Marionette.LayoutView.extend({
                 };
                 self.session.set('needLogin', true);
                 Router.getInstance().startOutOfHistory();
-                if ( user.isAnonymous() )
-                  Router.getInstance().navigate('user-selector', {trigger:true});
+                if (user.isAnonymous())
+                  Router.getInstance().navigate('user-selector', {
+                    trigger: true
+                  });
                 else
-                  Router.getInstance().navigate('login/'+user.get('id'), {trigger:true});
+                  Router.getInstance().navigate('login/' + user.get('id'), {
+                    trigger: true
+                  });
               }
             }
           });
@@ -458,7 +465,9 @@ var Layout = Marionette.LayoutView.extend({
         Main.getInstance().addDialog({
           cssClass: 'theme-primary with-bg-forest user-score',
           badgeClassNames: 'badge-circle bg-wood border-brown text-white',
-          badge: nbCompleted+'<div class="text-xs text-bottom">'+i18n.t('mission.label', {count: nbCompleted})+'</div>',
+          badge: nbCompleted + '<div class="text-xs text-bottom">' + i18n.t('mission.label', {
+            count: nbCompleted
+          }) + '</div>',
           title: i18n.t('dialogs.obsShared.title'),
           message: i18n.t('dialogs.obsShared.message'),
           button: i18n.t('dialogs.obsShared.button')
@@ -477,7 +486,9 @@ var Layout = Marionette.LayoutView.extend({
       Main.getInstance().addDialog({
         cssClass: 'theme-primary with-bg-forest user-score',
         badgeClassNames: 'badge-circle bg-wood border-brown text-white',
-        badge: nbCompleted+'<div class="text-xs text-bottom">'+i18n.t('mission.label', {count: nbCompleted})+'</div>',
+        badge: nbCompleted + '<div class="text-xs text-bottom">' + i18n.t('mission.label', {
+          count: nbCompleted
+        }) + '</div>',
         title: i18n.t('dialogs.obsShared.title'),
         message: i18n.t('dialogs.obsShared.message'),
         button: i18n.t('dialogs.obsShared.button')
@@ -538,7 +549,10 @@ var Layout = Marionette.LayoutView.extend({
     var self = this;
     var mission = self.model.get('mission');
     this.$el.find('form').addClass('loading');
-    openFB.init({appId: '545622275606103', tokenStore: window.localStorage});
+    openFB.init({
+      appId: '545622275606103',
+      tokenStore: window.localStorage
+    });
     openFB.api({
       method: 'POST',
       path: '/me/feed',
@@ -555,7 +569,7 @@ var Layout = Marionette.LayoutView.extend({
         Dialog.alert('Partage réussi');
       },
       error: function(error) {
-        if ( error.code == 190 ) {
+        if (error.code == 190) {
           Dialog.show({
             title: 'Connexion',
             message: 'Vous devez être connecter à Facebook pour partager votre obs',
@@ -570,16 +584,15 @@ var Layout = Marionette.LayoutView.extend({
               action: function(dialog) {
                 dialog.close();
                 openFB.login(function(response) {
-                  if(response.status === 'connected') {
-                      self.shareObs();
+                  if (response.status === 'connected') {
+                    self.shareObs();
                   } else {
-                      alert('Facebook login failed: ' + response.error);
-                      self.$el.find('form').removeClass('loading');
+                    alert('Facebook login failed: ' + response.error);
+                    self.$el.find('form').removeClass('loading');
                   }
                 }, {
                   scope: 'publish_actions'
-                }
-              );
+                });
               }
             }]
           });
