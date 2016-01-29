@@ -40,6 +40,8 @@ var Model = Backbone.Model.extend({
     term = term.toLowerCase();
     var letters = term.substring(0, 2);
     var startIndex = this.get('indexTable')[letters];
+    if ( !startIndex )
+      return [];
     var matched = [];
     var nbCities = this.rows.length;
     console.log(startIndex);
