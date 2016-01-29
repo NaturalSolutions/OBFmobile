@@ -49,7 +49,7 @@ module.exports = Marionette.LayoutView.extend({
     var user = User.getCurrent();
     user.set({
       forceDepartement: false
-    });
+    }).save();
     Router.getInstance().navigate('#missions/aroundme', {trigger: true});
   }
 });
