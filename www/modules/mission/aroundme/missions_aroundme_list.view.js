@@ -18,18 +18,24 @@ module.exports = Marionette.LayoutView.extend({
 
   initialize: function() {
     var self = this;
+    var user = User.getCurrent();
+    var departementCodes = user.get('departements');
 
-    Header.getInstance().set({
+    var headerOptions = {
       titleKey: 'missionsAroundme',
       titleArgs: {
-        dptLink: ' <small><a href="#missions/aroundme/manually?forceDepartement=true" class="text-primary">(13)</a></small>'
+        dptLink: ''
       },
       buttons: {
         right: ['plus']
       }
-    });
+    };
 
-    var departementCodes = User.getCurrent().get('departements');
+    if ( departementCodes.length && user.get('forceDepartement') )
+      headerOptions.titleArgs.dptLink = '<small><a href="#missions/aroundme/manually" class="text-primary">('+departementCodes[0]+')</a></small>';
+
+    Header.getInstance().set(headerOptions);
+    
     self.collection = Mission.collection.getInstance().filter(function(mission) {
       var isInDepartement = mission.isInDepartement(departementCodes);//_.intersection(departementCodes, mission.get('departements')).length;
       var inSeason = mission.inSeason(new Date());

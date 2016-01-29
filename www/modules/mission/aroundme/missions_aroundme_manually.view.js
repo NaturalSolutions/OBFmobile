@@ -5,46 +5,51 @@ var Marionette = require('backbone.marionette'),
     _ = require('lodash'),
     Router = require('../../routing/router'),
     User = require('../../profile/user.model'),
-    departement = require('../../main/departement.model');
+    departement = require('../../main/departement.model'),
+    Header = require('../../header/header');
 
 module.exports = Marionette.LayoutView.extend({
   template: require('./missions_aroundme_manually.tpl.html'),
   className: 'state state-manually',
   events: {
-    'submit form': 'onFormSubmit',
+    'click .btn-geoloc': 'onGeolocClick'
   },
 
   initialize: function(options) {
     this.options = options;
+
+    Header.getInstance().set({
+      titleKey: 'missionsAroundmeManually'
+    });
   },
 
   onShow: function() {
-    var self = this;
     this.$el.find('input.js-autocomplete').autocomplete({
-      source: departement.collection.getInstance().pluck('title'),
-      appendTo: this.$el.find('.js-autocomplete-result')
+      source: departement.collection.getInstance().toJSON(),
+      appendTo: this.$el.find('.js-autocomplete-result'),
+      _renderItem: function(ul, item) {
+        var $li = $('<li />');
+        console.log(item);
+        $li.text(item.title).data(item).appendTo(ul);
+        return ul;
+      },
+      select: function(event, ui) {
+        var user = User.getCurrent();
+        user.set({
+          forceDepartement: true,
+          departements: [ui.item.code]
+        });
+        user.save();
+        Router.getInstance().navigate('#missions/aroundme', {trigger: true});
+      }
     });
   },
 
-  onFormSubmit: function(e) {
-    e.preventDefault();
-    var self = this;
-
-    var dept = self.$el.find('input[name="departement"]').val();
-
-    var selectedDepartement = departement.collection.getInstance().findWhere({
-      title: dept
-    });
-
+  onGeolocClick: function() {
     var user = User.getCurrent();
-    user.set('departements',[selectedDepartement.get('code')]);
-    if ( this.options.forceDepartement )
-      user.set('forceDepartement', true);
-    user.save();
+    user.set({
+      forceDepartement: false
+    });
     Router.getInstance().navigate('#missions/aroundme', {trigger: true});
-  },
-
-  onDestroy: function() {
-    var self = this;
   }
 });

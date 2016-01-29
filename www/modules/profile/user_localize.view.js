@@ -1,7 +1,8 @@
 'use strict';
 
 var Marionette = require('backbone.marionette'),
-    CurrentPos = require('../localize/current_position.model');
+    CurrentPos = require('../localize/current_position.model'),
+    Header = require('../header/header');
 
 module.exports = Marionette.LayoutView.extend({
   template: require('./user_localize.tpl.html'),
@@ -10,6 +11,10 @@ module.exports = Marionette.LayoutView.extend({
 
   initialize: function() {
     this.currentPos = CurrentPos.model.getInstance();
+
+    Header.getInstance().set({
+      titleKey: 'missionsAroundmeLocalize'
+    });
   },
 
   onShow: function() {

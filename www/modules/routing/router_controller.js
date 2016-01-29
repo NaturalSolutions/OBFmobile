@@ -169,17 +169,22 @@ module.exports = Marionette.Object.extend({
 
     rgMain.show(new MissionsAroundMe({
       name: 'missionsAroundMe',
-      state: state,
-      forceDepartement: options.forceDepartement || false
+      state: state
     }), {
       preventDestroy: true
     });
   },
 
   missionsAroundMe: function() {
+    var user = User.getCurrent();
+    var state;
+    if ( user.get('departements').length && user.get('forceDepartement') )
+      state = 'list';
+    else
+      state = 'localize';
     this._missionsAroundMe({
       state: {
-        name: 'localize'
+        name: state
       }
     });
   },
@@ -187,7 +192,6 @@ module.exports = Marionette.Object.extend({
   missionsAroundMeManually: function(queryString) {
     var params = _.parseQueryString(queryString);
     this._missionsAroundMe({
-      forceDepartement: params.forceDepartement || false,
       state: {
         name: 'manually'
       }

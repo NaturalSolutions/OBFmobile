@@ -61,6 +61,7 @@ module.exports = Marionette.LayoutView.extend({
 
     self.rgStates.show(viewState);
   },
+  
   getLocalizeView: function() {
     var self = this;
 

@@ -1,16 +1,14 @@
 <div class="container">
-  <form>
-    <div class="well">
-      <fieldset class="departement">
-        <div class="form-group">
-          <h3>Département</h3>
-          <input name="departement" type="text" class="form-control js-autocomplete" placeholder="Saisir un département" />
-          <div class="js-autocomplete-results autocomplete-result"></div>
-        </div>
-      </fieldset>
+  <div class="well">
+    <div class="form-group">
+      <input name="departement" type="text" class="form-control js-autocomplete" placeholder="Saisir un département" />
+      <div class="js-autocomplete-results autocomplete-result"></div>
     </div>
-    <button type="submit" class="btn btn-primary btn-block btn-lg btn-submit pos-relative">
-      Valider
-    </button>
-  </form>
+    <div class="form-group">
+      <button class="btn btn-block btn-default btn-geoloc">
+        <span  class="icon material">gps_fixed</span>
+        Détection automatique
+      </button>
+    </div>
+  </div>
 </div>

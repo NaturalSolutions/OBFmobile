@@ -14,7 +14,9 @@
         "titles": {
             "dashboard": "Tableau de bord",
             "clue": "Carte des milieux",
-            "missionsAroundme": "Missions autour de moi__dptLink__",
+            "missionsAroundme": "Missions autour de moi __dptLink__",
+            "missionsAroundmeLocalize": "Missions autour de moi",
+            "missionsAroundmeManually": "Localisation",
             "missions": "Toutes les missions",
             "observation": "Observation",
             "profile": "mon profil",
