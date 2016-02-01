@@ -71,7 +71,7 @@ var Router = Marionette.AppRouter.extend({
     'updatepassword': 'updatePassword',
     'user-selector': 'userSelector',
     'login(/:id)': 'login',
-    'settings': 'settings'
+    'about': 'about'
   },
 });
 

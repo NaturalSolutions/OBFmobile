@@ -17,7 +17,7 @@ var Backbone = require('backbone'),
     Session = require('../main/session.model'),
     Login = require('../profile/login.view'),
     UserSelector = require('../profile/user_selector.view'),
-    Settings = require('../settings/settings.view');
+    About = require('../about/about.view');
 
 module.exports = Marionette.Object.extend({
   initialize: function(options) {
@@ -255,9 +255,9 @@ module.exports = Marionette.Object.extend({
       preventDestroy: true
     });
   },
-  settings: function() {
-    main.getInstance().rgMain.show(new Settings({
-      name: 'settings',
+  about: function() {
+    main.getInstance().rgMain.show(new About({
+      name: 'about',
     }), {
       preventDestroy: true
     });

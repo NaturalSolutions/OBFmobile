@@ -19,6 +19,7 @@ var View = Marionette.LayoutView.extend({
   initialize: function() {
     this.listenTo(header.getInstance(), 'btn:menu:click', this.toggleShow);
     this.listenTo(User.collection.getInstance(), 'change:current', this.onCurrentUserChange);
+    this.onCurrentUserChange(User.getCurrent());
   },
 
   serializeData: function() {
@@ -33,7 +34,13 @@ var View = Marionette.LayoutView.extend({
     
   },
 
-  onCurrentUserChange: function() {
+  onCurrentUserChange: function(newUser, prevUser) {
+    var self = this;
+    if (prevUser)
+      this.stopListening(prevUser);
+    this.listenTo(newUser, 'change', function(model) {
+      self.render();
+    });
     this.render();
   },
 

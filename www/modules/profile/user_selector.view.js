@@ -32,13 +32,17 @@ var Page = Marionette.LayoutView.extend({
     var session = Session.model.getInstance();
     if ( session.get('needLogin') )
       Router.getInstance().navigate('login/'+userId, {trigger:true});
-    else
+    else {
+      var Main = require('../main/main.view.js');
+      Main.getInstance().showLoader();
       session.logout().always(function() {
+        Main.getInstance().hideLoader();
         var collection = User.collection.getInstance();
         var user = collection.get(userId);
         collection.setCurrent(user);
         Router.getInstance().navigate('dashboard', {trigger:true});
       });
+    }
   }
 });
 

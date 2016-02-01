@@ -26,7 +26,7 @@ module.exports = Marionette.LayoutView.extend({
   onShow: function() {
     this.$el.find('input.js-autocomplete').autocomplete({
       source: departement.collection.getInstance().toJSON(),
-      appendTo: this.$el.find('.js-autocomplete-result'),
+      appendTo: this.$el.find('.js-autocomplete-results'),
       _renderItem: function(ul, item) {
         var $li = $('<li />');
         console.log(item);

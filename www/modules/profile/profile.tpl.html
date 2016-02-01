@@ -11,9 +11,9 @@
 
     <div class="footer">
       <button type="submit" class="btn btn-lg submit btn-primary btn-block pos-relative">
-        <%= i18n.t('pages.profile.form.submit') %>
         <% var spinnerTpl = require('../spinner/spinner.tpl.html'); %>
-        <%= spinnerTpl({className:'spinner-white icon-right loader'}) %>
+        <%= spinnerTpl({className:'spinner-white icon-left loader'}) %>
+        <%= i18n.t('pages.profile.form.submit') %>
       </button>
     </div>
 </form>
