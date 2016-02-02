@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="eu.naturalsolutions.enForetAvecNoe" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="eu.naturalsolutions.enForetAvecNoe" version="0.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>En Foret avec Noe</name>
     <description>
     </description>
@@ -30,7 +30,7 @@
     </feature>
     <plugin name="cordova-plugin-device" spec="~1.0.1" />
     <plugin name="cordova-plugin-network-information" spec="^1.0.1" />
-    <plugin name="cordova-plugin-geolocation" spec="~1.0.1" />
+    <plugin name="cordova-plugin-geolocation" spec="~2" />
     <plugin name="cordova-plugin-file" spec="~3.0.0" />
     <plugin name="cordova-plugin-file-transfer" spec="~1.2.1" />
     <plugin name="cordova-plugin-customurlscheme" spec="~4.0.0">
