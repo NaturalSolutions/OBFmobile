@@ -303,6 +303,8 @@ var Layout = Marionette.LayoutView.extend({
       automplete.render();
 
       var dialog = Dialog.show({
+        cssClass: 'fs-dialog',
+        title: 'Votre position',
         message: automplete.$el
       });
 

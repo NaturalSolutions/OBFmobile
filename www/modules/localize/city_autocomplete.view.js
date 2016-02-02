@@ -21,11 +21,6 @@ module.exports = Marionette.LayoutView.extend({
     var self = this;
     var city = City.model.getInstance();
     this.$el.find('input.js-autocomplete').autocomplete({
-      _renderItem: function(ul, item) {
-        var $li = $('<li />');
-        $li.text(item.label).data(item).appendTo(ul);
-        return ul;
-      },
       select: function(event, ui) {
         self.selectedItem = ui.item;
       },

@@ -44,16 +44,14 @@ var Model = Backbone.Model.extend({
       return [];
     var matched = [];
     var nbCities = this.rows.length;
-    console.log(startIndex);
     for ( var i = startIndex; i < nbCities; i++ ) {
       var row = this.rows[i];
       var label = row.label.toLowerCase();
       if ( _.startsWith(label, term) )
         matched.push(row);
-      if ( matched.length >= 10 )
+      if ( matched.length >= 20 )
         break;
     }
-    console.log(matched);
     return matched;
   }
 });
