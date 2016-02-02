@@ -42,4 +42,5 @@
     <plugin name="cordova-plugin-x-socialsharing" spec="~5.0.8" />
     <plugin name="cordova-plugin-camera" spec="^1.2.0" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
+    <plugin name="ionic-plugin-keyboard" spec="~1.0.8" />
 </widget>

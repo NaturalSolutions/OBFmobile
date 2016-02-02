@@ -46,6 +46,9 @@ function init() {
   }, false);
   currentPos.watch();*/
 
+  if (window.cordova)
+    window.cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
+
   if (navigator.onLine) {
     Session.model.getInstance().set({
       'network': true

@@ -33,11 +33,26 @@ module.exports = Marionette.LayoutView.extend({
   },
 
   onFormSubmit: function(e) {
+    var self = this;
     e.preventDefault();
 
     if ( !this.selectedItem )
       return false;
 
+    if ( window.cordova && window.cordova.plugins.Keyboard.isVisible ) {
+      console.log('wait onKeyboardhide');
+      self.onKeyboardhide = function() {
+        console.log('onKeyboardhide');
+        window.removeEventListener('native.keyboardhide', self.onKeyboardhide);
+        self.saveUser();
+      };
+      window.addEventListener('native.keyboardhide', self.onKeyboardhide);
+    } else
+      self.saveUser();
+  },
+
+  saveUser: function() {
+    console.log('saveUser');
     var user = User.getCurrent();
     user.set('city', this.selectedItem);
     user.save();

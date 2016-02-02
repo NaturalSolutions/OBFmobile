@@ -309,6 +309,7 @@ var Layout = Marionette.LayoutView.extend({
       });
 
       user.once('change:city', function() {
+        console.log('onUserChange city');
         dialog.close();
         Dialog.alert('Vous pouvez enregistrer');
       });
