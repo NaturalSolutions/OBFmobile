@@ -2,7 +2,8 @@
 
 var Marionette = require('backbone.marionette'),
     CurrentPos = require('../localize/current_position.model'),
-    Header = require('../header/header');
+    Header = require('../header/header'),
+    Dialog = require('bootstrap-dialog');
 
 module.exports = Marionette.LayoutView.extend({
   template: require('./user_localize.tpl.html'),
@@ -33,12 +34,19 @@ module.exports = Marionette.LayoutView.extend({
   },
 
   onPositionError: function(error) {
+    var self = this;
     console.log('onPositionError');
-    if (confirm('Erreur de géolocalisation : Réessayer ?')) {
+    Dialog.confirm('Erreur de géolocalisation : Réessayer ?', function(result) {
+      if (result)
+        self.watchCurrentPos();
+      else
+        self.triggerMethod('abort');
+    });
+    /*if (confirm('Erreur de géolocalisation : Réessayer ?')) {
       this.watchCurrentPos();
     } else {
       this.triggerMethod('abort');
-    }
+    }*/
   },
 
   onPositionSucess: function() {

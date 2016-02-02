@@ -6,7 +6,7 @@ var GeoModel = Backbone.Model.extend({
     _id: null,
     _dfd: null,
     defaultOptions: {
-        enableHighAccuracy: true,
+        enableHighAccuracy: false,
         maximumAge: 1000*60*10,
         timeout: 10000
     },
@@ -37,13 +37,20 @@ var GeoModel = Backbone.Model.extend({
     _error: function(error) {
         console.log('ERROR(' + error.code + '): ' + error.message);
         this.trigger('error', this, error);
-        this.clear(); // Erase position data
-        this.unwatch(); // Stop watching because something went wrong
+        /* jshint ignore:start */
+        var dontgo = (window.device.platform == "iOS" && error.code == 3);
+        console.log(dontgo);
+        if( !dontgo ){
+            this.clear(); // Erase position data
+            this.unwatch(); // Stop watching because something went wrong
+        }
+        /* jshint ignore:end */
     },
     promise: function() {
         return this._dfd.promise();
     },
     unwatch: function() {
+        console.log('unwatch');
         if (this._id)
           navigator.geolocation.clearWatch(this._id);
         if (this.watchTimeout)
@@ -80,7 +87,7 @@ var GeoModel = Backbone.Model.extend({
                 code: 3,
                 message: "Fallback timeout"
             });
-        }, this.options.timeout + 1);
+        }, this.options.timeout + 1000);
         this._id = navigator.geolocation.watchPosition(this._success, this._error, this.options);
 
         return this._dfd.promise();
