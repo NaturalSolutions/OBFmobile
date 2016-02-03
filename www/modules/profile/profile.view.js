@@ -296,9 +296,10 @@ var Page = Marionette.LayoutView.extend({
                   .always(function() {
                     self.$el.removeClass('block-ui');
                     $form.removeClass('loading');
-                    Router.getInstance().navigate('dashboard', {
-                      trigger: true
-                    });
+                    if ( !self.willBeDestroyed )
+                      Router.getInstance().navigate('dashboard', {
+                        trigger: true
+                      });
                   });
   },
 
