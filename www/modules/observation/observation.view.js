@@ -261,36 +261,18 @@ var Layout = Marionette.LayoutView.extend({
     console.log(errors);
     if (errors)
       return false;
-
-    // test online
-    if (!Session.model.getInstance().get('network')) {
-      //account exists
-      var account = this.accountExists();
-      if (account)
-        this.saveObs();
-      return false;
-    }
-
+    
     if (this.$el.hasClass('form-status-unsaved'))
       this.saveObs();
-    else if (this.$el.hasClass('form-status-shared-0'))
-      this.sendObs();
-    else if (this.$el.hasClass('form-status-shared-1'))
-      this.shareObs();
-  },
 
-  accountExists: function() {
-    var account;
-    var user = User.getCurrent();
-    if (!user.get('email')) {
-      Login.openDialog({
-        message: i18n.t('pages.observation.dialogs.need_login_offline')
-      });
-      account = false;
-    } else {
-      account = true;
+    if (navigator.onLine) {
+      if (this.$el.hasClass('form-status-shared-0'))
+        this.sendObs();
+      else if (this.$el.hasClass('form-status-shared-1'))
+        this.shareObs();
+    } else{
+      Dialog.alert(i18n.t('pages.observation.dialogs.need_login_offline'));
     }
-    return account;
   },
 
   saveObs: function() {
