@@ -8,7 +8,7 @@ var GeoModel = Backbone.Model.extend({
     defaultOptions: {
         enableHighAccuracy: true,
         maximumAge: 1000*60*10,
-        timeout: 10000
+        timeout: 1000*60
     },
     initialize: function(options) {
         var self = this;
@@ -38,12 +38,12 @@ var GeoModel = Backbone.Model.extend({
         console.log('ERROR(' + error.code + '): ' + error.message);
         this.trigger('error', this, error);
         /* jshint ignore:start */
-        var dontgo = (window.device.platform == "iOS" && error.code == 3);
-        console.log(dontgo);
-        if( !dontgo ){
+        // var dontgo = (window.device.platform == "iOS" && error.code == 3);
+        // console.log(dontgo);
+        // if( !dontgo ){
             this.clear(); // Erase position data
             this.unwatch(); // Stop watching because something went wrong
-        }
+        // }
         /* jshint ignore:end */
     },
     promise: function() {
