@@ -172,7 +172,7 @@ var SessionModel = Backbone.Model.extend({
             'firstname': _.get(response.user.field_first_name, 'und[0].value', ''),
             'email': response.user.mail,
             'externId': response.user.uid,
-            'newsletter': _.get(response.user.field_newsletter, 'und[0].value', '')
+            'newsletter': parseInt( _.get(response.user.field_newsletter, 'und[0].value', ''),10)
           }).save();
           users.setCurrent(user);
 
