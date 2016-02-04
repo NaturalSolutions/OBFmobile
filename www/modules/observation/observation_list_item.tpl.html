@@ -4,7 +4,7 @@
       <% var photoLink = data.observation.photos[0].externUrl %>
   <% } %>
 <a href="#observation/<%= data.observation.id %>">
-  <img src="images/FFFFFF-0.png" style="background-image:url('<%= data.observation.photos[0].url %>');" />
+  <img src="images/FFFFFF-0.png" style="background-image:url('<%= photoLink %>');" />
   <div class="status badge-circle no-border">
     <span class="icon icomoon"><%= data.observation.shared ? 'check' : 'transmit' %></span>
   </div>
