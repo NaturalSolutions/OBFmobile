@@ -357,7 +357,7 @@ var Layout = Marionette.LayoutView.extend({
       },
       field_lat_long: {
         und: [{
-          value: ''
+          value: self.observationModel.get('coords').latitude + '/' + self.observationModel.get('coords').longitude
         }]
       }
     };
