@@ -36,17 +36,22 @@ module.exports = Marionette.LayoutView.extend({
   onPositionError: function(error) {
     var self = this;
     console.log('onPositionError');
-    Dialog.confirm('Erreur de géolocalisation : Réessayer ?', function(result) {
-      if (result)
-        self.watchCurrentPos();
-      else
-        self.triggerMethod('abort');
+    var msgerror = this.currentPos.positionError(error);
+    var currentDialog = Dialog.confirm({
+      title: 'Problème de géolocalisation',
+      message: msgerror,
+      btnCancelLabel: 'Entrer sa géolocalisation manuellement',
+      btnOKLabel: 'Réessayer automatiquement',
+      callback: function(result) {
+          // result will be true if button was click, while it will be false if users close the dialog directly.
+          if(result) {
+            self.watchCurrentPos();
+          }else {
+            self.triggerMethod('abort');
+          }
+      }
     });
-    /*if (confirm('Erreur de géolocalisation : Réessayer ?')) {
-      this.watchCurrentPos();
-    } else {
-      this.triggerMethod('abort');
-    }*/
+    currentDialog.getModalFooter().find('.btn').addClass('btn-block');
   },
 
   onPositionSucess: function() {
