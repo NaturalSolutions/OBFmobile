@@ -7,6 +7,8 @@ var Backbone = require('backbone'),
   User = require('../profile/user.model'),
   Observation = require('../observation/observation.model'),
   TimeForest = require('../time_forest/time_forest.model'),
+  CurrentPos = require('../localize/current_position.model'),
+   
   config = require('../main/config');
 //i18n = require('i18n');
 
@@ -117,33 +119,61 @@ var View = Marionette.LayoutView.extend({
     this.Main.getInstance().hideLoader();
   },
 
+  checkposition: function() {
+    var self = this;
+    var deferred = $.Deferred();
+
+    var currentPos = CurrentPos.model.getInstance();
+    var coords = currentPos.get('coords');
+    if (!coords) {
+      currentPos.watch().then(
+        function(success) {
+          deferred.resolve(coords);
+        },
+        function(error) {
+          deferred.reject(error);
+        });
+    } else {
+      deferred.resolve(coords);
+    }
+    return deferred.promise();
+  },
+
   createObservation: function(fe, id) {
     var self = this;
     var router = require('../routing/router');
+    console.log(CurrentPos.model.getInstance());
     var observationModel = new(Observation.model.getClass())();
-
-    //set observation model
-    observationModel.set({
-      'userId': User.getCurrent().get('id'),
-      'date': this.moment().format('X'),
-      'photos': [{
-        'url': fe ? fe : '',
-        'externId': id ? id : ''
-      }]
-    });
-    //Save observation in localstorage
-    Observation.collection.getInstance().add(observationModel)
-      .save()
-      .done(function(data) {
-        //navigate
-        router.getInstance().navigate('observation/' + data.id, {
-          trigger: true
-        });
-          self.Main.getInstance().hideLoader();
-      })
-      .fail(function(e) {
-        console.log(e);
+    this.checkposition().always(function(coords) {
+      //set observation model
+      observationModel.set({
+        'userId': User.getCurrent().get('id'),
+        'date': self.moment().format('X'),
+        'photos': [{
+          'url': fe ? fe : '',
+          'externId': id ? id : ''
+        }],
+        'coords': {
+          latitude: coords.latitude || 0,
+          longitude: coords.longitude || 0
+        }
       });
+
+      //Save observation in localstorage
+      Observation.collection.getInstance().add(observationModel)
+        .save()
+        .done(function(data) {
+          //navigate
+          router.getInstance().navigate('observation/' + data.id, {
+            trigger: true
+          });
+          self.Main.getInstance().hideLoader();
+        })
+        .fail(function(e) {
+          console.log(e);
+        });
+    });
+
   },
 
   forestTime: function(e) {
