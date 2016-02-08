@@ -64,6 +64,15 @@
             "password_short": "Le mot de passe doit comprendre au moins 6 caractères."
         }
     },
+    "position":{
+        "errors":{
+            "dialogs":{
+                "permission_denied": "La géolocalisation n'est pas activée. Vous pouvez l'activer dans les réglages de votre mobile.",
+                "position_unavailable": "Le service de géolocalisation ne parvient pas retrouver votre position.",
+                "request_timeout": "Le service de géolocalisation ne parvient pas retrouver votre position."
+            }
+        }
+    },
     "user": {
         "score": {
             "level": {
