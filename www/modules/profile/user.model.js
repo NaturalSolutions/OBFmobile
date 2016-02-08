@@ -23,7 +23,7 @@ var UserModel = Backbone.Model.extend({
     positionEnabled: true,
     level: 0,
     palm: 0,
-    position: {
+    coords: {
       lat: null,
       lon: null
     },
