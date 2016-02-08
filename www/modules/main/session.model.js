@@ -177,6 +177,7 @@ var SessionModel = Backbone.Model.extend({
           users.setCurrent(user);
 
           self.syncObs(response.obs);
+          User.getCurrent().computeScore();
 
           console.log(self.afterLoggedAction);
           if (self.afterLoggedAction && self[self.afterLoggedAction.name]) {
