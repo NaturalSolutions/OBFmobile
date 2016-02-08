@@ -171,21 +171,6 @@ var Layout = Marionette.LayoutView.extend({
     $('.page-loader').removeClass('display');
   },
 
-  getPosition: function() {
-    var self = this;
-
-    var view = new(require('../profile/user_localize.view'))();
-    view.getPosition();
-    this.listenTo(view, 'success', function() {
-      self.stopListening(view);
-      view.destroy();
-    });
-    this.listenTo(view, 'abort', function() {
-      self.stopListening(view);
-      view.destroy();
-    });
-  },
-
 });
 
 var instance = null;
