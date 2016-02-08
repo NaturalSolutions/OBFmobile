@@ -119,6 +119,7 @@ var View = Marionette.LayoutView.extend({
     this.Main.getInstance().hideLoader();
   },
 
+// get position of the user or object currentposition ? 
   checkposition: function() {
     var self = this;
     var deferred = $.Deferred();
