@@ -397,6 +397,11 @@ var Layout = Marionette.LayoutView.extend({
         und: [{
           value: self.observationModel.get('coords').latitude + '/' + self.observationModel.get('coords').longitude
         }]
+      },
+      field_code_commune: {
+        und: [{
+          value: _.get(User.getCurrent().get('city'), 'code', '')
+        }]
       }
     };
     var query = {
