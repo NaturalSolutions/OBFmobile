@@ -462,6 +462,8 @@ var Layout = Marionette.LayoutView.extend({
         }).save().done(function() {
           self.sendPhoto();
         });
+
+        //save forest time
       }
     };
 
@@ -470,7 +472,6 @@ var Layout = Marionette.LayoutView.extend({
     });
   },
 
-  //TODO if fields are not update departement and mission don't exist
   sendPhoto: function() {
     var self = this;
     var user = User.getCurrent();
