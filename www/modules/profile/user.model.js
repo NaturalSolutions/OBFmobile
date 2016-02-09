@@ -23,10 +23,6 @@ var UserModel = Backbone.Model.extend({
     positionEnabled: true,
     level: 0,
     palm: 0,
-    coords: {
-      lat: null,
-      lon: null
-    },
     acceptedMissionIds: [],
     completedMissionIds: []
   },
@@ -73,9 +69,7 @@ var UserModel = Backbone.Model.extend({
   isAnonymous: function() {
     return !this.get('email');
   },
-  getHasCoords: function() {
-    return this.get('coords') && this.get('coords').lat;
-  },
+
   getPalmName: function() {
     var self = this;
 

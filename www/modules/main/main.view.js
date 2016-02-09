@@ -27,17 +27,11 @@ var Layout = Marionette.LayoutView.extend({
     // this.addListeners();
     this.listenTo(User.collection.getInstance(), 'change:current', this.onCurrentUserChange);
     var currentPos = CurrentPos.model.getInstance();
-    currentPos.watch();
     currentPos.on('change', function() {
       var lat = _.get(currentPos.get('coords'), 'latitude', '');
       var lon = _.get(currentPos.get('coords'), 'longitude', '');
       var timeStamp = currentPos.get('timestamp');
       var user = User.getCurrent();
-      user.set('coords', {
-        lat: lat,
-        lon: lon,
-        timestamp: timeStamp
-      });
 
       if ( !user.get('forceDepartement') ) {
         var selectedDepartements = Departement.collection.getInstance().clone();
@@ -63,7 +57,6 @@ var Layout = Marionette.LayoutView.extend({
     });
     currentPos.on('unwatch', function() {
       var user = User.getCurrent();
-      user.set('coords', {});
       user.set('departements', []);
     });
     currentPos.watch();
