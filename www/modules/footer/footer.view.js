@@ -119,33 +119,14 @@ var View = Marionette.LayoutView.extend({
     this.Main.getInstance().hideLoader();
   },
 
-// get position of the user or object currentposition ? 
-  checkposition: function() {
-    var self = this;
-    var deferred = $.Deferred();
-
-    var currentPos = CurrentPos.model.getInstance();
-    var coords = currentPos.get('coords');
-    if (!coords) {
-      currentPos.watch().then(
-        function(success) {
-          deferred.resolve(coords);
-        },
-        function(error) {
-          deferred.reject(error);
-        });
-    } else {
-      deferred.resolve(coords);
-    }
-    return deferred.promise();
-  },
-
   createObservation: function(fe, id) {
     var self = this;
+
     var router = require('../routing/router');
-    console.log(CurrentPos.model.getInstance());
     var observationModel = new(Observation.model.getClass())();
-    this.checkposition().always(function(coords) {
+    var currentPos = CurrentPos.model.getInstance();
+
+    currentPos.watch().always(function(){
       //set observation model
       observationModel.set({
         'userId': User.getCurrent().get('id'),
@@ -155,8 +136,8 @@ var View = Marionette.LayoutView.extend({
           'externId': id ? id : ''
         }],
         'coords': {
-          latitude: coords.latitude || 0,
-          longitude: coords.longitude || 0
+          latitude: _.get(currentPos.get('coords'), 'latitude', 0),
+          longitude: _.get(currentPos.get('coords'), 'longitude', 0)
         }
       });
 
@@ -174,7 +155,6 @@ var View = Marionette.LayoutView.extend({
           console.log(e);
         });
     });
-
   },
 
   forestTime: function(e) {
