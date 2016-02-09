@@ -298,26 +298,59 @@ var Layout = Marionette.LayoutView.extend({
       user.once('change:city', function() {
         console.log('onUserChange city');
         dialog.close();
-        Dialog.alert('Vous pouvez enregistrer');
+        self.onDomRefresh();
+        dfd.resolve();
       });
-
-      return false;
+    } else if (!this.observationModel.get('hasCoords') && user.get('city')) {
+      var currentDialog = Dialog.confirm({
+        title: 'Validation de la géolocalisation',
+        message: 'Cette observation a été prise à ' + user.get('city').value + ' ?',
+        btnCancelLabel: 'Non',
+        btnOKLabel: 'Oui',
+        closable: true, // <-- Default value is false
+        callback: function(result) {
+          if (result) {
+            dfd.resolve();
+          } else {
+            user.set('city', null).save();
+            self.saveObs();
+            dfd.reject();
+          }
+        }
+      });
     }
-    var formValues = this.formObs.getValue();
-    var missionCurrent = mission.collection.getInstance().findWhere({
-      id: _.parseInt(formValues.mission)
-    });
-    var deptCurrent = departement.collection.getInstance().findWhere({
-      id: formValues.dept
-    });
-    self.observationModel.set({
-      missionId: missionCurrent.get('srcId'),
-      cd_nom: missionCurrent.get('taxon').cd_nom,
-      departement: deptCurrent.get('code'),
-      deptId: deptCurrent.get('id')
-    }).save();
-    self.setFormStatus('saved');
+    return dfd.promise();
   },
+
+  saveObs: function() {
+    var self = this;
+
+    this.checkGeolocation().then(
+      function() {
+        var formValues = self.formObs.getValue();
+        var missionCurrent = mission.collection.getInstance().findWhere({
+          id: _.parseInt(formValues.mission)
+        });
+        var deptCurrent = departement.collection.getInstance().findWhere({
+          id: formValues.dept
+        });
+        self.observationModel.set({
+          missionId: missionCurrent.get('srcId'),
+          cd_nom: missionCurrent.get('taxon').cd_nom,
+          departement: deptCurrent.get('code'),
+          deptId: deptCurrent.get('id')
+        }).save();
+        self.setFormStatus('saved');
+      },
+      function() {
+        return false;
+      }
+    );
+  },
+
+
+  // Save in server time_forest : update user with new time (field_time_forest)
+
 
   sendObs: function(e) {
     var self = this;
