@@ -122,9 +122,14 @@ var Layout = Marionette.LayoutView.extend({
   onDomRefresh: function(options) {
     var self = this;
     var user = User.getCurrent();
-    if (user.get('departements').length)
-      this.model.set({
+
+    if (user.get('departements').length) {
+      this.observationModel.set({
         departement: user.get('departements')[0]
+      }).save();
+    } else if (user.get('city'))
+      this.observationModel.set({
+        departement: user.get('city').dpt
       }).save();
 
     if (this.observationModel.get('mission')) {
@@ -261,7 +266,7 @@ var Layout = Marionette.LayoutView.extend({
     console.log(errors);
     if (errors)
       return false;
-    
+
     if (this.$el.hasClass('form-status-unsaved'))
       this.saveObs();
 
