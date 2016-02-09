@@ -275,16 +275,16 @@ var Layout = Marionette.LayoutView.extend({
         this.sendObs();
       else if (this.$el.hasClass('form-status-shared-1'))
         this.shareObs();
-    } else{
+    } else {
       Dialog.alert(i18n.t('pages.observation.dialogs.need_login_offline'));
     }
   },
 
-  saveObs: function() {
+  checkGeolocation: function() {
     var self = this;
-
+    var dfd = $.Deferred();
     var user = User.getCurrent();
-    if (!user.get('hasCoords') && !user.get('city')) {
+    if (!this.observationModel.get('hasCoords') && !user.get('city')) {
 
       var automplete = new AutompleteCity();
       automplete.render();

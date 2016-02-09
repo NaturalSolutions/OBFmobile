@@ -41,6 +41,11 @@ var ObservationModel = Backbone.Model.extend({
 
     return Backbone.Model.prototype.get.call(self, attr);
   },
+
+  getHasCoords: function() {
+    return this.get('coords') && this.get('coords').lat;
+  },
+
   toJSON: function() {
     var self = this;
     var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
