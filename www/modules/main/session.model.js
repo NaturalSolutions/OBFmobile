@@ -177,6 +177,7 @@ var SessionModel = Backbone.Model.extend({
           users.setCurrent(user);
 
           self.syncObs(response.obs);
+          self.syncTimeForest(response.time_forest);
           User.getCurrent().computeScore();
 
           console.log(self.afterLoggedAction);
@@ -251,6 +252,22 @@ var SessionModel = Backbone.Model.extend({
     });
   },
 
+  syncTimeForest: function(tf){
+    var modelTimeForest = User.getCurrent().get('timeForest');
+    if(modelTimeForest && modelTimeForest.get('totalDuration') < parseInt(tf,10))
+      modelTimeForest.set('totalDuration', parseInt(tf,10)).save();
+    else if(modelTimeForest && modelTimeForest.get('totalDuration') > parseInt(tf,10)){
+      var queryData = {
+            field_time_forest: {
+              und: [{
+                value: modelTimeForest.get('totalDuration')
+              }]
+            }
+          };
+          this.updateUser(queryData);
+    }
+  },
+
   logout: function() {
     var self = this;
     var dfd = $.Deferred();
@@ -279,6 +296,27 @@ var SessionModel = Backbone.Model.extend({
       $.ajax(query);
     });
 
+    return dfd;
+  },
+
+  updateUser: function(data) {
+    var dfd = $.Deferred();
+    var query = {
+      url: config.apiUrl + '/obfmobile_user/' + User.getCurrent().get('externId') + '.json',
+      type: 'put',
+      contentType: 'application/json',
+      data: JSON.stringify(data),
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(errorThrown);
+        dfd.reject(jqXHR);
+      },
+      success: function(response) {
+        dfd.resolve(response);
+      }
+    };
+    this.getCredentials(query).done(function() {
+      $.ajax(query);
+    });
     return dfd;
   },
 

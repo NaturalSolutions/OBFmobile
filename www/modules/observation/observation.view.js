@@ -311,6 +311,7 @@ var Layout = Marionette.LayoutView.extend({
         callback: function(result) {
           if (result) {
             dfd.resolve();
+            self.onDomRefresh();
           } else {
             user.set('city', null).save();
             self.saveObs();
@@ -464,6 +465,19 @@ var Layout = Marionette.LayoutView.extend({
         });
 
         //save forest time
+        if (User.getCurrent().get('timeForest') && User.getCurrent().get('timeForest').get('totalDuration')){
+          var queryData = {
+            field_time_forest: {
+              und: [{
+                value: User.getCurrent().get('timeForest').get('totalDuration')
+              }]
+            }
+          };
+          self.session.updateUser(queryData).done(function(response){
+            User.getCurrent().get('timeForest')
+              .set('totalDuration', parseInt(response.field_time_forest.und[0].value, 10)).save();
+          });
+        }
       }
     };
 
@@ -628,7 +642,8 @@ var Layout = Marionette.LayoutView.extend({
         }
       }
     });
-  }
+  },
+
 });
 
 module.exports = {

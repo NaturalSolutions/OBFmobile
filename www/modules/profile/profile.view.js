@@ -141,9 +141,11 @@ var Page = Marionette.LayoutView.extend({
     if ($form.hasClass('loading'))
         return false;
 
-    var errors = this.form.validate();
-    console.log(errors);
-    if (errors)
+      var errors = this.form.validate();
+      console.log(errors);
+      if (errors && !this.model.get('externId'))
+        return false;
+      else if ((!_.isEmpty(errors.email) || !_.isEmpty(errors.firstname) || !_.isEmpty(errors.lastname)) && this.model.get('externId'))
         return false;
 
     this.$el.addClass('block-ui');
@@ -240,20 +242,10 @@ var Page = Marionette.LayoutView.extend({
     var self = this;
     var $form = this.$el.find('form');
     
-    var query = {
-      url: config.apiUrl + '/user/' + this.model.get('externId') + '.json',
-      type: 'put',
-      contentType: 'application/json',
-      data: JSON.stringify(queryData),
-      error: function(jqXHR, textStatus, errorThrown) {
-        //TODO
-        console.log(errorThrown);
-        Dialog.alert({
-          closable: true,
-          message: errorThrown
-        });
-      },
-      success: function(response) {
+    this.session.updateUser(queryData).always(function(){
+      self.$el.removeClass('block-ui');
+      $form.removeClass('loading');
+      if(this.state() === 'resolved'){
         self.updateModel();
         self.model.save();
         Dialog.show({
@@ -267,14 +259,7 @@ var Page = Marionette.LayoutView.extend({
             }
           }]
         });
-      },
-      complete: function() {
-        self.$el.removeClass('block-ui');
-        $form.removeClass('loading');
       }
-    };
-    this.session.getCredentials(query).done(function() {
-      $.ajax(query);
     });
   },
 
@@ -308,22 +293,28 @@ var Page = Marionette.LayoutView.extend({
     console.log('onChangePasswdClick');
   },
   onLogoutClick: function() {
+    var timeForest = {field_time_forest: {
+        und: _.get(User.getCurrent().get('timeForest'), 'attributes.totalDuration', '')
+    }};
     var Main = require('../main/main.view.js');
     var session = Session.model.getInstance();
     Main.getInstance().showLoader();
-    session.logout().always(function() {
-      Main.getInstance().hideLoader();
-      Dialog.alert('Vous êtes déconnecté');
-      User.collection.getInstance().becomeAnonymous();
-      Router.getInstance().navigate('', {
-        trigger: true
-      });
-      /*if ( !session.get('isAuth') )
-        Router.getInstance().navigate('dashboard', {
+    this.session.updateUser(timeForest).always(function(){
+      session.logout().always(function() {
+        Main.getInstance().hideLoader();
+        Dialog.alert('Vous êtes déconnecté');
+        User.collection.getInstance().becomeAnonymous();
+        Router.getInstance().navigate('', {
           trigger: true
-        });*/
+        });
+        /*if ( !session.get('isAuth') )
+          Router.getInstance().navigate('dashboard', {
+            trigger: true
+          });*/
+      });
     });
   },
+
 });
 
 module.exports = {
