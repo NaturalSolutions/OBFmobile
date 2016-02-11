@@ -9,3 +9,4 @@ www/templates.js
 npm-debug.log
 *~
 www-*
+*.sublime*
