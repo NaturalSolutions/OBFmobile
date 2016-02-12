@@ -20,7 +20,7 @@ var Page = Marionette.LayoutView.extend({
   events: {
     'submit form': 'onFormSubmit',
     'click .request-npw-js': 'onChangePasswdClick',
-    'click .btn-logout': 'onLogoutClick'
+    'click .btn-logout': 'onLogoutClick',
   },
   
   initialize: function() {
@@ -74,6 +74,23 @@ var Page = Marionette.LayoutView.extend({
           val: true,
           label: 'M\'abonner à la newsletter'
         }]
+      },
+      usercategory: {
+        type: 'Radio',
+        options:
+        {
+          value0:'Seul(e)',
+          value1:'Famille',
+          value2:'En groupe'
+        }
+        
+      },
+      groupcategory: {
+        type: 'Select',
+        options:['scout', 'éclaireur','autre'],
+        editorAttrs: {
+          placeholder: 'Sélectionnez votre groupe'
+        },
       }
     };
 
@@ -131,6 +148,16 @@ var Page = Marionette.LayoutView.extend({
     }).render();
 
     this.$el.append(this.form.$el);
+    this.form.fields.groupcategory.$el.hide();
+    this.form.on('usercategory:change', function(form, editor) {
+      if (editor.getValue() === "value2"){
+        self.form.fields.groupcategory.$el.show();
+        self.$el.find('select').selectPlaceholder();
+      }else{
+        self.form.fields.groupcategory.$el.hide();
+      }
+
+    });
     this.$el.find('.no-paste-js').nsNoPaste();
     Backbone.Form.validators.errMessages.required = i18n.t('validation.errors.required');
   },
@@ -152,6 +179,8 @@ var Page = Marionette.LayoutView.extend({
     $form.addClass('loading');
 
     var formValues = this.form.getValue();
+    if (formValues.groupcategory) 
+      formValues.usercategory = formValues.groupcategory;
     var queryData = {
       field_first_name: {
         und: [{
@@ -166,7 +195,10 @@ var Page = Marionette.LayoutView.extend({
       field_newsletter: {
         und: ((formValues.newsletter.length) ? '[0]{value:' + true + '}' : null)
       },
-      mail: formValues.email
+      mail: formValues.email,
+      field_user_category: {
+        und: formValues.usercategory
+      },
     };
     
     //If it's not register on sever
