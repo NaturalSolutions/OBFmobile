@@ -23,6 +23,9 @@ var ClassDef = Marionette.LayoutView.extend({
 
   initialize: function() {
     this.missions = User.getCurrent().getAcceptedMissions();
+    this.missions = _.sortBy(this.missions, function(mission) {
+      return mission.inSeason().end.delta;
+    });
     this.successfulMissions = User.getCurrent().getCompletedMissions();
   },
 
