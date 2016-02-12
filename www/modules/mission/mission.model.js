@@ -122,6 +122,8 @@ var Model = Backbone.Model.extend({
     if (endAt && !startAt) {
       startAt = today;
     }
+    if ( !startAt )
+      startAt = new Date();
     if ( !endAt ) {
       endAt = startAt;
     }
