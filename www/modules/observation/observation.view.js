@@ -465,11 +465,13 @@ var Layout = Marionette.LayoutView.extend({
         });
 
         //save forest time
-        if (User.getCurrent().get('timeForest') && User.getCurrent().get('timeForest').get('totalDuration')){
+        var modelTimeForest = User.getCurrent().get('timeForest');
+        var currentLocal = modelTimeForest.get('currentDuration');
+        if (currentLocal){
           var queryData = {
             field_time_forest: {
               und: [{
-                value: User.getCurrent().get('timeForest').get('totalDuration')
+                value: currentLocal
               }]
             }
           };

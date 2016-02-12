@@ -254,13 +254,14 @@ var SessionModel = Backbone.Model.extend({
 
   syncTimeForest: function(tf){
     var modelTimeForest = User.getCurrent().get('timeForest');
-    if(modelTimeForest && modelTimeForest.get('totalDuration') < parseInt(tf,10))
+    var currentLocal = modelTimeForest.get('currentDuration');
+    if(modelTimeForest && currentLocal < parseInt(tf,10))
       modelTimeForest.set('totalDuration', parseInt(tf,10)).save();
-    else if(modelTimeForest && modelTimeForest.get('totalDuration') > parseInt(tf,10)){
+    else if(modelTimeForest && currentLocal > parseInt(tf,10)){
       var queryData = {
             field_time_forest: {
               und: [{
-                value: modelTimeForest.get('totalDuration')
+                value: currentLocal
               }]
             }
           };
