@@ -1,12 +1,10 @@
 'use strict';
 var Marionette = require('backbone.marionette'),
-	_ = require('lodash'),
-    Header = require('../../header/header'),
-	Router = require('../../routing/router'),
-    Departement = require('../../main/departement.model');
-
+  _ = require('lodash'),
+  Header = require('../../header/header'),
+  Router = require('../../routing/router'),
+  Departement = require('../../main/departement.model');
 var filters = null;
-
 var View = Marionette.LayoutView.extend({
   header: {
     titleKey: 'missions',
@@ -19,33 +17,26 @@ var View = Marionette.LayoutView.extend({
   events: {
     'click .btn_search': 'onBtnSearchClick'
   },
-
   initialize: function() {
     var self = this;
     self.filters = filters ? _.clone(filters) : {};
-
     self.listenTo(Header.getInstance(), 'btn:back:click', function(e) {
       Router.getInstance().navigate('missions/all', {
         trigger: true
       });
     });
   },
-
   serializeData: function() {
     var self = this;
-
     return {
       departement: self.filters.departement
     };
   },
-
   onRender: function() {
     var self = this;
   },
-
   onShow: function() {
     var self = this;
-
     self.$el.find('input.js-autocomplete').autocomplete({
       source: Departement.collection.getInstance().toJSON(),
       appendTo: self.$el.find('.js-autocomplete-result'),
@@ -53,10 +44,8 @@ var View = Marionette.LayoutView.extend({
         self.filters.departement = ui.item;
       }
     });
-
     /*if (self.filters.departement)
         self.$el.find('input.js-autocomplete').val(self.filters.departement.get('title'));*/
-
     self.$el.find('.js-datetimepicker').datetimepicker({
       //locale: 'fr',
       format: 'DD/MM/YYYY'
@@ -71,32 +60,21 @@ var View = Marionette.LayoutView.extend({
       //$dpStart.data("DateTimePicker").maxDate(e.date);
       self.filters.endAt = e.date.toDate();
     });
-
-    if (self.filters.startAt)
-        $dpStart.data('DateTimePicker').date(self.filters.startAt);
-
-    if (self.filters.endAt)
-        $dpEnd.data('DateTimePicker').date(self.filters.endAt);
+    if (self.filters.startAt) $dpStart.data('DateTimePicker').date(self.filters.startAt);
+    if (self.filters.endAt) $dpEnd.data('DateTimePicker').date(self.filters.endAt);
   },
-
   onBtnSearchClick: function() {
     var self = this;
-
     filters = self.filters;
     Router.getInstance().navigate('missions/all', {
       trigger: true
     });
   },
-
   onDestroy: function() {
     var self = this;
   }
 });
-
 module.exports = {
-  setFilters: function(data) {
-    filters = data;
-  },
   getFilters: function() {
     return filters;
   },

@@ -16,7 +16,7 @@
 			<ul class="list-unstyled missions clearfix">
 			<% _.forEach(missionTab.missions, function(mission) { %>
 				<li class="pull-left">
-					<a href="#mission/<%= mission.srcId %>" class="inner">
+					<a href="#mission/<%= mission.id %>" class="inner">
 						<div class="delta text-nowrap text-primary"><%= i18n.t('pages.missionsAroundme.list.delta', {nb: mission.inSeason.end.delta}) %></div>
 						<div class="thumb">
 							<div class="img" style="background-image:url('./images/taxon/thumb/<%= mission.thumb %>');"></div>

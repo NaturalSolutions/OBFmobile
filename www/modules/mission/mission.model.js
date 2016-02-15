@@ -8,14 +8,13 @@ var Backbone = require('backbone'),
 
 var Model = Backbone.Model.extend({
   defaults: {
-    srcId: 0,
     externId: '',
     num: '0',
     title: '',
     poster: '',
     difficulty: 0,//0 == unset
     difficultyName: '',
-    departements: [],//codes
+    departementIds: [],
     criterias: [],
     seasons: [],//[{"startAt":"05","endAt":"11"}],
     environments: [],
@@ -59,19 +58,19 @@ var Model = Backbone.Model.extend({
   },
   getMap: function() {
     var self = this;
-    var id = self.get('srcId');
+    var id = self.get('id');
 
     return (id < 10 ? '0' : '') + id + '.png';
   },
   getThumb: function() {
     var self = this;
-    var id = self.get('srcId');
+    var id = self.get('id');
 
     return (id < 10 ? '0' : '') + id + '.jpg';
   },
   getPoster: function() {
     var self = this;
-    var id = self.get('srcId');
+    var id = self.get('id');
 
     return (id < 10 ? '0' : '') + id + '.jpg';
   },
@@ -103,11 +102,11 @@ var Model = Backbone.Model.extend({
 
     return seasons;
   },
-  isInDepartement: function(codes) {
+  isInDepartement: function(ids) {
     var self = this;
-    if (!_.isArray(codes))
-    codes = [codes];
-    return _.intersection(codes, self.get('departements')).length;
+    if (!_.isArray(ids))
+    ids = [ids];
+    return _.intersection(ids, self.get('departementIds')).length;
   },
   isInSeason: function(startAt, endAt) {
     var self = this;

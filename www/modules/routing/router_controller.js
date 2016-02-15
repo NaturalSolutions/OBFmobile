@@ -84,9 +84,7 @@ module.exports = Marionette.Object.extend({
   missionSheet: function(id) {
     id = _.parseInt(id);
     var MissionModel = require('../mission/mission.model');
-    var mission = MissionModel.collection.getInstance().findWhere({
-      srcId: id
-    });
+    var mission = MissionModel.collection.getInstance().get(id);
 
     var View = require('../mission/sheet/mission_sheet.view');
     main.getInstance().rgMain.show(new View({
@@ -110,7 +108,7 @@ module.exports = Marionette.Object.extend({
       var isMatch = true;
       if (isMatch && mission.get('difficulty') < 1)
         isMatch = false;
-      if (isMatch && departement && !mission.isInDepartement(departement.code))
+      if (isMatch && departement && !mission.isInDepartement(departement.id))
         isMatch = false;
       if (isMatch && (startAt || endAt) && !mission.isInSeason(startAt, endAt))
         isMatch = false;
@@ -178,7 +176,7 @@ module.exports = Marionette.Object.extend({
   missionsAroundMe: function() {
     var user = User.getCurrent();
     var state;
-    if ( user.get('departements').length && user.get('forceDepartement') )
+    if ( user.get('departementIds').length && user.get('forceDepartement') )
       state = 'list';
     else
       state = 'localize';

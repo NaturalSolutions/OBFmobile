@@ -51,13 +51,13 @@ var Layout = Marionette.LayoutView.extend({
             selectedDepartements.remove(departement);
           }
         }
-        user.set('departements', selectedDepartements.pluck('code'));
+        user.set('departementIds', selectedDepartements.pluck('id'));
       }
       user.save();
     });
     currentPos.on('unwatch', function() {
       var user = User.getCurrent();
-      user.set('departements', []);
+      user.set('departementIds', []);
     });
     currentPos.watch();
   },

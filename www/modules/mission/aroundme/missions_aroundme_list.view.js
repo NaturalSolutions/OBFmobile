@@ -19,7 +19,7 @@ module.exports = Marionette.LayoutView.extend({
   initialize: function() {
     var self = this;
     var user = User.getCurrent();
-    var departementCodes = user.get('departements');
+    var departementIds = user.get('departementIds');
 
     var headerOptions = {
       titleKey: 'missionsAroundme',
@@ -31,13 +31,13 @@ module.exports = Marionette.LayoutView.extend({
       }
     };
 
-    if ( departementCodes.length && user.get('forceDepartement') )
-      headerOptions.titleArgs.dptLink = '<small><a href="#missions/aroundme/manually" class="text-primary">('+departementCodes[0]+')</a></small>';
+    if ( departementIds.length && user.get('forceDepartement') )
+      headerOptions.titleArgs.dptLink = '<small><a href="#missions/aroundme/manually" class="text-primary">('+departementIds[0]+')</a></small>';
 
     Header.getInstance().set(headerOptions);
     
     self.collection = Mission.collection.getInstance().filter(function(mission) {
-      var isInDepartement = mission.isInDepartement(departementCodes);//_.intersection(departementCodes, mission.get('departements')).length;
+      var isInDepartement = mission.isInDepartement(departementIds);//_.intersection(departementIds, mission.get('departementIds')).length;
       var inSeason = mission.inSeason(new Date());
       return (isInDepartement && inSeason.isMatch);
     });
@@ -46,7 +46,7 @@ module.exports = Marionette.LayoutView.extend({
 
     /*_.forEach(self.collection, function(mission) {
     			console.log(mission);
-    			var isInDepartement = mission.isInDepartement(departementCodes);//_.intersection(departementCodes, mission.get('departements')).length;
+    			var isInDepartement = mission.isInDepartement(departementIds);//_.intersection(departementIds, mission.get('departementIds')).length;
     			var isInSeason = mission.inSeason(new Date());
     			console.log(mission.get('title'), isInSeason);
     			if (!isInDepartement || !isInSeason)
@@ -68,8 +68,9 @@ module.exports = Marionette.LayoutView.extend({
         missions: _.where(missions, {difficulty: i})
       });
     }
+    var departement = User.getCurrent().get('departement');
     return {
-      departement: User.getCurrent().getDepartementModel().toJSON(),
+      departement: (departement ? departement.toJSON() : null),
       missionTabs: missionTabs
     };
   },

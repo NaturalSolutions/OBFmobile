@@ -37,7 +37,7 @@ module.exports = Marionette.LayoutView.extend({
         var user = User.getCurrent();
         user.set({
           forceDepartement: true,
-          departements: [ui.item.code]
+          departementIds: [ui.item.id]
         });
         user.save();
         Router.getInstance().navigate('#missions/aroundme', {trigger: true});

@@ -4,7 +4,6 @@ var Backbone = require('backbone'),
 
 var Model = Backbone.Model.extend({
   defaults: {
-    code: '',
     title: '',
     lat: 0,
     lon: 0

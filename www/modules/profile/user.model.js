@@ -19,7 +19,7 @@ var UserModel = Backbone.Model.extend({
     totalTimeOnMission: 0,
     newsletter: false,
     displayHelp: true,
-    departements: [], //codes
+    departementIds: [],
     positionEnabled: true,
     level: 0,
     palm: 0,
@@ -82,23 +82,35 @@ var UserModel = Backbone.Model.extend({
     return 1;
   },
 
+  addLog: function(type, data) {
+    var logs = require('../logs/log.model').collection.getInstance();
+    logs.add({
+      userId: this.get('id'),
+      type: type,
+      data: data
+    }).save();
+  },
+
+  getLogs: function() {
+    var logs = require('../logs/log.model').collection.getInstance();
+    return new Backbone.Collection(logs.filter({
+      userId: this.get('id')
+    }));
+  },
+
   getAcceptedMissions: function() {
     return this.getMissions('accepted');
   },
   toggleAcceptedMission: function(mission) {
     if (!this.hasCompletedMission(mission)) {
       var result = this.toggleMission(mission, 'accepted');
-      var logs = require('../logs/log.model').collection.getInstance();
-      logs.add({
-        type: (result ? 'mission_accept' : 'mission_unaccept'),
-        data: {
-          mission: {
-            id: mission.get('srcId'),
-            num: mission.get('num'),
-            title: mission.get('title')
-          }
+      this.addLog((result ? 'mission_accept' : 'mission_unaccept'),{
+        mission: {
+          id: mission.get('id'),
+          num: mission.get('num'),
+          title: mission.get('title')
         }
-      }).save();
+      });
     }
   },
   hasAcceptedMission: function(mission) {
@@ -111,17 +123,13 @@ var UserModel = Backbone.Model.extend({
   addCompletedMission: function(mission) {
     var result = this.addMission(mission, 'completed');
     if (result) {
-      var logs = require('../logs/log.model').collection.getInstance();
-      logs.add({
-        type: 'mission_complete',
-        data: {
-          mission: {
-            id: mission.get('srcId'),
-            num: mission.get('num'),
-            title: mission.get('title')
-          }
+      this.addLog('mission_complete', {
+        mission: {
+          id: mission.get('id'),
+          num: mission.get('num'),
+          title: mission.get('title')
         }
-      }).save();
+      });
     }
   },
   hasCompletedMission: function(mission) {
@@ -132,7 +140,7 @@ var UserModel = Backbone.Model.extend({
     var missionIds = this.get(listName + 'MissionIds');
     var missions = require('../mission/mission.model').collection.getInstance();
     return missions.filter(function(mission) {
-      return missionIds.indexOf(mission.get('srcId')) > -1;
+      return missionIds.indexOf(mission.get('id')) > -1;
     });
   },
   addMission: function(mission, listName) {
@@ -140,7 +148,7 @@ var UserModel = Backbone.Model.extend({
       return false;
 
     var missionIds = this.get(listName + 'MissionIds');
-    missionIds.push(mission.get('srcId'));
+    missionIds.push(mission.get('id'));
     this.trigger('change:' + listName + 'Missions', this);
 
     return true;
@@ -150,7 +158,7 @@ var UserModel = Backbone.Model.extend({
       return false;
 
     var missionIds = this.get(listName + 'MissionIds');
-    _.pull(missionIds, mission.get('srcId'));
+    _.pull(missionIds, mission.get('id'));
     this.trigger('change:' + listName + 'Missions', this);
 
     return true;
@@ -167,16 +175,15 @@ var UserModel = Backbone.Model.extend({
   hasMission: function(mission, listName) {
     var missions = this.get(listName + 'MissionIds');
 
-    return missions.indexOf(mission.get('srcId')) > -1;
+    return missions.indexOf(mission.get('id')) > -1;
   },
-  getDepartementModel: function() {
-    if ( !this.get('departements') || !this.get('departements')[0] )
-      return {};
+  getDepartement: function() {
+    if ( !this.get('departementIds') || !this.get('departementIds')[0] )
+      return null;
     var Departement = require('../main/departement.model');
-    var code = this.get('departements')[0];
-    return Departement.collection.getInstance().findWhere({
-      code: code
-    });
+    var id = this.get('departementIds')[0];
+
+    return Departement.collection.getInstance().get(id);
   },
 
   computeScore: function() {

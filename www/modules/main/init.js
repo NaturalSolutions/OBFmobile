@@ -124,11 +124,10 @@ function init() {
           });
           var mission = new Mission.Model({
             id: missionData.id,
-            srcId: missionData.id,
             num: missionData.num,
             title: missionData.title,
             seasons: missionData.seasons,
-            departements: missionData.departements,
+            departementIds: missionData.departements,
             difficulty: missionData.difficulty,
             environments: missionData.environments,
             taxon: {
@@ -165,7 +164,6 @@ function init() {
         _.forEach(departementDatas, function(departementData) {
           var departement = new Departement.Model({
             id: departementData.code,
-            code: departementData.code,
             label: departementData.title,
             title: departementData.title,
             lat: departementData.lat,

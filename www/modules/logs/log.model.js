@@ -32,6 +32,7 @@ var types = {
 var LogModel = Backbone.Model.extend({
   defaults: {
     createdAt: new Date(),
+    userId: null,
     type: '',//cf: var types
     data: null//An object
   },

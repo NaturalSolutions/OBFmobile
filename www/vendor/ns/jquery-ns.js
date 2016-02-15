@@ -70,37 +70,32 @@
 })(jQuery);
 
 (function($) {
-  $.fn.selectPlaceholder = function() {
+  $.fn.selectPlaceholder = function(methodOrOptions) {
+    methodOrOptions = methodOrOptions || {};
     $(this)
             .each(function() {
-              new SelectWithPlaceholder(this);
+              new SelectWithPlaceholder(this, methodOrOptions);
             });
   };
 
-  var SelectWithPlaceholder = function(selectElement) {
-    var PLACEHOLDER_COLOR = 'rgb(176, 176, 176)',
-        PLACEHOLDER_VALUE = '',
+  var SelectWithPlaceholder = function(selectElement, methodOrOptions) {
+    var placeholderValue = methodOrOptions.placeholderValue || '',
         select = $(selectElement),
         originalColor = select.css('color'),
         placeholderText = select.attr('placeholder'),
-        placeholderOptionBuilder = new PlaceholderOptionBuilder(PLACEHOLDER_VALUE),
+        placeholderOptionBuilder = new PlaceholderOptionBuilder(placeholderValue),
         lastSelectedValue;
-
-    select
-    .bind('change', itemChanged)
-    //.css('color', PLACEHOLDER_COLOR)
-    .find('option')
-        //.css('color', originalColor)
-        .end();
+    
+    select.bind('change', itemChanged).end();
 
     var option = placeholderOptionBuilder.build(placeholderText);
-    if (!select.children('option[selected="selected"]').length)
-        option.attr('selected', true);
-
     select.prepend(option);
 
+    if ( !select.attr('selectedvalue') && !select.children('option[selected="selected"]').length )
+        option.attr('selected', true);
+
     function itemChanged() {
-      if (select.val() !== PLACEHOLDER_VALUE) {
+      if (select.val() !== placeholderValue) {
         lastSelectedValue = select.val();
         lookLikeOptionSelected();
       } else {
@@ -109,11 +104,7 @@
     }
 
     function lookLikeOptionSelected() {
-      select
-          //.css('color', originalColor)
-          .find('option[value="' + PLACEHOLDER_VALUE + '"]')
-              //.css('color', PLACEHOLDER_COLOR)
-              ;
+      select.find('option[value="' + placeholderValue + '"]');
     }
   };
 

@@ -1,6 +1,7 @@
 'use strict';
 var Backbone = require('backbone'),
   Marionette = require('backbone.marionette'),
+  _ = require('lodash'),
   Observation = require('../../observation/observation.model'),
   Router = require('../../routing/router'),
   User = require('../../profile/user.model.js');
@@ -35,8 +36,8 @@ module.exports = Marionette.LayoutView.extend({
     this.listenTo(user, 'change:acceptedMissions', this.onAcceptChange);
     this.listenTo(Observation.collection.getInstance(), 'add', function(observation) {
       observation.set({
-        'missionId': self.model.get('srcId'),
-        'departement': User.getCurrent().get('departements')[0],
+        'missionId': self.model.get('id'),
+        'departementId': _.get(User.getCurrent().get('departement'), 'id', null),
         'cd_nom': self.model.get('taxon').cd_nom
       });
       observation.save();
@@ -52,7 +53,7 @@ module.exports = Marionette.LayoutView.extend({
     var observations = Observation.collection.getInstance();
     observations = observations.where({
       userId: user.get('id'),
-      missionId: this.model.get('srcId')
+      missionId: this.model.get('id')
     });
     var ObservationsView = require('../../observation/observation_list.view');
     this.showChildView('observations', new ObservationsView({

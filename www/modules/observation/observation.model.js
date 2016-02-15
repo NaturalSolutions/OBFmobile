@@ -50,8 +50,8 @@ var ObservationModel = Backbone.Model.extend({
     var self = this;
     var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
 
-    _.forEach(['missionId', 'mission', 'deptId'], function(attr) {
-      result[attr] = self['get' + _.capitalize(attr)]();
+    _.forEach(['missionId', 'mission', 'departement'], function(attr) {
+      result[attr] = self.get(attr);
     }, this);
 
     if (result.mission)
@@ -61,11 +61,11 @@ var ObservationModel = Backbone.Model.extend({
 
     return result;
   },
-  getMissionId: function() {
+  /*getMissionId: function() {
     var self = this;
 
-    return _.parseInt(self.attributes.missionId);
-  },
+    return _.parseInt(self.attributes.missionId || 0);
+  },*/
   getMission: function() {
     var self = this;
     var missionId = self.get('missionId');
@@ -75,10 +75,20 @@ var ObservationModel = Backbone.Model.extend({
     var missions = require('../mission/mission.model').collection.getInstance();
 
     return missions.findWhere({
-      srcId: missionId
+      id: missionId
     });
   },
-  getDeptId: function() {
+  getDepartement: function() {
+    var self = this;
+    var departementId = self.get('departementId');
+    if (!departementId)
+      return null;
+
+    var departements = require('../main/departement.model').collection.getInstance();
+
+    return departements.get(departementId);
+  }
+  /*getDeptId: function() {
     var self = this;
     var dept = self.get('departement');
     if (!dept)
@@ -91,7 +101,7 @@ var ObservationModel = Backbone.Model.extend({
     });
 
     return _.get(currentDept, 'id');
-  }
+  }*/
 });
 
 var ObservationCollection = Backbone.Collection.extend({

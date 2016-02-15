@@ -1,7 +1,7 @@
 'use strict';
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
-    Log = require('../logs/log.model'),
+    User = require('../profile/user.model'),
     $ = require('jquery'),
     Router = require('../routing/router'),
     moment = require('moment'),
@@ -15,7 +15,7 @@ var ClassDef = Marionette.LayoutView.extend({
   },
 
   initialize: function() {
-    this.logs = Log.collection.getInstance();
+    this.logs = User.getCurrent().get('logs');
   },
 
   serializeData: function() {
