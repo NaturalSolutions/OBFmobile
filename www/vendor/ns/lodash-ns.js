@@ -23,6 +23,18 @@ _.mixin({
 });
 
 _.mixin({
+  clamp: function(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+  }
+});
+
+_.mixin({
+  upperFirst: function(str) {
+    return _.capitalize(str);
+  }
+});
+
+_.mixin({
   getDistanceFromLatLon: function(lat1, lon1, lat2, lon2) {
     var R = 6371; // Radius of the earth in km
     var dLat = _.deg2rad(lat2 - lat1); // deg2rad below
