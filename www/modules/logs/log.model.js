@@ -39,7 +39,7 @@ var LogModel = Backbone.Model.extend({
   get: function(attr) {
     var self = this;
 
-    var accessorName = 'get' + _.capitalize(attr);
+    var accessorName = 'get' + _.upperFirst(attr);
     if (self[accessorName]) {
       return self[accessorName]();
     }
@@ -51,7 +51,7 @@ var LogModel = Backbone.Model.extend({
 
     var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
     _.forEach(['category','icon'], function(attr) {
-      result[attr] = self['get' + _.capitalize(attr)]();
+      result[attr] = self['get' + _.upperFirst(attr)]();
     }, this);
 
     return result;

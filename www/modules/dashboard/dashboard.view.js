@@ -42,9 +42,11 @@ var ClassDef = Marionette.LayoutView.extend({
   },
 
   initialize: function(options) {
+    var self = this;
     this.defaultTab = _.keys(this.tabs)[0];
     this.curTab = options.tab || this.defaultTab;
     this.currentUser = User.getCurrent();
+    this.listenTo(this.currentUser.get('timeForest'), 'change:progressLog', this.setUserSky);
   },
 
   serializeData: function() {
@@ -56,6 +58,13 @@ var ClassDef = Marionette.LayoutView.extend({
 
   onRender: function(options) {
     this.displayTab();
+    this.setUserSky();
+  },
+
+  setUserSky: function() {
+    this.$el.find('.score-implode .user-sky').css({
+      'background-position-y': (this.currentUser.get('timeForest').get('progressLog')*100)+'%'
+    });
   },
 
   onHeaderClick: function() {

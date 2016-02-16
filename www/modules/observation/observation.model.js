@@ -28,13 +28,14 @@ var ObservationModel = Backbone.Model.extend({
   onSharedChange: function() {
     var user = User.getCurrent();
     if (this.get('shared') == 1) {
-      user.addCompletedMission(this.getMission());
-      user.save();
+      var mission = this.getMission();
+      if ( mission )
+        user.addCompletedMission(mission).save();
     }
   },
   get: function(attr) {
     var self = this;
-    var accessorName = 'get' + _.capitalize(attr);
+    var accessorName = 'get' + _.upperFirst(attr);
     if (self[accessorName]) {
       return self[accessorName]();
     }
@@ -50,7 +51,7 @@ var ObservationModel = Backbone.Model.extend({
     var self = this;
     var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
 
-    _.forEach(['missionId', 'mission', 'departement'], function(attr) {
+    _.forEach(['mission', 'departement'], function(attr) {
       result[attr] = self.get(attr);
     }, this);
 
@@ -61,11 +62,12 @@ var ObservationModel = Backbone.Model.extend({
 
     return result;
   },
-  /*getMissionId: function() {
+  getMissionId: function() {
     var self = this;
-
-    return _.parseInt(self.attributes.missionId || 0);
-  },*/
+    var missionId = _.parseInt(self.attributes.missionId);
+    
+    return _.isNaN(missionId) ? null : missionId;
+  },
   getMission: function() {
     var self = this;
     var missionId = self.get('missionId');

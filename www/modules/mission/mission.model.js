@@ -34,7 +34,7 @@ var Model = Backbone.Model.extend({
   get: function(attr) {
     var self = this;
     if (self.getDynAttrs().indexOf(attr) > -1) {
-      return self['get' + _.capitalize(attr)]();
+      return self['get' + _.upperFirst(attr)]();
     }
 
     return Backbone.Model.prototype.get.call(self, attr);

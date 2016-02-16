@@ -13,9 +13,16 @@ var TFmodel = Backbone.Model.extend({
         totalDuration: 0,
     },
     url: config.coreUrl,
+    initialize: function() {
+        var self = this;
+        this.setProgressLog();
+        this.on('change:intervalDuration', function() {
+            self.setProgressLog();
+        });
+    },
     get: function(attr) {
         var self = this;
-        var accessorName = 'get' + _.capitalize(attr);
+        var accessorName = 'get' + _.upperFirst(attr);
         if (self[accessorName]) {
             return self[accessorName]();
         }
@@ -63,6 +70,23 @@ var TFmodel = Backbone.Model.extend({
         var isStart = this.get('isStart');
         if (isStart) return this.get('intervalDuration') + this.get('totalDuration');
         else return this.get('totalDuration');
+    },
+    getProgress: function() {
+        var max = 60*60*10;//10h in seconds
+        var totalTime = this.get('currentDuration');
+        return _.clamp(_.ceil(totalTime/max, 2), 0, 1);
+    },
+    setProgressLog: function() {
+        var timeMax = 60*60*10;//10h in seconds
+        var totalTime = this.get('currentDuration');
+        var ratio =  _.clamp(totalTime/timeMax, 0, 1);
+        ratio = ratio*10;
+        var min = 1;
+        var max = 10;
+        var gap = max - min;
+        ratio = ratio / max * gap + min;
+        ratio = _.clamp(ratio, min, max);
+        this.set('progressLog', _.ceil(Math.log10(ratio), 2)).save();
     }
 });
 var TFcollection = Backbone.Collection.extend({
@@ -73,6 +97,8 @@ var TFcollection = Backbone.Collection.extend({
         this.deferred = this.fetch();
         var User = require('../profile/user.model');
         User.collection.getInstance().on('change:current', function(newUser, prevUser) {
+            if ( !prevUser )
+                return false;
             var prevTimeForest = prevUser.getTimeForest();
             if (!prevUser.isAnonymous())
               prevTimeForest.stop();

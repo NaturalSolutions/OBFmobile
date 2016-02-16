@@ -215,6 +215,12 @@ function init() {
     var collection = TimeForest.collection.getInstance();
     collection.fetch({
       success: function(data) {
+        collection.forEach(function(item) {
+          item.set({
+            startTime: 0,
+            intervalDuration: 0
+          }).save();
+        });
         deferred.resolve();
       },
       error: function(error) {

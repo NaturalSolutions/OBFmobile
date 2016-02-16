@@ -31,7 +31,7 @@ var UserModel = Backbone.Model.extend({
   get: function(attr) {
     var self = this;
 
-    var accessorName = 'get' + _.capitalize(attr);
+    var accessorName = 'get' + _.upperFirst(attr);
     if (self[accessorName]) {
       return self[accessorName]();
     }
@@ -58,7 +58,7 @@ var UserModel = Backbone.Model.extend({
     var self = this;
     var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
     _.forEach(['palmName', 'timeOnMissionLevel'], function(attr) {
-      result[attr] = self['get' + _.capitalize(attr)]();
+      result[attr] = self['get' + _.upperFirst(attr)]();
     }, this);
 
     if (result.mission)
@@ -81,6 +81,22 @@ var UserModel = Backbone.Model.extend({
   getTimeOnMissionLevel: function() {
     return 1;
   },
+
+  /*getTimeOnMissionRatio: function() {
+    var max = 60*60*10;//10h in seconds
+    var totalTime = this.get('timeForest').get('currentDuration');
+    return _.clamp(_.ceil(totalTime/max, 2), 0, 1);
+  },
+
+  getTimeOnMissionRatioLog: function() {
+    var ratio = this.get('timeOnMissionRatio')*10;
+    var min = 1;
+    var max = 10;
+    var gap = max - min;
+    ratio = ratio / max * gap + min;
+    ratio = _.clamp(ratio, min, max);
+    return _.ceil(Math.log10(ratio), 2);
+  },*/
 
   addLog: function(type, data) {
     var logs = require('../logs/log.model').collection.getInstance();
@@ -198,7 +214,7 @@ var UserModel = Backbone.Model.extend({
     var nbShared = shared.length;
 
     //TODO: define rules
-    var palmPad = [1, 3, 15];
+    var palmPad = [3, 10, 30];
     for (var palmPadIndex = palmPad.length - 1; palmPadIndex >= 0; palmPadIndex--) {
       if (nbShared >= palmPad[palmPadIndex]) {
         self.set('palm', palmPadIndex + 1);

@@ -291,7 +291,6 @@ var Layout = Marionette.LayoutView.extend({
     e.preventDefault();
 
     var errors = this.formObs.validate();
-    console.log(errors);
     if (errors)
       return false;
 
@@ -360,9 +359,9 @@ var Layout = Marionette.LayoutView.extend({
         var missionId = _.parseInt(formValues.missionId);
         var mission = Mission.collection.getInstance().get(missionId);
         self.observationModel.set({
-          mission: missionId,
+          missionId: missionId,
           cd_nom: mission.get('taxon').cd_nom,
-          departement: formValues.departement
+          departementId: formValues.departementId
         }).save();
         self.setFormStatus('saved');
       },
@@ -378,6 +377,8 @@ var Layout = Marionette.LayoutView.extend({
 
   sendObs: function(e) {
     var self = this;
+
+    console.log(this.observationModel.get('missionId'));
 
     if (self.$el.hasClass('sending') || self.observationModel.get('shared') == 1)
       return false;
@@ -428,6 +429,7 @@ var Layout = Marionette.LayoutView.extend({
         }]
       }
     };
+    console.log(data);
     var query = {
       url: config.apiUrl + '/node.json',
       type: 'POST',
