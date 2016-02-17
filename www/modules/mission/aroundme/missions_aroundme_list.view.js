@@ -8,7 +8,8 @@ var Backbone = require('backbone'),
 	User = require('../../profile/user.model'),
 	Mission = require('../../mission/mission.model'),
 	Router = require('../../routing/router'),
-  Header = require('../../header/header');
+  Header = require('../../header/header'),
+  Footer = require('../../footer/footer.view');
 
 module.exports = Marionette.LayoutView.extend({
   template: require('./missions_aroundme_list.tpl.html'),
@@ -36,13 +37,32 @@ module.exports = Marionette.LayoutView.extend({
 
     Header.getInstance().set(headerOptions);
     
-    self.collection = Mission.collection.getInstance().filter(function(mission) {
+    this.collection = Mission.collection.getInstance().filter(function(mission) {
       var isInDepartement = mission.isInDepartement(departementIds);//_.intersection(departementIds, mission.get('departementIds')).length;
       var inSeason = mission.inSeason(new Date());
       return (isInDepartement && inSeason.isMatch);
     });
 
-    self.collection = new Backbone.Collection(self.collection);
+    this.collection = new Backbone.Collection(this.collection);
+
+    var missions = this.collection.toJSON();
+    missions = _.sortBy(missions, function(mission) {
+      return mission.inSeason.end.delta;
+    });
+
+    this.missionTabs = [];
+    for (var i = 1; i <= 3; i++) {
+      this.missionTabs.push({
+        missions: _.where(missions, {difficulty: i})
+      });
+    }
+
+    this.listenTo(Footer.getInstance(), 'btn:clue:click', function(e) {
+      e.preventDefault();
+      var tabIndex = self.$el.find('.js-nav-tabs > .active').index();
+      var ids = _.pluck(self.missionTabs[tabIndex].missions, 'id');
+      Router.getInstance().navigate('clue?missionIds='+ids.join(), {trigger:true});
+    });
 
     /*_.forEach(self.collection, function(mission) {
     			console.log(mission);
@@ -55,23 +75,11 @@ module.exports = Marionette.LayoutView.extend({
   },
 
   serializeData: function() {
-    var self = this;
-
-    var missions = self.collection.toJSON();
-    missions = _.sortBy(missions, function(mission) {
-      return mission.inSeason.end.delta;
-    });
-
-    var missionTabs = [];
-    for (var i = 1; i <= 3; i++) {
-      missionTabs.push({
-        missions: _.where(missions, {difficulty: i})
-      });
-    }
     var departement = User.getCurrent().get('departement');
+
     return {
       departement: (departement ? departement.toJSON() : null),
-      missionTabs: missionTabs
+      missionTabs: this.missionTabs
     };
   },
 

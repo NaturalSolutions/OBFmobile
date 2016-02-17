@@ -4,7 +4,8 @@ var Backbone = require('backbone'),
   _ = require('lodash'),
   Observation = require('../../observation/observation.model'),
   Router = require('../../routing/router'),
-  User = require('../../profile/user.model.js');
+  User = require('../../profile/user.model.js'),
+  Footer = require('../../footer/footer.view');
 
 module.exports = Marionette.LayoutView.extend({
   header: 'none',
@@ -41,6 +42,11 @@ module.exports = Marionette.LayoutView.extend({
         'cd_nom': self.model.get('taxon').cd_nom
       });
       observation.save();
+    });
+
+    this.listenTo(Footer.getInstance(), 'btn:clue:click', function(e) {
+      e.preventDefault();
+      Router.getInstance().navigate('clue?missionId='+self.model.get('id'), {trigger:true});
     });
   },
 

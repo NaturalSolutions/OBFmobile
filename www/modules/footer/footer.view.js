@@ -8,7 +8,7 @@ var Backbone = require('backbone'),
   Observation = require('../observation/observation.model'),
   TimeForest = require('../time_forest/time_forest.model'),
   CurrentPos = require('../localize/current_position.model'),
-   
+  Router = require('../routing/router'),
   config = require('../main/config');
 //i18n = require('i18n');
 
@@ -19,8 +19,12 @@ var View = Marionette.LayoutView.extend({
   events: {
     'click .capture-photo-js': 'capturePhoto',
     'submit form': 'uploadPhoto',
-    'click .forest-time-js': 'forestTime'
+    'click .forest-time-js': 'forestTime',
+    'click .btn-clue': 'onBtnClueClick'
   },
+  /*triggers: {
+    'click .btn-clue': 'btn:clue:click'
+  },*/
 
   initialize: function() {
     this.moment = require('moment');
@@ -28,6 +32,13 @@ var View = Marionette.LayoutView.extend({
 
     this.listenTo(User.collection.getInstance(), 'change:current', this.onCurrentUserChange);
     this.listenTo(User.getCurrent().getTimeForest(), 'change:intervalDuration', this.displayTimeForest);
+
+    /*this.on('btn:clue:click', function(e) {
+      //Hack: enable to 
+      setTimeout(function() {
+        console.log('default btn:clue:click', e);
+      });
+    });*/
   },
 
   onCurrentUserChange: function(newUser, prevUser) {
@@ -49,6 +60,12 @@ var View = Marionette.LayoutView.extend({
     });
 
     this.displayTimeForest();
+  },
+
+  onBtnClueClick: function(e) {
+    this.trigger('btn:clue:click', e);
+    if ( !e.isDefaultPrevented() )
+      Router.getInstance().navigate('clue', {trigger:true});
   },
 
   displayTimeForest: function() {

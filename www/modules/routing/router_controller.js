@@ -43,6 +43,8 @@ module.exports = Marionette.Object.extend({
 
   clue: function(queryString) {
     var params = _.parseQueryString(queryString);
+    if ( params.missionId && !params.missionIds )
+      params.missionIds = params.missionId;
     if ( params.missionIds ) {
       params.missionIds = params.missionIds.split(',');
       params.missionIds = _.map(params.missionIds, _.parseInt);

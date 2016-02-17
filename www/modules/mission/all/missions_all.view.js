@@ -12,6 +12,7 @@ module.exports = Marionette.CompositeView.extend({
   events: {},
 
   initialize: function(options) {
+    var self = this;
     if ( !options.filterable ) {
       this.header = {
         titleKey: 'missions'
