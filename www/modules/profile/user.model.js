@@ -147,6 +147,7 @@ var UserModel = Backbone.Model.extend({
         }
       });
     }
+    return this;
   },
   hasCompletedMission: function(mission) {
     return this.hasMission(mission, 'completed');
