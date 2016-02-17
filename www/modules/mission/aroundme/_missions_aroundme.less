@@ -4,9 +4,26 @@
 		padding-top: 20px;
 	}
 	.state-list {
+		.localize {
+			background: rgba(255, 255, 255, 0.9);
+			padding: 10px 10px 0;
+			&:after {
+				content: "";
+				display: block;
+				height: 1px;
+				background: #CCC;
+				margin-top: 10px;
+			}
+		}
 		.missions {
 			padding-top: 20px;
-			li {
+			padding-bottom: 180px;
+			position: absolute;
+	    width: 100%;
+	    top: 140px;
+	    bottom: 0;
+	    overflow: auto;
+	    li {
 				width: 50%;
 				padding: 10px;
 				padding-left: 15px;

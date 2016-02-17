@@ -446,12 +446,12 @@ ul.form-control {
     padding-top: @header-height;
     padding-bottom: 180px;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
     &.animate-close {
         opacity: 0;
     }
-    &.page-scrollable {
-        overflow: auto;
-        -webkit-overflow-scrolling: touch;
+    &.page-no-scroll {
+        overflow: hidden;
     }
     &.no-header {
         padding-top: 0;

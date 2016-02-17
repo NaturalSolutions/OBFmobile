@@ -96,6 +96,12 @@ module.exports = Marionette.LayoutView.extend({
 
       }
     });
+
+    var user = User.getCurrent();
+    if ( user.get('departementIds').length && user.get('forceDepartement') )
+      this.$el.addClass('has-departement');
+    else
+      this.$el.removeClass('has-departement');
   },
 
   onDestroy: function() {

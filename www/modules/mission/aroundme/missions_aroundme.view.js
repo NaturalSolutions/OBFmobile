@@ -13,7 +13,7 @@ module.exports = Marionette.LayoutView.extend({
     }
   },
   template: require('./missions_aroundme.tpl.html'),
-  className: 'page page-missions page-missions-aroundme page-scrollable',
+  className: 'page page-missions page-missions-aroundme page-no-scroll',
   events: {},
   regions: {
     rgStates: '.page-states'
