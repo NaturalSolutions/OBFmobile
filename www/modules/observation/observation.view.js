@@ -420,7 +420,7 @@ var Layout = Marionette.LayoutView.extend({
       },
       field_lat_long: {
         und: [{
-          value: self.observationModel.get('coords').latitude + '/' + self.observationModel.get('coords').longitude
+          value: _.get(self.observationModel.get('coords'), 'latitude', 0) + '/' + _.get(self.observationModel.get('coords'), 'longitude', 0)
         }]
       },
       field_code_commune: {
@@ -486,7 +486,7 @@ var Layout = Marionette.LayoutView.extend({
           'externId': response.nid,
           'shared': 1
         }).save().done(function() {
-          self.sendPhoto();
+          self.sendPhotos();
         });
 
         //save forest time
@@ -513,17 +513,23 @@ var Layout = Marionette.LayoutView.extend({
     });
   },
 
-  sendPhoto: function() {
+  sendPhotos: function() {
     var self = this;
     var user = User.getCurrent();
 
     if (window.cordova) {
       var nbPhoto = (this.observationModel.get('photos').length) - 1;
-      var Adfd = [];
-      this.observationModel.get('photos').forEach(function(p, key) {
-        Adfd.push(self.uploadPhotoMob(p.url));
+      var dfds = [];
+      this.observationModel.get('photos').forEach(function(photo) {
+        var uploadDfd = self.uploadPhotoMob(photo.url);
+        dfds.push(uploadDfd);
       });
-      $.when.apply($, Adfd).done(function(response) {
+      $.when.apply($, dfds).progress(function() {
+        var resolvedFiles = _.filter(arguments, {type: 'fileResolved'});
+        if ( resolvedFiles.length == dfds.length )
+          self.startProgress(dfds);
+      });
+      $.when.apply($, dfds).done(function(response) {
         Main.getInstance().unblockUI();
         self.$el.removeClass('sending');
         self.$el.find('form').removeClass('loading');
@@ -568,6 +574,18 @@ var Layout = Marionette.LayoutView.extend({
     }
   },
 
+  startProgress: function(dfds) {
+    if ( this.isUploadProgress )
+      return false;
+    this.isUploadProgress = true;
+    console.log('startProgress');
+    _.forEach(dfds, function(dfd) {
+      dfd.progress(function(data) {
+        
+      });
+    });
+  },
+
   uploadPhotoMob: function(f) {
     var self = this;
     var dfd = $.Deferred();
@@ -575,6 +593,11 @@ var Layout = Marionette.LayoutView.extend({
     /* jshint ignore:start */
     window.resolveLocalFileSystemURL(f, function(fe) {
       fe.file(function(file) {
+        dfd.notify({
+          type: 'fileResolved',
+          data: file
+        });
+        var fileSize = file.size;
         var reader = new FileReader();
         reader.onloadend = function(e) {
           var data = new Uint8Array(e.target.result);
@@ -591,6 +614,18 @@ var Layout = Marionette.LayoutView.extend({
             processData: false, // obligatoire pour de l'upload
             dataType: 'json',
             data: fd,
+            xhr: function() {
+              var xhr = new window.XMLHttpRequest();
+              xhr.upload.addEventListener('progress', function(e) {
+                console.log('progress', e);
+                dfd.notify({
+                  type: 'progress',
+                  data: e
+                });
+              }, false);
+
+              return xhr;
+            },
             success: function(response) {
               console.log(response);
               dfd.resolve();
