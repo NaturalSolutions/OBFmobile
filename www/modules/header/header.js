@@ -45,6 +45,7 @@ var View = Marionette.LayoutView.extend({
 
     var data = self.data || {};
     data = _.defaultsDeep(data, {
+      title: '',
       titleKey: '',
       titleArgs: {},
       buttons: {
@@ -52,6 +53,11 @@ var View = Marionette.LayoutView.extend({
         right: [],
       }
     });
+
+    if ( !data.title && data.titleKey ) {
+      console.log(data);
+      data.title = i18n.t('header.titles.'+data.titleKey, data.titleArgs);
+    }
 
     _.forEach(data.buttons, function(side) {
       _.forEach(side, function(btnName, index) {
