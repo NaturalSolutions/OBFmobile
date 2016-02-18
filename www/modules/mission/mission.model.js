@@ -53,6 +53,10 @@ var Model = Backbone.Model.extend({
       from: moment(result.seasons[0].startAt).format('MMMM'),
       to: moment(result.seasons[0].endAt).format('MMMM')
     });
+    result.displaySeasonShort = i18n.t('common.mission.season.display', {
+      from: moment(result.seasons[0].startAt).format('MMM'),
+      to: moment(result.seasons[0].endAt).format('MMM')
+    });
 
     return result;
   },
