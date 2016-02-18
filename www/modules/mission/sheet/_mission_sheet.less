@@ -30,8 +30,9 @@
         margin-left: 1.6em;
       }
     }
-    .status {
-      top: 0;
+    
+  }
+  .status {
       text-align: center;
       .translate(0, -40%);
       .text {
@@ -40,7 +41,6 @@
         margin-top: 4px;
       }
     }
-  }
   .meta {
     padding: 16px 0 16px 20px;
     > span {
@@ -84,7 +84,7 @@
     }
   }
   &:not(.is-accept) {
-    .header .accept .text-is-accept {
+    .status.accept .text-is-accept {
       display: none;
     }
     .meta {
@@ -94,17 +94,13 @@
     }
   }
   &:not(.is-complete) {
-    .header {
-      .complete {
-        display: none;
-      }
+    .status.complete {
+      display: none;
     }
   }
   &.is-complete {
-    .header {
-      .accept {
-        display: none;
-      }
+    .status.accept {
+      display: none;
     }
   }
 }

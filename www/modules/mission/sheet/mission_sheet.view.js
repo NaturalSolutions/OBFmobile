@@ -5,10 +5,10 @@ var Backbone = require('backbone'),
   Observation = require('../../observation/observation.model'),
   Router = require('../../routing/router'),
   User = require('../../profile/user.model.js'),
+  Header = require('../../header/header'),
   Footer = require('../../footer/footer.view');
 
 module.exports = Marionette.LayoutView.extend({
-  header: 'none',
   template: require('./mission_sheet.tpl.html'),
   events: {
     'click .btn-accept': 'onAcceptClick',
@@ -17,7 +17,7 @@ module.exports = Marionette.LayoutView.extend({
   },
   attributes: function() {
     var user = User.getCurrent();
-    var classNames = 'page page-mission_sheet page-scrollable no-header';
+    var classNames = 'page page-mission_sheet';
     if (user.hasCompletedMission(this.model))
       classNames += ' is-complete';
     else if (user.hasAcceptedMission(this.model))
@@ -34,6 +34,14 @@ module.exports = Marionette.LayoutView.extend({
   initialize: function() {
     var self = this;
     var user = User.getCurrent();
+
+    this.header = {
+      title: this.model.get('title'),
+      buttons: {
+        left: ['back']
+      }
+    };
+
     this.listenTo(user, 'change:acceptedMissions', this.onAcceptChange);
     this.listenTo(Observation.collection.getInstance(), 'add', function(observation) {
       observation.set({
