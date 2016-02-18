@@ -1,18 +1,23 @@
 @page_missions_aroundme_item_width: 130px;
+@page_missions_aroundme_location_height: 41px;
+@page_missions_aroundme_tab_height: 47px;
 .page-missions-aroundme {
 	.state-localize {
 		padding-top: 20px;
 	}
 	.state-list {
-		.localize {
+		.location {
 			background: rgba(255, 255, 255, 0.9);
-			padding: 10px 10px 0;
+			padding: 0 10px;
+			.btn {
+				padding-top: 10px;
+				padding-bottom: 10px;
+			}
 			&:after {
 				content: "";
 				display: block;
 				height: 1px;
 				background: #CCC;
-				margin-top: 10px;
 			}
 		}
 		.missions {
@@ -20,7 +25,7 @@
 			padding-bottom: 180px;
 			position: absolute;
 	    width: 100%;
-	    top: 140px;
+	    top: @header-height + @page_missions_aroundme_tab_height;
 	    bottom: 0;
 	    overflow: auto;
 	    li {
@@ -83,6 +88,11 @@
 			}
 			li:nth-child(odd) {
     			clear: left;
+			}
+		}
+		.location ~ .tab-content {
+			.missions {
+				top: @header-height + @page_missions_aroundme_location_height + @page_missions_aroundme_tab_height;
 			}
 		}
 	}

@@ -22,20 +22,12 @@ module.exports = Marionette.LayoutView.extend({
     var user = User.getCurrent();
     var departementIds = user.get('departementIds');
 
-    var headerOptions = {
+    Header.getInstance().set({
       titleKey: 'missionsAroundme',
-      titleArgs: {
-        dptLink: ''
-      },
       buttons: {
         right: ['plus']
       }
-    };
-
-    if ( departementIds.length && user.get('forceDepartement') )
-      headerOptions.titleArgs.dptLink = '<small><a href="#missions/aroundme/manually" class="text-primary">('+departementIds[0]+')</a></small>';
-
-    Header.getInstance().set(headerOptions);
+    });
     
     this.collection = Mission.collection.getInstance().filter(function(mission) {
       var isInDepartement = mission.isInDepartement(departementIds);//_.intersection(departementIds, mission.get('departementIds')).length;
@@ -75,7 +67,10 @@ module.exports = Marionette.LayoutView.extend({
   },
 
   serializeData: function() {
-    var departement = User.getCurrent().get('departement');
+    var user = User.getCurrent();
+    var departement;
+    if ( user.get('departementIds').length && user.get('forceDepartement') )
+      departement = user.get('departement');
 
     return {
       departement: (departement ? departement.toJSON() : null),
@@ -96,12 +91,6 @@ module.exports = Marionette.LayoutView.extend({
 
       }
     });
-
-    var user = User.getCurrent();
-    if ( user.get('departementIds').length && user.get('forceDepartement') )
-      this.$el.addClass('has-departement');
-    else
-      this.$el.removeClass('has-departement');
   },
 
   onDestroy: function() {
