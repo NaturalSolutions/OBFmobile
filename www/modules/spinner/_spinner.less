@@ -5,7 +5,7 @@
     -webkit-animation: spin-rotation 1.4s linear infinite;
     animation: spin-rotation 1.4s linear infinite;
     .circle {
-        stroke-dasharray: 187;
+        stroke-dasharray: 188;
         stroke-dashoffset: 0;
         -webkit-transform-origin: center;
         -ms-transform-origin: center;
@@ -20,14 +20,27 @@
     width: 4em !important;
     height: 4em !important;
   }
-  &.spinner-green{
-    stroke: rgb(2,100,3);
-  } 
+  &.spinner-green {
+    .circle {
+      stroke: rgb(2,100,3);
+    }
+  }
+  &.is-determinate {
+    -webkit-animation: none;
+    animation: none;
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    .circle {
+      stroke-dashoffset: 188;
+      -webkit-animation: none;
+      animation: none;
+    }
+  }
 }
 
 @-webkit-keyframes spin {
   0% {
-    stroke-dashoffset: 187;
+    stroke-dashoffset: 188;
   }
 
   50% {
@@ -37,7 +50,7 @@
   }
 
   100% {
-    stroke-dashoffset: 187;
+    stroke-dashoffset: 188;
     -webkit-transform: rotate(450deg);
     transform: rotate(450deg);
   }
@@ -45,7 +58,7 @@
 
 @keyframes spin {
   0% {
-    stroke-dashoffset: 187;
+    stroke-dashoffset: 188;
   }
 
   50% {
@@ -55,7 +68,7 @@
   }
 
   100% {
-    stroke-dashoffset: 187;
+    stroke-dashoffset: 188;
     -webkit-transform: rotate(450deg);
     transform: rotate(450deg);
   }
