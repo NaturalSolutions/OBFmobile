@@ -1,7 +1,16 @@
 .page-mission_sheet {
   .poster {
-    max-height: 250px;
-    margin: auto;
+    background: no-repeat center;
+    background-size: cover;
+    img {
+      width: 100%;
+      height: auto;
+      max-height: 250px;
+      visibility: hidden;
+      @media (max-height: 480px) {
+        max-height: 200px;
+      }
+    }
   }
   .header {
     &:extend(.header-app);
@@ -35,6 +44,7 @@
   .status {
       text-align: center;
       .translate(0, -40%);
+      margin-right: .8rem;
       .text {
         display: block;
         font-size: 12px;
@@ -71,7 +81,7 @@
     }
   }
   &.is-accept {
-    .header .accept .text-default {
+    .status.accept .text-default {
       display: none;
     }
     .btn-accept {

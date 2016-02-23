@@ -23,6 +23,7 @@ module.exports = Marionette.LayoutView.extend({
     var departementIds = user.get('departementIds');
 
     Header.getInstance().set({
+      classNames: 'no-shadow',
       titleKey: 'missionsAroundme',
       buttons: {
         right: ['plus']

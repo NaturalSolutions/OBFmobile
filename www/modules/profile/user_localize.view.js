@@ -40,7 +40,7 @@ module.exports = Marionette.LayoutView.extend({
     var currentDialog = Dialog.confirm({
       title: 'Problème de géolocalisation',
       message: msgerror,
-      btnCancelLabel: 'Entrer sa géolocalisation manuellement',
+      btnCancelLabel: 'Saisir votre département',
       btnOKLabel: 'Réessayer automatiquement',
       callback: function(result) {
           // result will be true if button was click, while it will be false if users close the dialog directly.

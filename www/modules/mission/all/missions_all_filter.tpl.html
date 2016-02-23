@@ -1,25 +1,27 @@
 <div class="container">
-    <div class="form-group">
-    	<input type="text" class="form-control js-autocomplete" placeholder="<%= data.departement ? data.departement.title : 'Saisir un département' %>" />
-        <div class="js-autocomplete-result autocomplete-result"></div>
-    </div>
-	<div class="form-group">
-        <div class="input-group date js-datetimepicker date-start">
-            <input type="text" class="form-control" />
-            <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-            </span>
+    <div class="well">
+        <div class="form-group">
+        	<input type="text" class="form-control js-autocomplete" placeholder="<%= data.departement ? data.departement.title : 'Saisir un département' %>" />
+            <div class="js-autocomplete-result autocomplete-result"></div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="input-group date js-datetimepicker date-end">
-            <input type="text" class="form-control" />
-            <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-            </span>
+    	<div class="form-group">
+            <div class="input-group date js-datetimepicker date-start">
+                <input type="text" class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
         </div>
-    </div>
-    <div>
-    	<button type="button" class="btn btn-default btn_search">RECHERCHER</button>
+        <div class="form-group">
+            <div class="input-group date js-datetimepicker date-end">
+                <input type="text" class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+        <div>
+        	<button type="button" class="btn btn-default btn-block btn_search">Rechercher</button>
+        </div>
     </div>
 </div>

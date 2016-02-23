@@ -7,7 +7,7 @@ var Marionette = require('backbone.marionette'),
 var filters = null;
 var View = Marionette.LayoutView.extend({
   header: {
-    titleKey: 'missions',
+    titleKey: 'missionsFilter',
     buttons: {
       left: ['back']
     }

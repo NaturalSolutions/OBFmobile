@@ -33,6 +33,10 @@
       }
     }
   }
+  &.no-shadow {
+    .box-shadow(none);
+    border-bottom: 1px solid #EEE;
+  }
 }
 
 body.in-forest #header,
@@ -40,4 +44,7 @@ body.in-forest .header-app {
   background: #32934e;
   color: white;
   -webkit-transition: background-color 500ms linear;
+  .col-right .btn {
+    color: #FFF !important;
+  }
 }

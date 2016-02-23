@@ -1,7 +1,9 @@
 <div class="inner">
 	<% if ( data.departement ) { %>
 	<div class="location text-center">
-		<a href="#missions/aroundme/manually" class="btn btn-lg btn-link text-primary"><%= data.departement.title %></a>
+		<a href="#missions/aroundme/manually" class="btn btn-lg btn-link text-primary">
+			<%= data.departement.title %> <span class="icon material">edit</span>
+		</a>
 	</div>
 	<% } %>
 	<ul class="nav nav-tabs js-nav-tabs nav-justified" role="tablist">

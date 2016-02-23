@@ -12,7 +12,8 @@ var View = Marionette.LayoutView.extend({
   template: require('./header.html'),
   className: 'inner clearfix',
   events: {
-    'click .btn_back': 'historyBack'
+    'click .btn_back': 'historyBack',
+    'click .btn_close': 'historyBack'
   },
   triggers: {
     'click .btn_menu': 'btn:menu:click',
@@ -35,8 +36,8 @@ var View = Marionette.LayoutView.extend({
     option: {
       icon: 'khebab'
     },
-    cancel: {
-      icon: 'remove'
+    close: {
+      icon: 'close'
     }
   },
 

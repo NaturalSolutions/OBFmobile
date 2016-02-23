@@ -19,7 +19,10 @@ module.exports = Marionette.LayoutView.extend({
     this.options = options;
 
     Header.getInstance().set({
-      titleKey: 'missionsAroundmeManually'
+      titleKey: 'missionsAroundmeManually',
+      buttons: {
+        left: ['back']
+      }
     });
   },
 

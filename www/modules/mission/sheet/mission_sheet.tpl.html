@@ -1,39 +1,24 @@
 <div class="inner">
-    <img class="poster img-responsive" src="./images/taxon/poster/<%= data.mission.poster %>" />
-    <!-- <div class="header clearfix">
-        <div class="title">
-            <a class="icon icomoon btn-back">arrow_left</a> <span class="text"><%= data.mission.title %></span>
-        </div>
-        <div class="status accept floating floating-right">
-            <button type="button" class="btn btn-accept btn-fab btn-default btn-lg">
-                <span class="icon icomoon">check</span>
-            </button>
-            <span class="text text-default"><%= i18n.t('pages.missionSheet.acceptBtnLabel') %></span>
-            <span class="text text-is-accept"><%= i18n.t('pages.missionSheet.acceptedBtnLabel') %></span>
-        </div>
-        <div class="status complete floating floating-right">
-            <div class="btn btn-fab btn-lg bg-orange-light">
-                <span class="icon icomoon">palms</span>
-            </div>
-            <span class="text"><%= i18n.t('pages.missionSheet.completedBtnLabel') %></span>
-        </div>
-    </div> -->
+    <% var posterURL = './images/taxon/poster/'+data.mission.poster; %>
+    <div class="poster" style="background-image:url('<%= posterURL %>');">
+        <img src="<%= posterURL %>" />
+    </div>
     <div class="status accept floating floating-right">
-        <button type="button" class="btn btn-accept btn-fab btn-default btn-lg">
+        <button type="button" class="btn btn-accept btn-fab btn-default btn-sm">
             <span class="icon icomoon">check</span>
         </button>
         <span class="text text-default"><%= i18n.t('pages.missionSheet.acceptBtnLabel') %></span>
         <span class="text text-is-accept"><%= i18n.t('pages.missionSheet.acceptedBtnLabel') %></span>
     </div>
     <div class="status complete floating floating-right">
-        <div class="btn btn-fab btn-lg bg-orange-light">
+        <div class="btn btn-fab btn-sm bg-orange-light">
             <span class="icon icomoon">palms</span>
         </div>
         <span class="text"><%= i18n.t('pages.missionSheet.completedBtnLabel') %></span>
     </div>
     <div class="meta">
         <span class="num badge-circle"><%= data.mission.num %></span>
-        <span class="difficulty"><span class="icon icomoon">difficulty_<%= data.mission.difficultyName %></span> <%= i18n.t('mission.difficulty_'+ data.mission.difficulty) %></span>
+        <span class="difficulty"><span class="icon icomoon">difficulty_<%= data.mission.difficultyName %></span> <span class="hidden-small-height"><%= i18n.t('mission.difficulty_'+ data.mission.difficulty) %></span></span>
         <span class="season text-primary">
             <span class="icon icomoon">time</span>
             <span class="period"><%= data.mission.displaySeasonShort %></span>

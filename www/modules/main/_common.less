@@ -547,6 +547,7 @@ form:not(.loading) {
 
 .ui-autocomplete {
     padding: 0;
+    padding-top: 10px;
     margin: 0;
     > li {
         margin: 0;
@@ -575,9 +576,10 @@ form:not(.loading) {
     .modal-header{
         .close{
             font-size: 32px;
-            margin-top: -6px;
-            color: red;
-            opacity: 0.5;
+            margin-top: -9px;
+            color: #666;
+            opacity: 1;
+            font-weight: 300;
         }
     }
 }
@@ -648,4 +650,10 @@ body.header-none {
     background-color: rgba(255, 255, 255, 0.5);
     border: 1px solid #2f1c0c;
     color: #2f1c0c;
+}
+
+@media (max-height: 480px) {
+    .hidden-small-height {
+        display: none;
+    }
 }
