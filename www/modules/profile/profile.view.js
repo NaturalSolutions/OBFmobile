@@ -325,24 +325,15 @@ var Page = Marionette.LayoutView.extend({
     console.log('onChangePasswdClick');
   },
   onLogoutClick: function() {
-    var timeForest = {field_time_forest: {
-        und: _.get(User.getCurrent().get('timeForest'), 'attributes.totalDuration', '')
-    }};
     var Main = require('../main/main.view.js');
     var session = Session.model.getInstance();
     Main.getInstance().showLoader();
-    this.session.updateUser(timeForest).always(function(){
-      session.logout().always(function() {
-        Main.getInstance().hideLoader();
-        Dialog.alert('Vous êtes déconnecté');
-        User.collection.getInstance().becomeAnonymous();
-        Router.getInstance().navigate('', {
-          trigger: true
-        });
-        /*if ( !session.get('isAuth') )
-          Router.getInstance().navigate('dashboard', {
-            trigger: true
-          });*/
+    session.logout().always(function() {
+      Main.getInstance().hideLoader();
+      Dialog.alert('Vous êtes déconnecté');
+      User.collection.getInstance().becomeAnonymous();
+      Router.getInstance().navigate('', {
+        trigger: true
       });
     });
   },

@@ -31,7 +31,7 @@ var View = Marionette.LayoutView.extend({
     this.Main = require('../main/main.view.js');
 
     this.listenTo(User.collection.getInstance(), 'change:current', this.onCurrentUserChange);
-    this.listenTo(User.getCurrent().getTimeForest(), 'change:intervalDuration', this.displayTimeForest);
+    this.listenTo(User.getCurrent().getTimeForest(), 'change:total', this.displayTimeForest);
 
     /*this.on('btn:clue:click', function(e) {
       //Hack: enable to 
@@ -43,7 +43,7 @@ var View = Marionette.LayoutView.extend({
 
   onCurrentUserChange: function(newUser, prevUser) {
     this.stopListening(prevUser.getTimeForest());
-    this.listenTo(newUser.getTimeForest(), 'change:intervalDuration', this.displayTimeForest);
+    this.listenTo(newUser.getTimeForest(), 'change:total', this.displayTimeForest);
     this.render();
   },
 
@@ -69,7 +69,7 @@ var View = Marionette.LayoutView.extend({
   },
 
   displayTimeForest: function() {
-    var duration = User.getCurrent().getTimeForest().get('currentDuration');
+    var duration = User.getCurrent().getTimeForest().get('total');
     var display = this.moment.duration(duration, 'seconds').format('h[h] mm[min] ss[s]');
     this.$el.find('.time-forest-display-js').text(display);
   },

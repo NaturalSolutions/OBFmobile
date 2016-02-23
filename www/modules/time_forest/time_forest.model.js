@@ -9,14 +9,20 @@ var TFmodel = Backbone.Model.extend({
     defaults: {
         uid: '',
         startTime: 0,
-        intervalDuration: 0,
+        // curCount: 0,
         totalDuration: 0,
+
+        serverValue: 0,
+        prevCountTotal: 0,
+        curCountTotal: 0,
+        delta: 0,
+        total: 0
     },
     url: config.coreUrl,
     initialize: function() {
         var self = this;
         this.setProgressLog();
-        this.on('change:intervalDuration', function() {
+        this.on('change:total', function() {
             self.setProgressLog();
         });
     },
@@ -36,23 +42,35 @@ var TFmodel = Backbone.Model.extend({
         if (!isStart) this.start();
         else this.stop();
     },
-    start: function(from) {
+    start: function(_startTime, _curCountTotalInit) {
         var self = this;
-        this.set('startTime', from || moment().unix());
+        this.set('startTime', _startTime || moment().unix());
+        this.set('curCountTotalInit', _curCountTotalInit || this.get('curCountTotal'));
         this.save();
         this.intervalId = setInterval(function() {
-            self.set('intervalDuration', moment().unix() - self.get('startTime'));
-            self.save();
+            var curCount = moment().unix() - self.get('startTime');
+            var curCountTotal = self.get('curCountTotalInit') + curCount;
+            var delta = curCountTotal - self.get('prevCountTotal');
+            var total = self.get('serverValue') + delta;
+            self.set({
+                // curCount: curCount,
+                curCountTotal: curCountTotal,
+                delta: delta,
+                total: total
+            }).save();
         }, 1000);
         $('body').alterClass('*-forest', 'in-forest');
     },
     stop: function() {
-        if (!this.intervalId) return false;
-        clearInterval(this.intervalId);
+        var isStart = this.get('isStart');
+        if (!isStart)
+            return false;
+        if (this.intervalId)
+            clearInterval(this.intervalId);
         this.intervalId = null;
-        this.set('totalDuration', this.get('intervalDuration') + this.get('totalDuration'));
+        // this.set('totalDuration', this.get('curCount') + this.get('totalDuration'));
         this.set('startTime', 0);
-        this.set('intervalDuration', 0);
+        // this.set('curCount', 0);
         this.save();
         $('body').alterClass('*-forest', '');
     },
@@ -61,26 +79,24 @@ var TFmodel = Backbone.Model.extend({
             clearInterval(this.intervalId);
             this.intervalId = null;
         }
-        this.set('totalDuration', 0);
-        this.set('startTime', 0);
-        this.set('intervalDuration', 0);
+        this.set(this.defaults);
         this.save();
     },
-    getCurrentDuration: function() {
-        var isStart = this.get('isStart');
-        if (isStart) return this.get('intervalDuration') + this.get('totalDuration');
-        else return this.get('totalDuration');
-    },
+    // getCurrentDuration: function() {
+    //     var isStart = this.get('isStart');
+    //     if (isStart) return this.get('curCount') + this.get('totalDuration');
+    //     else return this.get('totalDuration');
+    // },
     getProgress: function() {
-        var max = 60*60*10;//10h in seconds
-        var totalTime = this.get('currentDuration');
-        return _.clamp(_.ceil(totalTime/max, 2), 0, 1);
+        var max = 60 * 60 * 10; //10h in seconds
+        var totalTime = this.get('total');
+        return _.clamp(_.ceil(totalTime / max, 2), 0, 1);
     },
     setProgressLog: function() {
-        var timeMax = 60*60*10;//10h in seconds
-        var totalTime = this.get('currentDuration');
-        var ratio =  _.clamp(totalTime/timeMax, 0, 1);
-        ratio = ratio*10;
+        var timeMax = 60 * 60 * 10; //10h in seconds
+        var totalTime = this.get('total');
+        var ratio = _.clamp(totalTime / timeMax, 0, 1);
+        ratio = ratio * 10;
         var min = 1;
         var max = 10;
         var gap = max - min;
@@ -97,19 +113,26 @@ var TFcollection = Backbone.Collection.extend({
         this.deferred = this.fetch();
         var User = require('../profile/user.model');
         User.collection.getInstance().on('change:current', function(newUser, prevUser) {
-            if ( !prevUser )
+            if (!prevUser)
                 return false;
             var prevTimeForest = prevUser.getTimeForest();
             if (!prevUser.isAnonymous())
-              prevTimeForest.stop();
+                prevTimeForest.stop();
             else {
-              var newTimeForest = newUser.getTimeForest();
-              newTimeForest.set({
-                totalDuration: prevTimeForest.get('totalDuration') + newTimeForest.get('totalDuration')
-              });
-              if (prevTimeForest.get('isStart'))
-                newTimeForest.start(prevTimeForest.get('startTime'));
-              else newTimeForest.save();
+                var newTimeForest = newUser.getTimeForest();
+                var curCountTotal = newTimeForest.get('curCountTotal') + prevTimeForest.get('curCountTotal');
+                var delta = curCountTotal - newTimeForest.get('prevCountTotal');
+                var total = newTimeForest.get('serverValue') + delta;
+                newTimeForest.set({
+                    // curCount: curCount,
+                    curCountTotal: curCountTotal,
+                    delta: delta,
+                    total: total
+                });
+                if (prevTimeForest.get('isStart'))
+                    newTimeForest.start(prevTimeForest.get('startTime'), prevTimeForest.get('curCountTotalInit'));
+                else
+                    newTimeForest.save();
                 prevTimeForest.reset();
             }
         });

@@ -82,22 +82,6 @@ var UserModel = Backbone.Model.extend({
     return 1;
   },
 
-  /*getTimeOnMissionRatio: function() {
-    var max = 60*60*10;//10h in seconds
-    var totalTime = this.get('timeForest').get('currentDuration');
-    return _.clamp(_.ceil(totalTime/max, 2), 0, 1);
-  },
-
-  getTimeOnMissionRatioLog: function() {
-    var ratio = this.get('timeOnMissionRatio')*10;
-    var min = 1;
-    var max = 10;
-    var gap = max - min;
-    ratio = ratio / max * gap + min;
-    ratio = _.clamp(ratio, min, max);
-    return _.ceil(Math.log10(ratio), 2);
-  },*/
-
   addLog: function(type, data) {
     var logs = require('../logs/log.model').collection.getInstance();
     logs.add({

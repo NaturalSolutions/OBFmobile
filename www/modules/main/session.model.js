@@ -177,8 +177,11 @@ var SessionModel = Backbone.Model.extend({
           users.setCurrent(user);
 
           self.syncObs(response.obs);
-          self.syncTimeForest(response.time_forest);
-          User.getCurrent().computeScore();
+          user.get('timeForest')
+            .set('serverValue', parseInt(response.user.field_time_forest.und[0].value, 10))
+            .save();
+
+          user.computeScore();
 
           console.log(self.afterLoggedAction);
           if (self.afterLoggedAction && self[self.afterLoggedAction.name]) {
@@ -252,23 +255,6 @@ var SessionModel = Backbone.Model.extend({
     });
   },
 
-  syncTimeForest: function(tf){
-    var modelTimeForest = User.getCurrent().get('timeForest');
-    var currentLocal = modelTimeForest.get('currentDuration');
-    if(modelTimeForest && currentLocal < parseInt(tf,10))
-      modelTimeForest.set('totalDuration', parseInt(tf,10)).save();
-    else if(modelTimeForest && currentLocal > parseInt(tf,10)){
-      var queryData = {
-            field_time_forest: {
-              und: [{
-                value: currentLocal
-              }]
-            }
-          };
-          this.updateUser(queryData);
-    }
-  },
-
   logout: function() {
     var self = this;
     var dfd = $.Deferred();
@@ -300,10 +286,20 @@ var SessionModel = Backbone.Model.extend({
     return dfd;
   },
 
+
+
   updateUser: function(data) {
+    var user = User.getCurrent();
+    var timeForestDelta = user.get('timeForest').get('delta');
+    data = data || {};
+    data.field_time_forest = {
+      und: [{
+        value: timeForestDelta
+      }]
+    };
     var dfd = $.Deferred();
     var query = {
-      url: config.apiUrl + '/obfmobile_user/' + User.getCurrent().get('externId') + '.json',
+      url: config.apiUrl + '/obfmobile_user/' + user.get('externId') + '.json',
       type: 'put',
       contentType: 'application/json',
       data: JSON.stringify(data),
@@ -312,6 +308,13 @@ var SessionModel = Backbone.Model.extend({
         dfd.reject(jqXHR);
       },
       success: function(response) {
+        var timeForest = user.get('timeForest');
+        timeForest
+          .set({
+            serverValue:  parseInt(response.field_time_forest.und[0].value, 10),
+            prevTotal: timeForest.get('curTotal')
+          }).save();
+
         dfd.resolve(response);
       }
     };

@@ -60,6 +60,11 @@ var Layout = Marionette.LayoutView.extend({
       user.set('departementIds', []);
     });
     currentPos.watch();
+
+    var timeForest = User.getCurrent().get('timeForest');
+    if(timeForest.get('isStart'))
+      timeForest.start(timeForest.get('startTime'), timeForest.get('curCountTotalInit'));
+
   },
 
   regions: {

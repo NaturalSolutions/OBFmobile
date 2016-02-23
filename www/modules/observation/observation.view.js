@@ -486,25 +486,10 @@ var Layout = Marionette.LayoutView.extend({
           'externId': response.nid,
           'shared': 1
         }).save().done(function() {
-          self.sendPhotos();
-        });
-
-        //save forest time
-        var modelTimeForest = User.getCurrent().get('timeForest');
-        var currentLocal = modelTimeForest.get('currentDuration');
-        if (currentLocal){
-          var queryData = {
-            field_time_forest: {
-              und: [{
-                value: currentLocal
-              }]
-            }
-          };
-          self.session.updateUser(queryData).done(function(response){
-            User.getCurrent().get('timeForest')
-              .set('totalDuration', parseInt(response.field_time_forest.und[0].value, 10)).save();
+          self.session.updateUser().done(function(response){
+            self.sendPhotos();
           });
-        }
+        });
       }
     };
 
@@ -512,6 +497,7 @@ var Layout = Marionette.LayoutView.extend({
       $.ajax(query);
     });
   },
+
 
   sendPhotos: function() {
     var self = this;
