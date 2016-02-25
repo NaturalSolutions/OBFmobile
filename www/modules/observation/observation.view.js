@@ -346,6 +346,8 @@ var Layout = Marionette.LayoutView.extend({
           }
         }
       });
+    } else if (this.observationModel.get('hasCoords')) {
+      dfd.resolve();
     }
     return dfd.promise();
   },
