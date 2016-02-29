@@ -44,7 +44,20 @@ var ObservationModel = Backbone.Model.extend({
   },
 
   getHasCoords: function() {
-    return this.get('coords') && this.get('coords').lat;
+    return this.get('coords') && this.get('coords').latitude;
+  },
+
+  getHasGeolocation: function(){
+    var user = User.getCurrent();
+    var coords = this.getHasCoords();
+    var city = user.get('hasCity');
+    if(coords){
+      return 'has coords';
+    } else if(!coords && city){
+      return 'has city';
+    } else if (!coords && !city){
+      return null;
+    }
   },
 
   toJSON: function() {

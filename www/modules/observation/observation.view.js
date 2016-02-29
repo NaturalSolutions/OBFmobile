@@ -42,20 +42,21 @@ var Layout = Marionette.LayoutView.extend({
     'click .capture-photo-js': 'capturePhoto'
   },
   initialize: function() {
+    this.user = User.getCurrent();
     this.observationModel = this.model;
     this.listenTo(this.observationModel, 'change:photos', this.render, this);
+    this.listenTo(this.observationModel, 'change:departement', this.render, this);
     this.listenTo(this.observationModel, 'change:shared', this.render, this);
 
     this.session = Session.model.getInstance();
 
-    var user = User.getCurrent();
-    if (user.get('departementIds').length) {
+    if (this.user.get('departementIds').length) {
       this.observationModel.set({
-        departementId: user.get('departementIds')[0]
+        departementId: this.user.get('departementIds')[0]
       }).save();
-    } else if (user.get('city'))
+    } else if (this.user.get('city'))
       this.observationModel.set({
-        departementId: user.get('city').dpt
+        departementId: this.user.get('city').dpt
       }).save();
   },
 
@@ -147,6 +148,13 @@ var Layout = Marionette.LayoutView.extend({
   },
 
   onDomRefresh: function(options) {
+    // var user = User.getCurrent();
+    if (this.user.get('city')){
+      this.observationModel.set({
+        departementId: this.user.get('city').dpt
+      }).save();
+      this.observationModel.get('departement');    }
+
     //this.$el.find('select').selectPlaceholder();
     /*var user = User.getCurrent();
     console.log('onDomRefresh');
@@ -310,9 +318,28 @@ var Layout = Marionette.LayoutView.extend({
   checkGeolocation: function() {
     var self = this;
     var dfd = $.Deferred();
-    var user = User.getCurrent();
-    if (!this.observationModel.get('hasCoords') && !user.get('city')) {
-
+    var geoStatus = this.observationModel.get('hasGeolocation');
+    if(geoStatus === 'has coords'){
+      dfd.resolve();
+    } else if(geoStatus === 'has city'){
+      var currentDialog = Dialog.confirm({
+        title: 'Validation de la géolocalisation',
+        message: 'Cette observation a été prise à ' + self.user.get('city').value + ' ?',
+        btnCancelLabel: 'Non',
+        btnOKLabel: 'Oui',
+        closable: true, // <-- Default value is false
+        callback: function(result) {
+          if (result) {
+            dfd.resolve();
+            self.onDomRefresh();
+          } else {
+            self.user.set('city', null).save();
+            self.saveObs();
+            dfd.reject();
+          }
+        }
+      });
+    } else if(!geoStatus){
       var automplete = new AutompleteCity();
       automplete.render();
 
@@ -322,33 +349,14 @@ var Layout = Marionette.LayoutView.extend({
         message: automplete.$el
       });
 
-      user.once('change:city', function() {
+      this.user.once('change:city', function() {
         console.log('onUserChange city');
         dialog.close();
         self.onDomRefresh();
         dfd.resolve();
       });
-    } else if (!this.observationModel.get('hasCoords') && user.get('city')) {
-      var currentDialog = Dialog.confirm({
-        title: 'Validation de la géolocalisation',
-        message: 'Cette observation a été prise à ' + user.get('city').value + ' ?',
-        btnCancelLabel: 'Non',
-        btnOKLabel: 'Oui',
-        closable: true, // <-- Default value is false
-        callback: function(result) {
-          if (result) {
-            dfd.resolve();
-            self.onDomRefresh();
-          } else {
-            user.set('city', null).save();
-            self.saveObs();
-            dfd.reject();
-          }
-        }
-      });
-    } else if (this.observationModel.get('hasCoords')) {
-      dfd.resolve();
     }
+
     return dfd.promise();
   },
 
@@ -397,11 +405,11 @@ var Layout = Marionette.LayoutView.extend({
       });
       return photos.join();
     };
-    var user = User.getCurrent();
+    // var user = User.getCurrent();
     //data expected by the server
     var data = {
       type: 'observation',
-      title: 'mission_' + self.observationModel.get('missionId') + '_' + self.observationModel.get('date') + '_' + user.get('externId'),
+      title: 'mission_' + self.observationModel.get('missionId') + '_' + self.observationModel.get('date') + '_' + this.user.get('externId'),
       field_observation_timestamp: {
         und: [{
           value: self.observationModel.get('date')
@@ -427,7 +435,7 @@ var Layout = Marionette.LayoutView.extend({
       },
       field_code_commune: {
         und: [{
-          value: _.get(User.getCurrent().get('city'), 'code', '')
+          value: _.get(this.user.get('city'), 'code', '')
         }]
       }
     };
@@ -455,12 +463,12 @@ var Layout = Marionette.LayoutView.extend({
                 };
                 self.session.set('needLogin', true);
                 Router.getInstance().startOutOfHistory();
-                if (user.isAnonymous())
+                if (self.user.isAnonymous())
                   Router.getInstance().navigate('user-selector', {
                     trigger: true
                   });
                 else
-                  Router.getInstance().navigate('login/' + user.get('id'), {
+                  Router.getInstance().navigate('login/' + this.user.get('id'), {
                     trigger: true
                   });
               }
@@ -503,7 +511,7 @@ var Layout = Marionette.LayoutView.extend({
 
   sendPhotos: function() {
     var self = this;
-    var user = User.getCurrent();
+    // var user = User.getCurrent();
 
     if (window.cordova) {
       var nbPhoto = (this.observationModel.get('photos').length) - 1;
@@ -525,7 +533,7 @@ var Layout = Marionette.LayoutView.extend({
         /*self.observationModel.set({
           'shared': 1
         }).save();*/
-        var nbCompleted = user.get('completedMissions').length;
+        var nbCompleted = this.user.get('completedMissions').length;
         Main.getInstance().addDialog({
           cssClass: 'theme-primary with-bg-forest user-score',
           badgeClassNames: 'badge-circle bg-wood border-brown text-white',
@@ -537,7 +545,7 @@ var Layout = Marionette.LayoutView.extend({
           button: i18n.t('dialogs.obsShared.button')
         });
         self.setFormStatus('shared');
-        user.computeScore();
+        this.user.computeScore();
       });
     } else {
       Main.getInstance().unblockUI();
@@ -546,7 +554,7 @@ var Layout = Marionette.LayoutView.extend({
       /*self.observationModel.set({
         'shared': 1
       }).save();*/
-      var nbCompleted = user.get('completedMissions').length;
+      var nbCompleted = this.user.get('completedMissions').length;
       Main.getInstance().addDialog({
         cssClass: 'theme-primary with-bg-forest user-score',
         badgeClassNames: 'badge-circle bg-wood border-brown text-white',
@@ -558,7 +566,7 @@ var Layout = Marionette.LayoutView.extend({
         button: i18n.t('dialogs.obsShared.button')
       });
       self.setFormStatus('shared');
-      user.computeScore();
+      this.user.computeScore();
     }
   },
 

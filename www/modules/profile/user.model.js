@@ -54,6 +54,10 @@ var UserModel = Backbone.Model.extend({
     return timeForest;
   },
 
+  getHasCity: function() {
+    return this.get('city') && this.get('city').value;
+  },
+
   toJSON: function() {
     var self = this;
     var result = Backbone.Model.prototype.toJSON.apply(self, arguments);
