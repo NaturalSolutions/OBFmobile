@@ -172,14 +172,14 @@ var Page = Marionette.LayoutView.extend({
       console.log(errors);
       if (errors && !this.model.get('externId'))
         return false;
-      else if ((!_.isEmpty(errors.email) || !_.isEmpty(errors.firstname) || !_.isEmpty(errors.lastname)) && this.model.get('externId'))
+      else if ( _.get(errors, 'email', '') || _.get(errors, 'firstname', '') || _.get(errors, 'lastname', '') && this.model.get('externId'))
         return false;
 
     this.$el.addClass('block-ui');
     $form.addClass('loading');
 
     var formValues = this.form.getValue();
-    if (formValues.groupcategory) 
+    if (formValues.groupcategory)
       formValues.usercategory = formValues.groupcategory;
     var queryData = {
       field_first_name: {
