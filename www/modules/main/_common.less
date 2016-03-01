@@ -7,6 +7,11 @@
 @blue: #3DBADB;
 @pink: #ff3f81;
 
+*:not(input):not(textarea):not(form):not(select) {
+    -webkit-touch-callout:none;
+    -webkit-user-select: none; /* Disable selection/copy in UIWebView */
+}
+
 .ui-helper-hidden-accessible {
     display: none;
 }
