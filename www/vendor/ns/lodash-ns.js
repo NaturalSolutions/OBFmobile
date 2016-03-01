@@ -2,6 +2,12 @@
 var console = console || {log: function() {}};
 
 _.mixin({
+  log10: function(value) {
+    return Math.log(value) / Math.LN10;
+  }
+});
+
+_.mixin({
   binarySearchIndex: function(values, target, start, end, comparatorCallback) {
     if ( start > end )
       return -1;//does not exist

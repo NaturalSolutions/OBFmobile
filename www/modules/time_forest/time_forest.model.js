@@ -20,6 +20,7 @@ var TFmodel = Backbone.Model.extend({
     },
     url: config.coreUrl,
     initialize: function() {
+        console.log('timeForest initialize');
         var self = this;
         this.setProgressLog();
         this.on('change:total', function() {
@@ -102,7 +103,7 @@ var TFmodel = Backbone.Model.extend({
         var gap = max - min;
         ratio = ratio / max * gap + min;
         ratio = _.clamp(ratio, min, max);
-        this.set('progressLog', _.ceil(Math.log10(ratio), 2)).save();
+        this.set('progressLog', _.ceil(_.log10(ratio), 2));
     }
 });
 var TFcollection = Backbone.Collection.extend({
