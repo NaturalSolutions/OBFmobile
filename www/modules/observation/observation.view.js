@@ -468,7 +468,7 @@ var Layout = Marionette.LayoutView.extend({
                     trigger: true
                   });
                 else
-                  Router.getInstance().navigate('login/' + this.user.get('id'), {
+                  Router.getInstance().navigate('login/' + self.user.get('id'), {
                     trigger: true
                   });
               }
