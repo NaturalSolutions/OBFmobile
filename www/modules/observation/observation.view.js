@@ -529,6 +529,7 @@ var Layout = Marionette.LayoutView.extend({
         Main.getInstance().unblockUI();
         self.$el.removeClass('sending');
         self.$el.find('form').removeClass('loading');
+        self.$el.find('form').removeClass('progressing');
 
         /*self.observationModel.set({
           'shared': 1
@@ -551,6 +552,7 @@ var Layout = Marionette.LayoutView.extend({
       Main.getInstance().unblockUI();
       self.$el.removeClass('sending');
       self.$el.find('form').removeClass('loading');
+      self.$el.find('form').removeClass('progressing');
       /*self.observationModel.set({
         'shared': 1
       }).save();*/
@@ -574,10 +576,11 @@ var Layout = Marionette.LayoutView.extend({
     if ( this.isUploadProgress )
       return false;
     this.isUploadProgress = true;
+    this.$el.find('form').addClass('progressing');
     console.log('startProgress');
     _.forEach(dfds, function(dfd) {
       dfd.progress(function(data) {
-        
+        console.log('progress notify', data);
       });
     });
   },
@@ -613,7 +616,7 @@ var Layout = Marionette.LayoutView.extend({
             xhr: function() {
               var xhr = new window.XMLHttpRequest();
               xhr.upload.addEventListener('progress', function(e) {
-                console.log('progress', e);
+                console.log('progress event', e);
                 dfd.notify({
                   type: 'progress',
                   data: e
