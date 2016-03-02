@@ -41,6 +41,8 @@ var Layout = Marionette.LayoutView.extend({
     //'submit form#form-picture': 'uploadPhoto',
     'click .capture-photo-js': 'capturePhoto'
   },
+  currentPhotoDeferred: [],
+
   initialize: function() {
     this.user = User.getCurrent();
     this.observationModel = this.model;
@@ -509,6 +511,16 @@ var Layout = Marionette.LayoutView.extend({
   },
 
 
+  listenRouter: function() {
+    var self = this;
+    this.listenToOnce(Router.getInstance(), 'route', function(name, args){
+      _.forEach(self.currentPhotoDeferred, function(jqxhr){
+        jqxhr.abort();
+      });
+      self.currentPhotoDeferred = [];
+    });
+  },
+
   sendPhotos: function() {
     var self = this;
     // var user = User.getCurrent();
@@ -520,12 +532,21 @@ var Layout = Marionette.LayoutView.extend({
         var uploadDfd = self.uploadPhotoMob(photo.url);
         dfds.push(uploadDfd);
       });
+
+      //listen cancel xhr router
+      this.listenRouter();
+
       $.when.apply($, dfds).progress(function() {
         var resolvedFiles = _.filter(arguments, {type: 'fileResolved'});
         if ( resolvedFiles.length == dfds.length )
           self.startProgress(dfds);
       });
       $.when.apply($, dfds).done(function(response) {
+
+        //stop listen router
+        self.stopListenning(Router.getInstance());
+        self.currentPhotoDeferred = [];
+
         Main.getInstance().unblockUI();
         self.$el.removeClass('sending');
         self.$el.find('form').removeClass('loading');
@@ -638,7 +659,7 @@ var Layout = Marionette.LayoutView.extend({
             }
           };
           self.session.getCredentials(query).then(function() {
-            $.ajax(query);
+            self.currentPhotoDeferred.push($.ajax(query));
           });
         };
         reader.readAsArrayBuffer(file);
