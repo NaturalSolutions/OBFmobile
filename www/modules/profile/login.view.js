@@ -148,13 +148,14 @@ var View = Marionette.LayoutView.extend({
       message: this.formNPW.$el,
       type: 'type-success',
       buttons: [{
-        label: 'Envoyer nouveau mot de passe par email',
-        cssClass: 'btn-block btn-default btn-lg',
-        action: _.debounce(function(dialogItself) {
+        label: 'Renouveller le mot de passe',
+        cssClass: 'btn-block btn-primary btn-lg',
+        action: function(dialogItself) {
           var errors = self.formNPW.validate();
-          console.log(errors);
           if (errors)
               return false;
+          dialogItself.enableButtons(false);
+          dialogItself.setClosable(false);
 
           var formValues = self.formNPW.getValue();
           $.ajax({
@@ -173,7 +174,7 @@ var View = Marionette.LayoutView.extend({
               self.dialogRequestNewpwSuccess();
             }
           });
-        },2000)
+        }
       }]
     });
   },
