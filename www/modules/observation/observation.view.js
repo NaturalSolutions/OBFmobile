@@ -533,7 +533,7 @@ var Layout = Marionette.LayoutView.extend({
         /*self.observationModel.set({
           'shared': 1
         }).save();*/
-        var nbCompleted = this.user.get('completedMissions').length;
+        var nbCompleted = self.user.get('completedMissions').length;
         Main.getInstance().addDialog({
           cssClass: 'theme-primary with-bg-forest user-score',
           badgeClassNames: 'badge-circle bg-wood border-brown text-white',
@@ -545,7 +545,7 @@ var Layout = Marionette.LayoutView.extend({
           button: i18n.t('dialogs.obsShared.button')
         });
         self.setFormStatus('shared');
-        this.user.computeScore();
+        self.user.computeScore();
       });
     } else {
       Main.getInstance().unblockUI();
@@ -566,7 +566,7 @@ var Layout = Marionette.LayoutView.extend({
         button: i18n.t('dialogs.obsShared.button')
       });
       self.setFormStatus('shared');
-      this.user.computeScore();
+      self.user.computeScore();
     }
   },
 
