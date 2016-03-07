@@ -43,4 +43,8 @@
     <plugin name="cordova-plugin-camera" spec="^1.2.0" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="ionic-plugin-keyboard" spec="~1.0.8" />
+    <preference name="xwalkVersion" value="16+" />
+    <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect" />
+    <preference name="xwalkMode" value="embedded" />
+    <preference name="xwalkMultipleApk" value="true" />
 </widget>
