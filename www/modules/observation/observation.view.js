@@ -516,8 +516,8 @@ var Layout = Marionette.LayoutView.extend({
     if (window.cordova) {
       var nbPhoto = (this.observationModel.get('photos').length) - 1;
       var dfds = [];
-      this.observationModel.get('photos').forEach(function(photo) {
-        var uploadDfd = self.uploadPhotoMob(photo.url);
+      this.observationModel.get('photos').forEach(function(photo, index) {
+        var uploadDfd = self.uploadPhotoMob(photo, index);
         dfds.push(uploadDfd);
       });
       $.when.apply($, dfds).progress(function() {
@@ -582,12 +582,13 @@ var Layout = Marionette.LayoutView.extend({
     });
   },
 
-  uploadPhotoMob: function(f) {
+  uploadPhotoMob: function(photo, index) {
     var self = this;
     var dfd = $.Deferred();
 
+    this.index = index;
     /* jshint ignore:start */
-    window.resolveLocalFileSystemURL(f, function(fe) {
+    window.resolveLocalFileSystemURL(photo.url, function(fe) {
       fe.file(function(file) {
         dfd.notify({
           type: 'fileResolved',
@@ -601,10 +602,10 @@ var Layout = Marionette.LayoutView.extend({
             type: 'image/jpeg'
           });
           var fd = new FormData();
-          fd.append('files[anything1]', imgBlob, file.name);
+          fd.append('files[obfmobile]', imgBlob, file.name);
           fd.append('field_name', 'field_observation_image');
           var query = {
-            url: encodeURI(config.apiUrl + '/node/' + self.observationModel.get('externId') + '/attach_file'),
+            url: encodeURI(config.apiUrl + '/obf_node/' + self.observationModel.get('externId') + '/attach_file'),
             type: 'post',
             contentType: false, // obligatoire pour de l'upload
             processData: false, // obligatoire pour de l'upload
@@ -623,8 +624,10 @@ var Layout = Marionette.LayoutView.extend({
               return xhr;
             },
             success: function(response) {
-              console.log(response);
               dfd.resolve();
+              photo.externUrl = response[0];
+              self.observationModel.get('photos')[self.index].externUrl = photo.externUrl;
+              self.observationModel.save();
             },
             error: function(error) {
               console.log(error);
