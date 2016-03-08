@@ -77,20 +77,23 @@ var Page = Marionette.LayoutView.extend({
       },
       usercategory: {
         type: 'Radio',
-        options:
-        {
-          value0:'Seul(e)',
-          value1:'Famille',
-          value2:'En groupe'
-        }
-        
+        options: ['Seul(e)', 'Famille', 'En groupe']
       },
       groupcategory: {
         type: 'Select',
-        options:['scout', 'éclaireur','autre'],
+        options: ['scout', 'éclaireur','autre'],
         editorAttrs: {
           placeholder: 'Sélectionnez votre groupe'
         },
+        validators: [function(value, formValues) {
+          var err = {
+                type: 'required',
+                message: i18n.t('validation.errors.required')
+            };
+
+            if ( formValues.usercategory == 'En groupe' && !value )
+              return err;
+        }]
       }
     };
 
@@ -148,11 +151,12 @@ var Page = Marionette.LayoutView.extend({
     }).render();
 
     this.$el.append(this.form.$el);
+    self.$el.find('select').selectPlaceholder();
+
     this.form.fields.groupcategory.$el.hide();
     this.form.on('usercategory:change', function(form, editor) {
-      if (editor.getValue() === "value2"){
+      if (editor.getValue() === "En groupe"){
         self.form.fields.groupcategory.$el.show();
-        self.$el.find('select').selectPlaceholder();
       }else{
         self.form.fields.groupcategory.$el.hide();
       }
@@ -165,7 +169,8 @@ var Page = Marionette.LayoutView.extend({
   onFormSubmit: function(e) {
     e.preventDefault();
     var $form = this.$el.find('form');
-    if ($form.hasClass('loading'))
+    this.form.validate();
+    /*if ($form.hasClass('loading'))
         return false;
 
       var errors = this.form.validate();
@@ -176,11 +181,13 @@ var Page = Marionette.LayoutView.extend({
         return false;
 
     this.$el.addClass('block-ui');
-    $form.addClass('loading');
+    $form.addClass('loading');*/
 
     var formValues = this.form.getValue();
-    if (formValues.groupcategory)
+
+    if ( formValues.usercategory == 'En groupe' && formValues.groupcategory )
       formValues.usercategory = formValues.groupcategory;
+
     var queryData = {
       field_first_name: {
         und: [{
@@ -200,6 +207,11 @@ var Page = Marionette.LayoutView.extend({
         und: formValues.usercategory
       },
     };
+
+    console.log(queryData);
+
+    if ( true )
+      return false;
     
     //If it's not register on sever
     if ( !this.model.get('externId') )
