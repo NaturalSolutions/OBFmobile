@@ -133,7 +133,8 @@ var Layout = Marionette.LayoutView.extend({
         options: Mission.collection.getInstance(),
         editorAttrs: {
           placeholder: 'Missions',
-          selectedvalue: this.observationModel.get('missionId')
+          selectedvalue: this.observationModel.get('missionId'),
+          disabled: this.observationModel.get('shared') ? true : false
         },
         validators: ['required']
       },
@@ -142,7 +143,8 @@ var Layout = Marionette.LayoutView.extend({
         options: Departement.collection.getInstance(),
         editorAttrs: {
           placeholder: 'Départements',
-          selectedvalue: this.observationModel.get('departementId')
+          selectedvalue: this.observationModel.get('departementId'),
+          disabled: this.observationModel.get('shared') ? true : false
         },
         validators: ['required']
       },
@@ -172,10 +174,10 @@ var Layout = Marionette.LayoutView.extend({
       idToTransmit = null;
     }
 
-    if (this.observationModel.get('shared') > 0) {
+    /*if (this.observationModel.get('shared') > 0) {
       this.$el.addClass('read-only');
       this.$el.find(':input:not(:submit)').prop('disabled', true);
-    }
+    }*/
 
     this.formObs.$el.find('select').selectPlaceholder();
 
@@ -194,11 +196,12 @@ var Layout = Marionette.LayoutView.extend({
 
   onDomRefresh: function(options) {
     // var user = User.getCurrent();
-    if (this.user.get('city')){
+    if (this.user.get('city')) {
       this.observationModel.set({
         departementId: this.user.get('city').dpt
       }).save();
-      this.observationModel.get('departement');    }
+      this.observationModel.get('departement');
+    }
 
     //this.$el.find('select').selectPlaceholder();
     /*var user = User.getCurrent();
