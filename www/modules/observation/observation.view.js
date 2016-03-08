@@ -383,6 +383,11 @@ var Layout = Marionette.LayoutView.extend({
     );
   },
 
+  onSendError: function() {
+    this.$el.removeClass('sending block-ui');
+    this.$el.find('form').removeClass('loading');
+  },
+
 
   // Save in server time_forest : update user with new time (field_time_forest)
 
@@ -395,9 +400,8 @@ var Layout = Marionette.LayoutView.extend({
     if (self.$el.hasClass('sending') || self.observationModel.get('shared') == 1)
       return false;
 
-    self.$el.addClass('sending');
+    self.$el.addClass('sending block-ui');
     this.$el.find('form').addClass('loading');
-    Main.getInstance().blockUI();
 
     //clear data photos
     var clearPhoto = function(args) {
@@ -448,9 +452,7 @@ var Layout = Marionette.LayoutView.extend({
       contentType: 'application/json',
       data: JSON.stringify(data),
       error: function(error) {
-        self.$el.removeClass('sending');
-        self.$el.find('form').removeClass('loading');
-        Main.getInstance().unblockUI();
+        self.onSendError();
         var dfd;
         if (error.responseJSON[0] === 'Access denied for user anonymous') {
           Dialog.confirm({
@@ -533,8 +535,30 @@ var Layout = Marionette.LayoutView.extend({
         dfds.push(uploadDfd);
       });
 
-      //listen cancel xhr router
-      this.listenRouter();
+      var isStarted = false;
+      var hasError = false;
+      _.forEach(dfds, function(dfd) {
+        dfd.fail(function(error) {
+          if ( !hasError && error && error == 'error' ) {
+            hasError = true;
+            self.onSendError();
+            Dialog.alert({
+              closable: true,
+              message: i18n.t('dialogs.errorRetry')
+            });
+            _.forEach(dfds, function(_dfd) {
+              if ( _dfd != dfd )
+                _dfd.reject();
+            });
+          }
+        });
+        dfd.progress(function(data) {
+          if ( !isStarted && data == 'progress' ) {
+            isStarted = true;
+            self.onUploadPhotosStart(dfds);
+          }
+        });
+      });
 
       $.when.apply($, dfds).progress(function() {
         var resolvedFiles = _.filter(arguments, {type: 'fileResolved'});
@@ -570,11 +594,10 @@ var Layout = Marionette.LayoutView.extend({
         this.user.computeScore();
       });
     } else {
-      Main.getInstance().unblockUI();
-      self.$el.removeClass('sending');
-      self.$el.find('form').removeClass('loading');
-      self.$el.find('form').removeClass('progressing');
-      /*self.observationModel.set({
+      this.$el.removeClass('sending block-ui');
+      this.$el.find('form').removeClass('loading');
+      this.$el.find('form').removeClass('progressing');
+      /*this.observationModel.set({
         'shared': 1
       }).save();*/
       var nbCompleted = this.user.get('completedMissions').length;
@@ -588,7 +611,7 @@ var Layout = Marionette.LayoutView.extend({
         message: i18n.t('dialogs.obsShared.message'),
         button: i18n.t('dialogs.obsShared.button')
       });
-      self.setFormStatus('shared');
+      this.setFormStatus('shared');
       this.user.computeScore();
     }
   },
@@ -606,7 +629,41 @@ var Layout = Marionette.LayoutView.extend({
     });
   },
 
-  uploadPhotoMob: function(f) {
+  onUploadPhotosProgress: function(loaded, total) {
+    var percent = Math.round((loaded/total)*100)+'%';
+    this.$el.find('.progress-bar').css({
+      width: percent
+    }).text(percent);
+  },
+
+  onPhotosUploaded: function() {
+    var self = this;
+    //stop listen router
+    self.stopListening(Router.getInstance());
+
+    self.$el.removeClass('sending block-ui');
+    self.$el.find('form').removeClass('loading');
+    self.$el.find('form').removeClass('progressing');
+
+    self.observationModel.set({
+      'shared': 1
+    }).save();
+    var nbCompleted = this.user.get('completedMissions').length;
+    Main.getInstance().addDialog({
+      cssClass: 'theme-primary with-bg-forest user-score',
+      badgeClassNames: 'badge-circle bg-wood border-brown text-white',
+      badge: nbCompleted + '<div class="text-xs text-bottom">' + i18n.t('mission.label', {
+        count: nbCompleted
+      }) + '</div>',
+      title: i18n.t('dialogs.obsShared.title'),
+      message: i18n.t('dialogs.obsShared.message'),
+      button: i18n.t('dialogs.obsShared.button')
+    });
+    self.setFormStatus('shared');
+    this.user.computeScore();
+},
+
+  uploadPhoto: function(f) {
     var self = this;
     var dfd = $.Deferred();
 
@@ -620,6 +677,8 @@ var Layout = Marionette.LayoutView.extend({
         var fileSize = file.size;
         var reader = new FileReader();
         reader.onloadend = function(e) {
+          if ( dfd.state() == 'rejected' )
+            return false;
           var data = new Uint8Array(e.target.result);
           var imgBlob = new Blob([data], {
             type: 'image/jpeg'
@@ -652,6 +711,7 @@ var Layout = Marionette.LayoutView.extend({
             },
             error: function(error) {
               console.log(error);
+              dfd.reject('error');
               Dialog.alert({
                 closable: true,
                 message: error.responseJSON
