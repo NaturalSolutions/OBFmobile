@@ -148,10 +148,6 @@ var SessionModel = Backbone.Model.extend({
         }),
         error: function(jqXHR, textStatus, errorThrown) {
           console.log(jqXHR, textStatus, errorThrown);
-          Dialog.alert({
-            closable: true,
-            message: errorThrown
-          });
           dfd.reject(jqXHR);
         },
         success: function(response) {

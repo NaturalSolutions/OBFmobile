@@ -517,13 +517,8 @@ var Layout = Marionette.LayoutView.extend({
       var photos = this.observationModel.get('photos');
       var dfds = [];
       photos.forEach(function(photo) {
-        var dfd = self.uploadPhoto(photo.url);
+        var dfd = self.uploadPhoto(photo.url, index);
         dfds.push(dfd);
-        /*dfd.progress(function(data) {
-          if ( data == 'progress' && !isStarted ) {
-            self.onUploadPhotosStart(dfds);
-          }
-        });*/
       });
 
       var isStarted = false;
@@ -562,6 +557,22 @@ var Layout = Marionette.LayoutView.extend({
 
       $.when.apply($, dfds).done(function(response) {
         self.onPhotosUploaded(response);
+        /*self.observationModel.set({
+          'shared': 1
+        }).save();*/
+        var nbCompleted = self.user.get('completedMissions').length;
+        Main.getInstance().addDialog({
+          cssClass: 'theme-primary with-bg-forest user-score',
+          badgeClassNames: 'badge-circle bg-wood border-brown text-white',
+          badge: nbCompleted + '<div class="text-xs text-bottom">' + i18n.t('mission.label', {
+            count: nbCompleted
+          }) + '</div>',
+          title: i18n.t('dialogs.obsShared.title'),
+          message: i18n.t('dialogs.obsShared.message'),
+          button: i18n.t('dialogs.obsShared.button')
+        });
+        self.setFormStatus('shared');
+        self.user.computeScore();
       });
     } else {
       this.$el.removeClass('sending block-ui');
@@ -581,8 +592,8 @@ var Layout = Marionette.LayoutView.extend({
         message: i18n.t('dialogs.obsShared.message'),
         button: i18n.t('dialogs.obsShared.button')
       });
-      this.setFormStatus('shared');
-      this.user.computeScore();
+      self.setFormStatus('shared');
+      self.user.computeScore();
     }
   },
 
@@ -639,13 +650,14 @@ var Layout = Marionette.LayoutView.extend({
     this.user.computeScore();
 },
 
-  uploadPhoto: function(f) {
+  uploadPhoto: function(photo, index) {
     var self = this;
     var dfd = $.Deferred();
     dfd.bytesTotal = 0;
 
+    this.index = index;
     /* jshint ignore:start */
-    window.resolveLocalFileSystemURL(f, function(fe) {
+    window.resolveLocalFileSystemURL(photo.url, function(fe) {
       fe.file(function(file) {
         dfd.bytesTotal = file.size;
         var reader = new FileReader();
@@ -657,10 +669,10 @@ var Layout = Marionette.LayoutView.extend({
             type: 'image/jpeg'
           });
           var fd = new FormData();
-          fd.append('files[anything1]', imgBlob, file.name);
+          fd.append('files[obfmobile]', imgBlob, file.name);
           fd.append('field_name', 'field_observation_image');
           var query = {
-            url: encodeURI(config.apiUrl + '/node/' + self.observationModel.get('externId') + '/attach_file'),
+            url: encodeURI(config.apiUrl + '/obf_node/' + self.observationModel.get('externId') + '/attach_file'),
             type: 'post',
             contentType: false, // obligatoire pour de l'upload
             processData: false, // obligatoire pour de l'upload
@@ -676,8 +688,10 @@ var Layout = Marionette.LayoutView.extend({
               return xhr;
             },
             success: function(response) {
-              console.log(response);
               dfd.resolve();
+              photo.externUrl = response[0];
+              self.observationModel.get('photos')[self.index].externUrl = photo.externUrl;
+              self.observationModel.save();
             },
             error: function(error) {
               console.log(error);

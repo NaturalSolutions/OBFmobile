@@ -37,7 +37,6 @@ var GeoModel = Backbone.Model.extend({
       },
       timestamp: position.timestamp
     });
-    console.log(position);
     if (this.watchTimeout)
       clearTimeout(this.watchTimeout);
   },
