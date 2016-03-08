@@ -21,6 +21,7 @@ var UserModel = Backbone.Model.extend({
     displayHelp: true,
     departementIds: [],
     positionEnabled: true,
+    nbComputedObs: 0,
     level: 0,
     palm: 0,
     acceptedMissionIds: [],
@@ -215,9 +216,11 @@ var UserModel = Backbone.Model.extend({
 
   computeScore: function() {
     var self = this;
+
+    self.set('nbComputedObs', this.get('completeObservations').length);
+
     var computableObs = this.get('computableObservations');
     var nbComputedObs = computableObs.length;
-    self.set('nbComputedObs', nbComputedObs);
 
     //TODO: define rules
     var palmPad = [3, 10, 30];
