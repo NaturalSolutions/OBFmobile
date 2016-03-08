@@ -122,23 +122,47 @@ var UserModel = Backbone.Model.extend({
   },
 
   getCompletedMissions: function() {
-    return this.getMissions('completed');
+    var missionIds = this.get('completedMissionIds');
+    var missions = require('../mission/mission.model').collection.getInstance();
+    return missions.filter(function(mission) {
+      return missionIds.indexOf(mission.get('id')) > -1;
+    });
   },
   addCompletedMission: function(mission) {
+    console.log(mission);
     var result = this.addMission(mission, 'completed');
-    if (result) {
-      this.addLog('mission_complete', {
-        mission: {
-          id: mission.get('id'),
-          num: mission.get('num'),
-          title: mission.get('title')
-        }
-      });
-    }
+    this.addLog('mission_complete', {
+      mission: {
+        id: mission.get('id'),
+        num: mission.get('num'),
+        title: mission.get('title')
+      }
+    });
     return this;
   },
   hasCompletedMission: function(mission) {
     return this.hasMission(mission, 'completed');
+  },
+
+  getObservations: function() {
+    var observations = require('../observation/observation.model').collection.getInstance();
+    return observations.where({
+      'userId': this.id
+    });
+  },
+
+  getCompleteObservations: function() {
+    var observations = this.get('observations');
+    return observations.filter(function(obs) {
+      return (obs.get('shared') > 0);
+    });
+  },
+
+  getComputableObservations: function() {
+    var observations = this.get('completeObservations');
+    return observations.filter(function(obs) {
+      return obs.get('mission').get('difficulty') > 0;
+    });
   },
 
   getMissions: function(listName) {
@@ -149,9 +173,7 @@ var UserModel = Backbone.Model.extend({
     });
   },
   addMission: function(mission, listName) {
-    if (this.hasMission(mission, listName))
-      return false;
-
+    
     var missionIds = this.get(listName + 'MissionIds');
     missionIds.push(mission.get('id'));
     this.trigger('change:' + listName + 'Missions', this);
@@ -193,25 +215,20 @@ var UserModel = Backbone.Model.extend({
 
   computeScore: function() {
     var self = this;
-    var observations = require('../observation/observation.model').collection.getInstance();
-    var obsByUid = observations.where({
-      'userId': this.id
-    });
-    var shared = obsByUid.filter(function(obs) {
-      return (obs.get('shared') > 0 && obs.get('mission').get('difficulty') > 0);
-    });
-    var nbShared = shared.length;
+    var computableObs = this.get('computableObservations');
+    var nbComputedObs = computableObs.length;
+    self.set('nbComputedObs', nbComputedObs);
 
     //TODO: define rules
     var palmPad = [3, 10, 30];
     for (var palmPadIndex = palmPad.length - 1; palmPadIndex >= 0; palmPadIndex--) {
-      if (nbShared >= palmPad[palmPadIndex]) {
+      if (nbComputedObs >= palmPad[palmPadIndex]) {
         self.set('palm', palmPadIndex + 1);
         break;
       }
     }
 
-    var difficultiesCompleted = _.countBy(shared, function(obs) {
+    var difficultiesCompleted = _.countBy(computableObs, function(obs) {
       return obs.get('mission').get('difficulty');
     });
     //TODO: define rules

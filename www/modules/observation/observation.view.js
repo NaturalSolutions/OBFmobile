@@ -43,21 +43,66 @@ var Layout = Marionette.LayoutView.extend({
   },
 
   initialize: function() {
-    this.user = User.getCurrent();
+    var user = this.user = User.getCurrent();
     this.observationModel = this.model;
     this.listenTo(this.observationModel, 'change:photos', this.render, this);
     this.listenTo(this.observationModel, 'change:departement', this.render, this);
     this.listenTo(this.observationModel, 'change:shared', this.render, this);
 
+    var mainView = Main.getInstance();
+    this.listenTo(user, 'change:nbComputedObs', function(model, nbComputed) {
+      if (!nbComputed)
+        return false;
+      mainView.addDialog({
+        cssClass: 'theme-primary with-bg-forest user-score',
+        badgeClassNames: 'badge-circle bg-wood border-brown text-white',
+        badge: nbComputed + '<div class="text-xs text-bottom">' + i18n.t('mission.label', {
+          count: nbComputed
+        }) + '</div>',
+        title: i18n.t('dialogs.obsShared.title'),
+        message: i18n.t('dialogs.obsShared.message'),
+        button: i18n.t('dialogs.obsShared.button')
+      });
+    });
+
+    this.listenTo(user, 'change:level', function(model, level) {
+      if (!level)
+        return false;
+      mainView.addDialog({
+        cssClass: 'theme-primary with-bg-forest user-score user-level-' + level,
+        badgeClassNames: 'badge-circle bg-wood border-brown text-white',
+        title: i18n.t('dialogs.level.title'),
+        message: i18n.t('dialogs.level.message.level_' + level),
+        button: i18n.t('dialogs.level.button')
+      });
+    });
+
+    this.listenTo(user, 'change:palm', function(model, palm) {
+      if (!palm)
+        return false;
+      var palmName = user.get('palmName');
+      var nbComputed = user.get('nbComputedObs');
+      mainView.addDialog({
+        cssClass: 'theme-primary with-bg-forest user-score user-palm-' + palmName,
+        badgeClassNames: 'badge-circle bg-wood border-brown text-white',
+        badge: nbComputed + '<div class="text-xs text-bottom">' + i18n.t('mission.label', {
+          count: nbComputed
+        }) + '</div>',
+        title: i18n.t('dialogs.palm.title'),
+        message: i18n.t('dialogs.palm.message.' + palmName),
+        button: i18n.t('dialogs.palm.button')
+      });
+    });
+
     this.session = Session.model.getInstance();
 
-    if (this.user.get('departementIds').length) {
+    if (user.get('departementIds').length) {
       this.observationModel.set({
-        departementId: this.user.get('departementIds')[0]
+        departementId: user.get('departementIds')[0]
       }).save();
-    } else if (this.user.get('city'))
+    } else if (user.get('city'))
       this.observationModel.set({
-        departementId: this.user.get('city').dpt
+        departementId: user.get('city').dpt
       }).save();
   },
 
@@ -513,11 +558,13 @@ var Layout = Marionette.LayoutView.extend({
     var self = this;
     // var user = User.getCurrent();
 
-    if (window.cordova) {
+    if ( !window.cordova )
+      self.onShared();
+    else {
       var photos = this.observationModel.get('photos');
       var dfds = [];
       photos.forEach(function(photo) {
-        var dfd = self.uploadPhoto(photo.url, index);
+        var dfd = self.uploadPhoto(photo);
         dfds.push(dfd);
       });
 
@@ -556,44 +603,9 @@ var Layout = Marionette.LayoutView.extend({
       });
 
       $.when.apply($, dfds).done(function(response) {
-        self.onPhotosUploaded(response);
-        /*self.observationModel.set({
-          'shared': 1
-        }).save();*/
-        var nbCompleted = self.user.get('completedMissions').length;
-        Main.getInstance().addDialog({
-          cssClass: 'theme-primary with-bg-forest user-score',
-          badgeClassNames: 'badge-circle bg-wood border-brown text-white',
-          badge: nbCompleted + '<div class="text-xs text-bottom">' + i18n.t('mission.label', {
-            count: nbCompleted
-          }) + '</div>',
-          title: i18n.t('dialogs.obsShared.title'),
-          message: i18n.t('dialogs.obsShared.message'),
-          button: i18n.t('dialogs.obsShared.button')
-        });
-        self.setFormStatus('shared');
-        self.user.computeScore();
+        self.stopListening(Router.getInstance());
+        self.onShared();
       });
-    } else {
-      this.$el.removeClass('sending block-ui');
-      this.$el.find('form').removeClass('loading');
-      this.$el.find('form').removeClass('progressing');
-      /*this.observationModel.set({
-        'shared': 1
-      }).save();*/
-      var nbCompleted = this.user.get('completedMissions').length;
-      Main.getInstance().addDialog({
-        cssClass: 'theme-primary with-bg-forest user-score',
-        badgeClassNames: 'badge-circle bg-wood border-brown text-white',
-        badge: nbCompleted + '<div class="text-xs text-bottom">' + i18n.t('mission.label', {
-          count: nbCompleted
-        }) + '</div>',
-        title: i18n.t('dialogs.obsShared.title'),
-        message: i18n.t('dialogs.obsShared.message'),
-        button: i18n.t('dialogs.obsShared.button')
-      });
-      self.setFormStatus('shared');
-      self.user.computeScore();
     }
   },
 
@@ -623,39 +635,26 @@ var Layout = Marionette.LayoutView.extend({
     }).text(percent);
   },
 
-  onPhotosUploaded: function() {
-    var self = this;
-    //stop listen router
-    self.stopListening(Router.getInstance());
+  onShared: function() {
+    this.$el.removeClass('sending block-ui');
+    this.$el.find('form').removeClass('loading');
+    this.$el.find('form').removeClass('progressing');
 
-    self.$el.removeClass('sending block-ui');
-    self.$el.find('form').removeClass('loading');
-    self.$el.find('form').removeClass('progressing');
 
-    self.observationModel.set({
+
+    //this.observationModel.save();
+    this.observationModel.set({
       'shared': 1
     }).save();
-    var nbCompleted = this.user.get('completedMissions').length;
-    Main.getInstance().addDialog({
-      cssClass: 'theme-primary with-bg-forest user-score',
-      badgeClassNames: 'badge-circle bg-wood border-brown text-white',
-      badge: nbCompleted + '<div class="text-xs text-bottom">' + i18n.t('mission.label', {
-        count: nbCompleted
-      }) + '</div>',
-      title: i18n.t('dialogs.obsShared.title'),
-      message: i18n.t('dialogs.obsShared.message'),
-      button: i18n.t('dialogs.obsShared.button')
-    });
-    self.setFormStatus('shared');
     this.user.computeScore();
-},
+    this.setFormStatus('shared');
+  },
 
-  uploadPhoto: function(photo, index) {
+  uploadPhoto: function(photo) {
     var self = this;
     var dfd = $.Deferred();
     dfd.bytesTotal = 0;
 
-    this.index = index;
     /* jshint ignore:start */
     window.resolveLocalFileSystemURL(photo.url, function(fe) {
       fe.file(function(file) {
@@ -688,10 +687,8 @@ var Layout = Marionette.LayoutView.extend({
               return xhr;
             },
             success: function(response) {
-              dfd.resolve();
               photo.externUrl = response[0];
-              self.observationModel.get('photos')[self.index].externUrl = photo.externUrl;
-              self.observationModel.save();
+              dfd.resolve();
             },
             error: function(error) {
               console.log(error);
