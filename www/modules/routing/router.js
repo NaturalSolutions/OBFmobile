@@ -1,7 +1,8 @@
 'use strict';
 
 var Backbone = require('backbone'),
-  Marionette = require('backbone.marionette');
+  Marionette = require('backbone.marionette'),
+  _ = require('lodash');
 
 var Router = Marionette.AppRouter.extend({
   lastHistoryUrl: '',
@@ -21,7 +22,10 @@ var Router = Marionette.AppRouter.extend({
     });
     document.addEventListener('backbutton', function(e) {
       e.preventDefault();
-      self.back();
+      _.defer(function() {
+         if ( !e.isDefaultPrevented )
+           self.back();
+       });
     }, false);
   },
 

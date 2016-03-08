@@ -44,7 +44,7 @@ module.exports = Marionette.LayoutView.extend({
     });
 
     this.missionTabs = [];
-    for (var i = 1; i <= 3; i++) {
+    for (var i = 0; i <= 3; i++) {
       this.missionTabs.push({
         missions: _.where(missions, {difficulty: i})
       });
