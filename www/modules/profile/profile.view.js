@@ -170,18 +170,17 @@ var Page = Marionette.LayoutView.extend({
     e.preventDefault();
     var $form = this.$el.find('form');
     this.form.validate();
-    /*if ($form.hasClass('loading'))
+    if ($form.hasClass('loading'))
         return false;
 
       var errors = this.form.validate();
-      console.log(errors);
       if (errors && !this.model.get('externId'))
         return false;
       else if ( _.get(errors, 'email', '') || _.get(errors, 'firstname', '') || _.get(errors, 'lastname', '') && this.model.get('externId'))
         return false;
 
     this.$el.addClass('block-ui');
-    $form.addClass('loading');*/
+    $form.addClass('loading');
 
     var formValues = this.form.getValue();
 
@@ -207,11 +206,6 @@ var Page = Marionette.LayoutView.extend({
         und: formValues.usercategory
       },
     };
-
-    console.log(queryData);
-
-    if ( true )
-      return false;
     
     //If it's not register on sever
     if ( !this.model.get('externId') )
