@@ -166,6 +166,7 @@ var Layout = Marionette.LayoutView.extend({
       }
     }).render();
     this.$el.append(this.formObs.$el);
+    this.$progressBar = this.$el.find('.progress-bar');
     
     Backbone.Form.validators.errMessages.required = i18n.t('validation.errors.required');
 
@@ -632,10 +633,13 @@ var Layout = Marionette.LayoutView.extend({
   },
 
   onUploadPhotosProgress: function(loaded, total) {
-    var percent = Math.round((loaded/total)*100)+'%';
-    this.$el.find('.progress-bar').css({
-      width: percent
-    }).text(percent);
+    var ratio = Math.min(1, (loaded/total) );
+    console.log('onUploadPhotosProgress', ratio, this.$progressBar.length);
+    this.$progressBar.css({
+      width: Math.round(ratio*100)+'%'
+    });
+    if ( ratio >= 1 )
+      this.$progressBar.addClass('progress-bar-striped active');
   },
 
   onShared: function() {
@@ -643,9 +647,8 @@ var Layout = Marionette.LayoutView.extend({
     this.$el.find('form').removeClass('loading');
     this.$el.find('form').removeClass('progressing');
 
+    this.$progressBar.removeClass('progress-bar-striped active');
 
-
-    //this.observationModel.save();
     this.observationModel.set({
       'shared': 1
     }).save();
@@ -683,6 +686,7 @@ var Layout = Marionette.LayoutView.extend({
             xhr: function() {
               var xhr = new window.XMLHttpRequest();
               xhr.upload.addEventListener('progress', function(e) {
+                console.log('progressEvent', e);
                 dfd.bytesLoaded = e.loaded;
                 dfd.notify('progress');
               }, false);
