@@ -643,7 +643,7 @@ var Layout = Marionette.LayoutView.extend({
   },
 
   onShared: function() {
-    this.$el.removeClass('sending block-ui');
+    var self = this;
     this.$el.find('form').removeClass('loading');
     this.$el.find('form').removeClass('progressing');
 
@@ -654,6 +654,11 @@ var Layout = Marionette.LayoutView.extend({
     }).save();
     this.user.computeScore();
     this.setFormStatus('shared');
+
+    setTimeout(function() {
+      self.$el.removeClass('sending block-ui');
+      Router.getInstance().navigate('dashboard/observations', {trigger: true});
+    }, 500);
   },
 
   uploadPhoto: function(photo) {
