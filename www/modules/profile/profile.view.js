@@ -83,7 +83,8 @@ var Page = Marionette.LayoutView.extend({
         type: 'Select',
         options: ['scout', 'éclaireur','autre'],
         editorAttrs: {
-          placeholder: 'Sélectionnez votre groupe'
+          placeholder: 'Sélectionnez votre groupe',
+          selectedvalue: this.model.get('groupcategory')
         },
         validators: [function(value, formValues) {
           var err = {
@@ -97,7 +98,7 @@ var Page = Marionette.LayoutView.extend({
       }
     };
 
-    if (!this.model.isNew)
+    if (!this.model.isNew())
         _.set(formSchema.email, 'editorAttrs.readonly', 'readonly');
     else {
       _.assign(formSchema, {
@@ -151,9 +152,12 @@ var Page = Marionette.LayoutView.extend({
     }).render();
 
     this.$el.append(this.form.$el);
-    self.$el.find('select').selectPlaceholder();
 
-    this.form.fields.groupcategory.$el.hide();
+    if(userData.usercategory === "En groupe")
+      self.form.fields.groupcategory.$el.show();
+    else
+      this.form.fields.groupcategory.$el.hide();
+
     this.form.on('usercategory:change', function(form, editor) {
       if (editor.getValue() === "En groupe"){
         self.form.fields.groupcategory.$el.show();
@@ -164,6 +168,8 @@ var Page = Marionette.LayoutView.extend({
     });
     this.$el.find('.no-paste-js').nsNoPaste();
     Backbone.Form.validators.errMessages.required = i18n.t('validation.errors.required');
+
+    self.$el.find('select').selectPlaceholder();
   },
 
   onFormSubmit: function(e) {
@@ -174,10 +180,10 @@ var Page = Marionette.LayoutView.extend({
         return false;
 
       var errors = this.form.validate();
-      if (errors && !this.model.get('externId'))
+      if (errors)
         return false;
-      else if ( _.get(errors, 'email', '') || _.get(errors, 'firstname', '') || _.get(errors, 'lastname', '') && this.model.get('externId'))
-        return false;
+      //else if ( _.get(errors, 'email', '') || _.get(errors, 'firstname', '') || _.get(errors, 'lastname', '') || _.get(errors, 'groupcategory', '') && this.model.get('externId'))
+      //  return false;
 
     this.$el.addClass('block-ui');
     $form.addClass('loading');
@@ -307,7 +313,9 @@ var Page = Marionette.LayoutView.extend({
       firstname: formValues.firstname,
       lastname: formValues.lastname,
       email: formValues.email,
-      newsletter: formValues.newsletter.length ? true : false
+      newsletter: formValues.newsletter.length ? true : false,
+      groupcategory: formValues.groupcategory,
+      usercategory: formValues.usercategory
     });
   },
 
