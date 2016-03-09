@@ -79,8 +79,11 @@
   };
 
   var SelectWithPlaceholder = function(selectElement, methodOrOptions) {
+    var select = $(selectElement);
+    if ( select.data('selectPlaceholderApi') )
+      return false;
+    select.data('selectPlaceholderApi', this);
     var placeholderValue = methodOrOptions.placeholderValue || '',
-        select = $(selectElement),
         originalColor = select.css('color'),
         placeholderText = select.attr('placeholder'),
         placeholderOptionBuilder = new PlaceholderOptionBuilder(placeholderValue),

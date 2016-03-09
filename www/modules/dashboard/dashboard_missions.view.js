@@ -22,7 +22,12 @@ var ClassDef = Marionette.LayoutView.extend({
   },
 
   initialize: function() {
-    this.missions = User.getCurrent().getAcceptedMissions();
+    var acceptedMissions = User.getCurrent().getAcceptedMissions();
+    var completedMissions = User.getCurrent().getCompletedMissions();
+
+    this.missions = _.filter(acceptedMissions, function(mission) {
+      return completedMissions.indexOf(mission) == -1;
+    });
     this.missions = _.sortBy(this.missions, function(mission) {
       return mission.inSeason().end.delta;
     });

@@ -41,22 +41,68 @@ var Layout = Marionette.LayoutView.extend({
     //'submit form#form-picture': 'uploadPhoto',
     'click .capture-photo-js': 'capturePhoto'
   },
+
   initialize: function() {
-    this.user = User.getCurrent();
+    var user = this.user = User.getCurrent();
     this.observationModel = this.model;
     this.listenTo(this.observationModel, 'change:photos', this.render, this);
     this.listenTo(this.observationModel, 'change:departement', this.render, this);
     this.listenTo(this.observationModel, 'change:shared', this.render, this);
 
+    var mainView = Main.getInstance();
+    this.listenTo(user, 'change:nbComputedObs', function(model, nbComputed) {
+      if (!nbComputed)
+        return false;
+      mainView.addDialog({
+        cssClass: 'theme-primary with-bg-forest user-score',
+        badgeClassNames: 'badge-circle bg-wood border-brown text-white',
+        badge: nbComputed + '<div class="text-xs text-bottom">' + i18n.t('mission.label', {
+          count: nbComputed
+        }) + '</div>',
+        title: i18n.t('dialogs.obsShared.title'),
+        message: i18n.t('dialogs.obsShared.message'),
+        button: i18n.t('dialogs.obsShared.button')
+      });
+    });
+
+    this.listenTo(user, 'change:level', function(model, level) {
+      if (!level)
+        return false;
+      mainView.addDialog({
+        cssClass: 'theme-primary with-bg-forest user-score user-level-' + level,
+        badgeClassNames: 'badge-circle bg-wood border-brown text-white',
+        title: i18n.t('dialogs.level.title'),
+        message: i18n.t('dialogs.level.message.level_' + level),
+        button: i18n.t('dialogs.level.button')
+      });
+    });
+
+    this.listenTo(user, 'change:palm', function(model, palm) {
+      if (!palm)
+        return false;
+      var palmName = user.get('palmName');
+      var nbComputed = user.get('nbComputedObs');
+      mainView.addDialog({
+        cssClass: 'theme-primary with-bg-forest user-score user-palm-' + palmName,
+        badgeClassNames: 'badge-circle bg-wood border-brown text-white',
+        badge: nbComputed + '<div class="text-xs text-bottom">' + i18n.t('mission.label', {
+          count: nbComputed
+        }) + '</div>',
+        title: i18n.t('dialogs.palm.title'),
+        message: i18n.t('dialogs.palm.message.' + palmName),
+        button: i18n.t('dialogs.palm.button')
+      });
+    });
+
     this.session = Session.model.getInstance();
 
-    if (this.user.get('departementIds').length) {
+    if (user.get('departementIds').length) {
       this.observationModel.set({
-        departementId: this.user.get('departementIds')[0]
+        departementId: user.get('departementIds')[0]
       }).save();
-    } else if (this.user.get('city'))
+    } else if (user.get('city'))
       this.observationModel.set({
-        departementId: this.user.get('city').dpt
+        departementId: user.get('city').dpt
       }).save();
   },
 
@@ -72,7 +118,6 @@ var Layout = Marionette.LayoutView.extend({
 
   onRender: function() {
     console.log('onRender');
-
     this.$el.attr('data-cid', this.cid);
 
     var isSaved = (this.observationModel.get('missionId') && this.observationModel.get('departementId'));
@@ -88,7 +133,8 @@ var Layout = Marionette.LayoutView.extend({
         options: Mission.collection.getInstance(),
         editorAttrs: {
           placeholder: 'Missions',
-          selectedvalue: this.observationModel.get('missionId')
+          selectedvalue: this.observationModel.get('missionId'),
+          disabled: this.observationModel.get('shared') ? true : false
         },
         validators: ['required']
       },
@@ -97,7 +143,8 @@ var Layout = Marionette.LayoutView.extend({
         options: Departement.collection.getInstance(),
         editorAttrs: {
           placeholder: 'Départements',
-          selectedvalue: this.observationModel.get('departementId')
+          selectedvalue: this.observationModel.get('departementId'),
+          disabled: this.observationModel.get('shared') ? true : false
         },
         validators: ['required']
       },
@@ -119,6 +166,7 @@ var Layout = Marionette.LayoutView.extend({
       }
     }).render();
     this.$el.append(this.formObs.$el);
+    this.$progressBar = this.$el.find('.progress-bar');
     
     Backbone.Form.validators.errMessages.required = i18n.t('validation.errors.required');
 
@@ -127,10 +175,10 @@ var Layout = Marionette.LayoutView.extend({
       idToTransmit = null;
     }
 
-    if (this.observationModel.get('shared') > 0) {
+    /*if (this.observationModel.get('shared') > 0) {
       this.$el.addClass('read-only');
       this.$el.find(':input:not(:submit)').prop('disabled', true);
-    }
+    }*/
 
     this.formObs.$el.find('select').selectPlaceholder();
 
@@ -149,11 +197,12 @@ var Layout = Marionette.LayoutView.extend({
 
   onDomRefresh: function(options) {
     // var user = User.getCurrent();
-    if (this.user.get('city')){
+    if (this.user.get('city')) {
       this.observationModel.set({
         departementId: this.user.get('city').dpt
       }).save();
-      this.observationModel.get('departement');    }
+      this.observationModel.get('departement');
+    }
 
     //this.$el.find('select').selectPlaceholder();
     /*var user = User.getCurrent();
@@ -302,10 +351,9 @@ var Layout = Marionette.LayoutView.extend({
     if (errors)
       return false;
 
-    if (this.$el.hasClass('form-status-unsaved'))
+    if (this.$el.hasClass('form-status-unsaved')) {
       this.saveObs();
-
-    if (navigator.onLine) {
+    } else if ( navigator.onLine ) {
       if (this.$el.hasClass('form-status-shared-0'))
         this.sendObs();
       else if (this.$el.hasClass('form-status-shared-1'))
@@ -381,6 +429,11 @@ var Layout = Marionette.LayoutView.extend({
     );
   },
 
+  onSendError: function() {
+    this.$el.removeClass('sending block-ui');
+    this.$el.find('form').removeClass('loading');
+  },
+
 
   // Save in server time_forest : update user with new time (field_time_forest)
 
@@ -393,9 +446,8 @@ var Layout = Marionette.LayoutView.extend({
     if (self.$el.hasClass('sending') || self.observationModel.get('shared') == 1)
       return false;
 
-    self.$el.addClass('sending');
+    self.$el.addClass('sending block-ui');
     this.$el.find('form').addClass('loading');
-    Main.getInstance().blockUI();
 
     //clear data photos
     var clearPhoto = function(args) {
@@ -446,9 +498,7 @@ var Layout = Marionette.LayoutView.extend({
       contentType: 'application/json',
       data: JSON.stringify(data),
       error: function(error) {
-        self.$el.removeClass('sending');
-        self.$el.find('form').removeClass('loading');
-        Main.getInstance().unblockUI();
+        self.onSendError();
         var dfd;
         if (error.responseJSON[0] === 'Access denied for user anonymous') {
           Dialog.confirm({
@@ -493,11 +543,11 @@ var Layout = Marionette.LayoutView.extend({
       },
       success: function(response) {
         self.observationModel.set({
-          'externId': response.nid,
-          'shared': 1
+          'externId': response.nid
+          //'shared': 1
         }).save().done(function() {
           self.session.updateUser().done(function(response){
-            self.sendPhotos();
+            self.uploadPhotos();
           });
         });
       }
@@ -508,95 +558,122 @@ var Layout = Marionette.LayoutView.extend({
     });
   },
 
-
-  sendPhotos: function() {
+  uploadPhotos: function() {
     var self = this;
     // var user = User.getCurrent();
 
-    if (window.cordova) {
-      var nbPhoto = (this.observationModel.get('photos').length) - 1;
+    if ( !window.cordova )
+      self.onShared();
+    else {
+      var photos = this.observationModel.get('photos');
       var dfds = [];
-      this.observationModel.get('photos').forEach(function(photo, index) {
-        var uploadDfd = self.uploadPhotoMob(photo, index);
-        dfds.push(uploadDfd);
+      photos.forEach(function(photo) {
+        var dfd = self.uploadPhoto(photo);
+        dfds.push(dfd);
       });
-      $.when.apply($, dfds).progress(function() {
-        var resolvedFiles = _.filter(arguments, {type: 'fileResolved'});
-        if ( resolvedFiles.length == dfds.length )
-          self.startProgress(dfds);
-      });
-      $.when.apply($, dfds).done(function(response) {
-        Main.getInstance().unblockUI();
-        self.$el.removeClass('sending');
-        self.$el.find('form').removeClass('loading');
 
-        /*self.observationModel.set({
-          'shared': 1
-        }).save();*/
-        var nbCompleted = self.user.get('completedMissions').length;
-        Main.getInstance().addDialog({
-          cssClass: 'theme-primary with-bg-forest user-score',
-          badgeClassNames: 'badge-circle bg-wood border-brown text-white',
-          badge: nbCompleted + '<div class="text-xs text-bottom">' + i18n.t('mission.label', {
-            count: nbCompleted
-          }) + '</div>',
-          title: i18n.t('dialogs.obsShared.title'),
-          message: i18n.t('dialogs.obsShared.message'),
-          button: i18n.t('dialogs.obsShared.button')
+      var isStarted = false;
+      var hasError = false;
+      _.forEach(dfds, function(dfd) {
+        dfd.fail(function(error) {
+          if ( !hasError && error && error == 'error' ) {
+            hasError = true;
+            self.onSendError();
+            Dialog.alert({
+              closable: true,
+              message: i18n.t('dialogs.errorRetry')
+            });
+            _.forEach(dfds, function(_dfd) {
+              if ( _dfd != dfd )
+                _dfd.reject();
+            });
+          }
         });
-        self.setFormStatus('shared');
-        self.user.computeScore();
+        dfd.progress(function(data) {
+          if ( !isStarted && data == 'progress' ) {
+            isStarted = true;
+            self.onUploadPhotosStart(dfds);
+          }
+        });
       });
-    } else {
-      Main.getInstance().unblockUI();
-      self.$el.removeClass('sending');
-      self.$el.find('form').removeClass('loading');
-      /*self.observationModel.set({
-        'shared': 1
-      }).save();*/
-      var nbCompleted = this.user.get('completedMissions').length;
-      Main.getInstance().addDialog({
-        cssClass: 'theme-primary with-bg-forest user-score',
-        badgeClassNames: 'badge-circle bg-wood border-brown text-white',
-        badge: nbCompleted + '<div class="text-xs text-bottom">' + i18n.t('mission.label', {
-          count: nbCompleted
-        }) + '</div>',
-        title: i18n.t('dialogs.obsShared.title'),
-        message: i18n.t('dialogs.obsShared.message'),
-        button: i18n.t('dialogs.obsShared.button')
+
+      this.listenToOnce(Router.getInstance(), 'route', function(name, args){
+        _.forEach(dfds, function(dfd) {
+          if ( dfd.jqxhr )
+            dfd.jqxhr.abort();
+          else
+            dfd.reject();
+        });
       });
-      self.setFormStatus('shared');
-      self.user.computeScore();
+
+      $.when.apply($, dfds).done(function(response) {
+        self.stopListening(Router.getInstance());
+        self.onShared();
+      });
     }
   },
 
-  startProgress: function(dfds) {
-    if ( this.isUploadProgress )
-      return false;
-    this.isUploadProgress = true;
-    console.log('startProgress');
+  onUploadPhotosStart: function(dfds) {
+    var self = this;
+    console.log('onPhotosStart');
+    this.$el.find('form').addClass('progressing');
     _.forEach(dfds, function(dfd) {
       dfd.progress(function(data) {
-        
+        if ( data == 'progress' ) {
+          var loaded = 0;
+          var total = 0;
+          _.forEach(dfds, function(dfd) {
+            loaded += (dfd.bytesLoaded || 0);
+            total += dfd.bytesTotal;
+          });
+          self.onUploadPhotosProgress(loaded, total);
+        }
       });
     });
   },
 
-  uploadPhotoMob: function(photo, index) {
+  onUploadPhotosProgress: function(loaded, total) {
+    var ratio = Math.min(1, (loaded/total) );
+    console.log('onUploadPhotosProgress', ratio, this.$progressBar.length);
+    this.$progressBar.css({
+      width: Math.round(ratio*100)+'%'
+    });
+    if ( ratio >= 1 )
+      this.$progressBar.addClass('progress-bar-striped active');
+  },
+
+  onShared: function() {
+    var self = this;
+    this.$el.find('form').removeClass('loading');
+    this.$el.find('form').removeClass('progressing');
+
+    this.$progressBar.removeClass('progress-bar-striped active');
+
+    this.observationModel.set({
+      'shared': 1
+    }).save();
+    this.user.computeScore();
+    this.setFormStatus('shared');
+
+    setTimeout(function() {
+      self.$el.removeClass('sending block-ui');
+      Router.getInstance().navigate('dashboard/observations', {trigger: true});
+    }, 500);
+  },
+
+  uploadPhoto: function(photo) {
     var self = this;
     var dfd = $.Deferred();
+    dfd.bytesTotal = 0;
 
-    this.index = index;
     /* jshint ignore:start */
     window.resolveLocalFileSystemURL(photo.url, function(fe) {
       fe.file(function(file) {
-        dfd.notify({
-          type: 'fileResolved',
-          data: file
-        });
-        var fileSize = file.size;
+        dfd.bytesTotal = file.size;
         var reader = new FileReader();
         reader.onloadend = function(e) {
+          if ( dfd.state() == 'rejected' )
+            return false;
           var data = new Uint8Array(e.target.result);
           var imgBlob = new Blob([data], {
             type: 'image/jpeg'
@@ -614,31 +691,29 @@ var Layout = Marionette.LayoutView.extend({
             xhr: function() {
               var xhr = new window.XMLHttpRequest();
               xhr.upload.addEventListener('progress', function(e) {
-                console.log('progress', e);
-                dfd.notify({
-                  type: 'progress',
-                  data: e
-                });
+                console.log('progressEvent', e);
+                dfd.bytesLoaded = e.loaded;
+                dfd.notify('progress');
               }, false);
 
               return xhr;
             },
             success: function(response) {
-              dfd.resolve();
               photo.externUrl = response[0];
-              self.observationModel.get('photos')[self.index].externUrl = photo.externUrl;
-              self.observationModel.save();
+              dfd.resolve();
             },
             error: function(error) {
               console.log(error);
-              Dialog.alert({
+              dfd.reject('error');
+              /*Dialog.alert({
                 closable: true,
                 message: error.responseJSON
-              });
+              });*/
             }
           };
           self.session.getCredentials(query).then(function() {
-            $.ajax(query);
+            if ( dfd.state() != 'rejected' )
+              dfd.jqxhr = $.ajax(query);
           });
         };
         reader.readAsArrayBuffer(file);

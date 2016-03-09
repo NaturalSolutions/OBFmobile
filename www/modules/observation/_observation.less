@@ -91,6 +91,26 @@
         }
         .actions {
             margin-top: 15px;
+            .btn {
+                > span {
+                    vertical-align: baseline;
+                }
+            }
+            .btn-share {
+                .icon {
+                    .scale(1.7);
+                }
+            }
+        }
+        &:not(.progressing) {
+            .progress {
+                display: none;
+            }
+        }
+        &.progressing {
+            .btn-send {
+                display: none;
+            }
         }
     }
     &:not(.form-status-unsaved) {

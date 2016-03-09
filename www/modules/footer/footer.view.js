@@ -50,13 +50,22 @@ var View = Marionette.LayoutView.extend({
   serializeData: function() {},
 
   onRender: function(options) {
+    var self = this;
     this.$fabDial = this.$el.find('.fab-dial');
     this.$fabDial.nsFabDial();
+
+   this.onBackBtnClick = this.onBackBtnClick || function(e) {
+     self.$fabDial.trigger('click');
+     e.isDefaultPrevented = true;
+   };
+
     this.$fabDial.on('show.bs.dropdown', function(e) {
       $('body').addClass('show-footer-overlay');
+     document.addEventListener('backbutton', self.onBackBtnClick, false);
     });
     this.$fabDial.on('hide.bs.dropdown', function(e) {
       $('body').removeClass('show-footer-overlay');
+     document.removeEventListener('backbutton', self.onBackBtnClick, false);
     });
 
     this.displayTimeForest();

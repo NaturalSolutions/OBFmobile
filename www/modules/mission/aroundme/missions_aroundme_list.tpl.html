@@ -7,12 +7,12 @@
 	</div>
 	<% } %>
 	<ul class="nav nav-tabs js-nav-tabs nav-justified" role="tablist">
-	<% var difficulties = ['beginner', 'confirmed', 'expert'] %>
+	<% var difficulties = ['trainee', 'beginner', 'confirmed', 'expert'] %>
 	<% _.forEach(data.missionTabs, function(missionTab, index) { %>
 		<li role="presentation" class=" <% if ( index == 0 ) { %>active<% } %>">
 			<a href="#tab-difficulty-<%= index %>" role="tab">
 				<span class="icon icomoon text-bottom">difficulty_<%= difficulties[index] %></span> 
-				<span><%= i18n.t('mission.difficulty_'+ (index+1)) %></span>
+				<div><%= i18n.t('mission.difficulty_'+ (index)) %></div>
 			</a>
 		</li>
 	<% }); %>
@@ -24,7 +24,7 @@
 			<% _.forEach(missionTab.missions, function(mission) { %>
 				<li class="pull-left">
 					<a href="#mission/<%= mission.id %>" class="inner">
-						<div class="delta text-nowrap text-primary"><%= i18n.t('pages.missionsAroundme.list.delta', {nb: mission.inSeason.end.delta}) %></div>
+						<div class="delta text-nowrap text-primary"><%= i18n.t('pages.missionsAroundme.list.delta', {nb: mission.inSeason.end.delta+1}) %></div>
 						<div class="thumb">
 							<div class="img" style="background-image:url('./images/taxon/thumb/<%= mission.thumb %>');"></div>
 							<div class="donutchart donutchart-primary" data-donutchart-value="<%= _.round((365-mission.inSeason.end.delta)/365, 2) %>"></div>

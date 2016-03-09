@@ -24,7 +24,7 @@
             </form>
         </div>
     </div>
-    <% if(data.observation.photos.length < 3){ %>
+    <% if ( data.observation.photos.length < 3 && !data.observation.shared ) { %>
         <button type="button" class="btn bg-brown btn-fab btn-add-photo capture-photo-js">
             <span class="icon icomoon">add_images</span>
         </button>

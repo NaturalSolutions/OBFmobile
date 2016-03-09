@@ -50,6 +50,11 @@ var ClassDef = Marionette.LayoutView.extend({
   },
 
   serializeData: function() {
+    var observations = this.currentUser.get('observations');
+
+    this.tabs.observations.badge = _.filter(observations, function(obs) {
+      return obs.get('shared') < 1;
+    }).length;
     return {
       user: this.currentUser.toJSON(),
       tabs: this.tabs

@@ -33,7 +33,7 @@
         "label_plural": "Missions",
         "deltaLong": "plus que __count__ jour",
         "deltaLong_plural": "plus que __count__ jours",
-        "difficulty_0": "Apprentissage",
+        "difficulty_0": "Apprenti",
         "difficulty_1": "Facile",
         "difficulty_2": "Confirmé",
         "difficulty_3": "Expert"
@@ -155,7 +155,8 @@
             "registration": "Vous n'avez pas de réseau internet, vous devrez finaliser votre inscription pour transmettre vos observations.",
             "observation": "Vous devez avoir accès au réseau internet, pour transmettre vos observations."
         },
-        "passwdError": "Mot de passe incorrecte."
+        "passwdError": "Mot de passe incorrecte.",
+        "errorRetry": "Une erreur est survenue, recommencez"
     },
     "pages": {
         "home": {
@@ -184,7 +185,7 @@
         },
         "missionSheet": {
             "acceptBtnLabel": "accepter",
-            "acceptedBtnLabel": "accepté",
+            "acceptedBtnLabel": "acceptée",
             "completedBtnLabel": "accomplie"
         },
         "observation": {

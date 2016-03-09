@@ -6,6 +6,7 @@
 @orange-light: #fd7939;
 @blue: #3DBADB;
 @pink: #ff3f81;
+@blue-facebook: #1d599d;
 
 *:not(input):not(textarea):not(form):not(select) {
     -webkit-touch-callout:none;
@@ -158,6 +159,8 @@ ul.form-control {
 .generate-theme(white; #FFF; @gray-dark);
 .generate-theme(gray-light; @gray-light; @gray-dark);
 .generate-theme(gray; @gray; @gray-dark);
+.generate-theme(pink; @pink; #FFF);
+.generate-theme(facebook; @blue-facebook; #FFF);
 
 .bg-wood {
     background-image: url("images/wood.jpg");

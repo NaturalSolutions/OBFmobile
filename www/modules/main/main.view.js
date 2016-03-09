@@ -25,7 +25,7 @@ var Layout = Marionette.LayoutView.extend({
   initialize: function() {
     this.dialogs = [];
     // this.addListeners();
-    this.listenTo(User.collection.getInstance(), 'change:current', this.onCurrentUserChange);
+    //this.listenTo(User.collection.getInstance(), 'change:current', this.onCurrentUserChange);
     var currentPos = CurrentPos.model.getInstance();
     currentPos.on('change', function() {
       var lat = _.get(currentPos.get('coords'), 'latitude', '');
@@ -85,7 +85,7 @@ var Layout = Marionette.LayoutView.extend({
     this.rgFooter.show(footer.getInstance());
   },
 
-  onCurrentUserChange: function(currentUser, prev) {
+  /*onCurrentUserChange: function(currentUser, prev) {
     var self = this;
     if (prev)
       this.stopListening(prev);
@@ -116,7 +116,7 @@ var Layout = Marionette.LayoutView.extend({
         button: i18n.t('dialogs.palm.button')
       });
     });
-  },
+  },*/
 
   addDialog: function(data) {
     var self = this;
