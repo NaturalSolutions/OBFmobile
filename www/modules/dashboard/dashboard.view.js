@@ -96,10 +96,16 @@ var ClassDef = Marionette.LayoutView.extend({
   },
 
   getObservationView: function() {
-    var observations = Observation.collection.getInstance();
+    var observations = Observation.collection.getInstance().clone();
+    observations.comparator = function(model) {
+        var comparator = model.get('date');
+        return -comparator;
+    };
+    observations.sort();
     observations = observations.where({
       userId: this.currentUser.get('id')
     });
+
     var ObservationsView = require('../observation/observation_list.view');
     return new ObservationsView({
       collection: new Backbone.Collection(observations)
