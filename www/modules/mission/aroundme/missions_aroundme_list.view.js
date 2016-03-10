@@ -11,6 +11,8 @@ var Backbone = require('backbone'),
   Header = require('../../header/header'),
   Footer = require('../../footer/footer.view');
 
+var lastTabIndex = 0;
+
 module.exports = Marionette.LayoutView.extend({
   template: require('./missions_aroundme_list.tpl.html'),
   className: 'state state-list',
@@ -75,7 +77,8 @@ module.exports = Marionette.LayoutView.extend({
 
     return {
       departement: (departement ? departement.toJSON() : null),
-      missionTabs: this.missionTabs
+      missionTabs: this.missionTabs,
+      lastTabIndex: lastTabIndex
     };
   },
 
@@ -85,6 +88,7 @@ module.exports = Marionette.LayoutView.extend({
     self.$el.find('.js-nav-tabs a').click(function(e) {
       e.preventDefault();
       $(this).tab('show');
+      lastTabIndex = $(this).parent().index();
     });
 
     self.$el.find('.donutchart').nsDonutChart({

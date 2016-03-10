@@ -9,7 +9,7 @@
 	<ul class="nav nav-tabs js-nav-tabs nav-justified" role="tablist">
 	<% var difficulties = ['trainee', 'beginner', 'confirmed', 'expert'] %>
 	<% _.forEach(data.missionTabs, function(missionTab, index) { %>
-		<li role="presentation" class=" <% if ( index == 0 ) { %>active<% } %>">
+		<li role="presentation" class=" <% if ( index == data.lastTabIndex ) { %>active<% } %>">
 			<a href="#tab-difficulty-<%= index %>" role="tab">
 				<span class="icon icomoon text-bottom">difficulty_<%= difficulties[index] %></span> 
 				<div><%= i18n.t('mission.difficulty_'+ (index)) %></div>
@@ -19,7 +19,7 @@
 	</ul>
 	<div class="tab-content">
 	<% _.forEach(data.missionTabs, function(missionTab, index) { %>
-		<div role="tabpanel" class="tab-pane <% if ( index == 0 ) { %>active<% } %>" id="tab-difficulty-<%= index %>">
+		<div role="tabpanel" class="tab-pane <% if ( index == data.lastTabIndex ) { %>active<% } %>" id="tab-difficulty-<%= index %>">
 			<ul class="list-unstyled missions clearfix">
 			<% _.forEach(missionTab.missions, function(mission) { %>
 				<li class="pull-left">
