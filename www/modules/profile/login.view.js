@@ -144,11 +144,11 @@ var View = Marionette.LayoutView.extend({
     this.formNPW.render();
 
     Dialog.show({
-      title: 'Demande de renouvellement de mot de passe',
+      title: 'Demande de changement de mot de passe',
       message: this.formNPW.$el,
       type: 'type-success',
       buttons: [{
-        label: 'Renouveller le mot de passe',
+        label: 'Changer votre mot de passe',
         cssClass: 'btn-block btn-primary btn-lg',
         action: function(dialogItself) {
           var errors = self.formNPW.validate();
