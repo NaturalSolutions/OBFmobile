@@ -182,7 +182,6 @@ var SessionModel = Backbone.Model.extend({
 
           user.computeScore();
 
-          console.log(self.afterLoggedAction);
           if (self.afterLoggedAction && self[self.afterLoggedAction.name]) {
             self[self.afterLoggedAction.name](self.afterLoggedAction.options);
           }
@@ -207,7 +206,7 @@ var SessionModel = Backbone.Model.extend({
 
     if (obs) {
       obs.set('userId', User.getCurrent().get('id'));
-      Observation.idToTransmit = options.id;
+      require('../observation/observation.view').setIdToTransmit(options.id);
       Router.getInstance().navigate('observation/' + options.id, {
         trigger: true
       });

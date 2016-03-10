@@ -498,6 +498,8 @@ var Layout = Marionette.LayoutView.extend({
       contentType: 'application/json',
       data: JSON.stringify(data),
       error: function(error) {
+        if ( self.willBeDestroyed )
+            return false;
         self.onSendError();
         var dfd;
         if (error.responseJSON[0] === 'Access denied for user anonymous') {
@@ -546,6 +548,8 @@ var Layout = Marionette.LayoutView.extend({
           'externId': response.nid
           //'shared': 1
         }).save().done(function() {
+          if ( self.willBeDestroyed )
+            return false;
           self.session.updateUser().done(function(response){
             self.uploadPhotos();
           });
@@ -598,7 +602,9 @@ var Layout = Marionette.LayoutView.extend({
       });
 
       this.listenToOnce(Router.getInstance(), 'route', function(name, args){
+        console.log('on route');
         _.forEach(dfds, function(dfd) {
+          console.log(dfd.jqxhr);
           if ( dfd.jqxhr )
             dfd.jqxhr.abort();
           else
@@ -783,6 +789,8 @@ var Layout = Marionette.LayoutView.extend({
 });
 
 module.exports = {
-  idToTransmit: idToTransmit,
+  setIdToTransmit: function(value) {
+    idToTransmit = value;
+  },
   Page: Layout
 };
