@@ -46,7 +46,10 @@ var View = Marionette.LayoutView.extend({
     });
     self.$el.find('.js-datetimepicker').datetimepicker({
       locale: 'fr',
-      format: 'DD/MM/YYYY'
+      format: 'DD/MM/YYYY',
+      ignoreReadonly: true,
+      focusOnShow: false,
+      allowInputToggle: true
     });
     self.$el.find('.js-datetimepicker').data("DateTimePicker").locale('fr');
     var $dpStart = self.$el.find('.js-datetimepicker.date-start');

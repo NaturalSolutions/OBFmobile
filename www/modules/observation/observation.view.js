@@ -740,7 +740,7 @@ var Layout = Marionette.LayoutView.extend({
       method: 'POST',
       path: '/me/feed',
       params: {
-        message: "J'ai accomplie une mission !",
+        message: "J'ai accompli une mission pour l'Observatoire de la Biodiversité des Forêts !",
         link: mission.get('taxon').url,
         name: mission.get('title'),
         picture: _.get(self.model.get('photos'), '[0].externUrl', ''),

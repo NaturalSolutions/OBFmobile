@@ -13,7 +13,7 @@
     "header": {
         "titles": {
             "dashboard": "Tableau de bord",
-            "clue": "Carte des milieux",
+            "clue": "Carte des missions",
             "missionsAroundme": "Missions autour de moi",
             "missionsAroundmeLocalize": "Missions autour de moi",
             "missionsAroundmeManually": "Localisation",
@@ -34,7 +34,7 @@
         "deltaLong": "plus que __count__ jour",
         "deltaLong_plural": "plus que __count__ jours",
         "difficulty_0": "Apprenti",
-        "difficulty_1": "Facile",
+        "difficulty_1": "Débutant",
         "difficulty_2": "Confirmé",
         "difficulty_3": "Expert"
     },

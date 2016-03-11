@@ -8,7 +8,7 @@ var Backbone = require('backbone'),
 var Layout = Marionette.LayoutView.extend({
   header: 'none',
   template: require('./home.tpl.html'),
-  className: 'page home ns-full-height',
+  className: 'page home ns-full-height container',
   events: {},
 
   initialize: function() {},

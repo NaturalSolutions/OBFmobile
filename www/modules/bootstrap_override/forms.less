@@ -18,6 +18,11 @@ label {
 	border-right: none;
 	padding-left: 0;
 	.form-control-focus(@brand-primary);
+  &[disabled],
+  &[readonly],
+  fieldset[disabled] & {
+    background: none;
+  }
 }
 
 .form-group-lg {

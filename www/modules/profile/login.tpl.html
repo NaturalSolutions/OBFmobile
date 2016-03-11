@@ -11,24 +11,8 @@
             </div>
         </div>
         <% } %>
-        <!-- <fieldset class="email" >
-            <div class="form-group">
-                <input name="login" type="text" class="form-control" placeholder="Entrez votre email" />
-                <p class="help-block"></p>
-            </div>
-        </fieldset> -->
     </div>
-
-    <!-- <div class="messages help-block">
-        <span class="text-info message-sending">Connexion...</span>
-        <span class="text-danger message-error">Login ou mot de passe incorrect</span>
-    </div> -->
-    <button type="submit" class="btn btn-primary btn-block btn-lg btn-submit pos-relative">
-        <% var spinnerTpl = require('../spinner/spinner.tpl.html'); %>
-        <%= spinnerTpl({className:'spinner-white icon-left loader'}) %>
-        Connexion
-    </button>
 </form>
 <div>
-    <a href="#registration" class="btn btn-profile btn-link">Créer un compte</a>
+    <a href="#registration" class="btn btn-profile btn-default btn-block btn-lg">Créer un compte</a>
 </div>
