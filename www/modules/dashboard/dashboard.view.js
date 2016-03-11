@@ -80,6 +80,10 @@ var ClassDef = Marionette.LayoutView.extend({
   displayTimeForest: function() {
     var duration = User.getCurrent().getTimeForest().get('total');
     var display = moment.duration(duration, 'seconds').format('h[h] mm[min] ss[s]');
+    if ( display.indexOf('min') < 0 )
+      display = 0+'min '+display;
+    if ( display.indexOf('h') < 0 )
+      display = 0+'h '+display;
     this.$el.find('.js-count-time-forest').text(display);
   },
 
