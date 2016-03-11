@@ -28,7 +28,7 @@ var Layout = Marionette.LayoutView.extend({
   header: {
     titleKey: 'observation',
     buttons: {
-      left: ['back']
+      left: ['close']
     }
   },
   template: require('./observation.tpl.html'),
