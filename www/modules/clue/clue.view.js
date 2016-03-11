@@ -28,7 +28,7 @@ var Layout = Marionette.LayoutView.extend({
       return ( !options.missionIds || _.includes(options.missionIds, mission.id));
     });
 
-    var environmentNames = _.uniq(_.flatten(_.pluck(missions, 'environments')));
+    var environmentNames = _.uniq(_.flatten(_.ck(missions, 'environments')));
     this.environments = {};
     _.forEach(environmentNames, function(environmentName) {
       var environmentConfig = {};//config.clueEnvironments[environmentName];

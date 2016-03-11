@@ -9,7 +9,8 @@ var Backbone = require('backbone'),
   TimeForest = require('../time_forest/time_forest.model'),
   CurrentPos = require('../localize/current_position.model'),
   Router = require('../routing/router'),
-  config = require('../main/config');
+  config = require('../main/config'),
+  moment = require('moment');
 //i18n = require('i18n');
 
 var View = Marionette.LayoutView.extend({
@@ -27,7 +28,6 @@ var View = Marionette.LayoutView.extend({
   },*/
 
   initialize: function() {
-    this.moment = require('moment');
     this.Main = require('../main/main.view.js');
 
     this.listenTo(User.collection.getInstance(), 'change:current', this.onCurrentUserChange);
@@ -79,7 +79,7 @@ var View = Marionette.LayoutView.extend({
 
   displayTimeForest: function() {
     var duration = User.getCurrent().getTimeForest().get('total');
-    var display = this.moment.duration(duration, 'seconds').format('h[h] mm[min] ss[s]');
+    var display = moment.duration(duration, 'seconds').format('h[h] mm[min] ss[s]');
     this.$el.find('.time-forest-display-js').text(display);
   },
 
@@ -156,7 +156,7 @@ var View = Marionette.LayoutView.extend({
       //set observation model
       observationModel.set({
         'userId': User.getCurrent().get('id'),
-        'date': self.moment().format('X'),
+        'date': moment().format('X'),
         'photos': [{
           'url': fe ? fe : '',
           'externId': id ? id : ''

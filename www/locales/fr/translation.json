@@ -176,6 +176,10 @@
             "missions": {
                 "findMissionBtn": "Trouvez-moi une mission",
                 "findMissionBtn_plural": "Trouvez-moi d'autres missions"
+            },
+            "timeForest": {
+                "enabled": "Vous êtes en forêt",
+                "disabled": "Vous n'êtes pas en forêt"
             }
         },
         "missionsAroundme": {

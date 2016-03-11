@@ -4,7 +4,8 @@ var Backbone = require('backbone'),
   Marionette = require('backbone.marionette'),
   _ = require('lodash'),
   User = require('../profile/user.model'),
-  Observation = require('../observation/observation.model');
+  Observation = require('../observation/observation.model'),
+  moment = require('moment');
 
 var ClassDef = Marionette.LayoutView.extend({
   header: {
@@ -16,7 +17,8 @@ var ClassDef = Marionette.LayoutView.extend({
   template: require('./dashboard.tpl.html'),
   className: 'page dashboard ns-full-height',
   events: {
-    'click .header': 'onHeaderClick'
+    'click .header': 'onHeaderClick',
+    'click .js-btn-time-forest': 'onTimeForestClick'
   },
 
   curTab: null,
@@ -47,16 +49,18 @@ var ClassDef = Marionette.LayoutView.extend({
     this.curTab = options.tab || this.defaultTab;
     this.currentUser = User.getCurrent();
     this.listenTo(this.currentUser.get('timeForest'), 'change:progressLog', this.setUserSky);
+    this.listenTo(User.collection.getInstance(), 'change:current', this.onCurrentUserChange);
+    this.listenTo(this.currentUser.getTimeForest(), 'change:total', this.displayTimeForest);
   },
 
   serializeData: function() {
-    var observations = this.currentUser.get('observations');
+    var observations = User.getCurrent().get('observations');
 
     this.tabs.observations.badge = _.filter(observations, function(obs) {
       return obs.get('shared') < 1;
     }).length;
     return {
-      user: this.currentUser.toJSON(),
+      user: User.getCurrent().toJSON(),
       tabs: this.tabs
     };
   },
@@ -64,11 +68,31 @@ var ClassDef = Marionette.LayoutView.extend({
   onRender: function(options) {
     this.displayTab();
     this.setUserSky();
+    this.displayTimeForest();
+  },
+
+  onCurrentUserChange: function(newUser, prevUser) {
+    this.stopListening(prevUser.getTimeForest());
+    this.listenTo(newUser.getTimeForest(), 'change:total', this.displayTimeForest);
+    this.render();
+  },
+
+  displayTimeForest: function() {
+    var duration = User.getCurrent().getTimeForest().get('total');
+    var display = moment.duration(duration, 'seconds').format('h[h] mm[min] ss[s]');
+    this.$el.find('.js-count-time-forest').text(display);
+  },
+
+  onTimeForestClick: function(e) {
+    if ( this.$el.find('.header').hasClass('show-score-explode') )
+      return false;
+    e.stopPropagation();
+    User.getCurrent().getTimeForest().toggleStart();
   },
 
   setUserSky: function() {
     this.$el.find('.score-implode .user-sky').css({
-      'background-position-y': (this.currentUser.get('timeForest').get('progressLog')*100)+'%'
+      'background-position-y': (User.getCurrent().get('timeForest').get('progressLog')*100)+'%'
     });
   },
 
@@ -103,7 +127,7 @@ var ClassDef = Marionette.LayoutView.extend({
     };
     observations.sort();
     observations = observations.where({
-      userId: this.currentUser.get('id')
+      userId: User.getCurrent().get('id')
     });
 
     var ObservationsView = require('../observation/observation_list.view');
