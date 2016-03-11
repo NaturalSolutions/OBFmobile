@@ -5,7 +5,9 @@
   <% } %>
 <a href="#observation/<%= data.observation.id %>">
   <img src="images/FFFFFF-0.png" style="background-image:url('<%= photoLink %>');" />
+  <% if ( !data.observation.shared ) { %>
   <div class="status badge-circle no-border bg-pink">
-    <span class="icon icomoon"><%= data.observation.shared ? 'check' : 'transmit' %></span>
+    <span class="icon icomoon">transmit</span>
   </div>
+  <% } %>
 </a>

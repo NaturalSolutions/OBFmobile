@@ -44,12 +44,11 @@ var View = Marionette.LayoutView.extend({
         self.filters.departement = ui.item;
       }
     });
-    /*if (self.filters.departement)
-        self.$el.find('input.js-autocomplete').val(self.filters.departement.get('title'));*/
     self.$el.find('.js-datetimepicker').datetimepicker({
-      //locale: 'fr',
+      locale: 'fr',
       format: 'DD/MM/YYYY'
     });
+    self.$el.find('.js-datetimepicker').data("DateTimePicker").locale('fr');
     var $dpStart = self.$el.find('.js-datetimepicker.date-start');
     var $dpEnd = self.$el.find('.js-datetimepicker.date-end');
     $dpStart.on('dp.change', function(e) {
