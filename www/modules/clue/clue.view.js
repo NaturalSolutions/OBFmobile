@@ -25,7 +25,7 @@ var Layout = Marionette.LayoutView.extend({
   initialize: function(options) {
     var missionCollection = Mission.collection.getInstance();
     var missions = _.filter(missionCollection.toJSON(), function(mission) {
-      return mission.difficulty > 0 && ( !options.missionIds || _.includes(options.missionIds, mission.id));
+      return ( !options.missionIds || _.includes(options.missionIds, mission.id));
     });
 
     var environmentNames = _.uniq(_.flatten(_.pluck(missions, 'environments')));

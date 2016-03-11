@@ -2,7 +2,8 @@
 var Marionette = require('backbone.marionette'),
     Header = require('../../header/header'),
     Router = require('../../routing/router'),
-    MissionListItem = require('../list_item/mission_list_item.view');
+    MissionListItem = require('../list_item/mission_list_item.view'),
+    Footer = require('../../footer/footer.view');
 
 module.exports = Marionette.CompositeView.extend({
   template: require('./missions_all.tpl.html'),
@@ -30,6 +31,12 @@ module.exports = Marionette.CompositeView.extend({
         });
       });
     }
+
+    this.listenTo(Footer.getInstance(), 'btn:clue:click', function(e) {
+      e.preventDefault();
+      var ids = self.collection.pluck('id');
+      Router.getInstance().navigate('clue?missionIds='+ids.join(), {trigger:true});
+    });
   },
 
   onShow: function() {
