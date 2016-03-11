@@ -602,9 +602,7 @@ var Layout = Marionette.LayoutView.extend({
       });
 
       this.listenToOnce(Router.getInstance(), 'route', function(name, args){
-        console.log('on route');
         _.forEach(dfds, function(dfd) {
-          console.log(dfd.jqxhr);
           if ( dfd.jqxhr )
             dfd.jqxhr.abort();
           else

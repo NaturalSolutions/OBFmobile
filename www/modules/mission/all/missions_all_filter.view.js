@@ -1,10 +1,6 @@
 'use strict';
 var Marionette = require('backbone.marionette'),
   _ = require('lodash'),
-  /*moment = require('moment'),
-  momentFr = require('moment/locale/fr'),*/
-  //momentPicker = require('eonasdan-bootstrap-datetimepicker/node_modules/moment/min/moment-with-locales'),
-  //momentPickerFr = require('eonasdan-bootstrap-datetimepicker/node_modules/moment/locale/fr'),
   Header = require('../../header/header'),
   Router = require('../../routing/router'),
   Departement = require('../../main/departement.model');
@@ -48,10 +44,6 @@ var View = Marionette.LayoutView.extend({
         self.filters.departement = ui.item;
       }
     });
-    /*if (self.filters.departement)
-        self.$el.find('input.js-autocomplete').val(self.filters.departement.get('title'));*/
-    //moment.locale('fr');
-    //momentPicker.locale('fr');
     self.$el.find('.js-datetimepicker').datetimepicker({
       locale: 'fr',
       format: 'DD/MM/YYYY'
