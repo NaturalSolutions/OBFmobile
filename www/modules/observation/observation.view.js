@@ -410,12 +410,27 @@ var Layout = Marionette.LayoutView.extend({
 
   saveObs: function() {
     var self = this;
+    var formValues = self.formObs.getValue();
+    var missionId = _.parseInt(formValues.missionId);
+    var mission = Mission.collection.getInstance().get(missionId);
+    var isInSeason = mission.isInSeason();
+    var isInDepartement = mission.isInDepartement(formValues.departementId);
+
+    var dialogMessages = [];
+    if ( !isInSeason )
+      dialogMessages.push(i18n.t('pages.observation.dialogs.out_of_date'));
+    if ( !isInDepartement )
+      dialogMessages.push(i18n.t('pages.observation.dialogs.out_of_departement'));
+
+    if ( dialogMessages.length ) {
+      Dialog.alert({
+        title: i18n.t('pages.observation.dialogs.out_of_title'),
+        message: dialogMessages.join('<br />')
+      });
+    }
 
     this.checkGeolocation().then(
       function() {
-        var formValues = self.formObs.getValue();
-        var missionId = _.parseInt(formValues.missionId);
-        var mission = Mission.collection.getInstance().get(missionId);
         self.observationModel.set({
           missionId: missionId,
           cd_nom: mission.get('taxon').cd_nom,

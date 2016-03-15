@@ -199,6 +199,9 @@
                 "share": "Partager sur Facebook"
             },
             "dialogs": {
+                "out_of_title": "Etes-vous sûr d'avoir vu cette espèce ?",
+                "out_of_date": "Ce n'est pas la saison.",
+                "out_of_departement": "Ce n'est pas le département.",
                 "need_login": "Vous devez être connecté pour transmettre votre observation.",
                 "need_registration": "Vous devez être inscrit pour transmettre votre observation.",
                 "need_complete_registration": "Vous devez finaliser votre inscription pour transmettre votre observation.",
