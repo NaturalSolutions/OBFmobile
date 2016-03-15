@@ -55,11 +55,11 @@ var View = Marionette.LayoutView.extend({
     var $dpStart = self.$el.find('.js-datetimepicker.date-start');
     var $dpEnd = self.$el.find('.js-datetimepicker.date-end');
     $dpStart.on('dp.change', function(e) {
-      //$dpEnd.data("DateTimePicker").minDate(e.date);
+      $dpEnd.data("DateTimePicker").minDate(e.date);
       self.filters.startAt = e.date.toDate();
     });
     $dpEnd.on('dp.change', function(e) {
-      //$dpStart.data("DateTimePicker").maxDate(e.date);
+      $dpStart.data("DateTimePicker").maxDate(e.date);
       self.filters.endAt = e.date.toDate();
     });
     if (self.filters.startAt) $dpStart.data('DateTimePicker').date(self.filters.startAt);
