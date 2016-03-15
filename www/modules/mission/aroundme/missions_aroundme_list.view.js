@@ -42,6 +42,8 @@ module.exports = Marionette.LayoutView.extend({
 
     var missions = this.collection.toJSON();
     missions = _.sortBy(missions, function(mission) {
+      mission.isAccepted = user.hasAcceptedMission(mission);
+      mission.isCompleted = user.hasCompletedMission(mission);
       return mission.inSeason.end.delta;
     });
 

@@ -42,6 +42,16 @@
 					right: 88%;
 					bottom: 88%;
 				}
+				.status {
+					position: absolute;
+					right: 0;
+				}
+				&:not(.is-complete) .status .complete {
+					display: none;
+				}
+				&:not(.is-accepted) .status .accept {
+					display: none;
+				}
 				.thumb {
 					position: relative;
 					width: @page_missions_aroundme_item_width;

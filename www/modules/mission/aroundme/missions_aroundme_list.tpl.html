@@ -20,11 +20,22 @@
 	<div class="tab-content">
 	<% _.forEach(data.missionTabs, function(missionTab, index) { %>
 		<div role="tabpanel" class="tab-pane <% if ( index == data.lastTabIndex ) { %>active<% } %>" id="tab-difficulty-<%= index %>">
+      <% if ( !missionTab.missions.length ) { %>
+        <div class="btn-lg text-center text-muted">Il n'y a pas de mission de ce niveau actuellement, revenez le mois prochain !</div>
+      <% } %>
 			<ul class="list-unstyled missions clearfix">
 			<% _.forEach(missionTab.missions, function(mission) { %>
-				<li class="pull-left">
+				<li class="pull-left <%= mission.isCompleted ? 'is-complete' : (mission.isAccepted ? 'is-accepted' : '') %>">
 					<a href="#mission/<%= mission.id %>" class="inner">
 						<div class="delta text-nowrap text-primary"><%= i18n.t('pages.missionsAroundme.list.delta', {nb: mission.inSeason.end.delta+1}) %></div>
+						<div class="status">
+							<div class="badge-circle no-border bg-blue accept">
+					    	<span class="icon icomoon">check</span>
+					    </div>
+					    <div class="badge-circle no-border bg-orange-light complete">
+					    	<span class="icon icomoon">palms</span>
+					    </div>
+				    </div>
 						<div class="thumb">
 							<div class="img" style="background-image:url('./images/taxon/thumb/<%= mission.thumb %>');"></div>
 							<div class="donutchart donutchart-primary" data-donutchart-value="<%= _.round((365-mission.inSeason.end.delta)/365, 2) %>"></div>
