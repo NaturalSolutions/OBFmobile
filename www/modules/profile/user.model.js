@@ -201,9 +201,10 @@ var UserModel = Backbone.Model.extend({
     return true;
   },
   hasMission: function(mission, listName) {
+    var id = mission.get ? mission.get('id') : mission.id;
     var missions = this.get(listName + 'MissionIds');
 
-    return missions.indexOf(mission.get('id')) > -1;
+    return missions.indexOf(id) > -1;
   },
   getDepartement: function() {
     if ( !this.get('departementIds') || !this.get('departementIds')[0] )
