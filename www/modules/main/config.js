@@ -3,8 +3,8 @@
 module.exports = {
   root: window.location.pathname.replace(/\/(?:index.html)?$/, ''),
   //serveur Demo
-  coreUrl: 'http://151.80.132.63/obf-back',
-  apiUrl: 'http://151.80.132.63/obf-back/obfmobileapi',
+  /*coreUrl: 'http://151.80.132.63/obf-back',
+  apiUrl: 'http://151.80.132.63/obf-back/obfmobileapi',*/
 
   //serveur local
   //test mobile
@@ -13,6 +13,10 @@ module.exports = {
 
   // coreUrl: 'http://192.168.1.67/DRUPAL/OBF_BACK/www',
   // 	apiUrl: 'http://192.168.1.67/DRUPAL/OBF_BACK/www/obfmobileapi',
+
+  //serveur Prod
+  coreUrl: 'http://obfmobile.noe.org',
+  apiUrl: 'http://obfmobile.noe.org/obfmobileapi',
 
   //test desktop
   // coreUrl: 'http://localhost/DRUPAL/OBF_BACK/www',
