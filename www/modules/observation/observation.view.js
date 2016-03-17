@@ -345,6 +345,7 @@ var Layout = Marionette.LayoutView.extend({
   },
 
   onFormSubmit: function(e) {
+    var self = this;
     e.preventDefault();
 
     var errors = this.formObs.validate();
@@ -354,9 +355,11 @@ var Layout = Marionette.LayoutView.extend({
     if (this.$el.hasClass('form-status-unsaved')) {
       this.saveObs();
     } else if ( navigator.onLine ) {
-      if (this.$el.hasClass('form-status-shared-0'))
-        this.sendObs();
-      else if (this.$el.hasClass('form-status-shared-1'))
+      if (this.$el.hasClass('form-status-shared-0')) {
+        this.checkBounds().done(function() {
+          self.sendObs();
+        });
+      } else if (this.$el.hasClass('form-status-shared-1'))
         this.shareObs();
     } else {
       Dialog.alert(i18n.t('pages.observation.dialogs.need_login_offline'));
@@ -408,26 +411,38 @@ var Layout = Marionette.LayoutView.extend({
     return dfd.promise();
   },
 
+  checkBounds: function() {
+    var dfd = $.Deferred();
+
+    var missionId = this.observationModel.get('missionId');
+    var departementId = this.observationModel.get('departementId');
+    var mission = Mission.collection.getInstance().get(missionId);
+    var isInSeason = mission.isInSeason();
+    var isInDepartement = mission.isInDepartement(departementId);
+
+    if ( isInSeason && isInDepartement )
+      dfd.resolve();
+    else {
+      Dialog.confirm({
+        title: i18n.t('pages.observation.dialogs.out_of_title'),
+        message: i18n.t('pages.observation.dialogs.out_of_bounds'),
+        callback: function(result) {
+          if (result)
+            dfd.resolve();
+          else
+            dfd.reject();
+        }
+      });
+    }
+
+    return dfd;
+  },
+
   saveObs: function() {
     var self = this;
     var formValues = self.formObs.getValue();
     var missionId = _.parseInt(formValues.missionId);
     var mission = Mission.collection.getInstance().get(missionId);
-    var isInSeason = mission.isInSeason();
-    var isInDepartement = mission.isInDepartement(formValues.departementId);
-
-    var dialogMessages = [];
-    if ( !isInSeason )
-      dialogMessages.push(i18n.t('pages.observation.dialogs.out_of_date'));
-    if ( !isInDepartement )
-      dialogMessages.push(i18n.t('pages.observation.dialogs.out_of_departement'));
-
-    if ( dialogMessages.length ) {
-      Dialog.alert({
-        title: i18n.t('pages.observation.dialogs.out_of_title'),
-        message: dialogMessages.join('<br />')
-      });
-    }
 
     this.checkGeolocation().then(
       function() {
