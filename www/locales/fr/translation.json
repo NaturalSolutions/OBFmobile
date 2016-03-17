@@ -160,7 +160,7 @@
     },
     "pages": {
         "home": {
-            "title": "En forêt avec Noé",
+            "title": "Mission forêt avec Noé",
             "btns": {
                 "subscribe": "Inscription",
                 "logged": "Connexion",
@@ -199,7 +199,8 @@
                 "share": "Partager sur Facebook"
             },
             "dialogs": {
-                "out_of_title": "Etes-vous sûr d'avoir vu cette espèce ?",
+                "out_of_title": "Etes-vous certain de votre observation ?",
+                "out_of_bounds": "Cette espèce s'observe rarement en ce moment dans ce département",
                 "out_of_date": "Ce n'est pas la saison.",
                 "out_of_departement": "Ce n'est pas le département.",
                 "need_login": "Vous devez être connecté pour transmettre votre observation.",
