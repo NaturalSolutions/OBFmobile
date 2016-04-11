@@ -77,11 +77,11 @@ var Page = Marionette.LayoutView.extend({
       },
       usercategory: {
         type: 'Radio',
-        options: ['Seul(e)', 'Famille', 'En groupe']
+        options: ['Seul(e)', 'En famille', 'En groupe']
       },
       groupcategory: {
         type: 'Select',
-        options: ['scout', 'éclaireur','autre'],
+        options: ['Scouts et guides de France', 'Eclaireuses-Eclaireurs de France','Francas','Ecole et Nature / GRAINE', 'Autres'],
         editorAttrs: {
           placeholder: 'Sélectionnez votre groupe',
           selectedvalue: this.model.get('groupcategory')
