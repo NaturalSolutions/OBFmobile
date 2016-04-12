@@ -8,7 +8,7 @@ var Backbone = require('backbone'),
     Dialog = require('bootstrap-dialog'),
     Session = require('../main/session.model'),
     User = require('./user.model'),
-    i18n = require('i18next-client');
+    i18n = require('i18next');
 
 var View = Marionette.LayoutView.extend({
   template: _.template(''),

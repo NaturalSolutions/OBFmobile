@@ -4,7 +4,7 @@ var Backbone = require('backbone'),
 	config = require('../main/config'),
 	moment = require('moment'),
   momentRange = require('moment-range'),
-	i18n = require('i18next-client');
+	i18n = require('i18next');
 
 var Model = Backbone.Model.extend({
   defaults: {
@@ -49,13 +49,11 @@ var Model = Backbone.Model.extend({
 
     result.inSeason = self.inSeason(new Date());
     result.isInSeason = result.inSeason.isMatch;
-    result.displaySeason = i18n.t('common.mission.season.display', {
-      from: moment(result.seasons[0].startAt).format('MMMM'),
-      to: moment(result.seasons[0].endAt).format('MMMM')
-    });
     result.displaySeasonShort = i18n.t('common.mission.season.display', {
-      from: moment(result.seasons[0].startAt).format('MMM'),
-      to: moment(result.seasons[0].endAt).format('MMM')
+      postProcess: 'sprintf', sprintf:{ from : moment(result.seasons[0].startAt).format('MMM'), to: moment(result.seasons[0].endAt).format('MMM')}
+    });
+    result.displaySeason = i18n.t('common.mission.season.display', {
+      postProcess: 'sprintf', sprintf:{ from : moment(result.seasons[0].startAt).format('MMMM'), to: moment(result.seasons[0].endAt).format('MMMM')}
     });
 
     return result;

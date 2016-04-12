@@ -3,7 +3,7 @@
 var Backbone = require('backbone'),
     $ = require('jquery'),
     _ = require('lodash'),
-    i18n = require('i18next-client'),
+    i18n = require('i18next'),
     Marionette = require('backbone.marionette');
 
 var Layout = Marionette.LayoutView.extend({

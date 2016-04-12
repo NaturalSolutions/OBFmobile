@@ -1,7 +1,7 @@
 'use strict';
 var Backbone = require('backbone'),
   _ = require('lodash'),
-  i18n = require('i18next-client');
+  i18n = require('i18next');
 
 var extendMessages = function() {
   _.extend(Backbone.Validation.messages, {

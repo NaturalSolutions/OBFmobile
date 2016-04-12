@@ -1,7 +1,7 @@
 ﻿'use strict';
 var Backbone = require('backbone'),
   _ = require('lodash'), // FIXME: "_ = Backbone._" doesn't work... why?
-  i18n = require('i18next-client'),
+  i18n = require('i18next'),
   $ = Backbone.$;
 var GeoModel = Backbone.Model.extend({
   _id: null,

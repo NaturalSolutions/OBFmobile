@@ -7,7 +7,7 @@ var Backbone = require('backbone'),
   _ = require('lodash'),
   Router = require('../routing/router'),
   Dialog = require('bootstrap-dialog'),
-  i18n = require('i18next-client'),
+  i18n = require('i18next'),
   Observation = require('../observation/observation.model'),
   User = require('../profile/user.model');
 

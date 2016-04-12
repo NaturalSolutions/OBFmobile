@@ -4,7 +4,7 @@ var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     _ = require('lodash'),
     $ = require('jQuery'),
-    i18n = require('i18next-client'),
+    i18n = require('i18next'),
     Router = require('../routing/router');
 //i18n = require('i18n');
 
@@ -56,7 +56,6 @@ var View = Marionette.LayoutView.extend({
     });
 
     if ( !data.title && data.titleKey ) {
-      console.log(data);
       data.title = i18n.t('header.titles.'+data.titleKey, data.titleArgs);
     }
 

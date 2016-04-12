@@ -6,7 +6,7 @@
     "common": {
         "mission": {
             "season": {
-                "display": "de __from__ à __to__"
+                "display": "de %(from)s à %(to)s"
             }
         }
     },
@@ -31,12 +31,14 @@
     "mission": {
         "label": "Mission",
         "label_plural": "Missions",
-        "deltaLong": "plus que __count__ jour",
-        "deltaLong_plural": "plus que __count__ jours",
+        "deltaLong": "plus que %(count)s jour",
+        "deltaLong_plural": "plus que %(count)s jours",
         "difficulty_0": "Apprenti",
         "difficulty_1": "Débutant",
         "difficulty_2": "Confirmé",
-        "difficulty_3": "Expert"
+        "difficulty_3": "Expert",
+        "labelLocalize_interval": "(0){le};(1-inf){les};",
+        "labelIdentification_interval": "(0){l'};(1-inf){les };"
     },
     "clue": {
         "sous_bois": "Sous bois",
@@ -49,7 +51,7 @@
     },
     "logs": {
         "checkin": "Vous êtes entré en forêt",
-        "checkout": "Vous êtes sorti de forêt <span>__duration__</span>",
+        "checkout": "Vous êtes sorti de forêt <span> %(duration)s </span>",
         "mission_accept": "Vous avez accepté la mission",
         "mission_unaccept": "Vous avez annulé la mission",
         "mission_complete": "Mission accomplie !"
@@ -184,7 +186,7 @@
         },
         "missionsAroundme": {
             "list": {
-                "delta": "__nb__ j"
+                "delta": "%(nb)s j"
             }
         },
         "missionSheet": {

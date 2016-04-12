@@ -7,7 +7,7 @@ var Backbone = require('backbone'),
   MissionListItem = require('../mission/list_item/mission_list_item.view'),
   _ = require('lodash'),
   config = require('../main/config'),
-  i18n = require('i18next-client');
+  i18n = require('i18next');
 
 var Layout = Marionette.LayoutView.extend({
   header: {

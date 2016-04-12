@@ -12,7 +12,7 @@ var Backbone = require('backbone'),
     UpdatePasswd = require('./update_password.view'),
     Router = require('../routing/router'),
     Utilities = require('../main/utilities'),
-    i18n = require('i18next-client');
+    i18n = require('i18next');
 
 var Page = Marionette.LayoutView.extend({
   template: _.template(''),

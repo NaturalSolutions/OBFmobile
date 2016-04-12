@@ -22,7 +22,10 @@ var Backbone = require('backbone'),
   _ns = require('lodash-ns'),
   BackboneFormsApp = require('./app-backbone-form'),
   Observation = require('../observation/observation.model'),
-  i18n = require('i18next-client'),
+  i18n = require('i18next'),
+  XHR = require('i18next-xhr-backend'),
+  intervalPlural = require('i18next-intervalplural-postprocessor'),
+  sprintf = require('i18next-sprintf-postprocessor'),
   User = require('../profile/user.model'),
   TimeForest = require('../time_forest/time_forest.model'),
   Log = require('../logs/log.model'),
@@ -89,10 +92,16 @@ function init() {
   var getI18n = function() {
     var deferred = $.Deferred();
 
-    i18n.init({
-      resGetPath: 'locales/__lng__/__ns__.json',
-      getAsync: false,
-      lng: 'fr'
+    i18n
+    .use(XHR)
+    .use(sprintf)
+    .use(intervalPlural)
+    .init({
+      backend: {
+        loadPath: "locales/{{lng}}/{{ns}}.json"
+      },
+      lng: 'fr',
+      debug: true,
     }, function(t) {
       deferred.resolve();
     });
@@ -131,6 +140,7 @@ function init() {
             departementIds: missionData.departements,
             difficulty: missionData.difficulty,
             environments: missionData.environments,
+            plural: missionData.plural,
             taxon: {
               title: missionData.taxon.title,
               scientific_name: missionData.taxon.scientific_name,

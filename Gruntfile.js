@@ -79,7 +79,7 @@ module.exports = function(grunt) {
                       templateSettings: {variable: 'data'},
                       requires: [
                           {variable: '_', module: 'lodash'},
-                          {variable: 'i18n', module: 'i18next-client'}
+                          {variable: 'i18n', module: 'i18next'}
                       ]
                     }]
                 ]

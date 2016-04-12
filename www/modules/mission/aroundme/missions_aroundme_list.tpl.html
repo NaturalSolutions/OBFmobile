@@ -27,7 +27,7 @@
 			<% _.forEach(missionTab.missions, function(mission) { %>
 				<li class="pull-left <%= mission.isCompleted ? 'is-complete' : (mission.isAccepted ? 'is-accepted' : '') %>">
 					<a href="#mission/<%= mission.id %>" class="inner">
-						<div class="delta text-nowrap text-primary"><%= i18n.t('pages.missionsAroundme.list.delta', {nb: mission.inSeason.end.delta+1}) %></div>
+						<div class="delta text-nowrap text-primary"><%= i18n.t('pages.missionsAroundme.list.delta', { postProcess: 'sprintf', sprintf: {nb: mission.inSeason.end.delta+1}}) %></div>
 						<div class="status">
 							<div class="badge-circle no-border bg-blue accept">
 					    	<span class="icon icomoon">check</span>

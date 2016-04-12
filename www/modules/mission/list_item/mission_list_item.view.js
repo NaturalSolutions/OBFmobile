@@ -4,7 +4,7 @@ var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     _ = require('lodash'),
     $ = require('jQuery'),
-    i18n = require('i18next-client'),
+    i18n = require('i18next'),
     User = require('../../profile/user.model.js');
 
 var View = Marionette.ItemView.extend({
