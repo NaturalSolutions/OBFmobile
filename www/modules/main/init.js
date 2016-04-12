@@ -101,7 +101,6 @@ function init() {
         loadPath: "locales/{{lng}}/{{ns}}.json"
       },
       lng: 'fr',
-      debug: true,
     }, function(t) {
       deferred.resolve();
     });
