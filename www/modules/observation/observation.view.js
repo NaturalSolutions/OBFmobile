@@ -29,7 +29,8 @@ var Layout = Marionette.LayoutView.extend({
     titleKey: 'observation',
     buttons: {
       left: ['close']
-    }
+    },
+    classNames: 'brown'
   },
   template: require('./observation.tpl.html'),
   className: 'page observation ns-full-height',

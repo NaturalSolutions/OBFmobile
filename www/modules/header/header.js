@@ -85,11 +85,10 @@ var View = Marionette.LayoutView.extend({
   },
 
   onRender: function(options) {
-    var self = this;
-
-    //self.$el.i18n();
-    self.$el.parent('header').attr('class', _.get(self.data, 'classNames', ''));
+    this.$el.parent('header').attr('class', _.get(this.data, 'classNames', ''));
   },
+
+
 
   historyBack: function() {
     console.log('header back');
