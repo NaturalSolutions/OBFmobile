@@ -1,6 +1,7 @@
 'use strict';
-var Backbone = require('backbone'),
-    _ = require('lodash');
+var Backbone = require('backbone');
+var _ = require('lodash');
+var $ = require('jquery');
 
 var extendForm = function() {
   var Form = Backbone.Form;
@@ -47,8 +48,82 @@ var extendForm = function() {
   }*/
 };
 
+var initCustomeEditors = function() {
+  var Form = Backbone.Form;
+
+  Form.editors.DialogSelect = Form.editors.Base.extend({
+    tagName: 'p',
+    className: 'form-control-static input-lg',
+    events: {
+      'click': 'onClick'
+    },
+
+    initialize: function(options) {
+      Form.editors.Base.prototype.initialize.call(this, options);
+
+      if (!this.schema || !this.schema.options) throw new Error("Missing required 'schema.options'");
+    },
+
+    render: function() {
+      this.setValue(this.value);
+
+      return this;
+    },
+
+    onClick: function(e) {
+      var self = this;
+      var i18n = require('i18next-client');
+      var Marionette = require('backbone.marionette');
+      var Dialog = require('bootstrap-dialog');
+      
+      var ListView = Marionette.CollectionView.extend({
+        tagName: 'ul',
+        className: 'list-unstyled',
+        childView: this.schema.options.itemView,
+        childViewOptions: this.schema.options.itemViewOptions,
+        childEvents: {
+          'click': onChildClick
+        }
+      });
+      var listView = new ListView({
+        collection: this.schema.options.collection
+      });
+      listView.render();
+
+      var dialog = Dialog.show({
+        closable: true,
+        title: this.schema.options.dialogTitle,
+        cssClass: 'fs-dialog fs-dialog-with-scroll',
+        message: listView.$el
+      });
+
+      function onChildClick(childView) {
+        dialog.close();
+        self.setValue(childView.model.get('id'));
+      }
+    },
+
+    getValue: function() {
+      return this.$el.data('value');
+    },
+
+    setValue: function(value) {
+      var self = this;
+      this.schema.options.collection.forEach(function(model) {
+        if ( model.get('id') == value )
+          self.$el.text(self.schema.options.getSelectedLabel(model));
+      });
+      if ( !this.$el.text() )
+        this.$el.text(this.schema.editorAttrs.placeholder);
+      this.$el.data('value', value);
+    },
+
+  });
+};
+
 module.exports = {
   init: function() {
     extendForm();
+    initCustomeEditors();
   }
 };

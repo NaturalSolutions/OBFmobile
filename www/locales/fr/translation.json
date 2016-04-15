@@ -195,6 +195,10 @@
             "completedBtnLabel": "accomplie"
         },
         "observation": {
+            "missionPlaceholder": "Missions",
+            "departementPlaceholder": "Départements",
+            "missionDialogTitle": "Sélectionner une mission",
+            "departementDialogTitle": "Sélectionner un département",
             "btns": {
                 "save": "Enregistrer",
                 "send": "Transmettre",

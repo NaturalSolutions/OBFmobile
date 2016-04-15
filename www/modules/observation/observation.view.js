@@ -111,9 +111,7 @@ var Layout = Marionette.LayoutView.extend({
     var observation = this.observationModel.toJSON();
 
     return {
-      observation: observation,
-      // departement: Departement.collection.getInstance(),
-      // missions: mission.collection.getInstance()
+      observation: observation
     };
   },
 
@@ -128,24 +126,52 @@ var Layout = Marionette.LayoutView.extend({
       this.setFormStatus('saved');
     }
 
+    var DepartementItemView = Marionette.ItemView.extend({
+      tagName: 'li',
+      className: 'list-group-item',
+      template: _.template(''),
+      triggers: {
+        'click': 'click'
+      },
+
+      onRender: function() {
+        this.$el.text(this.model.get('title'));
+      }
+    });
+
     var formSchema = {
       missionId: {
-        type: 'Select',
-        options: Mission.collection.getInstance(),
+        type: 'DialogSelect',
+        options: {
+          dialogTitle: i18n.t('pages.observation.missionDialogTitle'),
+          collection: Mission.collection.getInstance(),
+          itemView: require('../mission/list_item/mission_list_item.view'),
+          itemViewOptions: {
+            cancelLink: true
+          },
+          getSelectedLabel: function(model) {
+            return model.get('taxon').title || model.get('title');
+          }
+        },
         editorAttrs: {
-          placeholder: 'Missions',
-          selectedvalue: this.observationModel.get('missionId'),
-          disabled: this.observationModel.get('shared') ? true : false
+          placeholder: i18n.t('pages.observation.missionPlaceholder')
         },
         validators: ['required']
       },
       departementId: {
-        type: 'Select',
-        options: Departement.collection.getInstance(),
+        type: 'DialogSelect',
+        options: {
+          dialogTitle: i18n.t('pages.observation.departementDialogTitle'),
+          collection: Departement.collection.getInstance(),
+          itemView: DepartementItemView,
+          getSelectedLabel: function(model) {
+            return model.get('title');
+          }
+        },
         editorAttrs: {
-          placeholder: 'Départements',
-          selectedvalue: this.observationModel.get('departementId'),
-          disabled: this.observationModel.get('shared') ? true : false
+          placeholder: i18n.t('pages.observation.departementPlaceholder')
+          /*selectedvalue: this.observationModel.get('departementId'),
+          disabled: this.observationModel.get('shared') ? true : false*/
         },
         validators: ['required']
       },

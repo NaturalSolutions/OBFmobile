@@ -21,6 +21,10 @@
     outline: -webkit-focus-ring-color auto 0px;
 }
 
+p.help-block:empty {
+    display: none;
+}
+
 body, html {
     position: absolute;
     width: 100%;
@@ -321,6 +325,22 @@ ul.form-control {
                     }
                 }
             }
+        }
+    }
+    &.fs-dialog-with-scroll {
+        .modal-dialog .modal-content {
+            margin: 2%;
+            margin-bottom: 0;
+            height: 98%;
+        }
+        .modal-dialog .modal-content .modal-body {
+            position: absolute;
+            top: 53px;
+            bottom: 0;
+            width: 100%;
+            height: auto;
+            padding: 0;
+            overflow: auto;
         }
     }
     &.with-bg-forest {

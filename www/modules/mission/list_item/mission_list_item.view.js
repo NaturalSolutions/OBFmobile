@@ -10,7 +10,13 @@ var Backbone = require('backbone'),
 var View = Marionette.ItemView.extend({
   template: require('./mission_list_item.tpl.html'),
   className: 'media mission-list-item',
-  events: {},
+  events: {
+    'click .js-link-mission': 'onLinkClick'
+  },
+  initialize: function(options) {
+    this.options = options;
+  },
+
   serializeData: function() {
     return {
       mission: this.model.toJSON()
@@ -25,6 +31,14 @@ var View = Marionette.ItemView.extend({
     this.$el.addClass('is-complete');
     else if (user.hasAcceptedMission(this.model))
     this.$el.addClass('is-accept');
+  },
+
+  onLinkClick: function(e) {
+    if ( this.options.cancelLink ) {
+      this.trigger('click');
+      e.preventDefault();
+      return false;
+    }
   }
 });
 
