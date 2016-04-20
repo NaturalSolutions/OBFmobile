@@ -72,7 +72,7 @@ var initCustomeEditors = function() {
 
     onClick: function(e) {
       var self = this;
-      var i18n = require('i18next-client');
+      var i18n = require('i18next');
       var Marionette = require('backbone.marionette');
       var Dialog = require('bootstrap-dialog');
       
