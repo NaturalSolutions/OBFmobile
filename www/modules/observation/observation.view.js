@@ -30,7 +30,7 @@ var Layout = Marionette.LayoutView.extend({
     buttons: {
       left: ['close']
     },
-    classNames: 'brown'
+    classNames: 'orange'
   },
   template: require('./observation.tpl.html'),
   className: 'page observation ns-full-height',

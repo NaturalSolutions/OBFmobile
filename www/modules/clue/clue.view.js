@@ -15,7 +15,7 @@ var Layout = Marionette.LayoutView.extend({
     buttons: {
       left: ['close']
     },
-    classNames: 'orange'
+    classNames: 'brown'
   },
   template: require('./clue.tpl.html'),
   className: 'page page-scrollable clue no-footer-padding clearfix no-header',
