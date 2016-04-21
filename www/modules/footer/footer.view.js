@@ -21,7 +21,8 @@ var View = Marionette.LayoutView.extend({
     'click .capture-photo-js': 'capturePhoto',
     'submit form': 'uploadPhoto',
     'click .forest-time-js': 'forestTime',
-    'click .btn-clue': 'onBtnClueClick'
+    'click .btn-clue': 'onBtnClueClick',
+    'click .btn-help': 'toggleHelp'
   },
   /*triggers: {
     'click .btn-clue': 'btn:clue:click'
@@ -81,6 +82,14 @@ var View = Marionette.LayoutView.extend({
     var duration = User.getCurrent().getTimeForest().get('total');
     var display = moment.duration(duration, 'seconds').format('h[h] mm[min] ss[s]');
     this.$el.find('.time-forest-display-js').text(display);
+  },
+
+  toggleHelp: function() {
+    var someHelp = User.getCurrent().get('displayHelp');
+    if(someHelp)
+      User.getCurrent().set('displayHelp', false).save();
+    else
+      User.getCurrent().set('displayHelp', true).save();
   },
 
   capturePhoto: function() {

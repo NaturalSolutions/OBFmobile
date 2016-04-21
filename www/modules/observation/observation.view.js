@@ -13,6 +13,7 @@ var Backbone = require('backbone'),
   Slideshow = require('./observation_slideshow.view.js'),
   bootstrap = require('bootstrap'),
   Dialog = require('bootstrap-dialog'),
+  Help = require('../main/help.model'),
   Main = require('../main/main.view'),
   i18n = require('i18next'),
   Login = require('../profile/login.view'),
@@ -105,6 +106,15 @@ var Layout = Marionette.LayoutView.extend({
       this.observationModel.set({
         departementId: user.get('city').dpt
       }).save();
+
+    var helps = Help.collection.getInstance();
+    var titleKey = this.header.titleKey;
+    this.listenTo(user, 'change:displayHelp',
+      function(titleKey){
+        helps.someHelp(titleKey);
+      }
+    );
+    helps.someHelp(this.header.titleKey);
   },
 
   serializeData: function() {

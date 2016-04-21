@@ -12,9 +12,11 @@ var Backbone = require('backbone'),
   i18n = require('i18next'),
   moment = require('moment'),
   TimeForest = require('../time_forest/time_forest.model'),
+  Router = require('../routing/router'),
   Session = require('./session.model'),
   User = require('../profile/user.model'),
   Departement = require('./departement.model'),
+  Help = require('../main/help.model'),
   CurrentPos = require('../localize/current_position.model');
 
 var Layout = Marionette.LayoutView.extend({
@@ -23,6 +25,7 @@ var Layout = Marionette.LayoutView.extend({
   className: 'ns-full-height',
 
   initialize: function() {
+    var self = this;
     this.dialogs = [];
     // this.addListeners();
     //this.listenTo(User.collection.getInstance(), 'change:current', this.onCurrentUserChange);
@@ -64,6 +67,8 @@ var Layout = Marionette.LayoutView.extend({
     var timeForest = User.getCurrent().get('timeForest');
     if(timeForest.get('isStart'))
       timeForest.start(timeForest.get('startTime'), timeForest.get('curCountTotalInit'));
+  //TODO check if the user need somme help.
+
 
   },
 
@@ -129,6 +134,29 @@ var Layout = Marionette.LayoutView.extend({
       buttons: [{
         label: data.button,
         //cssClass: 'btn-primary',
+        action: function(dialog) {
+          dialog.close();
+        }
+      }],
+      onhidden: function(dialog) {
+        self.dialogs.shift();
+        self.openDialog();
+      }
+    });
+    this.dialogs.push(dialog);
+    if (this.dialogs.length == 1)
+      this.openDialog();
+  },
+
+  addDialogHelp: function(data) {
+    var self = this;
+    var message = (data && data.description) ? '<p class="description" >'+ data.description +'</p>' : '<p class="description" > Description de l\'aide</p>';
+    var dialog = new Dialog({
+      message: message,
+      // cssClass: 'text-cente',
+      buttons: [{
+        label: 'J\'ai compris',
+        cssClass: 'btn-block btn-default',
         action: function(dialog) {
           dialog.close();
         }

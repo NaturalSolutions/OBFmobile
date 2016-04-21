@@ -4,6 +4,7 @@ var Backbone = require('backbone'),
   Marionette = require('backbone.marionette'),
   _ = require('lodash'),
   User = require('../profile/user.model'),
+  Help = require('../main/help.model'),
   Observation = require('../observation/observation.model'),
   moment = require('moment');
 
@@ -51,6 +52,7 @@ var ClassDef = Marionette.LayoutView.extend({
     this.listenTo(this.currentUser.get('timeForest'), 'change:progressLog', this.setUserSky);
     this.listenTo(User.collection.getInstance(), 'change:current', this.onCurrentUserChange);
     this.listenTo(this.currentUser.getTimeForest(), 'change:total', this.displayTimeForest);
+
   },
 
   serializeData: function() {
@@ -69,6 +71,16 @@ var ClassDef = Marionette.LayoutView.extend({
     this.displayTab();
     this.setUserSky();
     this.displayTimeForest();
+
+    var currentUser = User.getCurrent();
+    var helps = Help.collection.getInstance();
+    var titleKey = this.header.titleKey;
+    this.listenTo(currentUser, 'change:displayHelp',
+      function(titleKey){
+        helps.someHelp(titleKey);
+      }
+    );
+    helps.someHelp(this.header.titleKey);
   },
 
   onCurrentUserChange: function(newUser, prevUser) {

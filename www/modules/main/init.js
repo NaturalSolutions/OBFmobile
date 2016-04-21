@@ -31,6 +31,7 @@ var Backbone = require('backbone'),
   Log = require('../logs/log.model'),
   City = require('../localize/city.model'),
   Departement = require('../main/departement.model'),
+  Help = require('../main/help.model'),
   Mission = require('../mission/mission.model'),
   Session = require('../main/session.model'),
   Utilities = require('../main/utilities'),
@@ -189,6 +190,29 @@ function init() {
     return deferred;
   };
 
+  var gethelp = function(){
+    var deferred = $.Deferred();
+    var helpCollection = new Help.collection.getInstance();
+
+    $.getJSON('./data/helps.json')
+      .then(function(response) {
+        var helpDatas = response;
+        _.forEach(helpDatas, function(helpData) {
+          var help = new Help.Model({
+            id: helpData.id,
+            label: helpData.title,
+            description: helpData.description
+          });
+          helpCollection.add(help);
+        });
+        deferred.resolve();
+      }, function(error) {
+        console.log(error);
+      });
+
+    return deferred;
+  };
+
   var getLogs = function() {
     return Log.collection.getInstance().fetch();
   };
@@ -251,7 +275,7 @@ function init() {
     Backbone.history.start();
   });
 
-  $.when(getI18n(), getMissions(), getCities(), getDepartements(), getUser(), getObservations(), getLogs(), getTimeForest())
+  $.when(getI18n(), getMissions(), getCities(), getDepartements(), getUser(), getObservations(), getLogs(), getTimeForest(), gethelp())
     .done(function() {
       app.start();
     });
