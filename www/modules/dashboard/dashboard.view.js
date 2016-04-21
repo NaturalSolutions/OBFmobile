@@ -68,16 +68,17 @@ var ClassDef = Marionette.LayoutView.extend({
   },
 
   onRender: function(options) {
+    var self = this;
     this.displayTab();
     this.setUserSky();
     this.displayTimeForest();
 
     var currentUser = User.getCurrent();
     var helps = Help.collection.getInstance();
-    var titleKey = this.header.titleKey;
+    this.titleKey = this.header.titleKey;
     this.listenTo(currentUser, 'change:displayHelp',
-      function(titleKey){
-        helps.someHelp(titleKey);
+      function(){
+        helps.someHelp(self.titleKey);
       }
     );
     helps.someHelp(this.header.titleKey);
