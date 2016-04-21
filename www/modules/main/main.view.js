@@ -16,7 +16,6 @@ var Backbone = require('backbone'),
   Session = require('./session.model'),
   User = require('../profile/user.model'),
   Departement = require('./departement.model'),
-  Help = require('../main/help.model'),
   CurrentPos = require('../localize/current_position.model');
 
 var Layout = Marionette.LayoutView.extend({
@@ -67,9 +66,12 @@ var Layout = Marionette.LayoutView.extend({
     var timeForest = User.getCurrent().get('timeForest');
     if(timeForest.get('isStart'))
       timeForest.start(timeForest.get('startTime'), timeForest.get('curCountTotalInit'));
-  //TODO check if the user need somme help.
 
-
+    var Help = require('./help.model');
+    var helpStatus = Help.collection.getInstance().checkStatus();
+    console.log('helpStatus: ',helpStatus);
+    if(helpStatus)
+      $('body').alterClass('*-help','with-help');
   },
 
   regions: {

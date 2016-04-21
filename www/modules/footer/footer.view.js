@@ -85,11 +85,8 @@ var View = Marionette.LayoutView.extend({
   },
 
   toggleHelp: function() {
-    var someHelp = User.getCurrent().get('displayHelp');
-    if(someHelp)
-      User.getCurrent().set('displayHelp', false).save();
-    else
-      User.getCurrent().set('displayHelp', true).save();
+    var Help = require('../main/help.model');
+    Help.collection.getInstance().toggleStatus();
   },
 
   capturePhoto: function() {

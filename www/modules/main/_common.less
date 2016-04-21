@@ -77,6 +77,17 @@ body:not(.not-anonymous) {
     }
 }
 
+body.with-help {
+    .hidden-help {
+        display: none;
+    }
+}
+body:not(.with-help) {
+    .visible-help {
+        display: none;
+    }
+}
+
 .badge-circle {
     font-size: .63em;
     width: 2em;

@@ -1,5 +1,6 @@
 'use strict';
 var Backbone = require('backbone'),
+    $ = require('jquery'),
     Main = require('../main/main.view'),
     User = require('../profile/user.model'),
     config = require('../main/config');
@@ -14,10 +15,32 @@ var Model = Backbone.Model.extend({
 var Collection = Backbone.Collection.extend({
   model: Model,
 
-  someHelp: function(key){
+  checkStatus: function(){
     var currentUser = User.getCurrent();
+    return currentUser.get('displayHelp');
+  },
+
+  toggleStatus: function(){
+    var status = this.checkStatus();
+    if(status)
+      this.stopHelp();
+    else
+      this.startHelp();
+  },
+
+  startHelp: function(){
+    $('body').alterClass('*-help', 'with-help');
+    User.getCurrent().set('displayHelp', true).save();
+  },
+
+  stopHelp: function(){
+    $('body').alterClass('*-help', '');
+    User.getCurrent().set('displayHelp', false).save();
+  },
+
+  someHelp: function(key){
     var needSomeHelp = this.findWhere({label: key});
-    var displayHelpState = currentUser.get('displayHelp');
+    var displayHelpState = this.checkStatus();
     if(displayHelpState && needSomeHelp){
       Main.getInstance().addDialogHelp({
         description: "Description de l'aide " + key + " !",
