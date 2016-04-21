@@ -30,11 +30,13 @@ var Collection = Backbone.Collection.extend({
 
   startHelp: function(){
     $('body').alterClass('*-help', 'with-help');
+    $('.btn-help .bg-blue-royal').alterClass('*-inner-border', 'btn-inner-border');
     User.getCurrent().set('displayHelp', true).save();
   },
 
   stopHelp: function(){
     $('body').alterClass('*-help', '');
+    $('.btn-help .bg-blue-royal').alterClass('btn-inner-border', '');
     User.getCurrent().set('displayHelp', false).save();
   },
 
