@@ -98,14 +98,17 @@ var Layout = Marionette.LayoutView.extend({
 
     this.session = Session.model.getInstance();
 
-    if (user.get('departementIds').length) {
-      this.observationModel.set({
-        departementId: user.get('departementIds')[0]
-      }).save();
-    } else if (user.get('city'))
-      this.observationModel.set({
-        departementId: user.get('city').dpt
-      }).save();
+    if (!this.observationModel.get('departementId')) {
+      if (user.get('departementIds').length) {
+        this.observationModel.set({
+          departementId: user.get('departementIds')[0]
+        }).save();
+      } else if (user.get('city'))
+        this.observationModel.set({
+          departementId: user.get('city').dpt
+        }).save();
+    }
+    
 
     var helps = Help.collection.getInstance();
     var titleKey = this.header.titleKey;
