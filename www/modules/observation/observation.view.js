@@ -294,13 +294,11 @@ var Layout = Marionette.LayoutView.extend({
   },
 
   setFormStatus: function(status) {
-    var self = this;
-
     if (status == 'unsaved')
-      self.$el.alterClass('form-status-*', 'form-status-unsaved');
+      this.$el.alterClass('form-status-*', 'form-status-unsaved');
     else {
-      var shared = self.observationModel.get('shared') || 0;
-      self.$el.alterClass('form-status-*', 'form-status-shared-' + shared);
+      var shared = this.observationModel.get('shared') || 0;
+      this.$el.alterClass('form-status-*', 'form-status-shared-' + shared);
     }
   },
 
@@ -723,11 +721,12 @@ var Layout = Marionette.LayoutView.extend({
 
     this.$progressBar.removeClass('progress-bar-striped active');
 
+    this.stopListening(this.observationModel);
     this.observationModel.set({
       'shared': 1
     }).save();
     this.user.computeScore();
-    this.setFormStatus('shared');
+    //this.setFormStatus('shared');
 
     setTimeout(function() {
       self.$el.removeClass('sending block-ui');
@@ -814,7 +813,7 @@ var Layout = Marionette.LayoutView.extend({
         link: mission.get('taxon').url,
         name: mission.get('title'),
         picture: _.get(self.model.get('photos'), '[0].externUrl', ''),
-        caption: 'En Forêt avec Noé',
+        caption: 'Mission Forêt Avec Noé',
         description: mission.get('taxon').characteristic
       },
       success: function() {
