@@ -212,7 +212,8 @@ module.exports = Marionette.Object.extend({
     var user = User.getCurrent();
 
     main.getInstance().rgMain.show(new Profile.Page({
-      model: user
+      model: user,
+      name: 'profile'
     }), {
       preventDestroy: true
     });
@@ -221,7 +222,8 @@ module.exports = Marionette.Object.extend({
     var user = new (User.model.getClass())();
 
     main.getInstance().rgMain.show(new Profile.Page({
-      model: user
+      model: user,
+      name: 'profile'
     }), {
       preventDestroy: true
     });

@@ -3,7 +3,7 @@
 var Backbone = require('backbone'),
     Marionette = require('backbone.marionette'),
     _ = require('lodash'),
-    $ = require('jQuery'),
+    $ = require('jquery'),
     header = require('../header/header');
 
 var Region = Marionette.Region.extend({
@@ -28,6 +28,7 @@ var Region = Marionette.Region.extend({
     		self.app.rootView.rgHeader.currentView.set(view.header);*/
 
     self.$el.prepend(view.el);
+    $('body').alterClass('section-*', 'section-'+_.get(view, 'options.name', ''));
   }
 });
 
