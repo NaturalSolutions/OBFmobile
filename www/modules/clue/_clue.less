@@ -21,14 +21,25 @@
       height: 40px;
       margin-top: -20px;
       margin-left: -20px;
-      background: rgba(255, 255, 255, 0.7);
       border-radius: 50%;
+      background: -moz-radial-gradient(center, ellipse cover,  rgba(255,255,255,0.7) 50%, rgba(255,255,255,0.5) 51%);
+      background: -webkit-radial-gradient(center, ellipse cover,  rgba(255,255,255,0.7) 50%,rgba(255,255,255,0.5) 51%);
+      background: radial-gradient(ellipse at center,  rgba(255,255,255,0.7) 50%,rgba(255,255,255,0.5) 51%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3ffffff', endColorstr='#80ffffff',GradientType=1 );
       .badge-circle {
         position: absolute;
         left: 50%;
         top: 50%;
         margin-top: -1em;
         margin-left: -1em;
+        border-color: #EEE;
+        background: #DDD;
+        font-size: .75em;
+        font-weight: 500;
+        color: #000;
+        &:after {
+          border-width: 2px;
+        }
       }
       &.is-cluster {
         .scale(1.2);
