@@ -1,29 +1,46 @@
 'use strict';
 
 var Marionette = require('backbone.marionette'),
-    CurrentPos = require('../localize/current_position.model'),
-    Header = require('../header/header'),
-    Dialog = require('bootstrap-dialog');
+    CurrentPos = require('./current_position.model'),
+    Header = require('../header/header');
 
 module.exports = Marionette.LayoutView.extend({
-  template: require('./user_localize.tpl.html'),
+  template: require('./localize.tpl.html'),
   className: 'state state-localize',
   events: {},
 
   initialize: function() {
     this.currentPos = CurrentPos.model.getInstance();
-
+    this.maxDuration = this.currentPos.options.timeout;
+    
     Header.getInstance().set({
       titleKey: 'missionsAroundmeLocalize'
     });
   },
 
   onShow: function() {
+    this.$progressBar = this.$el.find('.progress-bar');
     this.watchCurrentPos();
+  },
+
+  stopTimer: function() {
+    if ( this.interval )
+      clearInterval(this.interval);
   },
 
   watchCurrentPos: function() {
     var self = this;
+    var start = new Date();
+    self.$progressBar.css({
+      width: '0%'
+    });
+    this.interval = setInterval(function() {
+      var duration = new Date() - start;
+      var ratio = Math.min(100, duration/self.maxDuration*100);
+      self.$progressBar.css({
+        width: Math.round(ratio)+'%'
+      });
+    }, 1000);
     this.currentPos.watch().then(function(success) {
       if ( !self.willBeDestroyed )
         self.onPositionSucess();
@@ -35,9 +52,9 @@ module.exports = Marionette.LayoutView.extend({
 
   onPositionError: function(error) {
     var self = this;
-    console.log('onPositionError');
+    this.stopTimer();
     var msgerror = this.currentPos.positionError(error);
-    var currentDialog = Dialog.confirm({
+    var currentDialog = require('bootstrap-dialog').confirm({
       title: 'Problème de géolocalisation',
       message: msgerror,
       btnCancelLabel: 'Saisir votre département',
@@ -55,11 +72,17 @@ module.exports = Marionette.LayoutView.extend({
   },
 
   onPositionSucess: function() {
-    console.log('onPositionSucess');
-    this.triggerMethod('success');
+    var self = this;
+    this.stopTimer();
+    self.$progressBar.css({
+      width: '100%'
+    });
+    setTimeout(function() {
+      self.triggerMethod('success');
+    }, 700);
   },
 
   onDestroy: function() {
-    var self = this;
+    this.stopTimer();
   }
 });

@@ -41,7 +41,8 @@ module.exports = Marionette.LayoutView.extend({
   onShow: function() {
     var self = this;
 
-    self.setState(self.initState.name, self.initState.args);
+    self.setState('localize');
+    //self.setState(self.initState.name, self.initState.args);
   },
 
   setState: function(name, args) {
@@ -65,7 +66,7 @@ module.exports = Marionette.LayoutView.extend({
   getLocalizeView: function() {
     var self = this;
 
-    var view = new(require('../../profile/user_localize.view'))();
+    var view = new(require('../../localize/localize.view'))();
     self.listenTo(view, 'success', function() {
       self.stopListening(view);
       console.log('onLocalizeSuccess');
