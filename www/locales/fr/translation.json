@@ -3,13 +3,6 @@
         "key": "singular",
         "key_plural_2": "few"
     },
-    "common": {
-        "mission": {
-            "season": {
-                "display": "de %(from)s à %(to)s"
-            }
-        }
-    },
     "header": {
         "titles": {
             "dashboard": "Tableau de bord",
@@ -31,6 +24,10 @@
     "mission": {
         "label": "Mission",
         "label_plural": "Missions",
+        "season": {
+            "range": "de %(from)s à %(to)s",
+            "fullyear": "toutes l'année"
+        },
         "deltaLong": "plus que %(count)s jour",
         "deltaLong_plural": "plus que %(count)s jours",
         "difficulty_0": "Apprenti",

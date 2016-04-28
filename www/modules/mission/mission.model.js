@@ -49,12 +49,18 @@ var Model = Backbone.Model.extend({
 
     result.inSeason = self.inSeason(new Date());
     result.isInSeason = result.inSeason.isMatch;
-    result.displaySeasonShort = i18n.t('common.mission.season.display', {
-      postProcess: 'sprintf', sprintf:{ from : moment(result.seasons[0].startAt).format('MMM'), to: moment(result.seasons[0].endAt).format('MMM')}
-    });
-    result.displaySeason = i18n.t('common.mission.season.display', {
-      postProcess: 'sprintf', sprintf:{ from : moment(result.seasons[0].startAt).format('MMMM'), to: moment(result.seasons[0].endAt).format('MMMM')}
-    });
+    var season = result.seasons[0];
+    console.log(season.startAt.getMonth(), season.endAt.getMonth());
+    if ( season.startAt.getMonth() === 0 && season.endAt.getMonth() == 11 )
+      result.displaySeasonShort = result.displaySeason = i18n.t('mission.season.fullyear');
+    else {
+      result.displaySeasonShort = i18n.t('mission.season.range', {
+        postProcess: 'sprintf', sprintf:{ from : moment(season.startAt).format('MMM'), to: moment(season.endAt).format('MMM')}
+      });
+      result.displaySeason = i18n.t('mission.season.range', {
+        postProcess: 'sprintf', sprintf:{ from : moment(season.startAt).format('MMMM'), to: moment(season.endAt).format('MMMM')}
+      });
+    }
 
     return result;
   },
