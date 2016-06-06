@@ -284,15 +284,14 @@ function init() {
 if (window.cordova) {
   //iOS During initial startup, the first offline event (if applicable) takes at least a second to fire.
   setTimeout(function() {
-    $('.splashscreen').remove();
     document.addEventListener('deviceready', init, false);
+    navigator.splashscreen.hide();
     window.open = window.cordova.InAppBrowser.open;
-  }, 3000);
+  }, 1000);
 
 } else {
 
   setTimeout(function() {
-    $('.splashscreen').remove();
     $(document).ready(init);
   }, 500);
 }
