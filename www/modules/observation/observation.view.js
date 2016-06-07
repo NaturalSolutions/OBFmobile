@@ -802,7 +802,7 @@ var Layout = Marionette.LayoutView.extend({
     var mission = self.model.get('mission');
     this.$el.find('form').addClass('loading');
     openFB.init({
-      appId: '545622275606103',
+      appId: '146470505768742',
       tokenStore: window.localStorage
     });
     openFB.api({
