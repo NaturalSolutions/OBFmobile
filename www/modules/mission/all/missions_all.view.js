@@ -3,6 +3,8 @@ var Marionette = require('backbone.marionette'),
     Header = require('../../header/header'),
     Router = require('../../routing/router'),
     MissionListItem = require('../list_item/mission_list_item.view'),
+    User = require('../../profile/user.model'),
+    Help = require('../../main/help.model'),
     Footer = require('../../footer/footer.view');
 
 module.exports = Marionette.CompositeView.extend({
@@ -37,6 +39,15 @@ module.exports = Marionette.CompositeView.extend({
       var ids = self.collection.pluck('id');
       Router.getInstance().navigate('clue?missionIds='+ids.join(), {trigger:true});
     });
+
+    var currentUser = User.getCurrent();
+    var helps = Help.collection.getInstance();
+    this.listenTo(currentUser, 'change:displayHelp',
+      function(){
+        helps.someHelp("missionsAll");
+      }
+    );
+    helps.someHelp("missionsAll");
   },
 
   onShow: function() {

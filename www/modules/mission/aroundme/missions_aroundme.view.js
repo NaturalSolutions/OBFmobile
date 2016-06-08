@@ -3,6 +3,8 @@
 var Marionette = require('backbone.marionette'),
   header = require('../../header/header'),
   Router = require('../../routing/router'),
+  User = require('../../profile/user.model'),
+  Help = require('../../main/help.model'),
   _ = require('lodash');
 
 module.exports = Marionette.LayoutView.extend({
@@ -36,6 +38,15 @@ module.exports = Marionette.LayoutView.extend({
       });
     });
     self.initState = options.state;
+
+    var currentUser = User.getCurrent();
+    var helps = Help.collection.getInstance();
+    this.listenTo(currentUser, 'change:displayHelp',
+      function(){
+        helps.someHelp("missionsAroundme");
+      }
+    );
+    helps.someHelp("missionsAroundme");
   },
 
   onShow: function() {

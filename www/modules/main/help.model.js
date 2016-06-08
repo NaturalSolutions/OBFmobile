@@ -45,7 +45,7 @@ var Collection = Backbone.Collection.extend({
     var displayHelpState = this.checkStatus();
     if(displayHelpState && needSomeHelp){
       Main.getInstance().addDialogHelp({
-        description: "Description de l'aide " + key + " !",
+        description : needSomeHelp.get('description'),
       });
     }
   },

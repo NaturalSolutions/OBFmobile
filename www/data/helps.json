@@ -1,11 +1,24 @@
 [{
 "id": "001",
 "title": "dashboard",
-"description": "Aide du tableau de bord."
+"description": "<h1>Bienvenue !</h1> <p> Pour accomplir des missions et gagner des récompenses, rendez-vous dans une forêt proche de chez vous et envoyez à Noé les photos des espèces que vous rencontrez.</p><p> A tout moment, cliquez sur l’œil orange pour prendre une photo !</p><p> Visualisez vos récompenses en cliquant sur la mascotte et déclenchez le chronomètre pour enregistrer votre temps passé en forêt.</p><p>Cliquez sur le bouton « Trouvez-moi une mission »  pour débuter votre quête !</p>"
 },{
   "id": "002",
   "title": "observation",
-  "description": "Aide de la fiche observation."
-}
+  "description": "Complétez votre observation en ajoutant jusqu’à deux photos supplémentaires (bouton « + » en haut à droite). N’oubliez pas de transmettre votre observation pour obtenir des récompenses !"
 
+},{
+  "id": "003",
+  "title": "missionsAroundme",
+  "description": "Les missions disponibles autour de vous s’affichent ici par priorité et par difficulté. Entraînez-vous avec les missions du niveau « Apprenti », cliquez sur une mission pour afficher sa description. Retrouvez l’ensemble des missions en cliquant sur le « + » en haut à droite de l’écran."
+  },{
+  "id": "004",
+  "title": "missionsAll",
+  "description": "L’ensemble des missions sont disponibles ici, cliquez sur le menu en haut à droite pour filtrer ces missions par département et par date."
+  
+  },{
+  "id": "005",
+  "title": "missionSheet",
+  "description": "Cette fiche vous permettra d’identifier une espèce ou des éléments de la forêt. Cliquez sur « accepter » pour voir apparaître la mission dans votre tableau de bord. Prenez une photo en cliquant sur l’œil orange. Les photos sont visibles sur la fiche et dans votre tableau de bord." 
+  }
 ]

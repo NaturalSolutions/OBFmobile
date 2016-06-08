@@ -6,6 +6,7 @@ var Backbone = require('backbone'),
   Router = require('../../routing/router'),
   User = require('../../profile/user.model.js'),
   Header = require('../../header/header'),
+  Help = require('../../main/help.model'),
   Footer = require('../../footer/footer.view');
 
 module.exports = Marionette.LayoutView.extend({
@@ -56,6 +57,7 @@ module.exports = Marionette.LayoutView.extend({
       e.preventDefault();
       Router.getInstance().navigate('clue?missionId='+self.model.get('id'), {trigger:true});
     });
+
   },
 
   openWindow: function(){
@@ -73,6 +75,14 @@ module.exports = Marionette.LayoutView.extend({
     this.showChildView('observations', new ObservationsView({
       collection: new Backbone.Collection(observations)
     }));
+
+    var helps = Help.collection.getInstance();
+    this.listenTo(user, 'change:displayHelp',
+      function(){
+        helps.someHelp("missionSheet");
+      }
+    );
+    helps.someHelp("missionSheet");
   },
 
   serializeData: function() {

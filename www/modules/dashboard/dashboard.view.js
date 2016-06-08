@@ -78,7 +78,7 @@ var ClassDef = Marionette.LayoutView.extend({
     this.titleKey = this.header.titleKey;
     this.listenTo(currentUser, 'change:displayHelp',
       function(){
-        helps.someHelp(self.titleKey);
+        helps.someHelp(self.header.titleKey);
       }
     );
     helps.someHelp(this.header.titleKey);
