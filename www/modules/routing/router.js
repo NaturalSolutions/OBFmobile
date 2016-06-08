@@ -29,6 +29,15 @@ var Router = Marionette.AppRouter.extend({
     }, false);
   },
 
+  execute: function(callback, args, name) {
+    var Dialog = require('bootstrap-dialog');
+
+    if(Dialog.dialogs)
+      Dialog.closeAll();
+    if (callback)
+      callback.apply(this, args);
+  },
+
   startOutOfHistory: function() {
     this.lastHistoryUrl = window.location.href;
     this.isOutOfHistory = true;
