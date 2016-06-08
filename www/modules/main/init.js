@@ -200,7 +200,7 @@ function init() {
         _.forEach(helpDatas, function(helpData) {
           var help = new Help.Model({
             id: helpData.id,
-            label: helpData.title,
+            title: helpData.title,
             description: helpData.description
           });
           helpCollection.add(help);

@@ -69,7 +69,6 @@ var Layout = Marionette.LayoutView.extend({
 
     var Help = require('./help.model');
     var helpStatus = Help.collection.getInstance().checkStatus();
-    console.log('helpStatus: ',helpStatus);
     if(helpStatus)
       $('body').alterClass('*-help','with-help');
   },
@@ -152,8 +151,10 @@ var Layout = Marionette.LayoutView.extend({
 
   addDialogHelp: function(data) {
     var self = this;
-    var message = (data && data.description) ? '<p class="description" >'+ data.description +'</p>' : '<p class="description" > Description de l\'aide</p>';
+    var title = (data && data.title) ? '<span class="btn-lg btn-fab bg-blue-royal btn-inner-border"> <span class="icon icomoon">help</span> </span><p>'+ data.title + '</p>' : '<span class="btn-lg btn-fab bg-blue-royal btn-inner-border"> <span class="icon icomoon">help</span> </span>';
+    var message = (data && data.description) ? data.description : '<p class="description" > Description de l\'aide</p>';
     var dialog = new Dialog({
+      title: title,
       message: message,
       // cssClass: 'text-cente',
       buttons: [{
@@ -179,7 +180,7 @@ var Layout = Marionette.LayoutView.extend({
 
     var dialog = this.dialogs[0];
     dialog.realize();
-    dialog.getModalHeader().hide();
+    // dialog.getModalHeader().hide();
     dialog.open();
   },
 

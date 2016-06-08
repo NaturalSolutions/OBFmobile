@@ -41,11 +41,12 @@ var Collection = Backbone.Collection.extend({
   },
 
   someHelp: function(key){
-    var needSomeHelp = this.findWhere({label: key});
+    var needSomeHelp = this.findWhere({id: key});
     var displayHelpState = this.checkStatus();
     if(displayHelpState && needSomeHelp){
       Main.getInstance().addDialogHelp({
-        description : needSomeHelp.get('description'),
+        title: needSomeHelp.get('title'),
+        description: needSomeHelp.get('description'),
       });
     }
   },
