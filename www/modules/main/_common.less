@@ -98,36 +98,38 @@ body:not(.with-help) {
 }
 
 .with-help{
-    .bootstrap-dialog-title{
-        .btn-fab{
-            &.bg-blue-royal{
-                &.btn-inner-border{
-                    font-size: 10px;
-                    margin-right: 1em;
-                    position: relative;
-                    bottom: 4px;
+    .dialog-help{
+        .bootstrap-dialog-title{
+            .btn-fab{
+                &.bg-blue-royal{
+                    &.btn-inner-border{
+                        font-size: 10px;
+                        margin-right: 1em;
+                        position: relative;
+                        bottom: 4px;
+                    }
                 }
             }
+            p{
+                display: inline-block;
+                margin-top: 0px;
+                font-size: 19px;
+                padding-top: 12px;
+                text-shadow: 0 2px 9px rgba(0, 0, 0, 0.3);
+            }
         }
-        p{
-            display: inline-block;
-            margin-top: 0px;
-            font-size: 19px;
-            padding-top: 12px;
-            text-shadow: 0 2px 9px rgba(0, 0, 0, 0.3);
+        .modal-header{
+            border-bottom: none;
         }
-    }
-    .modal-header{
-        border-bottom: none;
-    }
-    .modal-body{
-        font-size: 1.6rem;
-    }
-    .modal-footer{
-        .btn-block{
+        .modal-body{
             font-size: 1.6rem;
         }
+        .modal-footer{
+            .btn-block{
+                font-size: 1.6rem;
+            }
 
+        }
     }
 }
 

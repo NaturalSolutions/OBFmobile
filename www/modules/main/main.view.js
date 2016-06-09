@@ -156,7 +156,7 @@ var Layout = Marionette.LayoutView.extend({
     var dialog = new Dialog({
       title: title,
       message: message,
-      // cssClass: 'text-cente',
+      cssClass: 'dialog-help',
       buttons: [{
         label: 'J\'ai compris',
         cssClass: 'btn-block btn-default',
@@ -180,7 +180,8 @@ var Layout = Marionette.LayoutView.extend({
 
     var dialog = this.dialogs[0];
     dialog.realize();
-    // dialog.getModalHeader().hide();
+    if(dialog.options.cssClass !== "dialog-help")
+      dialog.getModalHeader().hide();
     dialog.open();
   },
 
