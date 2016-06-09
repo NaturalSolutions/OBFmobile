@@ -2,6 +2,7 @@
 
 var Backbone = require('backbone'),
   Marionette = require('backbone.marionette'),
+  $ = require('jquery'),
   _ = require('lodash');
 
 var Router = Marionette.AppRouter.extend({
@@ -31,9 +32,11 @@ var Router = Marionette.AppRouter.extend({
 
   execute: function(callback, args, name) {
     var Dialog = require('bootstrap-dialog');
-
     if(Dialog.dialogs)
-      Dialog.closeAll();
+      $.each(Dialog.dialogs, function(id, dialog){
+        if(dialog.options.cssClass && dialog.options.cssClass === "dialog-help")
+          dialog.close();
+      });
     if (callback)
       callback.apply(this, args);
   },
