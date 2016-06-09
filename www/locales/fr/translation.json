@@ -28,8 +28,8 @@
             "range": "de %(from)s à %(to)s",
             "fullyear": "toutes l'année"
         },
-        "deltaLong": "plus que %(count)s jour",
-        "deltaLong_plural": "plus que %(count)s jours",
+        "deltaLong": "plus que {{count}} jour",
+        "deltaLong_plural": "plus que {{count}} jours",
         "difficulty_0": "Apprenti",
         "difficulty_1": "Débutant",
         "difficulty_2": "Confirmé",
