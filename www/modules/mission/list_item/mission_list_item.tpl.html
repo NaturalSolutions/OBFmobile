@@ -14,9 +14,7 @@
 	    	<span class="season text-primary">
 	    		<span class="icon icomoon">time</span> 
 	    		<span class="period"><%= data.mission.displaySeason %></span>
-            	<span class="delta"><%= i18n.t('mission.deltaLong',  {
-      postProcess: 'sprintf', sprintf:{ count : data.mission.inSeason.end.delta}
-    })%>
+            	<span class="delta"><%= i18n.t('mission.deltaLong', {count: data.mission.inSeason.end.delta+1})%>
             	</span>
 	    	</span>
 	    </div>
