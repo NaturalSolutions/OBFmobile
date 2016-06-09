@@ -98,7 +98,7 @@ var UserModel = Backbone.Model.extend({
 
   getLogs: function() {
     var logs = require('../logs/log.model').collection.getInstance();
-    return new Backbone.Collection(logs.filter({
+    return new Backbone.Collection(logs.where({
       userId: this.get('id')
     }));
   },
