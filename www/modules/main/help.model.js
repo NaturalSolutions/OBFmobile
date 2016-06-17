@@ -20,7 +20,8 @@ var Collection = Backbone.Collection.extend({
     var currentUser = User.getCurrent();
     var helpExists = currentUser.get('displayHelp'+queryString);
     var status;
-    if(helpExists === undefined)
+    var needSomeHelp = this.findWhere({id: queryString});
+    if(helpExists === undefined && needSomeHelp)
       status = currentUser.attributes['displayHelp'+queryString]= true;
     else
       status = currentUser.get('displayHelp'+queryString);
@@ -29,10 +30,13 @@ var Collection = Backbone.Collection.extend({
 
   toggleStatus: function(queryString){
     var status = this.checkStatus(queryString);
-    if(status)
-      this.stopHelp(queryString);
-    else
-      this.startHelp(queryString);
+    var needSomeHelp = this.findWhere({id: queryString});
+    if(needSomeHelp){
+      if(status)
+        this.stopHelp(queryString);
+      else
+        this.startHelp(queryString);
+      }
   },
 
   startHelp: function(queryString){
