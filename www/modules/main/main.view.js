@@ -16,6 +16,7 @@ var Backbone = require('backbone'),
   Session = require('./session.model'),
   User = require('../profile/user.model'),
   Departement = require('./departement.model'),
+  Help = require('./help.model'),
   CurrentPos = require('../localize/current_position.model');
 
 var Layout = Marionette.LayoutView.extend({
@@ -67,10 +68,8 @@ var Layout = Marionette.LayoutView.extend({
     if(timeForest.get('isStart'))
       timeForest.start(timeForest.get('startTime'), timeForest.get('curCountTotalInit'));
 
-    var Help = require('./help.model');
-    var helpStatus = Help.collection.getInstance().checkStatus();
-    if(helpStatus)
-      $('body').alterClass('*-help','with-help');
+    this.Help = require('./help.model');
+
   },
 
   regions: {
@@ -151,6 +150,8 @@ var Layout = Marionette.LayoutView.extend({
 
   addDialogHelp: function(data) {
     var self = this;
+    var queryHash = window.location.hash;
+    var queryParams = _.parseQueryHash(queryHash);
     var title = (data && data.title) ? '<span class="btn-lg btn-fab bg-blue-royal btn-inner-border"> <span class="icon icomoon">help</span> </span><p>'+ data.title + '</p>' : '<span class="btn-lg btn-fab bg-blue-royal btn-inner-border"> <span class="icon icomoon">help</span> </span>';
     var message = (data && data.description) ? data.description : '<p class="description" > Description de l\'aide</p>';
     var dialog = new Dialog({
@@ -161,6 +162,8 @@ var Layout = Marionette.LayoutView.extend({
         label: 'J\'ai compris',
         cssClass: 'btn-block btn-default',
         action: function(dialog) {
+          self.Help.collection.getInstance().stopHelp(queryParams);
+          console.log(queryParams);
           dialog.close();
         }
       }],

@@ -7,47 +7,55 @@ var Backbone = require('backbone'),
 
 var Model = Backbone.Model.extend({
   defaults: {
+    id:'',
     title: '',
-    description: 0,
+    description: '',
   },
 });
 
 var Collection = Backbone.Collection.extend({
   model: Model,
 
-  checkStatus: function(){
+  checkStatus: function(queryString){
     var currentUser = User.getCurrent();
-    return currentUser.get('displayHelp');
-  },
-
-  toggleStatus: function(){
-    var status = this.checkStatus();
-    if(status)
-      this.stopHelp();
+    var helpExists = currentUser.get('displayHelp'+queryString);
+    var status;
+    if(helpExists === undefined)
+      status = currentUser.attributes['displayHelp'+queryString]= true;
     else
-      this.startHelp();
+      status = currentUser.get('displayHelp'+queryString);
+    return status;
   },
 
-  startHelp: function(){
+  toggleStatus: function(queryString){
+    var status = this.checkStatus(queryString);
+    if(status)
+      this.stopHelp(queryString);
+    else
+      this.startHelp(queryString);
+  },
+
+  startHelp: function(queryString){
     $('body').alterClass('*-help', 'with-help');
-    $('.btn-help .bg-blue-royal').alterClass('*-inner-border', 'btn-inner-border');
-    User.getCurrent().set('displayHelp', true).save();
+    User.getCurrent().set('displayHelp'+queryString, true).save();
   },
 
-  stopHelp: function(){
+  stopHelp: function(queryString){
     $('body').alterClass('*-help', '');
-    $('.btn-help .bg-blue-royal').alterClass('btn-inner-border', '');
-    User.getCurrent().set('displayHelp', false).save();
+    User.getCurrent().set('displayHelp'+queryString, false).save();
   },
 
-  someHelp: function(key){
-    var needSomeHelp = this.findWhere({id: key});
-    var displayHelpState = this.checkStatus();
+  someHelp: function(querystring){
+    var needSomeHelp = this.findWhere({id: querystring});
+    var displayHelpState = this.checkStatus(querystring);
     if(displayHelpState && needSomeHelp){
-      // Main.getInstance().addDialogHelp({
-      //   title: needSomeHelp.get('title'),
-      //   description: needSomeHelp.get('description'),
-      // });
+      $('body').alterClass('*-help', 'with-help');
+      Main.getInstance().addDialogHelp({
+        title: needSomeHelp.get('title'),
+        description: needSomeHelp.get('description'),
+      });
+    }else{
+      $('body').alterClass('*-help', '');
     }
   },
 });

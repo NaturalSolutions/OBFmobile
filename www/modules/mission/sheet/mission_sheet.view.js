@@ -76,13 +76,16 @@ module.exports = Marionette.LayoutView.extend({
       collection: new Backbone.Collection(observations)
     }));
 
+    var queryHash = window.location.hash;
+    var params = _.parseQueryHash(queryHash);
+    var currentUser = User.getCurrent();
     var helps = Help.collection.getInstance();
-    this.listenTo(user, 'change:displayHelp',
+    this.listenTo(currentUser, 'change:displayHelp'+params,
       function(){
-        helps.someHelp("missionSheet");
+        helps.someHelp(params);
       }
     );
-    helps.someHelp("missionSheet");
+    helps.someHelp(params);
   },
 
   serializeData: function() {

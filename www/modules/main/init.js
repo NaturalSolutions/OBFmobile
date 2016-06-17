@@ -275,7 +275,7 @@ function init() {
     Backbone.history.start();
   });
 
-  $.when(getI18n(), getMissions(), getCities(), getDepartements(), getUser(), getObservations(), getLogs(), getTimeForest(), gethelp())
+  $.when(getI18n(), getMissions(), getCities(), getDepartements(), gethelp(), getUser(), getObservations(), getLogs(), getTimeForest())
     .done(function() {
       app.start();
     });

@@ -18,7 +18,6 @@ var UserModel = Backbone.Model.extend({
     language: 'fr',
     totalTimeOnMission: 0,
     newsletter: false,
-    displayHelp: true,
     departementIds: [],
     positionEnabled: true,
     nbComputedObs: 0,
@@ -260,6 +259,8 @@ var Collection = Backbone.Collection.extend({
     //Create an anonymous if necessary
     if (!anonymous){
       anonymous = this.add(new UserModel());
+      var Help = require('../main/help.model');
+      anonymous.set('helps',Help.collection.getInstance());
       anonymous.save();
     }
 

@@ -81,23 +81,15 @@ body.with-help {
     .hidden-help {
         display: none;
     }
-}
-body:not(.with-help) {
-    .visible-help {
-        display: none;
+    .btn-inner-border:before{
+        content: "";
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        box-shadow: inset 0px 0px 0px 5px rgba(0, 0, 0, 0.3);
     }
-}
-.btn-inner-border:before{
-    content: "";
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    box-shadow: inset 0px 0px 0px 5px rgba(0, 0, 0, 0.3);
-}
-
-.with-help{
     .dialog-help{
         .bootstrap-dialog-title{
             .btn-fab{
@@ -130,6 +122,15 @@ body:not(.with-help) {
             }
 
         }
+    }
+}
+body:not(.with-help) {
+    .visible-help {
+        display: none;
+    }
+     .btn-inner-border:before{
+        content: "";
+        display: none;
     }
 }
 

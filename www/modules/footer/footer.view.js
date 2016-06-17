@@ -86,7 +86,10 @@ var View = Marionette.LayoutView.extend({
 
   toggleHelp: function() {
     var Help = require('../main/help.model');
-    Help.collection.getInstance().toggleStatus();
+    var queryHash = window.location.hash;
+    var queryParams = _.parseQueryHash(queryHash);
+
+    Help.collection.getInstance().toggleStatus(queryParams);
   },
 
   capturePhoto: function() {

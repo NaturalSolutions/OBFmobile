@@ -177,6 +177,26 @@ _.mixin({parseQueryString: function(queryString) {
   return params;
 }});
 
+_.mixin({parseQueryHash: function(queryHash) {
+  var params = [];
+
+  if (queryHash) {
+    params = queryHash.split('/');
+    params[0] = params[0].replace('#','');
+    if(params[1]){
+      var r = /\d+/;
+      var findNumber = params[1].match(r);
+      if(findNumber)
+        params[1] = '';
+      params = params[0] + params[1];
+    }
+    if(params.length === 1)
+      params = params[0];
+
+    return params;
+  }
+}});
+
 _.mixin({filename: function(path) {
   return _.urlObject({url: path}).filename;
 }});

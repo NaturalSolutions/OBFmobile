@@ -73,15 +73,16 @@ var ClassDef = Marionette.LayoutView.extend({
     this.setUserSky();
     this.displayTimeForest();
 
+    var queryHash = window.location.hash;
+    var queryParams = _.parseQueryHash(queryHash);
     var currentUser = User.getCurrent();
     var helps = Help.collection.getInstance();
-    this.titleKey = this.header.titleKey;
-    this.listenTo(currentUser, 'change:displayHelp',
+    this.listenTo(currentUser, 'change:displayHelp'+queryParams,
       function(){
-        helps.someHelp(self.header.titleKey);
+        helps.someHelp(queryParams);
       }
     );
-    helps.someHelp(this.header.titleKey);
+    helps.someHelp(queryParams);
   },
 
   onCurrentUserChange: function(newUser, prevUser) {

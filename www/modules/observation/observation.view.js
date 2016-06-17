@@ -109,15 +109,16 @@ var Layout = Marionette.LayoutView.extend({
         }).save();
     }
     
-
+    var queryHash = window.location.hash;
+    var params = _.parseQueryHash(queryHash);
+    var currentUser = User.getCurrent();
     var helps = Help.collection.getInstance();
-    var titleKey = this.header.titleKey;
-    this.listenTo(user, 'change:displayHelp',
-      function(titleKey){
-        helps.someHelp(titleKey);
+    this.listenTo(currentUser, 'change:displayHelp'+params,
+      function(){
+        helps.someHelp(params);
       }
     );
-    helps.someHelp(this.header.titleKey);
+    helps.someHelp(params);
   },
 
   serializeData: function() {
