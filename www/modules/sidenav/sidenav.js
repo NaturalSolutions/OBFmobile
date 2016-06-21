@@ -13,13 +13,15 @@ var View = Marionette.LayoutView.extend({
   className: 'sidenav',
   events: {
     'click': 'hide',
-    'click .keep-sidenav-open': 'onKeepSidenavOpenClick'
+    'click .keep-sidenav-open': 'onKeepSidenavOpenClick',
+    'click #about': 'openInAppBrowser'
   },
 
   initialize: function() {
     this.listenTo(header.getInstance(), 'btn:menu:click', this.toggleShow);
     this.listenTo(User.collection.getInstance(), 'change:current', this.onCurrentUserChange);
     this.onCurrentUserChange(User.getCurrent());
+
   },
 
   serializeData: function() {
@@ -32,6 +34,17 @@ var View = Marionette.LayoutView.extend({
 
   onRender: function(options) {
     
+  },
+
+  openInAppBrowser: function(){
+    var self = this;
+    var target = "_blank";
+    var options = "location=yes";
+    var url = "http://biodiversite-foret.fr/appli/a_propos/";
+    var inAppBrowserRef;
+
+    inAppBrowserRef = window.open(url, target, options);
+
   },
 
   onCurrentUserChange: function(newUser, prevUser) {
