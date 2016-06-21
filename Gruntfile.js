@@ -93,7 +93,13 @@ module.exports = function(grunt) {
         filter: 'isFile',
         flatten: true
       }
-    }
+    },
+    uglify: {
+      dist: {
+          src: ['www/index.js'],
+          dest: 'www/index.js'
+      }
+    },
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -102,10 +108,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.registerTask('build', ['jshint', 'less', 'browserify:dev','copy']);
   grunt.registerTask('dev', ['build', 'connect', 'watch']);
-  grunt.registerTask('default', ['build']);
+  grunt.registerTask('default', ['build', 'uglify']);
 };
 
 /* TODO:
