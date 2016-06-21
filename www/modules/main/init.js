@@ -42,18 +42,6 @@ var Backbone = require('backbone'),
 _.extend(Backbone.Model.prototype, Backbone.Validation.mixin);
 
 function init() {
-  //Manage geolocation when the application goes to the background
-  /*document.addEventListener('resume', function() {
-      currentPos.watch();
-  }, false);
-  document.addEventListener('pause', function() {
-      currentPos.unwatch();
-  }, false);
-  currentPos.watch();*/
-
-  if (window.cordova)
-    window.cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
-
   if (navigator.onLine) {
     Session.model.getInstance().set({
       'network': true

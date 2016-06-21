@@ -44,14 +44,10 @@ module.exports = Marionette.CompositeView.extend({
 
     var queryHash = window.location.hash;
     var params = _.parseQueryHash(queryHash);
-    console.log(params);
+
     var currentUser = User.getCurrent();
     var helps = Help.collection.getInstance();
-    this.listenTo(currentUser, 'change:displayHelp'+params,
-      function(){
-        helps.someHelp(params);
-      }
-    );
+
     helps.someHelp(params);
   },
 

@@ -50,7 +50,7 @@ var Model = Backbone.Model.extend({
     result.inSeason = self.inSeason(new Date());
     result.isInSeason = result.inSeason.isMatch;
     var season = result.seasons[0];
-    console.log(season.startAt.getMonth(), season.endAt.getMonth());
+    // console.log(season.startAt.getMonth(), season.endAt.getMonth());
     if ( season.startAt.getMonth() === 0 && season.endAt.getMonth() == 11 )
       result.displaySeasonShort = result.displaySeason = i18n.t('mission.season.fullyear');
     else {

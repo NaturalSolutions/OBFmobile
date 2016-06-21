@@ -69,6 +69,17 @@ var Layout = Marionette.LayoutView.extend({
       timeForest.start(timeForest.get('startTime'), timeForest.get('curCountTotalInit'));
 
     this.Help = require('./help.model');
+    var queryHash = window.location.hash;
+    var params = _.parseQueryHash(queryHash);
+    var currentUser = User.getCurrent();
+    var helps = this.Help.collection.getInstance();
+    helps.each(function(help){
+      self.listenTo(currentUser, 'change:displayHelp'+help.get('id'),
+        function(){
+          helps.someHelp(help.get('id'));
+        }
+      );
+    });
 
   },
 

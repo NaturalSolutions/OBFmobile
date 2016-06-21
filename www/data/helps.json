@@ -1,12 +1,20 @@
 [{
-"id": "dashboard",
+"id": "dashboardmissions",
 "title": "Bienvenue",
-"description": "<p> Pour accomplir des missions et gagner des récompenses, rendez-vous dans une forêt proche de chez vous et envoyez à Noé les photos des espèces que vous rencontrez.</p><p> A tout moment, cliquez sur l’œil orange pour prendre une photo !</p><p> Visualisez vos récompenses en cliquant sur la mascotte et déclenchez le chronomètre pour enregistrer votre temps passé en forêt.</p><p>Cliquez sur le bouton « Trouvez-moi une mission »  pour débuter votre quête !</p>"
+"description": "<p> Pour accomplir des missions et gagner des récompenses, rendez-vous dans une forêt proche de chez vous et envoyez à Noé les photos des espèces que vous rencontrez.</p><p> A tout moment, cliquez sur l’œil orange pour prendre une photo&#8239!</p><p> Visualisez vos récompenses en cliquant sur la mascotte et déclenchez le chronomètre pour enregistrer votre temps passé en forêt.</p><p>Cliquez sur le bouton « Trouvez-moi une mission »  pour débuter votre quête&#8239!</p>"
+},
+{
+"id": "dashboardlogs",
+"title": "Bienvenue",
+"description": "<p> Pour accomplir des missions et gagner des récompenses, rendez-vous dans une forêt proche de chez vous et envoyez à Noé les photos des espèces que vous rencontrez.</p><p> A tout moment, cliquez sur l’œil orange pour prendre une photo&#8239!</p><p> Visualisez vos récompenses en cliquant sur la mascotte et déclenchez le chronomètre pour enregistrer votre temps passé en forêt.</p><p>Cliquez sur le bouton « Trouvez-moi une mission »  pour débuter votre quête&#8239!</p>"
+},{
+"id": "dashboardobservations",
+"title": "Bienvenue",
+"description": "<p> Pour accomplir des missions et gagner des récompenses, rendez-vous dans une forêt proche de chez vous et envoyez à Noé les photos des espèces que vous rencontrez.</p><p> A tout moment, cliquez sur l’œil orange pour prendre une photo&#8239!</p><p> Visualisez vos récompenses en cliquant sur la mascotte et déclenchez le chronomètre pour enregistrer votre temps passé en forêt.</p><p>Cliquez sur le bouton « Trouvez-moi une mission »  pour débuter votre quête&#8239!</p>"
 },{
   "id": "observation",
   "title": "observation",
-  "description": "<p>Complétez votre observation en ajoutant jusqu’à deux photos supplémentaires (bouton « + » en haut à droite).</p><p> N’oubliez pas de transmettre votre observation pour obtenir des récompenses !</p>"
-
+  "description": "<p>Complétez votre observation en ajoutant jusqu’à deux photos supplémentaires (bouton « + » en haut à droite).</p><p> N’oubliez pas de transmettre votre observation pour obtenir des récompenses&#8239!</p>"
 },{
   "id": "missionsaroundme",
   "title": "Les missions autour de moi",
@@ -20,5 +28,10 @@
   "id": "mission",
   "title": "Fiche missions",
   "description": "<p>Cette fiche vous permettra d’identifier une espèce ou des éléments de la forêt.</p><p> Cliquez sur « accepter » pour voir apparaître la mission dans votre tableau de bord. Prenez une photo en cliquant sur l’œil orange.</p><p> Les photos sont visibles sur la fiche et dans votre tableau de bord.<p>" 
+  }
+  ,{
+  "id": "clue",
+  "title": "Carte des indices",
+  "description": "<p>Cette Carte vous permettra de répérer les espèces dans la forêt selon leur type de milieu.</p>" 
   }
 ]

@@ -181,7 +181,8 @@ _.mixin({parseQueryHash: function(queryHash) {
   var params = [];
 
   if (queryHash) {
-    params = queryHash.split('/');
+    var regex = /\/|\?/;
+    params = queryHash.split(regex);
     params[0] = params[0].replace('#','');
     if(params[1]){
       var r = /\d+/;

@@ -3,6 +3,7 @@
 var Backbone = require('backbone'),
   Marionette = require('backbone.marionette'),
   _ = require('lodash'),
+  $ = require('jquery'),
   User = require('../profile/user.model'),
   Help = require('../main/help.model'),
   Observation = require('../observation/observation.model'),
@@ -36,7 +37,7 @@ var ClassDef = Marionette.LayoutView.extend({
         //ClassDef: require('./dashboard_logs.view')
     },
     observations: {
-      getView: 'getObservationView'
+      getView: 'getObservationView',
     },
   },
 
@@ -53,6 +54,7 @@ var ClassDef = Marionette.LayoutView.extend({
     this.listenTo(User.collection.getInstance(), 'change:current', this.onCurrentUserChange);
     this.listenTo(this.currentUser.getTimeForest(), 'change:total', this.displayTimeForest);
 
+    this.someHelp();
   },
 
   serializeData: function() {
@@ -67,20 +69,19 @@ var ClassDef = Marionette.LayoutView.extend({
     };
   },
 
+  someHelp: function(){
+    var queryHash = window.location.hash;
+    var params = _.parseQueryHash(queryHash);
+    var currentUser = User.getCurrent();
+    var helps = Help.collection.getInstance();
+    helps.someHelp(params);
+  },
+
   onRender: function(options) {
     var self = this;
     this.displayTab();
     this.setUserSky();
     this.displayTimeForest();
-
-    var currentUser = User.getCurrent();
-    var helps = Help.collection.getInstance();
-    this.listenTo(currentUser, 'change:displayHelp'+ self.header.titleKey,
-      function(){
-        helps.someHelp(self.header.titleKey);
-      }
-    );
-    helps.someHelp(self.header.titleKey);
   },
 
   onCurrentUserChange: function(newUser, prevUser) {
@@ -136,6 +137,7 @@ var ClassDef = Marionette.LayoutView.extend({
   },
 
   getObservationView: function() {
+    var self =this;
     var observations = Observation.collection.getInstance().clone();
     observations.comparator = function(model) {
         var comparator = model.get('date');
@@ -148,8 +150,10 @@ var ClassDef = Marionette.LayoutView.extend({
 
     var ObservationsView = require('../observation/observation_list.view');
     return new ObservationsView({
-      collection: new Backbone.Collection(observations)
+      collection: new Backbone.Collection(observations),
+      // initialize: self.someHelp(),
     });
+
   }
 });
 

@@ -113,11 +113,11 @@ var Layout = Marionette.LayoutView.extend({
     var params = _.parseQueryHash(queryHash);
     var currentUser = User.getCurrent();
     var helps = Help.collection.getInstance();
-    this.listenTo(currentUser, 'change:displayHelp'+params,
-      function(){
-        helps.someHelp(params);
-      }
-    );
+    // this.listenTo(currentUser, 'change:displayHelp'+params,
+    //   function(){
+    //     helps.someHelp(params);
+    //   }
+    // );
     helps.someHelp(params);
   },
 

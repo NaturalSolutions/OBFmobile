@@ -7,6 +7,8 @@ var Backbone = require('backbone'),
   MissionListItem = require('../mission/list_item/mission_list_item.view'),
   _ = require('lodash'),
   config = require('../main/config'),
+  Help = require('../main/help.model'),
+  User = require('../profile/user.model'),
   i18n = require('i18next');
 
 var Layout = Marionette.LayoutView.extend({
@@ -53,6 +55,14 @@ var Layout = Marionette.LayoutView.extend({
       collection: this.missionListCollection
     });
     this.missionListView.render();
+
+
+    var queryHash = window.location.hash;
+    var params = _.parseQueryHash(queryHash);
+    var currentUser = User.getCurrent();
+    var helps = Help.collection.getInstance();
+
+    helps.someHelp(params);
   },
 
   serializeData: function() {
