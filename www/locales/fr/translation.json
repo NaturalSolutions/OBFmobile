@@ -104,7 +104,7 @@
                 },
                 "gold": {
                     "label": "Or",
-                    "description": "Au moins 15 missions"
+                    "description": "Au moins 30 missions"
                 }
             },
             "timeOnMission": {
