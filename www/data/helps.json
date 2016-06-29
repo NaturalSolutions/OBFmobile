@@ -1,7 +1,7 @@
 [{
 "id": "dashboardmissions",
 "title": "Bienvenue",
-"description": "<p> Pour accomplir des missions et gagner des récompenses, rendez-vous dans une forêt proche de chez vous et envoyez à Noé les photos des espèces que vous rencontrez.</p><p> A tout moment, cliquez sur l’œil orange pour prendre une photo&#8239!</p><p> Visualisez vos récompenses en cliquant sur la mascotte et déclenchez le chronomètre pour enregistrer votre temps passé en forêt.</p><p>Cliquez sur le bouton « Trouvez-moi une mission »  pour débuter votre quête&#8239!</p>"
+"description": "<p> Pour accomplir des missions et gagner des récompenses, rendez-vous dans en forêt, proche ou non de chez vous, retrouvez des espèces recherchées et envoyez à Noé leurs photos.</p><p> A tout moment, cliquez sur l’œil orange pour prendre une photo&#8239!</p><p> Visualisez vos récompenses en cliquant sur la mascotte et déclenchez le chronomètre pour enregistrer votre temps passé en forêt.</p><p>Cliquez sur le bouton « Trouvez-moi une mission »  pour débuter votre quête&#8239!</p><p>Les observations transmises à Noé s’affichent ici. Elles seront envoyées aux scientifiques du Muséum national d’Histoire naturelle pour validation avant de rejoindre l’Inventaire national du patrimoine naturel.</p>"
 },
 {
 "id": "dashboardlogs",
@@ -14,7 +14,7 @@
 },{
   "id": "observation",
   "title": "observation",
-  "description": "<p>Complétez votre observation en ajoutant jusqu’à deux photos supplémentaires (bouton « + » en haut à droite).</p><p> N’oubliez pas de transmettre votre observation pour obtenir des récompenses&#8239!</p>"
+  "description": "<p>Complétez votre observation en ajoutant jusqu’à deux photos supplémentaires (bouton « + » en haut à droite).</p><p>N’oubliez pas de transmettre votre observation pour gravir les niveaux et obtenir des récompenses&#8239!</p>"
 },{
   "id": "missionsaroundme",
   "title": "Les missions autour de moi",
@@ -27,7 +27,7 @@
   },{
   "id": "mission",
   "title": "Fiche missions",
-  "description": "<p>Cette fiche vous permettra d’identifier une espèce ou des éléments de la forêt.</p><p> Cliquez sur « accepter » pour voir apparaître la mission dans votre tableau de bord. Prenez une photo en cliquant sur l’œil orange.</p><p> Les photos sont visibles sur la fiche et dans votre tableau de bord.<p>" 
+  "description": "<p>Cette fiche vous donnera les informations utiles pour identifier une espèce ou des éléments caractéristiques de la forêt.</p><p> Cliquez sur « accepter » pour voir apparaître la mission dans votre tableau de bord. Prenez une photo en cliquant sur l’œil orange.</p><p> Les photos sont visibles sur la fiche et dans votre tableau de bord.<p>"
   }
   ,{
   "id": "clue",
