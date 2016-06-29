@@ -20,7 +20,6 @@ var TFmodel = Backbone.Model.extend({
     },
     url: config.coreUrl,
     initialize: function() {
-        console.log('timeForest initialize');
         var self = this;
         this.setProgressLog();
         this.on('change:total', function() {

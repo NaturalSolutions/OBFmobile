@@ -174,7 +174,6 @@ var Layout = Marionette.LayoutView.extend({
         cssClass: 'btn-block btn-default',
         action: function(dialog) {
           self.Help.collection.getInstance().stopHelp(queryParams);
-          console.log(queryParams);
           dialog.close();
         }
       }],

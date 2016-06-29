@@ -129,7 +129,6 @@ var UserModel = Backbone.Model.extend({
     });
   },
   addCompletedMission: function(mission) {
-    console.log(mission);
     var result = this.addMission(mission, 'completed');
     this.addLog('mission_complete', {
       mission: {

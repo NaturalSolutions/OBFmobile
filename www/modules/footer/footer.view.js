@@ -126,13 +126,10 @@ var View = Marionette.LayoutView.extend({
         console.log('failed with error code: ' + error.code);
       };
       var copiedFile = function(fileEntry) {
-        // save observation and navigate to obsvertion
-        // self.uploadPhotoMob(fileEntry.nativeURL);
         self.createObservation(fileEntry.nativeURL);
 
       };
       var gotFileEntry = function(fileEntry) {
-        console.log('got image file entry: ' + fileEntry.nativeURL);
         var gotFileSystem = function(fileSystem) {
           fileSystem.root.getDirectory(tagprojet, {
             create: true,

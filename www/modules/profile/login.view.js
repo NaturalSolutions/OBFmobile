@@ -87,7 +87,6 @@ var View = Marionette.LayoutView.extend({
       return false;
 
     var formValues = this.formLogin.getValue();
-    console.log(formValues);
     
     self.$el.addClass('block-ui');
     $form.addClass('loading');

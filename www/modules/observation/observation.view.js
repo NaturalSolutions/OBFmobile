@@ -130,7 +130,6 @@ var Layout = Marionette.LayoutView.extend({
   },
 
   onRender: function() {
-    console.log('onRender');
     this.$el.attr('data-cid', this.cid);
 
     var isSaved = (this.observationModel.get('missionId') && this.observationModel.get('departementId'));
@@ -440,7 +439,6 @@ var Layout = Marionette.LayoutView.extend({
       });
 
       this.user.once('change:city', function() {
-        console.log('onUserChange city');
         dialog.close();
         self.onDomRefresh();
         dfd.resolve();
@@ -510,8 +508,6 @@ var Layout = Marionette.LayoutView.extend({
   sendObs: function(e) {
     var self = this;
 
-    console.log(this.observationModel.get('missionId'));
-
     if (self.$el.hasClass('sending') || self.observationModel.get('shared') == 1)
       return false;
 
@@ -560,7 +556,6 @@ var Layout = Marionette.LayoutView.extend({
         }]
       }
     };
-    console.log(data);
     var query = {
       url: config.apiUrl + '/node.json',
       type: 'POST',
@@ -688,7 +683,6 @@ var Layout = Marionette.LayoutView.extend({
 
   onUploadPhotosStart: function(dfds) {
     var self = this;
-    console.log('onPhotosStart');
     this.$el.find('form').addClass('progressing');
     _.forEach(dfds, function(dfd) {
       dfd.progress(function(data) {
@@ -707,7 +701,6 @@ var Layout = Marionette.LayoutView.extend({
 
   onUploadPhotosProgress: function(loaded, total) {
     var ratio = Math.min(1, (loaded/total) );
-    console.log('onUploadPhotosProgress', ratio, this.$progressBar.length);
     this.$progressBar.css({
       width: Math.round(ratio*100)+'%'
     });

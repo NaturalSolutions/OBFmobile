@@ -72,7 +72,6 @@ var View = Marionette.LayoutView.extend({
 
   onKeepSidenavOpenClick: function(e) {
     console.log('onKeepSidenavOpenClick');
-    console.log(e);
     e.preventDefault();
   }
 

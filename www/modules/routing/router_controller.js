@@ -139,7 +139,6 @@ module.exports = Marionette.Object.extend({
   missionsTraining: function() {
     var Mission = require('../mission/mission.model');
     var missions = new Backbone.Collection(Mission.collection.getInstance().where({difficulty: 0}));
-    console.log(missions.length);
     var View = require('../mission/all/missions_all.view');
     main.getInstance().rgMain.show(new View({
       collection: missions
@@ -238,7 +237,6 @@ module.exports = Marionette.Object.extend({
     var user = null;
     if ( id )
       user = User.collection.getInstance().get(id);
-    console.log(User.collection.getInstance());
     main.getInstance().rgMain.show(new Login.Page({
       name: 'login',
       model: user

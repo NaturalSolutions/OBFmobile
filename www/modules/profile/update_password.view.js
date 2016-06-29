@@ -79,8 +79,6 @@ var View = Marionette.LayoutView.extend({
     var curPassword = formValues.cur_password;
     var password = formValues.password;
 
-    console.log(formValues);
-
     var user = User.getCurrent();
 
     var data = {
