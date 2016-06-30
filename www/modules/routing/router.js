@@ -94,7 +94,6 @@ var instance = null;
 
 module.exports = {
   getInstance: function() {
-    //console.log(Controller);
     if (!instance)
       instance = new Router({
         controller: new(require('./router_controller'))()

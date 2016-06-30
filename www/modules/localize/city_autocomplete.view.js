@@ -40,9 +40,7 @@ module.exports = Marionette.LayoutView.extend({
       return false;
 
     if ( window.cordova && window.cordova.plugins.Keyboard.isVisible ) {
-      console.log('wait onKeyboardhide');
       self.onKeyboardhide = function() {
-        console.log('onKeyboardhide');
         window.removeEventListener('native.keyboardhide', self.onKeyboardhide);
         self.saveUser();
       };
@@ -52,7 +50,6 @@ module.exports = Marionette.LayoutView.extend({
   },
 
   saveUser: function() {
-    console.log('saveUser');
     var user = User.getCurrent();
     user.set('city', this.selectedItem);
     user.save();

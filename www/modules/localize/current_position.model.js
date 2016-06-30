@@ -47,7 +47,6 @@ var GeoModel = Backbone.Model.extend({
     var now = Date.now();
     var diffTime = now - lastposTime;
     if (lastposTime && (diffTime > this.options.maximumAge)) {
-      console.log('claer maximumAge', this.options.maximumAge);
       this.clear(); // Erase position data
     }
 
@@ -57,7 +56,6 @@ var GeoModel = Backbone.Model.extend({
     return this._dfd.promise();
   },
   unwatch: function() {
-    console.log('unwatch');
     if (this._id)
       navigator.geolocation.clearWatch(this._id);
     if (this.watchTimeout)
@@ -71,13 +69,10 @@ var GeoModel = Backbone.Model.extend({
   },
   watch: function(options) {
     var self = this;
-    console.log('watch');
     if (this._dfd) {
-      console.log('watch _dfd');
       var state = this._dfd.state();
       if (state == 'pending')
         return this._dfd;
-      console.log('watch _dfd', state);
       var dfd = $.Deferred();
       if (state == 'resolved')
         dfd.resolve();
