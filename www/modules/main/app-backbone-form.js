@@ -111,10 +111,10 @@ var initCustomeEditors = function() {
       var self = this;
       this.schema.options.collection.forEach(function(model) {
         if ( model.get('id') == value )
-          self.$el.text(self.schema.options.getSelectedLabel(model));
+          self.$el.html(self.schema.options.getSelectedLabel(model));
       });
       if ( !this.$el.text() )
-        this.$el.text(this.schema.editorAttrs.placeholder);
+        this.$el.html(this.schema.editorAttrs.placeholder);
       this.$el.data('value', value);
     },
 

@@ -163,7 +163,11 @@ var Layout = Marionette.LayoutView.extend({
             cancelLink: true
           },
           getSelectedLabel: function(model) {
-            return model.get('taxon').title || model.get('title');
+            var title = model.get('title');
+            var taxonTitle = model.get('taxon').title;
+            if ( taxonTitle )
+              title += '<br /><small>'+taxonTitle+'</small>';
+            return title;
           }
         },
         editorAttrs: {
