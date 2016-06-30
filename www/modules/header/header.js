@@ -91,7 +91,6 @@ var View = Marionette.LayoutView.extend({
 
 
   historyBack: function() {
-    console.log('header back');
     Router.getInstance().back();
   }
 
