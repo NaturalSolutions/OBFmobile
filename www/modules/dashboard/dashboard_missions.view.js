@@ -4,6 +4,7 @@ var Backbone = require('backbone'),
     Mission = require('../mission/mission.model'),
     _ = require('lodash'),
     MissionListItem = require('../mission/list_item/mission_list_item.view'),
+    Help = require('../main/help.model'),
     User = require('../profile/user.model');
 
 var CollectionView = Marionette.CollectionView.extend({
@@ -32,6 +33,8 @@ var ClassDef = Marionette.LayoutView.extend({
       return mission.inSeason().end.delta;
     });
     this.successfulMissions = User.getCurrent().getCompletedMissions();
+
+    this.someHelp();
   },
 
   serializeData: function() {
@@ -39,6 +42,14 @@ var ClassDef = Marionette.LayoutView.extend({
       missions: this.missions,
       successfulMissions : this.successfulMissions
     };
+  },
+
+  someHelp: function(){
+    var queryHash = window.location.hash;
+    var params = _.parseQueryHash(queryHash);
+    var currentUser = User.getCurrent();
+    var helps = Help.collection.getInstance();
+    helps.someHelp(params);
   },
 
   onRender: function() {

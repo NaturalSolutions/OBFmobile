@@ -5,7 +5,6 @@ var Backbone = require('backbone'),
   _ = require('lodash'),
   $ = require('jquery'),
   User = require('../profile/user.model'),
-  Help = require('../main/help.model'),
   Observation = require('../observation/observation.model'),
   moment = require('moment');
 
@@ -54,7 +53,6 @@ var ClassDef = Marionette.LayoutView.extend({
     this.listenTo(User.collection.getInstance(), 'change:current', this.onCurrentUserChange);
     this.listenTo(this.currentUser.getTimeForest(), 'change:total', this.displayTimeForest);
 
-    this.someHelp();
   },
 
   serializeData: function() {
@@ -67,14 +65,6 @@ var ClassDef = Marionette.LayoutView.extend({
       user: User.getCurrent().toJSON(),
       tabs: this.tabs
     };
-  },
-
-  someHelp: function(){
-    var queryHash = window.location.hash;
-    var params = _.parseQueryHash(queryHash);
-    var currentUser = User.getCurrent();
-    var helps = Help.collection.getInstance();
-    helps.someHelp(params);
   },
 
   onRender: function(options) {
@@ -150,8 +140,7 @@ var ClassDef = Marionette.LayoutView.extend({
 
     var ObservationsView = require('../observation/observation_list.view');
     return new ObservationsView({
-      collection: new Backbone.Collection(observations),
-      // initialize: self.someHelp(),
+      collection: new Backbone.Collection(observations)
     });
 
   }
