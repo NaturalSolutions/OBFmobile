@@ -16,7 +16,6 @@ var View = Marionette.LayoutView.extend({
     'click': 'hide',
     'click .keep-sidenav-open': 'onKeepSidenavOpenClick',
     'click #about': 'openInAppBrowser',
-    'click #usage_data': 'openInAppBrowser'
   },
 
   initialize: function() {
@@ -37,7 +36,6 @@ var View = Marionette.LayoutView.extend({
   onRender: function(options) {
     
   },
-
 
   openInAppBrowser: function(e){
     var self = this;
