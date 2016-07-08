@@ -236,7 +236,12 @@
             "missions": "Toutes les missions",
             "missionsTraining": "Missions d'apprentissage",
             "dashboard": "Tableau de bord",
-            "indices": "Indices"
+            "indices": "Indices",
+            "usage_data": "Utilisation des données"
+        },
+        "link":{
+            "usage_data": "utilisation_donnees",
+            "about": "a_propos"
         }
     },
     "footer": {

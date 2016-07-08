@@ -6,6 +6,7 @@ var Backbone = require('backbone'),
     User = require('../profile/user.model'),
     $ = require('jQuery'),
     Router = require('../routing/router'),
+    i18n = require('i18next'),
     Session = require('../main/session.model');
 
 var View = Marionette.LayoutView.extend({
@@ -14,7 +15,8 @@ var View = Marionette.LayoutView.extend({
   events: {
     'click': 'hide',
     'click .keep-sidenav-open': 'onKeepSidenavOpenClick',
-    'click #about': 'openInAppBrowser'
+    'click #about': 'openInAppBrowser',
+    'click #usage_data': 'openInAppBrowser'
   },
 
   initialize: function() {
@@ -36,13 +38,16 @@ var View = Marionette.LayoutView.extend({
     
   },
 
-  openInAppBrowser: function(){
+
+  openInAppBrowser: function(e){
     var self = this;
     var target = "_blank";
     var options = "location=yes";
-    var url = "http://biodiversite-foret.fr/appli/a_propos/";
-    var inAppBrowserRef;
+    var currentId = e.currentTarget.id;
+    var trad = i18n.t('sidenav.link.'+currentId);
+    var url = "http://biodiversite-foret.fr/appli/"+trad+"/";
 
+    var inAppBrowserRef;
     inAppBrowserRef = window.open(url, target, options);
 
   },
