@@ -58,8 +58,6 @@ module.exports = Marionette.LayoutView.extend({
       Router.getInstance().navigate('clue?missionId='+self.model.get('id'), {trigger:true});
     });
 
-    this.someHelp();
-
   },
 
   openWindow: function(){
@@ -84,14 +82,6 @@ module.exports = Marionette.LayoutView.extend({
     return {
       mission: this.model.toJSON()
     };
-  },
-
-  someHelp: function(){
-    var queryHash = window.location.hash;
-    var params = _.parseQueryHash(queryHash);
-    var currentUser = User.getCurrent();
-    var helps = Help.collection.getInstance();
-    helps.someHelp(params);
   },
 
   onAcceptClick: function(e) {
