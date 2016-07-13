@@ -26,7 +26,7 @@
         "label_plural": "Missions",
         "season": {
             "range": "de %(from)s à %(to)s",
-            "fullyear": "toutes l'année"
+            "fullyear": "toute l'année"
         },
         "deltaLong": "plus que {{count}} jour",
         "deltaLong_plural": "plus que {{count}} jours",
@@ -253,5 +253,18 @@
             "forest_time_off": "Je suis en forêt",
             "clue": "Milieux"
         }
+    },
+    "facebook":{
+        "message": "J'ai accompli une mission pour l'Observatoire de la Biodiversité des Forêts !",
+        "caption": "Mission Forêt Avec Noé",
+        "dialog":{
+            "title": "Connexion",
+            "message": "Vous devez être connecté à Facebook pour partager votre obs",
+            "btns":{
+                "cancel": "Annuler",
+                "login": "Me connecter"
+            },
+            "alert": "Echec de la connexion Facebook : "
+        }    
     }
 }

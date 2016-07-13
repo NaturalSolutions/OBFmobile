@@ -807,11 +807,11 @@ var Layout = Marionette.LayoutView.extend({
       method: 'POST',
       path: '/me/feed',
       params: {
-        message: "J'ai accompli une mission pour l'Observatoire de la Biodiversité des Forêts !",
+        message: i18n.t('facebook.message'),
         link: mission.get('taxon').url,
         name: mission.get('title'),
         picture: _.get(self.model.get('photos'), '[0].externUrl', ''),
-        caption: 'Mission Forêt Avec Noé',
+        caption: i18n.t('facebook.caption'),
         description: mission.get('taxon').characteristic
       },
       success: function() {
@@ -821,23 +821,24 @@ var Layout = Marionette.LayoutView.extend({
       error: function(error) {
         if (error.code == 190) {
           Dialog.show({
-            title: 'Connexion',
-            message: 'Vous devez être connecter à Facebook pour partager votre obs',
+            title: i18n.t('facebook.dialog.title'),
+            message: i18n.t('facebook.dialog.message'),
             buttons: [{
-              label: 'Annuler',
+              label: i18n.t('facebook.dialog.btns.cancel'),
               action: function(dialog) {
                 dialog.close();
                 self.$el.find('form').removeClass('loading');
               }
             }, {
-              label: 'Me connecter',
+              label: i18n.t('facebook.dialog.btns.login'),
               action: function(dialog) {
                 dialog.close();
                 openFB.login(function(response) {
                   if (response.status === 'connected') {
                     self.shareObs();
                   } else {
-                    alert('Facebook login failed: ' + response.error);
+
+                    alert(i18n.t('facebook.dialog.alert') + response.error.message);
                     self.$el.find('form').removeClass('loading');
                   }
                 }, {
