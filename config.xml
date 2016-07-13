@@ -7,7 +7,7 @@
     <author email="obf@noe.org" href="http://www.noe.org/">Noé</author>
     <content src="index.html" />
     <access origin="http://obfmobile.noe.org/*" />
-    <access origin="http://http://151.80.132.63/*" />
+    <access origin="http://151.80.132.63/*" />
     <access origin="cdvfile://*" />
     <access origin="https://graph.facebook.com/*" />
 
