@@ -5,7 +5,9 @@ var Marionette = require('backbone.marionette'),
   Router = require('../../routing/router'),
   User = require('../../profile/user.model'),
   Help = require('../../main/help.model'),
-  _ = require('lodash');
+  _ = require('lodash'),
+  $ = require('jquery'),
+  i18n = require('i18next');
 
 module.exports = Marionette.LayoutView.extend({
   header: {
@@ -71,11 +73,22 @@ module.exports = Marionette.LayoutView.extend({
 
     self.rgStates.show(viewState);
   },
-  
+
   getLocalizeView: function() {
     var self = this;
 
-    var view = new(require('../../localize/localize.view'))();
+    var $missions = $('<ul class="list-unstyled missions clearfix"></ul>');
+    for (var i = 0; i < 6; i++) {
+      $missions.append('<li class="pull-left is-placeholder"><a class="inner"><div class="thumb"><div class="img"></div><div class="donutchart"></div><div class="title"></div></div></a></li>');
+    }
+
+    var $placeholder = $('<div><div class="title text-center">'+i18n.t('pages.missionsAroundme.localize.localizing')+'</div></div>');
+    $placeholder.append($missions);
+
+    var view = new(require('../../localize/localize.view'))({
+      $placeholder: $placeholder
+    });
+
     self.listenTo(view, 'success', function() {
       self.stopListening(view);
       self.setState('list', _.get(self, 'state.args'));
@@ -111,4 +124,3 @@ module.exports = Marionette.LayoutView.extend({
     var self = this;
   }
 });
-

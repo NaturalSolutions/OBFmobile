@@ -2,10 +2,27 @@
 @page_missions_aroundme_location_height: 44px;
 @page_missions_aroundme_tab_height: 68px;
 .page-missions-aroundme {
-	.state-localize {
-		padding-top: 20px;
-	}
-	.state-list {
+  .state-localize {
+    &:before {
+      content: "";
+      height: 68px;
+      display: block;
+      background: #FFF;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+    }
+    .progress {
+      position: relative;
+      top: -3px;
+      background: none;
+      margin-bottom: 0;
+    }
+    .title {
+      position: relative;
+      top: -40px;
+      font-size: 17px;
+    }
+  }
+	.state-list, .state-localize {
 		.location {
 			background: rgba(255, 255, 255, 0.9);
 			border-bottom: 1px solid #EEE;
@@ -62,7 +79,7 @@
 				    left: 14px;
 				    bottom: 14px;
 				    right: 14px;
-						background: no-repeat center;
+						background: #EEE no-repeat center;
 						background-size: cover;
 						border-radius: 50%;
 					}
@@ -94,6 +111,12 @@
 			li:nth-child(odd) {
     			clear: left;
 			}
+      li.is-placeholder {
+        .donutchart {
+          border: 8px solid #EEE;
+          border-radius: 50%;
+        }
+      }
 		}
 		.location ~ .tab-content {
 			.missions {
@@ -108,6 +131,6 @@
 }
 ul.ui-autocomplete{
 	background-color: rgba(255,255,255,0.9);
-  list-style-type: none;    
+  list-style-type: none;
   width: 78% !important;
 }

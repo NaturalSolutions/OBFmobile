@@ -9,10 +9,11 @@ module.exports = Marionette.LayoutView.extend({
   className: 'state state-localize',
   events: {},
 
-  initialize: function() {
+  initialize: function(options) {
+    this.options = options;
     this.currentPos = CurrentPos.model.getInstance();
     this.maxDuration = this.currentPos.options.timeout;
-    
+
     Header.getInstance().set({
       titleKey: 'missionsAroundmeLocalize'
     });
@@ -20,6 +21,11 @@ module.exports = Marionette.LayoutView.extend({
 
   onShow: function() {
     this.$progressBar = this.$el.find('.progress-bar');
+
+    if ( this.options.$placeholder ) {
+      this.$el.append(this.options.$placeholder);
+    }
+
     this.watchCurrentPos();
   },
 
@@ -41,13 +47,15 @@ module.exports = Marionette.LayoutView.extend({
         width: Math.round(ratio)+'%'
       });
     }, 1000);
-    this.currentPos.watch().then(function(success) {
-      if ( !self.willBeDestroyed )
+    setTimeout(function() {
+      self.currentPos.watch().then(function(success) {
+        if ( !self.willBeDestroyed )
         self.onPositionSucess();
-    }, function(error) {
-      if ( !self.willBeDestroyed )
+      }, function(error) {
+        if ( !self.willBeDestroyed )
         self.onPositionError(error);
-    });
+      });
+    }, 100);
   },
 
   onPositionError: function(error) {

@@ -182,6 +182,9 @@
             }
         },
         "missionsAroundme": {
+            "localize": {
+                "localizing": "Chargement"
+            },
             "list": {
                 "delta": "%(nb)s j"
             }
