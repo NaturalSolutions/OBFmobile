@@ -275,7 +275,7 @@ if (window.cordova) {
     document.addEventListener('deviceready', init, false);
     navigator.splashscreen.hide();
     window.open = window.cordova.InAppBrowser.open;
-  }, 1000);
+  }, 3000);
 
 } else {
 
