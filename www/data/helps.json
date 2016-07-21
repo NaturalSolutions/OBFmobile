@@ -1,7 +1,7 @@
 [{
 "id": "dashboardmissions",
 "title": "Bienvenue",
-"description": "<p> Pour accomplir des missions et gagner des récompenses, rendez-vous dans en forêt, proche ou non de chez vous, retrouvez des espèces recherchées et envoyez à Noé leurs photos.</p><p> A tout moment, cliquez sur l’œil orange pour prendre une photo&#8239!</p><p> Visualisez vos récompenses en cliquant sur la mascotte et déclenchez le chronomètre pour enregistrer votre temps passé en forêt.</p><p>Cliquez sur le bouton « Trouvez-moi une mission »  pour débuter votre quête&#8239!</p>"
+"description": "<p> Pour accomplir des missions et gagner des récompenses, rendez-vous dans en forêt, retrouvez des espèces recherchées autour de vous et envoyez leurs photos à Noé.</p><p> A tout moment, cliquez sur l’œil orange pour prendre une photo&#8239!</p><p> Visualisez vos récompenses en cliquant sur la mascotte et déclenchez le chronomètre pour enregistrer votre temps passé en forêt.</p><p>Cliquez sur le bouton « Trouvez-moi une mission »  pour débuter votre quête&#8239!</p>"
 },
 {
 "id": "dashboardlogs",
@@ -10,7 +10,7 @@
 },{
 "id": "dashboardobservations",
 "title": "Observation",
-"description": "<p>Les observations transmises à Noé s’affichent ici. Elles seront envoyées aux scientifiques du Muséum national d’Histoire naturelle pour validation avant de rejoindre l’Inventaire national du patrimoine naturel.</p><p>Partagez avec vos amis vos observations sur Facebook.</p>"
+"description": "<p>Les observations transmises à Noé s’affichent ici. Les observations seront transmises au Muséum national d’Histoire naturelle pour être validées.</p><p>Partagez avec vos amis vos observations sur Facebook.</p>"
 },{
   "id": "observation",
   "title": "Observation",
@@ -22,11 +22,11 @@
   },{
   "id": "missionsall",
   "title": "Toutes les missions",
-  "description": "<p>L’ensemble des missions sont disponibles ici, cliquez sur le menu en haut à droite pour filtrer ces missions par département et par date.</p>"
+  "description": "<p>L’ensemble des missions est disponible ici. Cliquez sur le menu en haut à droite pour filtrer ces missions par département et par mois.</p>"
   
   },{
   "id": "mission",
-  "title": "Fiche missions",
+  "title": "Fiche mission",
   "description": "<p>Cette fiche vous donnera les informations utiles pour identifier une espèce ou des éléments caractéristiques de la forêt.</p><p> Cliquez sur « accepter » pour voir apparaître la mission dans votre tableau de bord. Prenez une photo en cliquant sur l’œil orange.</p><p> Les photos sont visibles sur la fiche et dans votre tableau de bord.<p>"
   }
   ,{
