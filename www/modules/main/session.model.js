@@ -231,9 +231,11 @@ var SessionModel = Backbone.Model.extend({
             'date': obs[item].timestamp,
             'missionId': obs[item].mission,
             'externId': obs[item].entity_id,
-            "departement": obs[item].dept,
+            "departementId": obs[item].dept,
             "shared": 1
           });
+
+
 
           var arrayPhoto = [];
           for (var photo in obs[item].photos) {
