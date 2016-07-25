@@ -173,7 +173,7 @@ var SessionModel = Backbone.Model.extend({
           users.setCurrent(user);
 
           self.syncObs(response.obs);
-          
+
           if(response.user.field_time_forest.und){
             user.get('timeForest')
               .set('serverValue', parseInt(response.user.field_time_forest.und[0].value, 10))
