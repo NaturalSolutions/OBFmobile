@@ -108,7 +108,7 @@ var Layout = Marionette.LayoutView.extend({
           departementId: user.get('city').dpt
         }).save();
     }
-    
+
     var queryHash = window.location.hash;
     var params = _.parseQueryHash(queryHash);
     var currentUser = User.getCurrent();
@@ -211,7 +211,7 @@ var Layout = Marionette.LayoutView.extend({
     }).render();
     this.$el.append(this.formObs.$el);
     this.$progressBar = this.$el.find('.progress-bar');
-    
+
     Backbone.Form.validators.errMessages.required = i18n.t('validation.errors.required');
 
     if (idToTransmit == this.observationModel.get('id')) {
@@ -799,6 +799,28 @@ var Layout = Marionette.LayoutView.extend({
     var self = this;
     var mission = self.model.get('mission');
     this.$el.find('form').addClass('loading');
+    var shareOptions = {
+      method: "share",
+      caption: i18n.t('facebook.caption'),
+      href: mission.get('taxon').url,
+      description: mission.get('taxon').description,
+      picture: _.get(self.model.get('photos'), '[0].externUrl', ''),
+      //name: mission.get('title')
+      //message: 'First photo post',
+    };
+    console.log('shareOptions', shareOptions);
+    //window.facebookConnectPlugin.api();
+    window.facebookConnectPlugin.showDialog(shareOptions,
+      function (response) {
+        console.log('SHARED', response);
+        self.$el.find('form').removeClass('loading');
+        Dialog.alert('Partage réussi');
+      }, function (error) {
+        console.log(error);
+        self.$el.find('form').removeClass('loading');
+      }
+    );
+    /*
     openFB.init({
       appId: '146470505768742',
       tokenStore: window.localStorage
@@ -850,6 +872,7 @@ var Layout = Marionette.LayoutView.extend({
         }
       }
     });
+    */
   },
 
 });
