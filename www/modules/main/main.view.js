@@ -170,8 +170,8 @@ var Layout = Marionette.LayoutView.extend({
       message: message,
       cssClass: 'dialog-help',
       buttons: [{
-        label: 'J\'ai compris',
-        cssClass: 'btn-block btn-default',
+        label: i18n.t('dialogs.help.btns.disable'),
+        cssClass: 'btn-lg btn-block bg-gray-dark',
         action: function(dialog) {
           self.Help.collection.getInstance().stopHelp(queryParams);
           dialog.close();

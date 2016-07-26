@@ -155,7 +155,12 @@
             "observation": "Vous devez avoir accès au réseau internet, pour transmettre vos observations."
         },
         "passwdError": "Mot de passe incorrecte.",
-        "errorRetry": "Une erreur est survenue, recommencez"
+        "errorRetry": "Une erreur est survenue, recommencez",
+        "help": {
+          "btns": {
+            "disable": "Ne plus afficher"
+          }
+        }
     },
     "pages": {
         "home": {
@@ -250,8 +255,8 @@
     "footer": {
         "btns": {
             "observation": "Observation",
-            "help_on": "Désactiver l'aide",
-            "help_off": "Activer l'aide",
+            "help_on": "Aide activée",
+            "help_off": "Aide désactivée",
             "forest_time_on": "Je suis en forêt",
             "forest_time_off": "Je suis en forêt",
             "clue": "Milieux"
@@ -268,6 +273,6 @@
                 "login": "Me connecter"
             },
             "alert": "Echec de la connexion Facebook : "
-        }    
+        }
     }
 }
