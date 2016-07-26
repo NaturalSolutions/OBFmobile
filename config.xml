@@ -17,6 +17,8 @@
     <preference name="StatusBarStyle" value="blackopaque" />
     <preference name="StatusBarBackgroundColor" value="#000000" />
     <allow-intent href="obfmobile:" />
+    <allow-intent href="fbapi20150629:/*" />
+
     <platform name="ios">
         <allow-navigation href="http://biodiversite-foret.fr/*" />
         <allow-navigation href="https://biodiversite-foret.fr/*" />
