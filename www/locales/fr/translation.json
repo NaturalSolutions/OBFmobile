@@ -34,13 +34,13 @@
         "difficulty_1": "Débutant",
         "difficulty_2": "Confirmé",
         "difficulty_3": "Expert",
-        "labelLocalize_interval": "(0){Où le trouver ?};(1-inf){Où les trouver ?};",
+        "labelLocalize_interval": "(0){Où le rechercher ?};(1-inf){Où les rechercher ?};",
         "labelIdentification_interval": "(0){Comment l'identifier ?};(1-inf){Comment les identifier ?};"
     },
     "clue": {
         "sous_bois": "Sous bois",
-        "feuillus": "Feuillus",
-        "coniferes": "Conifères",
+        "feuillus": "Forêt de feuillus",
+        "coniferes": "Forêt de conifères",
         "prairie": "Prairie",
         "milieu_humide": "Milieu humide",
         "lisiere": "Lisière",
