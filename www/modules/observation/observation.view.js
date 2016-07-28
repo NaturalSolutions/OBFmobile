@@ -809,15 +809,12 @@ var Layout = Marionette.LayoutView.extend({
       //name: mission.get('title')
       //message: 'First photo post',
     };
-    console.log('shareOptions', shareOptions);
     //window.facebookConnectPlugin.api();
     window.facebookConnectPlugin.showDialog(shareOptions,
       function (response) {
-        console.log('SHARED', response);
         self.$el.find('form').removeClass('loading');
-        Dialog.alert('Partage réussi');
+        //Dialog.alert('Partage réussi');
       }, function (error) {
-        console.log(error);
         self.$el.find('form').removeClass('loading');
       }
     );
