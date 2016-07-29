@@ -18,7 +18,7 @@
 },{
   "id": "missionsaroundme",
   "title": "Les missions autour de moi",
-  "description": "<p>Les missions disponibles autour de vous s’affichent ici par priorité et par difficulté.</p><p> Entraînez-vous avec les missions du niveau « Apprenti », cliquez sur une mission pour afficher sa description.</p><p> Retrouvez l’ensemble des missions en cliquant sur le <span class=\"icon icomoon text-primary\" style=\"vertical-align:bottom\">plus</span> en haut à droite de l’écran.</p>"
+  "description": "<p>Les missions disponibles, dans un rayon de 150 km autour de vous, s’affichent ici par priorité et par difficulté.</p><p> Entraînez-vous avec les missions du niveau « Apprenti », cliquez sur une mission pour afficher sa description.</p><p> Retrouvez l’ensemble des missions en cliquant sur le <span class=\"icon icomoon text-primary\" style=\"vertical-align:bottom\">plus</span> en haut à droite de l’écran.</p>"
   },{
   "id": "missionsall",
   "title": "Toutes les missions",
