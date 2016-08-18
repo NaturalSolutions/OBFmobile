@@ -132,9 +132,9 @@
         "palm": {
             "title": "Bravo !",
             "message": {
-                "bronze": "Vous gagné la palme de bronze",
-                "silver": "Vous gagné la palme d'argent",
-                "gold": "Vous gagné la palme d'or"
+                "bronze": "Vous avez gagné la palme de bronze",
+                "silver": "Vous avez gagné la palme d'argent",
+                "gold": "Vous avez gagné la palme d'or"
             },
             "button": "Continuer"
         },
@@ -234,7 +234,7 @@
     },
     "sidenav": {
         "btns": {
-            "login": "se connecter",
+            "login": "Se connecter",
             "logout": "Se déconnecter",
             "profile": "Mon profil",
             "settings": "Paramètres",
