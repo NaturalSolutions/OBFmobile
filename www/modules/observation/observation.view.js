@@ -804,6 +804,7 @@ var Layout = Marionette.LayoutView.extend({
       caption: i18n.t('facebook.caption'),
       href: mission.get('taxon').url,
       share_feedBrowser: true, // iOS only
+      hashtag: "#Missionforet",
       description: mission.get('taxon').description,
       picture: _.get(self.model.get('photos'), '[0].externUrl', ''),
       //name: mission.get('title')
