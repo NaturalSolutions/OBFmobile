@@ -356,7 +356,7 @@ var Layout = Marionette.LayoutView.extend({
       //TODO put tag projet in config
       var tagprojet = 'noe-obf';
       var copiedFile = function(fileEntry) {
-        self.addPhoto(fileEntry.nativeURL);
+        self.addPhoto(fileEntry.toInternalURL());
       };
       var gotFileEntry = function(fileEntry) {
         var gotFileSystem = function(fileSystem) {

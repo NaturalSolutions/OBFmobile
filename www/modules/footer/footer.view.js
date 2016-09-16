@@ -126,8 +126,7 @@ var View = Marionette.LayoutView.extend({
         console.log('failed with error code: ' + error.code);
       };
       var copiedFile = function(fileEntry) {
-        self.createObservation(fileEntry.nativeURL);
-
+        self.createObservation(fileEntry.toInternalURL());
       };
       var gotFileEntry = function(fileEntry) {
         var gotFileSystem = function(fileSystem) {
