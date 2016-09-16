@@ -254,6 +254,22 @@ function init() {
     return deferred;
   };
 
+  var checkUrlFile = function(){
+    /* jshint ignore:start */
+    if (device.platform === 'iOS'){
+      getObservations().done(function(obss){
+          obss.forEach(function(obs, idx) {
+            obs.photos.forEach(function(photo){
+              var absolutePath = photo.url.indexOf('file://');
+              if (absolutePath !== -1)
+                photo.url = 'cdvfile://localhost/persistent/noe-obf/'+photo.url.substr(photo.url.lastIndexOf('/') + 1);
+              });
+          });
+      });
+    }
+    /* jshint ignore:end */
+  };
+
   var app = new Marionette.Application();
   app.on('start', function() {
     BackboneFormsApp.init();
@@ -265,6 +281,8 @@ function init() {
 
   $.when(getI18n(), getMissions(), getCities(), getDepartements(), gethelp(), getUser(), getObservations(), getLogs(), getTimeForest())
     .done(function() {
+      if (window.cordova)
+        checkUrlFile();
       app.start();
     });
 }

@@ -272,7 +272,7 @@
                 "cancel": "Annuler",
                 "login": "Me connecter"
             },
-            "alert": "Echec de la connexion Facebook : "
+            "fail": "Echec de l'ouverture de l'application Facebook."
         }
     }
 }
