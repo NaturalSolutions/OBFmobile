@@ -803,8 +803,8 @@ var Layout = Marionette.LayoutView.extend({
       method: "share",
       caption: i18n.t('facebook.caption'),
       href: mission.get('taxon').url,
-      share_feedBrowser: true, // iOS only
-      hashtag: "#Missionforet",
+      //share_native: true, // iOS
+      // hashtag: "#Missionforet", // not implemented 09/2016
       description: mission.get('taxon').description,
       picture: _.get(self.model.get('photos'), '[0].externUrl', ''),
       //name: mission.get('title')
@@ -814,8 +814,8 @@ var Layout = Marionette.LayoutView.extend({
     window.facebookConnectPlugin.showDialog(shareOptions,
       function (response) {
         self.$el.find('form').removeClass('loading');
-        //Dialog.alert('Partage réussi');
       }, function (error) {
+        Dialog.alert(i18n.t('facebook.dialog.fail'));
         self.$el.find('form').removeClass('loading');
       }
     );
