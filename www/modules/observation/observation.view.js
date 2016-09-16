@@ -371,7 +371,7 @@ var Layout = Marionette.LayoutView.extend({
         window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFileSystem, self.onFail);
         /* jshint ignore:end */
       };
-      window.resolveLocalFileSystemURI(imageURI, gotFileEntry, self.onFail);
+      window.resolveLocalFileSystemURL(imageURI, gotFileEntry, self.onFail);
     }
   },
 
