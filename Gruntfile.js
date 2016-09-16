@@ -114,8 +114,3 @@ module.exports = function(grunt) {
   grunt.registerTask('dev', ['build', 'connect', 'watch']);
   grunt.registerTask('default', ['build', 'uglify']);
 };
-
-/* TODO:
- * - uglify (prod uniquement)
- * - remplacer connect par ripple et enlever le test "if (window.cordova)" dans init.js
- */
